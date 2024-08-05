@@ -284,12 +284,10 @@ export default function NavBarTW ()
                 <div className="col-span-1 flex justify-center md:col-span-2 md:col-start-2 lg:col-span-1">
                   <p className="h-12  text-gray-400">Volunteers</p>
                 </div>
-                <div className="col-span-1 flex justify-center md:col-span-2 md:col-start-4 lg:col-span-1">
-                  <p className="h-12  text-gray-400">Performers</p>
-                </div>
-                <div className="col-span-1 flex justify-center md:col-span-2 md:col-start-4 lg:col-span-1">
+                <div className="col-span-2 flex justify-center md:col-span-2 md:col-start-4 lg:col-span-1">
                   <p className="h-12  text-gray-400">CRM</p>
                 </div>
+                
               </div>
             </div>
           </div>
