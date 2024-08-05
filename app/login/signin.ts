@@ -11,7 +11,10 @@ export async function signIn(formData: FormData) {
   const password = formData.get("password") as string;
   const supabase = createClient();
 
-  const { data: { user }, error } = await supabase.auth.signInWithPassword({
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -43,8 +46,7 @@ export async function signIn(formData: FormData) {
 
     const userProfile = userProfilesResult[0];
     const dashboardUrl = `/dashboard/${encodeURIComponent(userProfile.organizationName)}`;
-    return redirect( dashboardUrl );
-    
+    return redirect(dashboardUrl);
   } catch (error) {
     console.error("Error fetching user profile:", error);
     return redirect("/login?message=Error fetching user profile");

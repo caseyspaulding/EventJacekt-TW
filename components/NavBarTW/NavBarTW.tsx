@@ -63,7 +63,10 @@ export default function NavBarTW() {
                   src="/images/logo.svg"
                   className="h-8 w-auto sm:h-10"
                 />
-              </a> <p className="ml-2 mt-1 text-xl text-blue-400 "><span>EventJacket</span></p>
+              </a>{" "}
+              <p className="ml-2 mt-1 text-xl text-blue-400 ">
+                <span>EventJacket</span>
+              </p>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
               <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">

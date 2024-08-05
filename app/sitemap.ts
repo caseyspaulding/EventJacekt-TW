@@ -1,24 +1,24 @@
-import { MetadataRoute } from 'next'
- 
+import type { MetadataRoute } from "next";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://eventjacket.com',
+      url: "https://eventjacket.com",
       lastModified: new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: "yearly",
       priority: 1,
     },
     {
-      url: 'https://eventjacket.com/about',
+      url: "https://eventjacket.com/about",
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: 'https://eventjacket.com/blog',
+      url: "https://eventjacket.com/blog",
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.5,
     },
-  ]
+  ];
 }

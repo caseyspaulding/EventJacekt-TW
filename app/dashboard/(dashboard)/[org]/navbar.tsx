@@ -46,7 +46,7 @@ export function DashboardNavbar() {
   return (
     <Navbar
       fluid
-      className="fixed top-0 z-30 w-full border-b border-gray-200 bg-white p-0 sm:p-0 dark:border-gray-700 dark:bg-gray-800"
+      className="fixed top-0 z-30 w-full border-b border-gray-200 bg-white p-0 dark:border-gray-700 dark:bg-gray-800 sm:p-0"
     >
       <div className="w-full p-3 pr-4">
         <div className="flex items-center justify-between">
@@ -98,7 +98,7 @@ export function DashboardNavbar() {
           </div>
           <div className="flex items-center lg:gap-3">
             <div className="flex items-center">
-              <button className="cursor-pointer rounded p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 lg:hidden dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:bg-gray-700 dark:focus:ring-gray-700">
+              <button className="cursor-pointer rounded p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:bg-gray-700 dark:focus:ring-gray-700 lg:hidden">
                 <span className="sr-only">Search</span>
                 <HiSearch className="h-6 w-6" />
               </button>
