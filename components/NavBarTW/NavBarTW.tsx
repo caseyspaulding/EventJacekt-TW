@@ -56,14 +56,14 @@ export default function NavBarTW() {
         <Popover className="relative bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 md:justify-start md:space-x-10 lg:px-8">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <a href="#">
+              <a href="/">
                 <span className="sr-only">EventJacket</span>
                 <img
                   alt=""
                   src="/images/logo.svg"
                   className="h-8 w-auto sm:h-10"
                 />
-              </a>
+              </a> <p className="ml-2 mt-1 text-xl text-blue-400 "><span>EventJacket</span></p>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
               <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
