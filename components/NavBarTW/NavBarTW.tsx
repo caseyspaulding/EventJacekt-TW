@@ -67,7 +67,7 @@ export default function NavBarTW ()
                   className="h-8 w-auto sm:h-10"
                 />
               </a>{ " " }
-              <p className="ml-2 mt-1 text-xl text-blue-400 ">
+              <p className="ml-2  font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-500 ">
                 <span>EventJacket</span>
               </p>
             </div>
@@ -269,23 +269,26 @@ export default function NavBarTW ()
           <div className="bg-gray-100">
             <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
               <p className="text-center text-base font-semibold text-gray-500">
-                Everything you need. All in one place.
+                All in one place.
               </p>
               <div className="mt-6 grid grid-cols-2 gap-8 md:grid-cols-6 lg:grid-cols-5">
                 <div className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-                  <p className="h-12">Ticketing</p>
+                  <p className="h-12 text-gray-400">Ticketing</p>
                 </div>
                 <div className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-                  <p className="h-12">Payouts</p>
+                  <p className="h-12  text-gray-400">Payouts</p>
                 </div>
                 <div className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-                  <p className="h-12">Vendors</p>
+                  <p className="h-12  text-gray-400">Vendors</p>
                 </div>
                 <div className="col-span-1 flex justify-center md:col-span-2 md:col-start-2 lg:col-span-1">
-                  <p className="h-12">Volunteers</p>
+                  <p className="h-12  text-gray-400">Volunteers</p>
                 </div>
-                <div className="col-span-2 flex justify-center md:col-span-2 md:col-start-4 lg:col-span-1">
-                  <p className="h-12">Performers</p>
+                <div className="col-span-1 flex justify-center md:col-span-2 md:col-start-4 lg:col-span-1">
+                  <p className="h-12  text-gray-400">Performers</p>
+                </div>
+                <div className="col-span-1 flex justify-center md:col-span-2 md:col-start-4 lg:col-span-1">
+                  <p className="h-12  text-gray-400">CRM</p>
                 </div>
               </div>
             </div>
