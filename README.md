@@ -21,12 +21,12 @@
 
 ## Table of Contents
 
-- [How to use in your own project](#how-to-use-in-your-own-project)
-- [How to install](#how-to-install)
-  - [Assumptions](#assumptions)
-- [How to develop locally](#how-to-develop-locally)
-- [How to build for production](#how-to-build-for-production)
-- [How to deploy](#how-to-deploy)
+-   [How to use in your own project](#how-to-use-in-your-own-project)
+-   [How to install](#how-to-install)
+    -   [Assumptions](#assumptions)
+-   [How to develop locally](#how-to-develop-locally)
+-   [How to build for production](#how-to-build-for-production)
+-   [How to deploy](#how-to-deploy)
 
 ## How to use in your own project
 
@@ -38,10 +38,10 @@ Your Next.js project will also need to have [`flowbite-react`](https://github.co
 
 Optional dependencies include:
 
-- [`react-icons`](https://react-icons.github.io/react-icons/) for most of the many icons used
-- [`react-apexcharts`](https://github.com/apexcharts/react-apexcharts) for charts/graphs found on [Dashboard page](https://github.com/themesberg/flowbite-react-admin-dashboard/blob/main/src/pages/index.tsx)
-- [`react-sortablejs`](https://github.com/SortableJS/react-sortablejs) for Kanban-style boards found on [Kanban page](https://github.com/themesberg/flowbite-react-admin-dashboard/blob/main/src/pages/kanban.tsx)
-- [`svgmap`](https://github.com/StephanWagner/svgMap) for maps found on [Dashboard page](https://github.com/themesberg/flowbite-react-admin-dashboard/blob/main/src/pages/kanban.tsx)
+-   [`react-icons`](https://react-icons.github.io/react-icons/) for most of the many icons used
+-   [`react-apexcharts`](https://github.com/apexcharts/react-apexcharts) for charts/graphs found on [Dashboard page](https://github.com/themesberg/flowbite-react-admin-dashboard/blob/main/src/pages/index.tsx)
+-   [`react-sortablejs`](https://github.com/SortableJS/react-sortablejs) for Kanban-style boards found on [Kanban page](https://github.com/themesberg/flowbite-react-admin-dashboard/blob/main/src/pages/kanban.tsx)
+-   [`svgmap`](https://github.com/StephanWagner/svgMap) for maps found on [Dashboard page](https://github.com/themesberg/flowbite-react-admin-dashboard/blob/main/src/pages/kanban.tsx)
 
 Finally, you can use your own back-end APIs by replacing the contents of the relevant `page.tsx` files. For example, if you would like to load JSON data from a remote server for the Dashboard, open `app/(dashboard)/(footer)/page.tsx` and replace the following:
 
@@ -68,9 +68,9 @@ As long as your remote server provides JSON that looks identical to our schema, 
 
 ### Assumptions
 
-- You can open a shell/terminal/command prompt
-- You have Git instaslled and can run `git` in the shell
-- You have Node.js installed and can run `node`, `npm` in the shell
+-   You can open a shell/terminal/command prompt
+-   You have Git instaslled and can run `git` in the shell
+-   You have Node.js installed and can run `node`, `npm` in the shell
 
 Clone this repository
 

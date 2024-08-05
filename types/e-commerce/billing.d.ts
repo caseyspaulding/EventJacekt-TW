@@ -1,15 +1,15 @@
 export interface ECommerceBillingNextPayment {
-  service: string;
-  logo: string;
-  serviceDescription: string;
-  amount: number;
-  interval: string;
-  date: string;
+    service: string;
+    logo: string;
+    serviceDescription: string;
+    amount: number;
+    interval: string;
+    date: string;
 }
 
 export interface ECommerceBillingTransaction {
-  transaction: string;
-  time: string;
-  amount: number;
-  status: string;
+    transaction: string;
+    time: string;
+    amount: number;
+    status: string;
 }

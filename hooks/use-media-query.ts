@@ -1,27 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(getMatches(query));
+    const [matches, setMatches] = useState(getMatches(query));
 
-  function getMatches(query: string): boolean {
-    if (typeof window === "undefined") return false;
+    function getMatches(query: string): boolean {
+        if (typeof window === 'undefined') return false;
 
-    return window.matchMedia(query).matches;
-  }
+        return window.matchMedia(query).matches;
+    }
 
-  function handleChange() {
-    setMatches(getMatches(query));
-  }
+    function handleChange() {
+        setMatches(getMatches(query));
+    }
 
-  useEffect(() => {
-    const matchMedia = window.matchMedia(query);
+    useEffect(() => {
+        const matchMedia = window.matchMedia(query);
 
-    handleChange();
+        handleChange();
 
-    matchMedia.addEventListener("change", handleChange);
-    return () => matchMedia.removeEventListener("change", handleChange);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+        matchMedia.addEventListener('change', handleChange);
+        return () => matchMedia.removeEventListener('change', handleChange);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [query]);
 
-  return matches;
+    return matches;
 }
