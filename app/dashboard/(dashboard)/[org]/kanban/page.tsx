@@ -1,3 +1,4 @@
+
 import kanbanBoards from "@/data/kanban.json";
 import type { KanbanBoard } from "@/types/kanban";
 import KanbanPageContent from "./content";
