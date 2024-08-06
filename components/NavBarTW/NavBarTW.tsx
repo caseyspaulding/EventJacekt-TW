@@ -18,6 +18,8 @@ import
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
+import Image from "next/image";
+
 const solutions = [
   {
     name: "Ticketing",
@@ -61,8 +63,10 @@ export default function NavBarTW ()
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <a href="/">
                 <span className="sr-only">EventJacket</span>
-                <img
-                  alt=""
+                <Image
+                  alt="Evenjacket logo"
+                  height={ 40 }
+                  width={ 40 }
                   src="/images/logo.svg"
                   className="h-8 w-auto sm:h-10"
                 />
@@ -153,8 +157,10 @@ export default function NavBarTW ()
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <img
+                    <Image
                       alt="EventJacket"
+                      height={ 40 }
+                      width={ 40 }
                       src="/images/logo.svg"
                       className="h-8 w-auto"
                     />
@@ -226,8 +232,10 @@ export default function NavBarTW ()
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
               <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
                 <div className="absolute inset-0">
-                  <img
+                  <Image
                     alt="People working on laptops"
+                    height={ 1024 }
+                    width={ 1536 }
                     src="/images/festival-2.png"
                     className="h-full w-full object-cover"
                   />
