@@ -1,7 +1,9 @@
 import { createClient } from '@/utils/supabase/server';
-import { Button } from 'flowbite-react';
 import { redirect } from 'next/navigation';
 import { SubmitButton } from './submit-button';
+import { Button, Card, Checkbox, Label, TextInput } from 'flowbite-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface SearchParams {
     message?: string;
@@ -46,7 +48,96 @@ export default function Login({ searchParams }: LoginProps) {
 
     return (
         <>
-            <form className="mt-11 flex w-full flex-1 flex-col justify-center gap-2">
+            <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
+                <Link
+                    href="/"
+                    className="mb-8 flex items-center justify-center text-2xl font-semibold dark:text-white lg:mb-10"
+                >
+                    <Image alt="" src="/images/logo.svg" width={ 43 } height={ 44 } className="mr-4 h-11" />
+                    <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
+                        EventJacket
+                    </span>
+                </Link>
+                <Card
+                    horizontal
+                    imgAlt=""
+                    imgSrc="/images/authentication/login.jpg"
+                    className="w-full md:max-w-screen-lg"
+                    theme={ {
+                        root: {
+                            children: 'my-auto w-full gap-0 space-y-8 p-6 sm:p-8 lg:p-16'
+                        },
+                        img: {
+                            horizontal: {
+                                on: 'hidden w-2/3 rounded-l-lg md:w-96 md:p-0 lg:block'
+                            }
+                        }
+                    } }
+                >
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white lg:text-3xl">
+                        Sign in to platform
+                    </h2>
+                    <form className="mt-8 space-y-6">
+                        <div className="flex flex-col gap-y-2">
+                            <Label htmlFor="email">Your email</Label>
+                            <TextInput
+                                
+                                name="email"
+                                placeholder="name@company.com"
+                               required 
+                            />
+                        </div>
+                        <div className="flex flex-col gap-y-2">
+                            <Label htmlFor="password">Your password</Label>
+                            <TextInput
+                                id="password"
+                                name="password"
+                                placeholder="••••••••"
+                                type="password"
+
+                            />
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-x-3">
+                                <Checkbox id="rememberMe" name="rememberMe" />
+                                <Label htmlFor="rememberMe">Remember me</Label>
+                            </div>
+                            <Link
+                                href="#"
+                                className="text-right text-sm text-primary-700 hover:underline dark:text-primary-500"
+                            >
+                                Lost Password?
+                            </Link>
+                        </div>
+                        <div className="mb-6">
+                            
+                            <SubmitButton
+                                color="blue"
+                                size="lg"
+                                formAction={ signIn }
+                                className="w-full px-0 py-px sm:w-auto bg-blue-600"
+                                pendingText="Signing In..."
+                            >
+                                Login to your account
+                            </SubmitButton>
+
+                            { searchParams?.message && (
+                                <p className="bg-foreground/10 mt-4 p-4 text-center">{ searchParams.message }</p>
+                            ) }
+                        </div>
+                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                            Not registered?&nbsp;
+                            <Link
+                                href="/signup"
+                                className="text-primary-700 hover:underline dark:text-primary-500"
+                            >
+                                Create account
+                            </Link>
+                        </p>
+                    </form>
+                </Card>
+            </div>
+            {/*<form className="mt-11 flex w-full flex-1 flex-col justify-center gap-2">
                 <label className="text-md" htmlFor="email">
                     Email
                 </label>
@@ -69,7 +160,7 @@ export default function Login({ searchParams }: LoginProps) {
 
                 <SubmitButton
                     formAction={signIn}
-                    className="mb-2 rounded-md bg-green-700 px-4 py-2"
+                    className="w-full px-0 py-px sm:w-auto bg-blue-600"
                     pendingText="Signing In..."
                 >
                     Sign In
@@ -78,31 +169,9 @@ export default function Login({ searchParams }: LoginProps) {
                 {searchParams?.message && (
                     <p className="bg-foreground/10 mt-4 p-4 text-center">{searchParams.message}</p>
                 )}
-            </form>
+            </form>*/}
 
-            <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">
-                <Button
-                    href="/"
-                    // eslint-disable-next-line tailwindcss/no-custom-classname
-                    className="text-foreground bg-btn-background hover:bg-btn-background-hover group absolute left-8 top-8 flex items-center rounded-md px-4 py-2 text-sm no-underline"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-                    >
-                        <polyline points="15 18 9 12 15 6" />
-                    </svg>{' '}
-                    Back
-                </Button>
-            </div>
+           
         </>
     );
 }

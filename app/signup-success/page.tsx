@@ -9,9 +9,9 @@ export default function SignUpSuccess() {
                     Check your email to continue the sign-in process.
                 </p>
                 <Link href="/login" passHref>
-                    <a className="mt-6 rounded-md bg-blue-600 px-6 py-2 font-semibold text-white">
+                    <p className="mt-6 rounded-md bg-blue-600 px-6 py-2 font-semibold text-white">
                         Go to Login
-                    </a>
+                    </p>
                 </Link>
             </div>
         </div>

@@ -4,64 +4,63 @@ module.exports = {
   env: {
     browser: true,
     commonjs: true,
-    es2021: true,
+    es2021: true
   },
   extends: [
-    "eslint:recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:prettier/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:tailwindcss/recommended",
-    "plugin:@next/next/recommended",
+    'eslint:recommended',
+
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+
+    'plugin:@next/next/recommended'
   ],
   overrides: [
     {
-      files: ["**/*.{ts,tsx}"],
-      plugins: ["@typescript-eslint"],
-      parser: "@typescript-eslint/parser",
-      extends: ["plugin:@typescript-eslint/recommended"],
+      files: ['**/*.{ts,tsx}'],
+      plugins: ['@typescript-eslint'],
+      parser: '@typescript-eslint/parser',
+      extends: ['plugin:@typescript-eslint/recommended'],
       rules: {
-        "@typescript-eslint/consistent-type-imports": "warn", // Changed to warn instead of error for leniency
-      },
-    },
+        '@typescript-eslint/consistent-type-imports': 'warn' // Changed to warn instead of error for leniency
+      }
+    }
   ],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module'
   },
   settings: {
     react: {
-      version: "detect",
+      version: 'detect'
     },
     tailwindcss: {
-      callees: ["twMerge", "createTheme"],
-      classRegex: "^(class(Name)|theme)?$",
-    },
+      callees: ['twMerge', 'createTheme'],
+      classRegex: '^(class(Name)|theme)?$'
+    }
   },
   rules: {
     // React specific rules
-    "react/no-unescaped-entities": "off",
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-uses-react": "off", // No longer needed in React 17+
-    "react/jsx-uses-vars": "warn", // Reduced severity
+    'react/no-unescaped-entities': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-uses-react': 'off', // No longer needed in React 17+
+    'react/jsx-uses-vars': 'off', // Reduced severity
 
     // Accessibility specific rules
-    "jsx-a11y/anchor-is-valid": "off",
+    'jsx-a11y/anchor-is-valid': 'off',
 
     // Tailwind CSS specific rules
-    "tailwindcss/enforces-shorthand": "off",
-    "tailwindcss/no-custom-classname": "off",
+    'tailwindcss/enforces-shorthand': 'off',
+    'tailwindcss/no-custom-classname': 'off',
 
     // Prettier integration
-    "prettier/prettier": ["warn", { endOfLine: "auto" }], // Use Prettier for formatting, but only warn for issues
+    'prettier/prettier': ['warn', { endOfLine: 'auto' }], // Use Prettier for formatting, but only warn for issues
 
     // TypeScript specific rules
-    "@typescript-eslint/explicit-module-boundary-types": "off", // Less strict about return types
-    "@typescript-eslint/no-explicit-any": "warn", // Allow use of 'any', but warn about it
+    '@typescript-eslint/explicit-module-boundary-types': 'off', // Less strict about return types
+    '@typescript-eslint/no-explicit-any': 'off', // Allow use of 'any', but warn about it
 
     // General rules
-    "no-console": "warn", // Allow console logs, but warn about them
-    "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }], // Warn for unused vars but allow unused function arguments prefixed with an underscore
-  },
-};
+    'no-console': 'off', // Allow console logs, but warn about them
+    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }] // Warn for unused vars but allow unused function arguments prefixed with an underscore
+  }
+}
