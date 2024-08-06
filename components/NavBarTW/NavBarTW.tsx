@@ -23,13 +23,13 @@ const solutions = [
     name: "Ticketing",
     description:
       "Get a better understanding of where your traffic is coming from.",
-    href: "#",
+    href: "/ticketing",
     icon: InboxIcon,
   },
   {
     name: "CRM",
     description: "Build and Maintain your relationships.",
-    href: "#",
+    href: "/crm",
     icon: ChatBubbleBottomCenterTextIcon,
   },
   {
@@ -46,9 +46,9 @@ const solutions = [
   },
 ];
 const navigation = [
-  { name: "Pricing", href: "#" },
-  { name: "Partners", href: "#" },
-  { name: "Company", href: "#" },
+  { name: "Pricing", href: "/pricing" },
+  { name: "FAQs", href: "/faqs" },
+  { name: "Company", href: "/about" },
 ];
 
 export default function NavBarTW ()
