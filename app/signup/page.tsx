@@ -35,21 +35,16 @@ export default function SignUp({ searchParams }: SignUpProps) {
   return (
     <>
       <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
-        <Link
-          href="/"
-          className="mb-8 flex items-center justify-center text-2xl font-semibold dark:text-white lg:mb-10"
-        >
-          <Image
-            alt=""
-            src="/images/logo.svg"
-            width={43}
-            height={44}
-            className="mr-4 h-11"
-          />
-          <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-            EventJacket
-          </span>
-        </Link>
+        
+                  <Link
+                      href="/"
+                      className="mb-8 flex items-center justify-center text-2xl font-semibold dark:text-white lg:mb-10"
+                  >
+                      <Image alt="" src="/images/logo.svg" width={ 43 } height={ 44 } className="mr-2 h-11" />
+                      <span className="self-center text-blue-600 whitespace-nowrap text-2xl font-extrabold dark:text-white">
+                          EventJacket
+                      </span>
+                  </Link>
         <Card
           horizontal
           imgSrc="/images/authentication/create-account.jpg"

@@ -53,8 +53,8 @@ export default function Login({ searchParams }: LoginProps) {
                     href="/"
                     className="mb-8 flex items-center justify-center text-2xl font-semibold dark:text-white lg:mb-10"
                 >
-                    <Image alt="" src="/images/logo.svg" width={ 43 } height={ 44 } className="mr-4 h-11" />
-                    <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
+                    <Image alt="" src="/images/logo.svg" width={ 43 } height={ 44 } className="mr-2 h-11" />
+                    <span className="self-center text-blue-600 whitespace-nowrap text-2xl font-extrabold dark:text-white">
                         EventJacket
                     </span>
                 </Link>

@@ -67,7 +67,7 @@ export default function NavBarTW ()
                   className="h-8 w-auto sm:h-10"
                 />
               </a>{ " " }
-              <p className="ml-2  font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-500 ">
+              <p className="ml-2  font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-600 ">
                 <span>EventJacket</span>
               </p>
             </div>
