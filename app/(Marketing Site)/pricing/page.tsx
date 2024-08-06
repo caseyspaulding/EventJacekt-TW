@@ -145,7 +145,7 @@ export default function Example ()
             <div>
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
                 <span className="text-gray-900">Everything you need for</span>
-                <span className="text-blue-600">$99 a month</span>
+                <span className="text-blue-600">$19 a month</span>
               </h1>
               <p className="mt-5 text-xl text-gray-500">
                 Includes every feature we offer plus unlimited projects and unlimited users.
@@ -163,8 +163,7 @@ export default function Example ()
               <h2 className="text-lg font-semibold text-blue-600">Everything you need</h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900">All-in-one platform</p>
               <p className="mt-4 text-lg text-gray-500">
-                Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla
-                nec. Urna, sed a lectus elementum blandit et.
+                
               </p>
             </div>
             <div className="mt-4 sm:mt-8 md:mt-10 md:grid md:grid-cols-2 md:gap-x-8 xl:col-span-2 xl:mt-0">
@@ -192,7 +191,7 @@ export default function Example ()
         </div>
       </div>
 
-      {/* Branded FAQ */ }
+      {/* Branded FAQ 
       <div className="bg-blue-900">
         <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight text-white">Frequently asked questions</h2>
@@ -208,7 +207,7 @@ export default function Example ()
           </div>
         </div>
       </div>
-
+*/ }
       {/* CTA section */ }
       <div className="bg-blue-50">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
