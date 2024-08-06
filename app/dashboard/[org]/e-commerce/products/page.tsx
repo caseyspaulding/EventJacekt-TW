@@ -1,5 +1,5 @@
 import products from '@/data/e-commerce/product.json';
-import type { ECommerceProduct } from '@/types/e-commerce/product';
+import type { ECommerceProduct } from '../../../../../types/e-commerce/product';
 import ECommerceProductsPageContent from './content';
 
 export interface ECommerceProductsPageData {

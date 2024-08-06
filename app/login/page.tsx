@@ -61,7 +61,7 @@ export default function Login({ searchParams }: LoginProps) {
                 <Card
                     horizontal
                     imgAlt=""
-                    imgSrc="/images/authentication/login.jpg"
+                    imgSrc="/images/authentication/login.png"
                     className="w-full md:max-w-screen-lg"
                     theme={ {
                         root: {
@@ -75,7 +75,7 @@ export default function Login({ searchParams }: LoginProps) {
                     } }
                 >
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white lg:text-3xl">
-                        Sign in to platform
+                        Sign in 
                     </h2>
                     <form className="mt-8 space-y-6">
                         <div className="flex flex-col gap-y-2">

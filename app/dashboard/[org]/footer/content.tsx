@@ -9,41 +9,43 @@ import { useEffect, type FC } from 'react';
 import 'svgmap/dist/svgMap.min.css';
 import type { DashboardPageData } from './page';
 
-const DashboardPageContent: FC<DashboardPageData> = function ({ dashboard }) {
+const DashboardPageContent: FC<DashboardPageData> = function ( { dashboard } )
+{
     return (
         <div className="px-4 pt-6">
-            <SalesThisWeek dashboard={dashboard} />
+            <SalesThisWeek dashboard={ dashboard } />
             <div className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                <NewProductsThisWeek dashboard={dashboard} />
-                <VisitorsThisWeek dashboard={dashboard} />
-                <UserSignupsThisWeek dashboard={dashboard} />
+                <NewProductsThisWeek dashboard={ dashboard } />
+                <VisitorsThisWeek dashboard={ dashboard } />
+                <UserSignupsThisWeek dashboard={ dashboard } />
             </div>
             <div className="my-4 grid grid-cols-1 xl:gap-4 2xl:grid-cols-3">
-                <SessionsByCountry dashboard={dashboard} />
+                <SessionsByCountry dashboard={ dashboard } />
                 <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-1">
-                    <LatestCustomers dashboard={dashboard} />
-                    <AcquisitionOverview dashboard={dashboard} />
+                    <LatestCustomers dashboard={ dashboard } />
+                    <AcquisitionOverview dashboard={ dashboard } />
                 </div>
             </div>
-            <Transactions dashboard={dashboard} />
+            <Transactions dashboard={ dashboard } />
         </div>
     );
 };
 
-const SalesThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
+const SalesThisWeek: FC<DashboardPageData> = function ( { dashboard } )
+{
     return (
         <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-6 xl:p-8">
             <div className="mb-4 flex items-center justify-between">
                 <div className="shrink-0">
                     <span className="text-2xl font-bold leading-none text-gray-900 dark:text-white sm:text-3xl">
-                        {formatToUSD(dashboard.salesThisWeek.sales)}
+                        { formatToUSD( dashboard.salesThisWeek.sales ) }
                     </span>
                     <h3 className="text-base font-normal text-gray-600 dark:text-gray-400">
                         Sales this week
                     </h3>
                 </div>
                 <div className="flex flex-1 items-center justify-end text-base font-bold text-green-500 dark:text-green-400">
-                    {dashboard.salesThisWeek.percentage * 100}%
+                    { dashboard.salesThisWeek.percentage * 100 }%
                     <svg
                         className="h-5 w-5"
                         fill="currentColor"
@@ -58,7 +60,7 @@ const SalesThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
                     </svg>
                 </div>
             </div>
-            <SalesApexChart dashboard={dashboard} />
+            <SalesApexChart dashboard={ dashboard } />
             <div className="mt-5 flex items-center justify-between border-t border-gray-200 pt-3 dark:border-gray-700 sm:pt-6">
                 <DateRangeDropdown />
                 <div className="shrink-0">
@@ -77,7 +79,7 @@ const SalesThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                strokeWidth={2}
+                                strokeWidth={ 2 }
                                 d="M9 5l7 7-7 7"
                             />
                         </svg>
@@ -88,7 +90,8 @@ const SalesThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
     );
 };
 
-const SalesApexChart: FC<DashboardPageData> = function ({ dashboard }) {
+const SalesApexChart: FC<DashboardPageData> = function ( { dashboard } )
+{
     const { mode } = useThemeMode();
     const isDarkTheme = mode === 'dark';
 
@@ -147,7 +150,7 @@ const SalesApexChart: FC<DashboardPageData> = function ({ dashboard }) {
             categories: dashboard.salesThisWeek.categories,
             labels: {
                 style: {
-                    colors: [labelColor],
+                    colors: [ labelColor ],
                     fontSize: '14px',
                     fontWeight: 500
                 }
@@ -171,11 +174,12 @@ const SalesApexChart: FC<DashboardPageData> = function ({ dashboard }) {
         yaxis: {
             labels: {
                 style: {
-                    colors: [labelColor],
+                    colors: [ labelColor ],
                     fontSize: '14px',
                     fontWeight: 500
                 },
-                formatter: function (value) {
+                formatter: function ( value )
+                {
                     return '$' + value;
                 }
             }
@@ -185,7 +189,7 @@ const SalesApexChart: FC<DashboardPageData> = function ({ dashboard }) {
             fontWeight: 500,
             fontFamily: 'Inter, sans-serif',
             labels: {
-                colors: [labelColor]
+                colors: [ labelColor ]
             },
             itemMargin: {
                 horizontal: 10
@@ -206,23 +210,24 @@ const SalesApexChart: FC<DashboardPageData> = function ({ dashboard }) {
     };
     const series = dashboard.salesThisWeek.series;
 
-    return <ApexChart height={420} options={options} series={series} type="area" />;
+    return <ApexChart height={ 420 } options={ options } series={ series } type="area" />;
 };
 
-const NewProductsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
+const NewProductsThisWeek: FC<DashboardPageData> = function ( { dashboard } )
+{
     return (
         <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-6 xl:p-8">
             <div className="flex items-center">
                 <div className="shrink-0">
                     <span className="text-2xl font-bold leading-none text-gray-900 dark:text-white sm:text-3xl">
-                        {formatNumber(dashboard.newProductsThisWeek.products)}
+                        { formatNumber( dashboard.newProductsThisWeek.products ) }
                     </span>
                     <h3 className="text-base font-normal text-gray-600 dark:text-gray-400">
                         New products this week
                     </h3>
                 </div>
                 <div className="ml-5 flex w-0 flex-1 items-center justify-end text-base font-bold text-green-500 dark:text-green-400">
-                    {dashboard.newProductsThisWeek.percentage * 100}%
+                    { dashboard.newProductsThisWeek.percentage * 100 }%
                     <svg
                         className="h-5 w-5"
                         fill="currentColor"
@@ -237,7 +242,7 @@ const NewProductsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
                     </svg>
                 </div>
             </div>
-            <NewProductsApexChart dashboard={dashboard} />
+            <NewProductsApexChart dashboard={ dashboard } />
             <div className="flex items-center justify-between border-t border-gray-200 pt-3 dark:border-gray-700 sm:pt-6">
                 <DateRangeDropdown />
                 <div className="shrink-0">
@@ -256,7 +261,7 @@ const NewProductsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                strokeWidth={2}
+                                strokeWidth={ 2 }
                                 d="M9 5l7 7-7 7"
                             />
                         </svg>
@@ -267,9 +272,10 @@ const NewProductsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
     );
 };
 
-const NewProductsApexChart: FC<DashboardPageData> = function ({ dashboard }) {
+const NewProductsApexChart: FC<DashboardPageData> = function ( { dashboard } )
+{
     const options: ApexCharts.ApexOptions = {
-        colors: ['#1A56DB', '#FDBA8C'],
+        colors: [ '#1A56DB', '#FDBA8C' ],
         chart: {
             fontFamily: 'Inter, sans-serif',
             foreColor: '#4B5563',
@@ -302,7 +308,7 @@ const NewProductsApexChart: FC<DashboardPageData> = function ({ dashboard }) {
         stroke: {
             show: true,
             width: 5,
-            colors: ['transparent']
+            colors: [ 'transparent' ]
         },
         grid: {
             show: false
@@ -334,23 +340,24 @@ const NewProductsApexChart: FC<DashboardPageData> = function ({ dashboard }) {
     };
     const series = dashboard.newProductsThisWeek.series;
 
-    return <ApexChart height={305} options={options} series={series} type="bar" />;
+    return <ApexChart height={ 305 } options={ options } series={ series } type="bar" />;
 };
 
-const VisitorsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
+const VisitorsThisWeek: FC<DashboardPageData> = function ( { dashboard } )
+{
     return (
         <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-6 xl:p-8">
             <div className="flex items-center">
                 <div className="shrink-0">
                     <span className="text-2xl font-bold leading-none text-gray-900 dark:text-white sm:text-3xl">
-                        {formatNumber(dashboard.visitorsThisWeek.visitors)}
+                        { formatNumber( dashboard.visitorsThisWeek.visitors ) }
                     </span>
                     <h3 className="text-base font-normal text-gray-600 dark:text-gray-400">
                         Visitors this week
                     </h3>
                 </div>
                 <div className="ml-5 flex w-0 flex-1 items-center justify-end text-base font-bold text-green-500 dark:text-green-400">
-                    {dashboard.visitorsThisWeek.percentage * 100}%
+                    { dashboard.visitorsThisWeek.percentage * 100 }%
                     <svg
                         className="h-5 w-5"
                         fill="currentColor"
@@ -365,7 +372,7 @@ const VisitorsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
                     </svg>
                 </div>
             </div>
-            <VisitorsApexChart dashboard={dashboard} />
+            <VisitorsApexChart dashboard={ dashboard } />
             <div className="mt-3.5 flex items-center justify-between border-t border-gray-200 pt-3 dark:border-gray-700 sm:pt-6">
                 <DateRangeDropdown />
                 <div className="shrink-0">
@@ -384,7 +391,7 @@ const VisitorsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                strokeWidth={2}
+                                strokeWidth={ 2 }
                                 d="M9 5l7 7-7 7"
                             />
                         </svg>
@@ -395,7 +402,8 @@ const VisitorsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
     );
 };
 
-const VisitorsApexChart: FC<DashboardPageData> = function ({ dashboard }) {
+const VisitorsApexChart: FC<DashboardPageData> = function ( { dashboard } )
+{
     const { mode } = useThemeMode();
     const isDarkTheme = mode === 'dark';
 
@@ -440,23 +448,24 @@ const VisitorsApexChart: FC<DashboardPageData> = function ({ dashboard }) {
     };
     const series = dashboard.visitorsThisWeek.series;
 
-    return <ApexChart height={305} options={options} series={series} type="area" />;
+    return <ApexChart height={ 305 } options={ options } series={ series } type="area" />;
 };
 
-const UserSignupsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
+const UserSignupsThisWeek: FC<DashboardPageData> = function ( { dashboard } )
+{
     return (
         <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-6 xl:p-8">
             <div className="flex items-center">
                 <div className="shrink-0">
                     <span className="text-2xl font-bold leading-none text-gray-900 dark:text-white sm:text-3xl">
-                        {formatNumber(dashboard.userSignupsThisWeek.signups)}
+                        { formatNumber( dashboard.userSignupsThisWeek.signups ) }
                     </span>
                     <h3 className="text-base font-normal text-gray-600 dark:text-gray-400">
                         User signups this week
                     </h3>
                 </div>
                 <div className="ml-5 flex w-0 flex-1 items-center justify-end text-base font-bold text-red-500 dark:text-red-400">
-                    {dashboard.userSignupsThisWeek.percentage * 100}%
+                    { dashboard.userSignupsThisWeek.percentage * 100 }%
                     <svg
                         className="h-5 w-5"
                         fill="currentColor"
@@ -471,7 +480,7 @@ const UserSignupsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
                     </svg>
                 </div>
             </div>
-            <UserSignupsApexChart dashboard={dashboard} />
+            <UserSignupsApexChart dashboard={ dashboard } />
             <div className="flex items-center justify-between border-t border-gray-200 pt-3 dark:border-gray-700 sm:pt-6">
                 <DateRangeDropdown />
                 <div className="shrink-0">
@@ -490,7 +499,7 @@ const UserSignupsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                strokeWidth={2}
+                                strokeWidth={ 2 }
                                 d="M9 5l7 7-7 7"
                             />
                         </svg>
@@ -501,13 +510,14 @@ const UserSignupsThisWeek: FC<DashboardPageData> = function ({ dashboard }) {
     );
 };
 
-const UserSignupsApexChart: FC<DashboardPageData> = function ({ dashboard }) {
+const UserSignupsApexChart: FC<DashboardPageData> = function ( { dashboard } )
+{
     const { mode } = useThemeMode();
     const isDarkTheme = mode === 'dark';
 
     const backgroundBarColors = isDarkTheme
-        ? ['#374151', '#374151', '#374151', '#374151', '#374151', '#374151', '#374151']
-        : ['#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB'];
+        ? [ '#374151', '#374151', '#374151', '#374151', '#374151', '#374151', '#374151' ]
+        : [ '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB' ];
 
     const options: ApexCharts.ApexOptions = {
         labels: dashboard.userSignupsThisWeek.labels,
@@ -580,10 +590,11 @@ const UserSignupsApexChart: FC<DashboardPageData> = function ({ dashboard }) {
     };
     const series = dashboard.userSignupsThisWeek.series;
 
-    return <ApexChart height={305} options={options} series={series} type="bar" />;
+    return <ApexChart height={ 305 } options={ options } series={ series } type="bar" />;
 };
 
-const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
+const SessionsByCountry: FC<DashboardPageData> = function ( { dashboard } )
+{
     return (
         <div className="mb-4 rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-6 xl:mb-0 xl:p-8 2xl:col-span-2">
             <div className="mb-4">
@@ -594,7 +605,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                     View website visitors by hovering over the map
                 </span>
             </div>
-            <SessionsByCountryMap dashboard={dashboard} />
+            <SessionsByCountryMap dashboard={ dashboard } />
             <ul className="space-y-6">
                 <li className="w-full items-center sm:flex">
                     <div className="mb-3 flex items-center sm:mb-0">
@@ -608,23 +619,23 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                                 y="0.529053"
                                 width="25.7522"
                                 height="17.1429"
-                                rx={2}
+                                rx={ 2 }
                                 fill="white"
                             />
                             <mask
                                 id="mask0"
-                                style={{ maskType: 'alpha' }}
+                                style={ { maskType: 'alpha' } }
                                 maskUnits="userSpaceOnUse"
-                                x={0}
-                                y={0}
-                                width={26}
-                                height={18}
+                                x={ 0 }
+                                y={ 0 }
+                                width={ 26 }
+                                height={ 18 }
                             >
                                 <rect
                                     y="0.529053"
                                     width="25.7522"
                                     height="17.1429"
-                                    rx={2}
+                                    rx={ 2 }
                                     fill="white"
                                 />
                             </mask>
@@ -635,7 +646,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                                     d="M25.7522 0.529053H0V1.67191H25.7522V0.529053ZM25.7522 2.81477H0V3.95763H25.7522V2.81477ZM0 5.10048H25.7522V6.24333H0V5.10048ZM25.7522 7.3862H0V8.52905H25.7522V7.3862ZM0 9.67192H25.7522V10.8148H0V9.67192ZM25.7522 11.9576H0V13.1005H25.7522V11.9576ZM0 14.2433H25.7522V15.3862H0V14.2433ZM25.7522 16.5291H0V17.6719H25.7522V16.5291Z"
                                     fill="#D02F44"
                                 />
-                                <rect y="0.529053" width="11.0367" height={8} fill="#46467F" />
+                                <rect y="0.529053" width="11.0367" height={ 8 } fill="#46467F" />
                                 <g filter="url(#filter0_d)">
                                     <path
                                         fillRule="evenodd"
@@ -655,14 +666,14 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                                     filterUnits="userSpaceOnUse"
                                     colorInterpolationFilters="sRGB"
                                 >
-                                    <feFlood floodOpacity={0} result="BackgroundImageFix" />
+                                    <feFlood floodOpacity={ 0 } result="BackgroundImageFix" />
                                     <feColorMatrix
                                         in="SourceAlpha"
                                         type="matrix"
                                         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
                                         result="hardAlpha"
                                     />
-                                    <feOffset dy={1} />
+                                    <feOffset dy={ 1 } />
                                     <feColorMatrix
                                         type="matrix"
                                         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
@@ -688,7 +699,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                                     gradientUnits="userSpaceOnUse"
                                 >
                                     <stop stopColor="white" />
-                                    <stop offset={1} stopColor="#F0F0F0" />
+                                    <stop offset={ 1 } stopColor="#F0F0F0" />
                                 </linearGradient>
                             </defs>
                         </svg>
@@ -699,7 +710,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                     <div className="h-5 w-full rounded-lg bg-gray-200 dark:bg-gray-700">
                         <div
                             className="h-5 rounded-md bg-primary-700 p-1 text-center text-xs font-bold leading-none text-primary-100"
-                            style={{ width: '35%' }}
+                            style={ { width: '35%' } }
                         >
                             35%
                         </div>
@@ -725,12 +736,12 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                             />
                             <mask
                                 id="mask0"
-                                style={{ maskType: 'alpha' }}
+                                style={ { maskType: 'alpha' } }
                                 maskUnits="userSpaceOnUse"
-                                x={0}
-                                y={0}
-                                width={26}
-                                height={18}
+                                x={ 0 }
+                                y={ 0 }
+                                width={ 26 }
+                                height={ 18 }
                             >
                                 <rect
                                     x="0.25"
@@ -772,7 +783,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                     <div className="h-5 w-full rounded-lg bg-gray-200 dark:bg-gray-700">
                         <div
                             className="h-5 rounded-md bg-primary-700 p-1 text-center text-xs font-bold leading-none text-primary-100"
-                            style={{ width: '26%' }}
+                            style={ { width: '26%' } }
                         >
                             26%
                         </div>
@@ -798,12 +809,12 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                             />
                             <mask
                                 id="mask0"
-                                style={{ maskType: 'alpha' }}
+                                style={ { maskType: 'alpha' } }
                                 maskUnits="userSpaceOnUse"
-                                x={0}
-                                y={0}
-                                width={26}
-                                height={18}
+                                x={ 0 }
+                                y={ 0 }
+                                width={ 26 }
+                                height={ 18 }
                             >
                                 <rect
                                     x="0.25"
@@ -839,7 +850,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                     <div className="h-5 w-full rounded-lg bg-gray-200 dark:bg-gray-700">
                         <div
                             className="h-5 rounded-md bg-primary-700 p-1 text-center text-xs font-bold leading-none text-primary-100"
-                            style={{ width: '18%' }}
+                            style={ { width: '18%' } }
                         >
                             18%
                         </div>
@@ -865,12 +876,12 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                             />
                             <mask
                                 id="mask0"
-                                style={{ maskType: 'alpha' }}
+                                style={ { maskType: 'alpha' } }
                                 maskUnits="userSpaceOnUse"
-                                x={0}
-                                y={0}
-                                width={26}
-                                height={18}
+                                x={ 0 }
+                                y={ 0 }
+                                width={ 26 }
+                                height={ 18 }
                             >
                                 <rect
                                     x="0.25"
@@ -906,7 +917,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                     <div className="h-5 w-full rounded-lg bg-gray-200 dark:bg-gray-700">
                         <div
                             className="h-5 rounded-md bg-primary-700 p-1 text-center text-xs font-bold leading-none text-primary-100"
-                            style={{ width: '14%' }}
+                            style={ { width: '14%' } }
                         >
                             14%
                         </div>
@@ -924,23 +935,23 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                                 y="0.529053"
                                 width="25.7567"
                                 height="17.1429"
-                                rx={2}
+                                rx={ 2 }
                                 fill="white"
                             />
                             <mask
                                 id="mask0"
-                                style={{ maskType: 'alpha' }}
+                                style={ { maskType: 'alpha' } }
                                 maskUnits="userSpaceOnUse"
-                                x={0}
-                                y={0}
-                                width={26}
-                                height={18}
+                                x={ 0 }
+                                y={ 0 }
+                                width={ 26 }
+                                height={ 18 }
                             >
                                 <rect
                                     y="0.529053"
                                     width="25.7567"
                                     height="17.1429"
-                                    rx={2}
+                                    rx={ 2 }
                                     fill="white"
                                 />
                             </mask>
@@ -1009,25 +1020,25 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                             <defs>
                                 <linearGradient
                                     id="paint0_linear"
-                                    x1={0}
+                                    x1={ 0 }
                                     y1="0.529053"
-                                    x2={0}
+                                    x2={ 0 }
                                     y2="9.10048"
                                     gradientUnits="userSpaceOnUse"
                                 >
                                     <stop stopColor="white" />
-                                    <stop offset={1} stopColor="#F0F0F0" />
+                                    <stop offset={ 1 } stopColor="#F0F0F0" />
                                 </linearGradient>
                                 <linearGradient
                                     id="paint1_linear"
-                                    x1={0}
+                                    x1={ 0 }
                                     y1="0.529053"
-                                    x2={0}
+                                    x2={ 0 }
                                     y2="8.52905"
                                     gradientUnits="userSpaceOnUse"
                                 >
                                     <stop stopColor="#FF2E3B" />
-                                    <stop offset={1} stopColor="#FC0D1B" />
+                                    <stop offset={ 1 } stopColor="#FC0D1B" />
                                 </linearGradient>
                             </defs>
                         </svg>
@@ -1038,7 +1049,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                     <div className="h-5 w-full rounded-lg bg-gray-200 dark:bg-gray-700">
                         <div
                             className="h-5 rounded-md bg-primary-700 p-1 text-center text-xs font-bold leading-none text-primary-100"
-                            style={{ width: '10%' }}
+                            style={ { width: '10%' } }
                         >
                             10%
                         </div>
@@ -1064,12 +1075,12 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                             />
                             <mask
                                 id="mask0"
-                                style={{ maskType: 'alpha' }}
+                                style={ { maskType: 'alpha' } }
                                 maskUnits="userSpaceOnUse"
-                                x={0}
-                                y={0}
-                                width={26}
-                                height={18}
+                                x={ 0 }
+                                y={ 0 }
+                                width={ 26 }
+                                height={ 18 }
                             >
                                 <rect
                                     x="0.25"
@@ -1117,7 +1128,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                     <div className="h-5 w-full rounded-lg bg-gray-200 dark:bg-gray-700">
                         <div
                             className="h-5 rounded-md bg-primary-700 p-1 text-center text-xs font-bold leading-none text-primary-100"
-                            style={{ width: '7%' }}
+                            style={ { width: '7%' } }
                         >
                             7%
                         </div>
@@ -1142,7 +1153,7 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                strokeWidth={2}
+                                strokeWidth={ 2 }
                                 d="M9 5l7 7-7 7"
                             />
                         </svg>
@@ -1153,18 +1164,20 @@ const SessionsByCountry: FC<DashboardPageData> = function ({ dashboard }) {
     );
 };
 
-const SessionsByCountryMap: FC<DashboardPageData> = function ({ dashboard }) {
+const SessionsByCountryMap: FC<DashboardPageData> = function ( { dashboard } )
+{
     const { mode } = useThemeMode();
 
     const isDarkTheme = mode === 'dark';
 
-    useEffect(() => {
+    useEffect( () =>
+    {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const SVGMap = require('svgmap');
-        const previousMap = document.getElementsByClassName('svgMap-map-wrapper')[0];
-        previousMap?.parentElement?.removeChild(previousMap);
+        const SVGMap = require( 'svgmap' );
+        const previousMap = document.getElementsByClassName( 'svgMap-map-wrapper' )[ 0 ];
+        previousMap?.parentElement?.removeChild( previousMap );
 
-        new SVGMap({
+        new SVGMap( {
             targetElementID: 'map',
             colorMin: '#A4CAFE',
             colorMax: '#1A56DB',
@@ -1188,13 +1201,14 @@ const SessionsByCountryMap: FC<DashboardPageData> = function ({ dashboard }) {
                 applyData: 'visitors',
                 values: dashboard.sessionsByCountryMap
             }
-        });
-    }, [dashboard.sessionsByCountryMap, isDarkTheme]);
+        } );
+    }, [ dashboard.sessionsByCountryMap, isDarkTheme ] );
 
     return <div id="map" className="my-6" />;
 };
 
-const LatestCustomers: FC<DashboardPageData> = function ({ dashboard }) {
+const LatestCustomers: FC<DashboardPageData> = function ( { dashboard } )
+{
     return (
         <div className="mb-4 h-full rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-6">
             <div className="mb-4 flex items-center justify-between">
@@ -1210,32 +1224,32 @@ const LatestCustomers: FC<DashboardPageData> = function ({ dashboard }) {
             </div>
             <div className="flow-root">
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {dashboard.latestCustomers.map(({ name, avatar, email, spent }) => (
-                        <li key={name} className="py-3 sm:py-4">
+                    { dashboard.latestCustomers.map( ( { name, avatar, email, spent } ) => (
+                        <li key={ name } className="py-3 sm:py-4">
                             <div className="flex items-center space-x-4">
                                 <div className="shrink-0">
                                     <Image
                                         alt=""
-                                        height={32}
-                                        src={avatar}
-                                        width={32}
+                                        height={ 32 }
+                                        src={ avatar }
+                                        width={ 32 }
                                         className="rounded-full"
                                     />
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                                        {name}
+                                        { name }
                                     </p>
                                     <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                                        {email}
+                                        { email }
                                     </p>
                                 </div>
                                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                    ${spent.toFixed(0)}
+                                    ${ spent.toFixed( 0 ) }
                                 </div>
                             </div>
                         </li>
-                    ))}
+                    ) ) }
                 </ul>
             </div>
             <div className="flex items-center justify-between border-t border-gray-200 pt-3 dark:border-gray-700 sm:pt-6">
@@ -1256,7 +1270,7 @@ const LatestCustomers: FC<DashboardPageData> = function ({ dashboard }) {
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                strokeWidth={2}
+                                strokeWidth={ 2 }
                                 d="M9 5l7 7-7 7"
                             />
                         </svg>
@@ -1267,14 +1281,15 @@ const LatestCustomers: FC<DashboardPageData> = function ({ dashboard }) {
     );
 };
 
-const AcquisitionOverview: FC<DashboardPageData> = function ({ dashboard }) {
+const AcquisitionOverview: FC<DashboardPageData> = function ( { dashboard } )
+{
     return (
         <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-6 xl:p-8">
             <h3 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
                 Acquisition Overview
             </h3>
             <div className="my-6">
-                <AcquisitionApexChart dashboard={dashboard} />
+                <AcquisitionApexChart dashboard={ dashboard } />
             </div>
             <div className="flex flex-col">
                 <div className="overflow-x-auto rounded-lg">
@@ -1293,30 +1308,30 @@ const AcquisitionOverview: FC<DashboardPageData> = function ({ dashboard }) {
                                     </Table.HeadCell>
                                 </Table.Head>
                                 <Table.Body className="divide-y divide-gray-100 dark:divide-gray-700">
-                                    {dashboard.acquisitionOverview.topChannels.map(
-                                        ({ channel, users, acquisition }) => (
+                                    { dashboard.acquisitionOverview.topChannels.map(
+                                        ( { channel, users, acquisition } ) => (
                                             <Table.Row
-                                                key={channel}
+                                                key={ channel }
                                                 className="text-gray-500 dark:text-gray-400"
                                             >
                                                 <Table.Cell className="whitespace-nowrap border-t-0 p-4 text-left align-middle text-sm font-normal">
-                                                    {channel}
+                                                    { channel }
                                                 </Table.Cell>
                                                 <Table.Cell className="whitespace-nowrap border-t-0 p-4 align-middle text-xs font-medium text-gray-900 dark:text-white">
-                                                    {users.toLocaleString()}
+                                                    { users.toLocaleString() }
                                                 </Table.Cell>
                                                 <Table.Cell className="whitespace-nowrap border-t-0 p-4 align-middle text-xs">
                                                     <div className="flex items-center">
                                                         <span className="mr-2 text-xs font-medium">
-                                                            {(acquisition * 100).toFixed(0)}%
+                                                            { ( acquisition * 100 ).toFixed( 0 ) }%
                                                         </span>
                                                         <div className="relative w-full">
                                                             <div className="h-2 w-full rounded-sm bg-gray-200 dark:bg-gray-700">
                                                                 <div
                                                                     className="h-2 rounded-sm bg-primary-700"
-                                                                    style={{
-                                                                        width: `${acquisition * 100}%`
-                                                                    }}
+                                                                    style={ {
+                                                                        width: `${ acquisition * 100 }%`
+                                                                    } }
                                                                 />
                                                             </div>
                                                         </div>
@@ -1324,7 +1339,7 @@ const AcquisitionOverview: FC<DashboardPageData> = function ({ dashboard }) {
                                                 </Table.Cell>
                                             </Table.Row>
                                         )
-                                    )}
+                                    ) }
                                 </Table.Body>
                             </Table>
                         </div>
@@ -1349,7 +1364,7 @@ const AcquisitionOverview: FC<DashboardPageData> = function ({ dashboard }) {
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                strokeWidth={2}
+                                strokeWidth={ 2 }
                                 d="M9 5l7 7-7 7"
                             />
                         </svg>
@@ -1360,13 +1375,14 @@ const AcquisitionOverview: FC<DashboardPageData> = function ({ dashboard }) {
     );
 };
 
-const AcquisitionApexChart: FC<DashboardPageData> = function ({ dashboard }) {
+const AcquisitionApexChart: FC<DashboardPageData> = function ( { dashboard } )
+{
     const { mode } = useThemeMode();
     const isDarkTheme = mode === 'dark';
 
     const options: ApexCharts.ApexOptions = {
         labels: dashboard.acquisitionOverview.labels,
-        colors: ['#16BDCA', '#FDBA8C', '#1A56DB', '#D61F69', '#9061F9', '#6875F5'],
+        colors: [ '#16BDCA', '#FDBA8C', '#1A56DB', '#D61F69', '#9061F9', '#6875F5' ],
         chart: {
             fontFamily: 'Inter, sans-serif',
             toolbar: {
@@ -1374,7 +1390,7 @@ const AcquisitionApexChart: FC<DashboardPageData> = function ({ dashboard }) {
             }
         },
         stroke: {
-            colors: [isDarkTheme ? '#111827' : '#fff']
+            colors: [ isDarkTheme ? '#111827' : '#fff' ]
         },
         plotOptions: {
             pie: {
@@ -1402,13 +1418,15 @@ const AcquisitionApexChart: FC<DashboardPageData> = function ({ dashboard }) {
             },
             x: {
                 show: true,
-                formatter: function (_, { seriesIndex, w }) {
-                    const label = w.config.labels[seriesIndex];
+                formatter: function ( _, { seriesIndex, w } )
+                {
+                    const label = w.config.labels[ seriesIndex ];
                     return label;
                 }
             },
             y: {
-                formatter: function (value) {
+                formatter: function ( value )
+                {
                     return value + '%';
                 }
             }
@@ -1425,18 +1443,20 @@ const AcquisitionApexChart: FC<DashboardPageData> = function ({ dashboard }) {
     };
     const series = dashboard.acquisitionOverview.series;
 
-    return <ApexChart height={305} options={options} series={series} type="donut" />;
+    return <ApexChart height={ 305 } options={ options } series={ series } type="donut" />;
 };
 
-const Transactions: FC<DashboardPageData> = function ({ dashboard }) {
-    function getBadgeColor(status: string) {
+const Transactions: FC<DashboardPageData> = function ( { dashboard } )
+{
+    function getBadgeColor ( status: string )
+    {
         const map: Record<string, string> = {
             Completed: 'success',
             'In progress': 'purple',
             Cancelled: 'failure'
         };
 
-        return map[status];
+        return map[ status ];
     }
 
     return (
@@ -1469,11 +1489,11 @@ const Transactions: FC<DashboardPageData> = function ({ dashboard }) {
                             >
                                 <Table.Head
                                     className="bg-gray-50 dark:bg-gray-700"
-                                    theme={{
+                                    theme={ {
                                         cell: {
                                             base: 'p-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-white'
                                         }
-                                    }}
+                                    } }
                                 >
                                     <Table.HeadCell>Transaction</Table.HeadCell>
                                     <Table.HeadCell>Date &amp; Time</Table.HeadCell>
@@ -1481,29 +1501,29 @@ const Transactions: FC<DashboardPageData> = function ({ dashboard }) {
                                     <Table.HeadCell>Status</Table.HeadCell>
                                 </Table.Head>
                                 <Table.Body className="bg-white dark:bg-gray-800">
-                                    {dashboard.transactions.map(
-                                        ({ transaction, date, amount, status }) => (
-                                            <Table.Row key={`${transaction}-${date}-${amount}`}>
+                                    { dashboard.transactions.map(
+                                        ( { transaction, date, amount, status } ) => (
+                                            <Table.Row key={ `${ transaction }-${ date }-${ amount }` }>
                                                 <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal text-gray-900 dark:text-white">
-                                                    {transaction}
+                                                    { transaction }
                                                 </Table.Cell>
                                                 <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                                                    {date}
+                                                    { date }
                                                 </Table.Cell>
                                                 <Table.Cell className="whitespace-nowrap p-4 text-sm font-semibold text-gray-900 dark:text-white">
-                                                    {formatToUSD(amount)}
+                                                    { formatToUSD( amount ) }
                                                 </Table.Cell>
                                                 <Table.Cell className="flex whitespace-nowrap p-4">
                                                     <Badge
                                                         className="rounded-md font-medium"
-                                                        color={getBadgeColor(status)}
+                                                        color={ getBadgeColor( status ) }
                                                     >
-                                                        {status}
+                                                        { status }
                                                     </Badge>
                                                 </Table.Cell>
                                             </Table.Row>
                                         )
-                                    )}
+                                    ) }
                                 </Table.Body>
                             </Table>
                         </div>
@@ -1528,7 +1548,7 @@ const Transactions: FC<DashboardPageData> = function ({ dashboard }) {
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                strokeWidth={2}
+                                strokeWidth={ 2 }
                                 d="M9 5l7 7-7 7"
                             />
                         </svg>
@@ -1539,7 +1559,8 @@ const Transactions: FC<DashboardPageData> = function ({ dashboard }) {
     );
 };
 
-const DateRangeDropdown: FC = function () {
+const DateRangeDropdown: FC = function ()
+{
     return (
         <span className="p-2 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
             <Dropdown inline label="Last 7 days">

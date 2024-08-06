@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/db';
+import { db } from '../../../db';
 import { events } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
 import { and, eq } from 'drizzle-orm/expressions';

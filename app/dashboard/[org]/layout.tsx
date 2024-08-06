@@ -1,5 +1,5 @@
-import { SidebarProvider } from '@/contexts/sidebar-context';
-import { sidebarCookie } from '@/lib/sidebar-cookie';
+import { SidebarProvider } from '../../../contexts/sidebar-context';
+import { sidebarCookie } from '../../../lib/sidebar-cookie';
 import type { PropsWithChildren } from 'react';
 import { LayoutContent } from './layout-content';
 import { DashboardNavbar } from './navbar';

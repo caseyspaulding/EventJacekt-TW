@@ -7,7 +7,7 @@ import type { FC } from 'react';
 import { HiBriefcase, HiDotsVertical, HiHeart, HiLocationMarker } from 'react-icons/hi';
 import { MdComment } from 'react-icons/md';
 import type { UserFeedPageData } from './page';
-
+import type { UserProfile } from '@/types/user/profile';
 const UserFeedPageContent: FC<UserFeedPageData> = function ({ userFeed, userProfile }) {
     return (
         <div className="relative grid grid-cols-1 overflow-y-hidden xl:h-[calc(100vh-4rem)] xl:grid-cols-4 xl:gap-4">

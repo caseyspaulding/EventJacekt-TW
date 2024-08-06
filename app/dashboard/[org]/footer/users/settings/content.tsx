@@ -12,7 +12,7 @@ import {
     HiOutlineDeviceMobile
 } from 'react-icons/hi';
 import type { UserSettingsPageData } from './page';
-
+import type { UserSettings, UserSettingsSocialAccount } from '../../../../../../types/user/settings'
 const UserSettingsPageContent: FC<UserSettingsPageData> = function ({
     languages,
     timezones,
@@ -139,7 +139,7 @@ const SocialAccountsCard: FC<Pick<UserSettingsPageData, 'userSettings'>> = funct
             <div className="flow-root">
                 <h3 className="text-xl font-bold dark:text-white">Social accounts</h3>
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {socialAccounts.map(({ social, icon, account }) => (
+                    { socialAccounts.map( ( { social, icon, account }: UserSettingsSocialAccount ) => (
                         <li key={social} className="py-4">
                             <div className="flex items-center space-x-4">
                                 <div className="shrink-0">

@@ -6,10 +6,12 @@ export interface DashboardPageData {
   dashboard: Dashboard;
 }
 
-async function getData() {
-  return { dashboard } as DashboardPageData;
+async function getData (): Promise<DashboardPageData>
+{
+  return { dashboard };
 }
 
 export default async function UsersListPage() {
-  return <DashboardPageContent {...await getData()} />;
+  const data = await getData();
+  return <DashboardPageContent { ...data } />;
 }

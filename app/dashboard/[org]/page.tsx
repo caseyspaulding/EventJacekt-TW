@@ -2,7 +2,7 @@ import { fetchEventsForOrg } from './actions';
 import { notFound } from 'next/navigation';
 import EventActions from './EventActions';
 import { createClient } from '@/utils/supabase/server';
-import { db } from '@/db';
+import { db } from '../../../db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq, and } from 'drizzle-orm/expressions';
 

@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/db';
+import { db } from '../../db';
 import { organizations, userProfiles } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
 import { headers } from 'next/headers';

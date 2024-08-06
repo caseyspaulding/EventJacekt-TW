@@ -3,7 +3,7 @@
 import { Breadcrumb, Label, Table, TextInput } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { FC } from 'react';
+import type { AwaitedReactNode, FC, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
 import { HiCog, HiDotsVertical, HiDownload, HiHome, HiPrinter } from 'react-icons/hi';
 import type { ECommerceInvoicePageData } from './page';
 
@@ -153,8 +153,8 @@ const Invoice: FC<ECommerceInvoicePageData> = function ({ invoice }) {
                                     <Table.HeadCell>Total</Table.HeadCell>
                                 </Table.Head>
                                 <Table.Body>
-                                    {invoice.services.map((service) => (
-                                        <Table.Row key={service.item}>
+                                    {invoice.services.map((service: { item: boolean | Key | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | null | undefined; category: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; price: number; quantity: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; discount: number; }) => (
+                                        <Table.Row key={service.item?.toString() ?? ''}>
                                             <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal">
                                                 <div className="text-base font-semibold text-gray-900 dark:text-white">
                                                     {service.item}
