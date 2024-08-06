@@ -1,6 +1,6 @@
 'use client';
 
-import { useSidebarContext } from '@/contexts/sidebar-context';
+import { useSidebarContext } from '../../../contexts/sidebar-context';  
 import type { PropsWithChildren } from 'react';
 import { twMerge } from 'tailwind-merge';
 

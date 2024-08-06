@@ -1,7 +1,7 @@
 'use client';
 
-import ApexChart from '@/components/chart';
-import { formatNumber, formatToUSD } from '@/helpers/format-number';
+import ApexChart from '../../../../components/chart';
+import { formatNumber, formatToUSD } from '../../../../helpers/format-number';
 import { Badge, Dropdown, Table, useThemeMode } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
