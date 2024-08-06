@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import
   {
     Popover,
@@ -67,7 +67,7 @@ export default function NavBarTW ()
                   className="h-8 w-auto sm:h-10"
                 />
               </a>{ " " }
-              <p className="ml-2  font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-600 ">
+              <p className="ml-2  font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-700 ">
                 <span>EventJacket</span>
               </p>
             </div>
@@ -205,11 +205,11 @@ export default function NavBarTW ()
                   >
                     Sign up
                   </a>
-                  <p className="mt-6 text-center text-base font-medium text-gray-500">
+                  <p className="mt-6 mr-2 text-center text-base font-medium text-gray-500">
                     Existing customer?
-                    <a href="login" className="text-gray-900">
+                    <Link href="/login" className=" ml-2 text-gray-900">
                       Sign in
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </div>
