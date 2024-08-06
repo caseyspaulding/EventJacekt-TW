@@ -1,6 +1,6 @@
 'use client';
 
-import { useSidebarContext } from '@/contexts/sidebar-context';
+import { useSidebarContext } from '../../../contexts/sidebar-context';
 import { Dropdown, Sidebar, TextInput, Tooltip } from 'flowbite-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

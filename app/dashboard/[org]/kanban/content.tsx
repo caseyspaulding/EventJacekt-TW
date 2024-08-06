@@ -416,7 +416,7 @@ const AddAnotherCardModal: FC = function () {
                             />
                         </div>
                         <div className="flex w-full items-center justify-center">
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                          
                             <label className="flex h-32 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 text-gray-500 hover:border-gray-300 hover:bg-gray-100 hover:text-gray-900 dark:border-gray-700 dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:hover:text-white">
                                 <div className="flex items-center justify-center space-x-2">
                                     <svg

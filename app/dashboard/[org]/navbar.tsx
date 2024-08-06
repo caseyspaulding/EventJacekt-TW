@@ -1,7 +1,7 @@
 'use client';
 
-import { useSidebarContext } from '@/contexts/sidebar-context';
-import { useMediaQuery } from '@/hooks/use-media-query';
+import { useSidebarContext } from '../../../contexts/sidebar-context';
+import { useMediaQuery } from '../../../hooks/use-media-query';
 import {
     Avatar,
     DarkThemeToggle,

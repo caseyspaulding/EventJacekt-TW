@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { SubmitButton } from './submit-button';
-import { Button, Card, Checkbox, Label, TextInput } from 'flowbite-react';
+import { Card, Checkbox, Label, TextInput } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -113,7 +113,6 @@ export default function Login({ searchParams }: LoginProps) {
                             
                             <SubmitButton
                                 color="blue"
-                                size="lg"
                                 formAction={ signIn }
                                 className="w-full px-0 py-px sm:w-auto bg-blue-600"
                                 pendingText="Signing In..."

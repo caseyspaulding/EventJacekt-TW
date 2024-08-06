@@ -1,5 +1,5 @@
-import type { SidebarCookie } from '@/lib/sidebar-cookie';
-import { sidebarCookie } from '@/lib/sidebar-cookie';
+import type { SidebarCookie } from '../../../lib/sidebar-cookie';
+import { sidebarCookie } from '../../../lib/sidebar-cookie';
 import type { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {

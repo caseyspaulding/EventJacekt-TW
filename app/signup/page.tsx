@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "./submit-button";
 import { signUp } from "./signup";
-import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
+import { Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -176,7 +176,7 @@ const AddProductModal: FC = function () {
                             </div>
                         </div>
                         <div className="mt-4 flex w-full items-center justify-center">
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                          
                             <label className="flex h-32 w-full cursor-pointer flex-col rounded border-2 border-dashed border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-700">
                                 <div className="flex flex-col items-center justify-center pb-6 pt-5">
                                     <HiOutlineUpload className="h-10 w-10 text-gray-400" />
@@ -297,7 +297,7 @@ const EditProductModal: FC = function () {
                             </div>
                         </div>
                         <div className="flex w-full items-center justify-center">
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                           
                             <label className="flex h-32 w-full cursor-pointer flex-col rounded border-2 border-dashed border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-700">
                                 <div className="flex flex-col items-center justify-center pb-6 pt-5">
                                     <HiOutlineUpload className="h-10 w-10 text-gray-400" />
