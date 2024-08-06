@@ -1,22 +1,22 @@
 "use client";
 import Link from "next/link";
 import
-  {
-    Popover,
-    PopoverButton,
-    PopoverGroup,
-    PopoverPanel,
-  } from "@headlessui/react";
+{
+  Popover,
+  PopoverButton,
+  PopoverGroup,
+  PopoverPanel,
+} from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import
-  {
-    Bars3Icon,
-    ChatBubbleBottomCenterTextIcon,
-    ChatBubbleLeftRightIcon,
-    InboxIcon,
-    QuestionMarkCircleIcon,
-    XMarkIcon,
-  } from "@heroicons/react/24/outline";
+{
+  Bars3Icon,
+  ChatBubbleBottomCenterTextIcon,
+  ChatBubbleLeftRightIcon,
+  InboxIcon,
+  QuestionMarkCircleIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 
 const solutions = [
   {
@@ -287,7 +287,7 @@ export default function NavBarTW ()
                 <div className="col-span-2 flex justify-center md:col-span-2 md:col-start-4 lg:col-span-1">
                   <p className="h-12  text-gray-400">CRM</p>
                 </div>
-                
+
               </div>
             </div>
           </div>

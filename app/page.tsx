@@ -1,4 +1,5 @@
-import CTACentered from "@/components/CTA/CTA-Centered";
+
+import CTAwPicture from "@/components/CTA/CTAwPicture";
 import FeaturesGridWithIcons from "@/components/Features/FeaturesGridwithIcons";
 import FooterFull from "@/components/Footers/FooterFull";
 import NavBarTW from "@/components/NavBarTW/NavBarTW";
@@ -8,7 +9,8 @@ export default async function Index() {
     <>
       <NavBarTW />
       <FeaturesGridWithIcons />
-      <CTACentered />
+      
+      <CTAwPicture /> 
      <FooterFull />
     </>
   );
