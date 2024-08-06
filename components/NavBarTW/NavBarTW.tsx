@@ -1,63 +1,14 @@
-"use client";
-import Link from "next/link";
-import
-{
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-} from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import
-{
-  Bars3Icon,
-  ChatBubbleBottomCenterTextIcon,
-  ChatBubbleLeftRightIcon,
-  InboxIcon,
-  QuestionMarkCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+
+
 
 import Image from "next/image";
 
-const solutions = [
-  {
-    name: "Ticketing",
-    description:
-      "Get a better understanding of where your traffic is coming from.",
-    href: "/ticketing",
-    icon: InboxIcon,
-  },
-  {
-    name: "CRM",
-    description: "Build and Maintain your relationships.",
-    href: "/crm",
-    icon: ChatBubbleBottomCenterTextIcon,
-  },
-  {
-    name: "Live Chat",
-    description: "Organize your team's workflow and get more done.",
-    href: "#",
-    icon: ChatBubbleLeftRightIcon,
-  },
-  {
-    name: "Knowledge Base",
-    description: "Connect with third-party tools that you're already using.",
-    href: "#",
-    icon: QuestionMarkCircleIcon,
-  },
-];
-const navigation = [
-  { name: "Pricing", href: "/pricing" },
-  { name: "FAQs", href: "/faqs" },
-  { name: "Company", href: "/about" },
-];
 
 export default function NavBarTW ()
 {
   return (
     <div className="bg-white">
-     
+
       <main>
         <div>
           {/* Hero card */ }
@@ -67,6 +18,7 @@ export default function NavBarTW ()
               <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
                 <div className="absolute inset-0">
                   <Image
+                    priority
                     alt="People working on laptops"
                     height={ 1024 }
                     width={ 1536 }
@@ -108,7 +60,7 @@ export default function NavBarTW ()
           </div>
 
           {/* Logo cloud */ }
-         
+
         </div>
 
         {/* More main page content here... */ }
