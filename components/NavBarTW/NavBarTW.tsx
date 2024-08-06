@@ -236,7 +236,7 @@ export default function NavBarTW ()
                     alt="People working on laptops"
                     height={ 1024 }
                     width={ 1536 }
-                    src="/images/festival-2.png"
+                    src="/images/festival-2.webp"
                     className="h-full w-full object-cover"
                   />
                   <div className="absolute inset-0 bg-blue-700 mix-blend-multiply" />
