@@ -71,14 +71,14 @@ export function DashboardNavbar() {
                         </button>
                         <Navbar.Brand as={Link} href="/" className="mr-14">
                             <Image
-                                className="mr-3 h-8"
+                                className="mr-1 h-8"
                                 alt=""
                                 src="/images/logo.svg"
                                 width={32}
                                 height={32}
                             />
-                            <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-                                Flowbite
+                            <span className="self-center whitespace-nowrap text-xl font-extrabold text-blue-700 dark:text-white">
+                                EventJacket
                             </span>
                         </Navbar.Brand>
                         <form className="hidden lg:block lg:pl-2">
