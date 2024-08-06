@@ -8,10 +8,8 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-
     'plugin:@next/next/recommended'
   ],
   overrides: [
@@ -52,15 +50,12 @@ module.exports = {
     'tailwindcss/enforces-shorthand': 'off',
     'tailwindcss/no-custom-classname': 'off',
 
-    // Prettier integration
-    'prettier/prettier': ['warn', { endOfLine: 'auto' }], // Use Prettier for formatting, but only warn for issues
-
     // TypeScript specific rules
     '@typescript-eslint/explicit-module-boundary-types': 'off', // Less strict about return types
     '@typescript-eslint/no-explicit-any': 'off', // Allow use of 'any', but warn about it
 
     // General rules
-    'no-console': 'off', // Allow console logs, but warn about them
+    'no-console': 'off', // Allow console logs
     'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }] // Warn for unused vars but allow unused function arguments prefixed with an underscore
   }
 }
