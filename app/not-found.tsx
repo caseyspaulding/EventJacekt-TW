@@ -100,7 +100,7 @@ export default function Example ()
                         ) ) }
                     </ul>
                     <div className="mt-10 flex justify-center">
-                        <a href="#" className="text-sm font-semibold leading-6 text-blue-600">
+                        <a href="/" className="text-sm font-semibold leading-6 text-blue-600">
                             <span aria-hidden="true">&larr;</span>
                             Back to home
                         </a>

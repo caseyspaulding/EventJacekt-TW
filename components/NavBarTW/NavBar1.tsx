@@ -36,7 +36,7 @@ const solutions = [
 const navigation = [
   { name: "Pricing", href: "/pricing" },
   { name: "FAQs", href: "/faqs" },
-  { name: "Company", href: "/about" },
+  { name: "Blog", href: "/blog" },
 ];
 export default function NavBar1 ()
 {
