@@ -27,8 +27,8 @@ const solutions = [
     icon: ChatBubbleLeftRightIcon,
   },
   {
-    name: "Knowledge Base",
-    description: "Connect with third-party tools that you're already using.",
+    name: "Analytics",
+    description: "Data you need to make the right decisions.",
     href: "#",
     icon: QuestionMarkCircleIcon,
   },
@@ -36,7 +36,7 @@ const solutions = [
 const navigation = [
   { name: "Pricing", href: "/pricing" },
   { name: "FAQs", href: "/faqs" },
-  { name: "Blog", href: "/blog" },
+  { name: "Blog", href: "/posts" },
 ];
 export default function NavBar1 ()
 {
