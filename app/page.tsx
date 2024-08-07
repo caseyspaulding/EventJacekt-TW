@@ -13,7 +13,8 @@ export default async function Index() {
       <FeaturesGridWithIcons />
       
       <CTAwPicture /> 
-     <FooterFull />
+      <FooterFull />
+  
     </>
   );
 }

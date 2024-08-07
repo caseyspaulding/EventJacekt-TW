@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function NavBarTW ()
 {
   return (
-    <div className="bg-white">
+    <div className="bg-gradient-to-b from-blue-50 via-white to-white">
 
       <main>
         <div>
@@ -30,9 +30,9 @@ export default function NavBarTW ()
                 <div className="relative px-6 py-16 sm:py-24 lg:px-8 lg:py-32">
                   <h1 className="text-center text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                     <span className="block text-white">
-                      Take control of your
+                      Simplify Event Management, 
                     </span>
-                    <span className="block text-blue-200">Event Managment</span>
+                    <span className="block text-blue-200">Maximize Attendee Satisfaction</span>
                   </h1>
                   <p className="mx-auto mt-6 max-w-lg text-center text-xl text-blue-200 sm:max-w-3xl">
                     Our platform has everything you need to run your events from
