@@ -76,52 +76,52 @@ const recentPosts = [
   { id: 3, name: 'Improve your customer experience', href: '#' },
 ]
 const features = [
-  'Vitae in pulvinar odio id utobortis in inter.',
-  'Sed sed id viverra viverra augue eget massa.',
-  'Urna, gravida amet, a, integer venenatis.',
-  'Lobortis sed pharetra amet vitae eleifend.',
-  'Ullamcorper blandit a consequat donec elit aoreet.',
-  'Dolor quo assumenda.',
-  'Esse rerum distinctio maiores maiores.',
-  'Eos enim officiis ratione.',
-  'Tempore molestiae aliquid excepturi.',
-  'Perspiciatis eveniet inventore eum et aliquam.',
+  'Create and manage multiple events with customizable details and schedules.',
+  'Send automated email invitations and reminders to attendees.',
+  'Track RSVPs and manage guest lists in real-time.',
+  'Generate QR codes for easy check-in and attendance tracking.',
+  'Offer tiered ticket pricing and promotional codes for discounts.',
+  'Integrate with payment gateways for secure online ticket sales.',
+  'Provide interactive seating charts for assigned seating events.',
+  'Create custom registration forms to collect attendee information.',
+  'Offer a mobile-responsive event website for each event.',
+  'Generate detailed reports and analytics on ticket sales and attendance.',
 ]
 const faqs = [
   {
     id: 1,
-    question: "What's the best thing about Switzerland?",
+    question: "What types of events can I manage with EventJacket?",
     answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      "EventJacket is versatile and can handle a wide range of events, including conferences, workshops, concerts, weddings, and corporate gatherings. Our platform is designed to accommodate both small intimate events and large-scale productions.",
   },
   {
     id: 2,
-    question: 'Why do you never see elephants hiding in trees?',
+    question: 'How does EventJacket handle ticket sales and payments?',
     answer:
-      "Because they're so good at it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      "EventJacket integrates with popular payment gateways to process ticket sales securely. You can set up various ticket types, pricing tiers, and even offer promotional codes. Funds are typically transferred to your linked bank account within 2-5 business days after the event.",
   },
   {
     id: 3,
-    question: 'How do you make holy water?',
+    question: 'Can I customize the registration form for my event?',
     answer:
-      'You boil the hell out of it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.',
+      'Yes, EventJacket allows you to create custom registration forms. You can add fields to collect specific information from attendees, such as dietary requirements, session preferences, or any other details relevant to your event.',
   },
   {
     id: 4,
-    question: "Why can't you hear a pterodactyl go to the bathroom?",
+    question: "How does the check-in process work with EventJacket?",
     answer:
-      'Because the pee is silent. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.',
+      'EventJacket provides a streamlined check-in process using QR codes. Attendees receive a unique QR code with their ticket, which can be scanned using our mobile app or a compatible device at the event entrance for quick and efficient check-in.',
   },
   {
     id: 5,
-    question: 'What do you call someone with no body and no nose?',
-    answer: 'Nobody knows. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.',
+    question: 'What kind of reports and analytics does EventJacket offer?',
+    answer: 'EventJacket provides comprehensive reporting features, including real-time ticket sales data, attendance tracking, revenue summaries, and attendee demographics. You can also generate custom reports to gain insights specific to your event needs.',
   },
   {
     id: 6,
-    question: 'Why did the invisible man turn down the job offer?',
+    question: 'Is it possible to manage multiple events simultaneously on EventJacket?',
     answer:
-      "He couldn't see himself doing it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      "Yes, EventJacket is designed to handle multiple events concurrently. You can create, manage, and track numerous events from a single dashboard, making it ideal for event planners, organizations, or venues that host various events.",
   },
 ]
 
@@ -145,7 +145,7 @@ export default function Example ()
             <div>
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
                 <span className="text-gray-900">Everything you need for</span>
-                <span className="text-blue-600">$19 a month</span>
+                <span className="text-blue-600 ml-2">$19 a month</span>
               </h1>
               <p className="mt-5 text-xl text-gray-500">
                 Includes every feature we offer plus unlimited projects and unlimited users.
@@ -191,7 +191,7 @@ export default function Example ()
         </div>
       </div>
 
-      {/* Branded FAQ 
+      {/* Branded FAQ */ }
       <div className="bg-blue-900">
         <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight text-white">Frequently asked questions</h2>
@@ -207,7 +207,7 @@ export default function Example ()
           </div>
         </div>
       </div>
-*/ }
+
       {/* CTA section */ }
       <div className="bg-blue-50">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">

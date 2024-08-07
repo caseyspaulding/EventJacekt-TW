@@ -22,7 +22,7 @@ export default function PrivacyPolicy ()
         Description of Service
         <br />
         <br />
-        Event Jacket provides a cloud-based software solution designed to assist HVAC business owners in managing their operations, schedlng, invoicing, and other related tasks.
+        Event Jacket provides a cloud-based software solution designed to assist event organizers managing their operations, ticketing, communications, marketing, invoicing, and other related tasks.
         <br />
         <br />
         User Account
