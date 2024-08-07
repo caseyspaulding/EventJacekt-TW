@@ -68,7 +68,7 @@ export default function NavBar1 ()
         <Popover className="relative bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 md:justify-start md:space-x-10 lg:px-8">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <a href="/">
+              <Link href="/">
                 <span className="sr-only">EventJacket</span>
                 <Image
                   alt="Evenjacket logo"
@@ -77,10 +77,12 @@ export default function NavBar1 ()
                   src="/images/logo.svg"
                   className="h-8 w-auto sm:h-10"
                 />
-              </a>{ " " }
+              </Link>
+              <Link href="/">
               <p className="ml-2  font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-700 ">
                 <span>EventJacket</span>
-              </p>
+                </p>
+              </Link>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
               <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
