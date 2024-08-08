@@ -10,7 +10,7 @@ export default function BlogPost ()
 {
   return (
     <div>
-      BlogPost
+      
       <BlogPostForm  />
     </div>
   );

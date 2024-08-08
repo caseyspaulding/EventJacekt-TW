@@ -50,47 +50,95 @@ const BlogPostForm: React.FC = () =>
   };
 
   return (
-    <form onSubmit={ handleSubmit }>
-      <input
-        name="title"
-        type="text"
-        value={ title }
-        onChange={ ( e ) => setTitle( e.target.value ) }
-        placeholder="Post Title"
-        required
-      />
-      <input
-        name="slug"
-        type="text"
-        value={ slug }
-        onChange={ ( e ) => setSlug( e.target.value ) }
-        placeholder="URL Slug"
-      />
-      <textarea
-        name="excerpt"
-        value={ excerpt }
-        onChange={ ( e ) => setExcerpt( e.target.value ) }
-        placeholder="Excerpt"
-      />
-      <RichTextEditor value={ content } onChange={ setContent } />
-      <input type="hidden" name="content" value={ content } />
-      <input
-        name="author"
-        type="text"
-        value={ author }
-        onChange={ ( e ) => setAuthor( e.target.value ) }
-        placeholder="Author"
-        required
-      />
-      <input
-        name="tags"
-        type="text"
-        value={ tags }
-        onChange={ ( e ) => setTags( e.target.value ) }
-        placeholder="Tags (comma-separated)"
-      />
-      <Button type="submit">Create Post</Button>
-    </form>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">Create New Blog Post</h1>
+      <form onSubmit={ handleSubmit } className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Post Title
+          </label>
+          <input
+            name="title"
+            type="text"
+            value={ title }
+            onChange={ ( e ) => setTitle( e.target.value ) }
+            placeholder="Post Title"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            URL Slug
+          </label>
+          <input
+            name="slug"
+            type="text"
+            value={ slug }
+            onChange={ ( e ) => setSlug( e.target.value ) }
+            placeholder="URL Slug"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Excerpt
+          </label>
+          <textarea
+            name="excerpt"
+            value={ excerpt }
+            onChange={ ( e ) => setExcerpt( e.target.value ) }
+            placeholder="Excerpt"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Content
+          </label>
+          <RichTextEditor value={ content } onChange={ setContent } />
+          <input type="hidden" name="content" value={ content } />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Author
+          </label>
+          <input
+            name="author"
+            type="text"
+            value={ author }
+            onChange={ ( e ) => setAuthor( e.target.value ) }
+            placeholder="Author"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Tags (comma-separated)
+          </label>
+          <input
+            name="tags"
+            type="text"
+            value={ tags }
+            onChange={ ( e ) => setTags( e.target.value ) }
+            placeholder="Tags (comma-separated)"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        <div>
+          <Button type="submit" className="w-full bg-indigo-600 text-white hover:bg-indigo-700">
+            Create Post
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 
