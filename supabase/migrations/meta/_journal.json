@@ -1,20 +1,27 @@
 {
-    "version": "7",
-    "dialect": "postgresql",
-    "entries": [
-        {
-            "idx": 0,
-            "version": "7",
-            "when": 1722170603361,
-            "tag": "0000_careless_starhawk",
-            "breakpoints": true
-        },
-        {
-            "idx": 1,
-            "version": "7",
-            "when": 1722347216048,
-            "tag": "0001_melodic_mandarin",
-            "breakpoints": true
-        }
-    ]
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1722170603361,
+      "tag": "0000_careless_starhawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1722347216048,
+      "tag": "0001_melodic_mandarin",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1723128516497,
+      "tag": "0002_unusual_silverclaw",
+      "breakpoints": true
+    }
+  ]
 }

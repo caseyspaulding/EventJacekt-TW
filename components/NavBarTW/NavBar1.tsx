@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from "@headlessui/react";
 import { Bars3Icon, ChatBubbleBottomCenterTextIcon, ChatBubbleLeftRightIcon, ChevronDownIcon, InboxIcon, QuestionMarkCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
@@ -36,7 +36,7 @@ const solutions = [
 const navigation = [
   { name: "Pricing", href: "/pricing" },
   { name: "FAQs", href: "/faqs" },
-  { name: "Blog", href: "/posts" },
+  { name: "Blog", href: "/blog" },
 ];
 export default function NavBar1 ()
 {
@@ -79,8 +79,8 @@ export default function NavBar1 ()
                 />
               </Link>
               <Link href="/">
-              <p className="ml-2  font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-700 ">
-                <span>EventJacket</span>
+                <p className="ml-2  font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-700 ">
+                  <span>EventJacket</span>
                 </p>
               </Link>
             </div>
