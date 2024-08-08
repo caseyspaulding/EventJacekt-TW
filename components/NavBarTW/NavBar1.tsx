@@ -5,6 +5,7 @@ import { Bars3Icon, ChatBubbleBottomCenterTextIcon, ChatBubbleLeftRightIcon, Che
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import AuthButton from "../AuthButton";
 
 const solutions = [
   {
@@ -143,6 +144,7 @@ export default function NavBar1 ()
             </PopoverGroup>
 
             <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+             
               <a
                 href="/login"
                 className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"

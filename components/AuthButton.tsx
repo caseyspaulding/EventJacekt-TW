@@ -1,6 +1,6 @@
 import { Button } from "flowbite-react";
 import { createClient } from "../utils/supabase/server";
-
+import { signOut } from "app/actions/SignOut";
 import { redirect } from "next/navigation";
 
 export default async function AuthButton() {
@@ -10,13 +10,7 @@ export default async function AuthButton() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const signOut = async () => {
-    "use server";
-
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    return redirect("/login");
-  };
+ 
 
   return user ? (
     <div className="flex items-center gap-4">

@@ -5,6 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 import { db } from '../../../db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq, and } from 'drizzle-orm/expressions';
+import AuthButton from '@/components/AuthButton';
 
 interface DashboardPageProps {
     params: { org: string };
