@@ -1,19 +1,48 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RichTextEditor from './RichTextEditor';
 import { Button } from 'flowbite-react';
 import { createBlogPost } from '../app/actions/blogActions';
+import { createClient } from '@/utils/supabase/client';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { User } from '@supabase/supabase-js'; // Import the User type
 
 const BlogPostForm: React.FC = () =>
 {
+  const router = useRouter();
+  const supabase = createClient();
+  const [ user, setUser ] = useState<User | null>( null ); // Allow both User and null types
   const [ title, setTitle ] = useState( '' );
   const [ content, setContent ] = useState( '' );
   const [ excerpt, setExcerpt ] = useState( '' );
   const [ author, setAuthor ] = useState( '' );
   const [ tags, setTags ] = useState( '' );
   const [ slug, setSlug ] = useState( '' );
+
+  useEffect( () =>
+  {
+    const checkUser = async () =>
+    {
+      const supabase = createClient();
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+
+      // Authorization check
+      if ( user?.email !== 'casey.spaulding@outlook.com' )
+      { // Replace with your email
+        toast.error( 'You do not have access to this page.' );
+        router.push( '/' );
+        return;
+      }
+
+      setUser( user );
+    };
+
+    checkUser();
+  }, [ router, supabase ] );
 
   const handleSubmit = async ( e: React.FormEvent ) =>
   {
@@ -48,6 +77,11 @@ const BlogPostForm: React.FC = () =>
       toast.error( response.message );
     }
   };
+
+  if ( !user )
+  {
+    return <div>Loading...</div>; // Show a loading state while checking user
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
