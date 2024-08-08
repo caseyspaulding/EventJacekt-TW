@@ -1,5 +1,5 @@
-// components/BlogPostForm.tsx
-'use client'; 
+'use client';
+
 import React, { useState } from 'react';
 import RichTextEditor from './RichTextEditor';
 import { Button } from 'flowbite-react';
@@ -25,8 +25,8 @@ const BlogPostForm: React.FC = () =>
         content,
         excerpt,
         author,
-        tags: tags.split( ',' ).map( tag => tag.trim() ),
-        slug
+        tags: tags.split( ',' ).map( ( tag ) => tag.trim() ),
+        slug,
       } ),
     } );
     // Handle response

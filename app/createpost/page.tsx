@@ -1,11 +1,17 @@
-import BlogPostForm from "@/components/BlogPostForm";
+'use client';
 
-export default function 
-BlogPost() {
+import dynamic from 'next/dynamic';
+
+const BlogPostForm = dynamic( () => import( '@/components/BlogPostForm' ), {
+  ssr: false,
+} );
+
+export default function BlogPost ()
+{
   return (
     <div>
       BlogPost
-      <BlogPostForm />  
+      <BlogPostForm  />
     </div>
-  )
+  );
 }

@@ -1,9 +1,13 @@
+'use client';
+
 import React, { useCallback, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient( 'https://mphgaanpbwsetutodyvl.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1waGdhYW5wYndzZXR1dG9keXZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjIwOTQyMDAsImV4cCI6MjAzNzY3MDIwMH0.wzzXs8PWbo4QyHv142w9Oy1q-2nYtDz8A4lRuuN_jLo' );
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
+const supabase = createClient( supabaseUrl, supabaseAnonKey );
 
 interface RichTextEditorProps
 {
@@ -31,29 +35,28 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ( { value, onChange } ) =>
       {
         // Upload file to Supabase Storage
         const { data, error } = await supabase.storage
-          .from( 'images' ) // Replace 'images' with your bucket name
+          .from( 'images' )
           .upload( `blog-images/${ Date.now() }-${ file.name }`, file );
 
         if ( error ) throw error;
 
         // Get public URL of the uploaded image
-        const { data: { publicUrl }} = supabase.storage
+        const { publicUrl } = supabase.storage
           .from( 'images' )
-          .getPublicUrl( data.path );
-
-        
+          .getPublicUrl( data.path )
+          .data;
 
         // Insert image into editor
         const quill = quillRef.current?.getEditor();
         const range = quill?.getSelection( true );
         if ( quill && range )
         {
-          quill.insertEmbed( range.index, 'image', publicUrl );
+          quill.insertEmbed( range.index, 'image', publicUrl ?? '' );
         }
       } catch ( error )
       {
         console.error( 'Error uploading image: ', error );
-        // Handle error (e.g., show a notification to the user)
+        alert( 'There was an error uploading your image. Please try again.' );
       }
     };
   }, [] );
@@ -61,9 +64,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ( { value, onChange } ) =>
   const modules = {
     toolbar: {
       container: [
-        [ { 'header': [ 1, 2, false ] } ],
+        [ { header: [ 1, 2, false ] } ],
         [ 'bold', 'italic', 'underline', 'strike', 'blockquote' ],
-        [ { 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' } ],
+        [ { list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' } ],
         [ 'link', 'image' ],
         [ 'clean' ]
       ],
