@@ -1,22 +1,30 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import { db } from '@/db';
-import { blogPosts } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import DOMPurify from 'isomorphic-dompurify';
+import { getBlogPostBySlug, getAllBlogSlugs } from '@/app/actions/blogActions';
+
+// This function generates all static paths for the blog post pages
+export async function generateStaticParams ()
+{
+  const slugs = await getAllBlogSlugs();
+  return slugs.map( ( slug: string ) => ( { slug } ) );
+}
 
 export default async function BlogPost ( { params }: { params: { slug: string } } )
 {
-  const [ post ] = await db.select().from( blogPosts ).where( eq( blogPosts.slug, params.slug ) );
+  const post = await getBlogPostBySlug( params.slug );
 
   if ( !post )
   {
     return <div>Post not found</div>;
   }
 
+  // Sanitize the HTML content
+  const sanitizedContent = DOMPurify.sanitize( post.content );
+
   return (
     <article>
       <h1>{ post.title }</h1>
-      <ReactMarkdown>{ post.content }</ReactMarkdown>
+      <div dangerouslySetInnerHTML={ { __html: sanitizedContent } } />
       <p>By { post.author } on { new Date( post.createdAt ).toLocaleDateString() }</p>
       <div>
         Tags: { post.tags ? post.tags.join( ', ' ) : '' }

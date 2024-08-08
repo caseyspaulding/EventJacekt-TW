@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google';
 import type { PropsWithChildren } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { customTheme } from './theme';
-
+import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
@@ -28,7 +28,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 />
                 <ThemeModeScript />
             </head>
-            <body className={twMerge('bg-gray-50 dark:bg-gray-900', inter.className)}>
+           
+            <body className={ twMerge( 'bg-gray-50 dark:bg-gray-900', inter.className ) }>
+                <Toaster />
                 <Flowbite theme={{ theme: customTheme }}>{children}</Flowbite>
             </body>
         </html>
