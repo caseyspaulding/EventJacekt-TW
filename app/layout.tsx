@@ -8,7 +8,7 @@ import { customTheme } from './theme';
 import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' });
+const inter = Inter( { subsets: [ 'latin' ], display: 'swap' } );
 
 export const metadata: Metadata = {
     title: 'EventJacket',
@@ -16,11 +16,12 @@ export const metadata: Metadata = {
         'All-in-one event management platform for nonprofits, schools, and businesses. Manage events, sell tickets, and engage with your audience.'
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout ( { children }: PropsWithChildren )
+{
     return (
         <html lang="en">
             <head>
-               
+
                 <link
                     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
                     rel="stylesheet"
@@ -28,10 +29,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 />
                 <ThemeModeScript />
             </head>
-           
-            <body className={ twMerge( 'bg-gray-50 dark:bg-gray-900', inter.className ) }>
+
+            <body className={ twMerge( 'bg-white dark:bg-gray-900', inter.className ) }>
                 <Toaster />
-                <Flowbite theme={{ theme: customTheme }}>{children}</Flowbite>
+                <Flowbite theme={ { theme: customTheme } }>{ children }</Flowbite>
             </body>
         </html>
     );

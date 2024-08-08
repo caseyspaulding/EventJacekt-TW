@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function NavBarTW ()
 {
   return (
-    <div className="bg-gradient-to-b from-blue-50 via-white to-white">
+    <div className="bg-white">
 
       <main>
         <div>

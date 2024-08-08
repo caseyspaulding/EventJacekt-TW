@@ -17,6 +17,7 @@ import
   } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import NavBar1 from '@/components/NavBarTW/NavBar1'
+import Link from 'next/link'
 
 const solutions = [
   {
@@ -151,12 +152,12 @@ export default function Example ()
                 Includes every feature we offer plus unlimited projects and unlimited users.
               </p>
             </div>
-            <a
-              href="#"
+            <Link
+              href="/signup"
               className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-5 py-3 text-base font-medium text-white hover:bg-blue-700 sm:mt-10 sm:w-auto xl:mt-0"
             >
               Get started today
-            </a>
+            </Link>
           </div>
           <div className="border-t border-gray-200 pt-16 xl:grid xl:grid-cols-3 xl:gap-x-8">
             <div>
