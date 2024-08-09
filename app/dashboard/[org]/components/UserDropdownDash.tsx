@@ -35,7 +35,12 @@ export default function UserDropdown ()
       label={
         <span>
           <span className="sr-only">User menu</span>
-          <Avatar alt="" img={ user ? "/images/avatars/user-avatar.jpg" : "" } rounded size="sm" />
+          <Avatar
+            alt=""
+            img={ "/images/avatars/user-avatar.jpg" }
+            rounded size="sm"
+            className='w-8 h-8 md:w-10 md:h-10'
+          />
         </span>
       }
     >
