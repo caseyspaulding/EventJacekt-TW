@@ -121,7 +121,9 @@ export default function Login({ searchParams }: LoginProps) {
                             </SubmitButton>
 
                             { searchParams?.message && (
-                                <p className="bg-foreground/10 mt-4 p-4 text-center">{ searchParams.message }</p>
+                                <p className="bg-red-100 border border-red-500 text-red-700 p-4 mt-4 rounded text-center">
+                                    { searchParams.message }
+                                </p>
                             ) }
                         </div>
                         <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
