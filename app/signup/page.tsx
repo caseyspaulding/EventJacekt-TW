@@ -1,8 +1,9 @@
-"use client";
+'use client'; 
 
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "./submit-button";
-import { signUp } from "./signup";
+import { signUp } from "./signup"; // Adjust the path as necessary
 import { Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,7 +20,21 @@ interface SignUpProps
 
 export default function SignUp ( { searchParams }: SignUpProps )
 {
+  const [ email, setEmail ] = useState( "" );
+  const [ password, setPassword ] = useState( "" );
+  const [ orgName, setOrgName ] = useState( "" );
+  const [ acceptTerms, setAcceptTerms ] = useState( false );
+  const [ isFormValid, setIsFormValid ] = useState( false );
   const router = useRouter();
+
+  // Validate email and password
+  useEffect( () =>
+  {
+    const emailIsValid = email.includes( "@" ) && email.includes( "." );
+    const passwordIsValid = password.length >= 8;
+    const orgNameIsValid = orgName.trim() !== "";
+    setIsFormValid( emailIsValid && passwordIsValid && orgNameIsValid && acceptTerms );
+  }, [ email, password, orgName, acceptTerms ] );
 
   const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ) =>
   {
@@ -32,16 +47,13 @@ export default function SignUp ( { searchParams }: SignUpProps )
       router.push( result.redirectUrl );
     } else
     {
-      // Handle error, maybe set some state to show an error message
       console.error( result.message );
-      // You might want to update your UI to show this error message
     }
   };
 
   return (
     <>
       <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
-
         <Link
           href="/"
           className="mb-8 flex items-center justify-center text-2xl font-semibold dark:text-white lg:mb-10"
@@ -73,11 +85,23 @@ export default function SignUp ( { searchParams }: SignUpProps )
           <form onSubmit={ handleSubmit } className="mt-8 space-y-6">
             <div className="flex flex-col gap-y-2">
               <Label htmlFor="email">Your email</Label>
-              <TextInput name="email" placeholder="name@company.com" required />
+              <TextInput
+                name="email"
+                placeholder="name@company.com"
+                value={ email }
+                onChange={ ( e ) => setEmail( e.target.value ) }
+                required
+              />
             </div>
             <div className="flex flex-col gap-y-2">
               <Label htmlFor="orgName">Organization Name</Label>
-              <TextInput name="orgName" placeholder="Organization" required />
+              <TextInput
+                name="orgName"
+                placeholder="Organization"
+                value={ orgName }
+                onChange={ ( e ) => setOrgName( e.target.value ) }
+                required
+              />
             </div>
             <div className="flex flex-col gap-y-2">
               <Label htmlFor="password">Your password</Label>
@@ -85,12 +109,18 @@ export default function SignUp ( { searchParams }: SignUpProps )
                 name="password"
                 placeholder="••••••••"
                 type="password"
+                value={ password }
+                onChange={ ( e ) => setPassword( e.target.value ) }
                 required
               />
             </div>
 
             <div className="flex items-center gap-x-3">
-              <Checkbox name="acceptTerms" />
+              <Checkbox
+                name="acceptTerms"
+                checked={ acceptTerms }
+                onChange={ ( e ) => setAcceptTerms( e.target.checked ) }
+              />
               <Label htmlFor="acceptTerms">
                 I accept the&nbsp;
                 <Link
@@ -106,11 +136,12 @@ export default function SignUp ( { searchParams }: SignUpProps )
                 type="submit"
                 className="w-full bg-blue-500 px-0 py-px sm:w-auto"
                 pendingText="Signing Up..."
+                disabled={ !isFormValid }
               >
                 Sign Up
               </SubmitButton>
               { searchParams?.message && (
-                <p className="bg-foreground/10 mt-4 p-4 text-center">
+                <p className="bg-red-100 border border-red-500 text-red-700 p-4 mt-4 rounded text-center">
                   { searchParams.message }
                 </p>
               ) }
