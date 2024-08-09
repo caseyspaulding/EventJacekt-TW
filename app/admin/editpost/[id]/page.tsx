@@ -13,6 +13,8 @@ export default function EditPostPage ()
 {
   const router = useRouter();
   const { id } = useParams();
+  // Convert id to a number
+  const idAsNumber = String( id );
   const [ title, setTitle ] = useState( '' );
   const [ content, setContent ] = useState( '' );
   const [ excerpt, setExcerpt ] = useState( '' );
@@ -20,7 +22,7 @@ export default function EditPostPage ()
   const [ tags, setTags ] = useState( '' );
   const [ slug, setSlug ] = useState( '' );
   const [ loading, setLoading ] = useState( true );
-
+  
   useEffect( () =>
   {
     const fetchPost = async () =>
@@ -66,7 +68,7 @@ export default function EditPostPage ()
     formData.append( 'tags', tags );
     formData.append( 'slug', slug );
 
-    const response = await updateBlogPost( id, formData );
+    const response = await updateBlogPost( idAsNumber, formData );
 
     if ( response.success )
     {
