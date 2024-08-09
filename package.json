@@ -23,13 +23,17 @@
         "@supabase/supabase-js": "^2.45.0",
         "@tinymce/tinymce-react": "^5.1.1",
         "@types/dompurify": "^3.0.5",
+        "@types/js-cookie": "^3.0.6",
         "@uiw/react-md-editor": "^4.0.4",
         "clsx": "^2.1.1",
         "dompurify": "^3.1.6",
         "drizzle-orm": "^0.32.2",
         "easymde": "^2.18.0",
         "flowbite-react": "^0.9.0",
+        "fs": "0.0.1-security",
         "isomorphic-dompurify": "^2.14.0",
+        "js-cookie": "^3.0.5",
+        "net": "^1.0.2",
         "next": "^14.2.5",
         "nextra": "^2.13.4",
         "nextra-theme-blog": "^2.13.4",
@@ -49,7 +53,8 @@
         "stripe": "^16.6.0",
         "svgmap": "^2.11.1",
         "tailwind-merge": "^2.4.0",
-        "tinymce": "^7"
+        "tinymce": "^7",
+        "tls": "^0.0.1"
     },
     "devDependencies": {
         "@changesets/changelog-github": "^0.5.0",

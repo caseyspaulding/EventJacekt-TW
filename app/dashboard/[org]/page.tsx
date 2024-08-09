@@ -5,7 +5,8 @@ import { createClient } from '@/utils/supabase/server';
 import { db } from '../../../db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq, and } from 'drizzle-orm/expressions';
-import AuthButton from '@/components/AuthButton';
+import ClientDashboard from './ClientDashboard';
+
 
 interface DashboardPageProps {
     params: { org: string };
@@ -47,24 +48,11 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         const events = await fetchEventsForOrg();
 
         return (
-            <div className="container mx-auto px-4 py-8">
-                <h1 className="mb-6 text-3xl font-bold">Dashboard for {decodedOrgName}</h1>
-                <p className="mb-4 text-xl">Welcome to {dashboardData.organizationName}</p>
-
-                {/* Organization Info Section */}
-                <section className="mb-6 rounded-lg bg-white p-6 shadow">
-                    <h2 className="mb-4 text-2xl font-semibold">Organization Info</h2>
-                    <p>
-                        <strong>ID:</strong> {dashboardData.id}
-                    </p>
-                    <p>
-                        <strong>Organization ID:</strong> {dashboardData.organizationId}
-                    </p>
-                </section>
-
-                {/* Events Section */}
-                <EventActions events={events} />
-            </div>
+            <ClientDashboard
+                orgName={ decodedOrgName }
+                dashboardData={ dashboardData }
+                events={ events }
+            />
         );
     } catch (error) {
         console.error('Error fetching dashboard data:', error);

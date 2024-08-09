@@ -1,19 +1,20 @@
-import { cookies } from 'next/headers';
+import Cookies from 'js-cookie';
 
 const NAME = 'sidebar-collapsed';
 
-export interface SidebarCookie {
+export interface SidebarCookie
+{
     isCollapsed: boolean;
 }
 
 export const sidebarCookie = {
-    get(): SidebarCookie {
-        const cookie = cookies().get(NAME);
-        const isCollapsed = cookie?.value === 'true';
-
+    get (): SidebarCookie
+    {
+        const isCollapsed = Cookies.get( NAME ) === 'true';
         return { isCollapsed };
     },
-    set(value: SidebarCookie) {
-        cookies().set(NAME, String(value.isCollapsed));
+    set ( value: SidebarCookie )
+    {
+        Cookies.set( NAME, String( value.isCollapsed ) );
     }
 };
