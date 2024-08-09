@@ -1,50 +1,35 @@
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+'use client';   
+
+import React, { useState, useEffect } from 'react';
 import { SubmitButton } from './submit-button';
 import { Card, Checkbox, Label, TextInput } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { signIn } from './signin'; // Adjust the path as necessary
 
-interface SearchParams {
+interface SearchParams
+{
     message?: string;
 }
 
-interface LoginProps {
+interface LoginProps
+{
     searchParams: SearchParams;
 }
 
-export default function Login({ searchParams }: LoginProps) {
-    const signIn = async (formData: FormData) => {
-        'use server';
+export default function Login ( { searchParams }: LoginProps )
+{
+    const [ email, setEmail ] = useState( '' );
+    const [ password, setPassword ] = useState( '' );
+    const [ isValid, setIsValid ] = useState( false );
 
-        const email = formData.get('email') as string;
-        const password = formData.get('password') as string;
-        const supabase = createClient();
-
-        const { data: session, error } = await supabase.auth.signInWithPassword({
-            email,
-            password
-        });
-
-        if (error) {
-            return redirect('/login?message=Could not authenticate user');
-        }
-
-        const { user } = session;
-        const { data: profile, error: profileError } = await supabase
-            .from('user_profiles')
-            .select('organization_name')
-            .eq('user_id', user.id)
-            .single();
-
-        if (profileError) {
-            console.error('Error fetching user profile:', profileError);
-            return redirect('/login?message=Could not fetch user profile');
-        }
-
-        // Redirect to the dynamic dashboard route
-        return redirect(`/dashboard/${encodeURIComponent(profile.organization_name)}`);
-    };
+    useEffect( () =>
+    {
+        // Basic email validation regex
+        const isEmailValid = /\S+@\S+\.\S+/.test( email );
+        // Validate both email and password
+        setIsValid( isEmailValid && password.length > 0 );
+    }, [ email, password ] );
 
     return (
         <>
@@ -75,16 +60,17 @@ export default function Login({ searchParams }: LoginProps) {
                     } }
                 >
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white lg:text-3xl">
-                        Sign in 
+                        Sign in
                     </h2>
                     <form className="mt-8 space-y-6">
                         <div className="flex flex-col gap-y-2">
                             <Label htmlFor="email">Your email</Label>
                             <TextInput
-                                
                                 name="email"
                                 placeholder="name@company.com"
-                               required 
+                                value={ email }
+                                onChange={ ( e ) => setEmail( e.target.value ) }
+                                required
                             />
                         </div>
                         <div className="flex flex-col gap-y-2">
@@ -94,7 +80,9 @@ export default function Login({ searchParams }: LoginProps) {
                                 name="password"
                                 placeholder="••••••••"
                                 type="password"
-
+                                value={ password }
+                                onChange={ ( e ) => setPassword( e.target.value ) }
+                                required
                             />
                         </div>
                         <div className="flex items-center justify-between">
@@ -110,12 +98,12 @@ export default function Login({ searchParams }: LoginProps) {
                             </Link>
                         </div>
                         <div className="mb-6">
-                            
                             <SubmitButton
                                 color="blue"
                                 formAction={ signIn }
                                 className="w-full px-0 py-px sm:w-auto bg-blue-600"
                                 pendingText="Signing In..."
+                                disabled={ !isValid } // Disable the button if the form is invalid
                             >
                                 Login to your account
                             </SubmitButton>
@@ -138,41 +126,6 @@ export default function Login({ searchParams }: LoginProps) {
                     </form>
                 </Card>
             </div>
-            {/*<form className="mt-11 flex w-full flex-1 flex-col justify-center gap-2">
-                <label className="text-md" htmlFor="email">
-                    Email
-                </label>
-                <input
-                    className="mb-6 rounded-md border bg-inherit px-4 py-2"
-                    name="email"
-                    placeholder="you@example.com"
-                    required
-                />
-                <label className="text-md" htmlFor="password">
-                    Password
-                </label>
-                <input
-                    className="mb-6 rounded-md border bg-inherit px-4 py-2"
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    required
-                />
-
-                <SubmitButton
-                    formAction={signIn}
-                    className="w-full px-0 py-px sm:w-auto bg-blue-600"
-                    pendingText="Signing In..."
-                >
-                    Sign In
-                </SubmitButton>
-
-                {searchParams?.message && (
-                    <p className="bg-foreground/10 mt-4 p-4 text-center">{searchParams.message}</p>
-                )}
-            </form>*/}
-
-           
         </>
     );
 }
