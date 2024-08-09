@@ -11,8 +11,8 @@ export default function FAQ() {
     <div>
       <NavBar1 />  
       <HeaderCentered
-        title="Frequently asked questions"
-        description="Got questions? We've got answers. Check out our FAQ section to learn more about our platform."
+        title="FAQs"
+        description="Got questions? We've got answers. Check out our Frequently asked questions section to learn more about our platform."
       />
       <FAQ_TW />  
       <FooterFull />  

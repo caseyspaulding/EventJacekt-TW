@@ -10,7 +10,7 @@ export default function CRM() {
       <NavBar1 />  
       <HeaderCentered
         title="CRM"
-        description="Managing your vendors, performers and attendees has never been easier. With our CRM, you can keep track of all your interactions and make sure you never miss a beat."
+        description="Managing your vendors, performers and attendees has never been easier. Keep track of all your interactions and make sure you never miss a beat."
       />
       contnet </div>
   )

@@ -4,6 +4,7 @@ import { db } from '@/db';
 import { blogPosts } from '@/db/schema';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
+import HeaderCentered from '@/components/HeaderCentered';
 
 export default async function BlogList ()
 {
@@ -12,13 +13,15 @@ export default async function BlogList ()
   return (
     <>
       <NavBar1 />
-      <div className="bg-white py-24 sm:py-32">
+      <HeaderCentered
+        title="Blog"
+        description=" Read the latest articles from our blog for tips to grow and organize stellar events with EventJacket."
+      />
+      <div className="bg-white ">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
-            <p className="mt-2 text-lg leading-8 text-gray-600">
-              Tips to Grow and Organize Stellar Events with EventJacket
-            </p>
+          
+            
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             { posts.map( ( post ) => (
