@@ -18,6 +18,7 @@ import
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import NavBar1 from '@/components/NavBarTW/NavBar1'
 import Link from 'next/link'
+import HeaderCentered from '@/components/HeaderCentered'
 
 const solutions = [
   {
@@ -138,7 +139,10 @@ export default function Example ()
 
     <div className="bg-white">
      <NavBar1 />  
-
+      <HeaderCentered
+        title="Pricing"
+        description=""
+      />
       <div className="bg-gradient-to-b from-blue-50 via-white to-white">
         {/* Pricing section with single price and feature list */ }
         <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
