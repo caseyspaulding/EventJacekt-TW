@@ -1,5 +1,7 @@
+import FooterFull from "@/components/Footers/FooterFull";
 import HeaderCentered from "@/components/HeaderCentered";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
+import TicketingFeatures from "./TicketingFeatures";
 
 export default function page ()
 {
@@ -10,6 +12,8 @@ export default function page ()
         title="Ticketing Solutions"
         description="From seamless ticket creation, effortless sales tracking, our platform empowers you to manage attendees and ticket sales with just a few clicks."
       />
-      page</div>
+      <TicketingFeatures /> 
+      <FooterFull />
+    </div>
   )
 }

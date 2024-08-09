@@ -19,6 +19,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import NavBar1 from '@/components/NavBarTW/NavBar1'
 import Link from 'next/link'
 import HeaderCentered from '@/components/HeaderCentered'
+import FooterFull from '@/components/Footers/FooterFull'
 
 const solutions = [
   {
@@ -232,8 +233,9 @@ export default function Example ()
           </div>
         </div>
       </div>
-
+      <FooterFull />
      
     </div>
+   
   )
 }
