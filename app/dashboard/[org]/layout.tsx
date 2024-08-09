@@ -7,9 +7,20 @@ import { LayoutContent } from './layout-content';
 import { DashboardNavbar } from './navbar';
 import { DashboardSidebar } from './sidebar';
 import { UserProvider } from '@/contexts/UserContext';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
 
 export default async function DashboardLayout ( { children }: PropsWithChildren<unknown> )
 {
+    const supabase = createClient();
+    const {
+        data: { session }
+    } = await supabase.auth.getSession();
+
+    if ( !session )
+    {
+        redirect( '/login' );
+    }
     const user = await fetchUserProfile();
     return (
         <UserProvider user={ user }>
