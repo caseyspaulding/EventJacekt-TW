@@ -22,15 +22,15 @@ const solutions = [
     icon: ChatBubbleBottomCenterTextIcon,
   },
   {
-    name: "Live Chat",
-    description: "Organize your team's workflow and get more done.",
-    href: "#",
+    name: "Marketing",
+    description: "Get the word out.",
+    href: "/marketing",
     icon: ChatBubbleLeftRightIcon,
   },
   {
     name: "Analytics",
     description: "Data you need to make the right decisions.",
-    href: "#",
+    href: "/analytics",
     icon: QuestionMarkCircleIcon,
   },
 ];
