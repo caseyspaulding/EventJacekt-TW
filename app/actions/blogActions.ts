@@ -4,7 +4,7 @@
 import { db } from '@/db';
 import { blogPosts } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-
+import { createClient } from '../../utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -34,6 +34,7 @@ export async function createBlogPost ( formData: FormData )
   const author = formData.get( 'author' ) as string;
   const tags = ( formData.get( 'tags' ) as string ).split( ',' ).map( tag => tag.trim() );
   let slug = formData.get( 'slug' ) as string;
+  const featuredImage = formData.get( 'featuredImage' ) as string; // Get the featured image URL
 
   if ( !slug )
   {
@@ -42,12 +43,14 @@ export async function createBlogPost ( formData: FormData )
 
   try
   {
+    // Check if the post with the same slug already exists
     const existingPosts = await db.select().from( blogPosts ).where( eq( blogPosts.slug, slug ) );
     if ( existingPosts.length > 0 )
     {
       return { success: false, message: 'A post with this slug already exists.' };
     }
 
+    // Insert the new blog post into the database
     await db.insert( blogPosts ).values( {
       title,
       content,
@@ -55,10 +58,12 @@ export async function createBlogPost ( formData: FormData )
       author,
       tags,
       slug,
+      featuredImage, // Include the featured image URL
       createdAt: new Date(),
       updatedAt: new Date(),
     } );
 
+    // Revalidate the blog path to update the page
     revalidatePath( '/blog' );
 
     return { success: true, message: 'Post created successfully!' };
@@ -69,6 +74,8 @@ export async function createBlogPost ( formData: FormData )
     return { success: false, message: 'Failed to create blog post. Please try again.' };
   }
 }
+
+
 export async function getAllBlogSlugs ()
 {
   // Assuming you're using Supabase with Drizzle ORM
@@ -85,4 +92,45 @@ function generateSlug ( title: string ): string
     .replace( /\s+/g, '-' )      // Replace spaces with hyphens
     .replace( /--+/g, '-' )      // Replace multiple hyphens with a single hyphen
     .substring( 0, 255 );        // Limit slug length to 255 characters
+}
+
+export async function updateBlogPost ( id: string, formData: FormData )
+{
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from( 'blog_posts' )
+    .update( {
+      title: formData.get( 'title' ),
+      content: formData.get( 'content' ),
+      excerpt: formData.get( 'excerpt' ),
+      author: formData.get( 'author' ),
+      tags: formData.get( 'tags' )?.toString().split( ',' ).map( tag => tag.trim() ),
+      slug: formData.get( 'slug' ),
+      updated_at: new Date().toISOString(),
+    } )
+    .eq( 'id', id );
+
+  if ( error )
+  {
+    return { success: false, message: 'Failed to update the blog post' };
+  }
+
+  return { success: true, message: 'Blog post updated successfully' };
+}
+
+export async function deletePost ( postId: number )
+{
+  const supabase = createClient();
+  const { error } = await supabase
+    .from( 'blog_posts' )
+    .delete()
+    .eq( 'id', postId );
+
+  if ( error )
+  {
+    console.error( 'Error deleting post:', error.message );
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
 }

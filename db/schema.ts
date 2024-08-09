@@ -199,4 +199,5 @@ export const blogPosts = pgTable( 'blog_posts', {
     updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
     publishedAt: timestamp( 'published_at' ),
     tags: text( 'tags' ).array(),
+    featuredImage: varchar( 'featured_image', { length: 255 } ), // New column for storing featured image URL
 } );

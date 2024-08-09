@@ -64,16 +64,17 @@ export default function Example ()
         <div className="bg-white">
             <main className="mx-auto w-full max-w-7xl px-6 pb-16 pt-10 sm:pb-24 lg:px-8">
                 <Link href="/">
-                <Image
-                    height={ 40 }
-                    width={ 40 }
-                    alt="EventJacket logo"
-                    src="/images/logo.svg"
-                    className="mx-auto h-10 w-auto sm:h-12"
+                    <Image
+                        height={ 40 }
+                        width={ 40 }
+                        alt="EventJacket logo"
+                        src="/images/logo.svg"
+                        className="mx-auto h-10 w-auto sm:h-12"
                     />
                 </Link>
                 <div className="mx-auto mt-10 max-w-2xl text-center sm:mt-14">
                     <p className="text-base font-semibold leading-8 text-blue-700">404</p>
+                    <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Ah Snap!</h1>
                     <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">This page does not exist</h1>
                     <p className="mt-4 text-base leading-7 text-gray-600 sm:mt-6 sm:text-lg sm:leading-8">
                         Sorry, we couldn’t find the page you’re looking for.

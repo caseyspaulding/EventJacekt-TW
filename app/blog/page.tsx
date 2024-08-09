@@ -5,6 +5,7 @@ import { blogPosts } from '@/db/schema';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
 import HeaderCentered from '@/components/HeaderCentered';
+import Image from 'next/image';
 
 export default async function BlogList ()
 {
@@ -28,9 +29,9 @@ export default async function BlogList ()
               <article key={ post.id } className="flex flex-col items-start justify-between">
                 <div className="relative w-full">
                   <img
-                    alt=""
-                    src='/images/blog/image-1.jpg'
-                    //  src={ post.imageUrl }
+                    alt={ post.title }
+                    src={ post.featuredImage || '/images/blog/image-1.jpg' } 
+                    
                     className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
                   />
                   <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />

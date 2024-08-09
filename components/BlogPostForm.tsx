@@ -20,7 +20,7 @@ const BlogPostForm: React.FC = () =>
   const [ author, setAuthor ] = useState( '' );
   const [ tags, setTags ] = useState( '' );
   const [ slug, setSlug ] = useState( '' );
-
+  const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
   useEffect( () =>
   {
     const checkUser = async () =>
@@ -44,9 +44,62 @@ const BlogPostForm: React.FC = () =>
     checkUser();
   }, [ router, supabase ] );
 
+
+  type PublicUrlResponse = {
+    data: {
+      publicUrl: string;
+    };
+    error: any;
+  };
+
+
+  const handleImageUpload = async ( file: File | null ) =>
+  {
+    if ( !file )
+    {
+      console.error( 'No file selected' );
+      return null;
+    }
+
+    const { data, error } = await createClient().storage
+      .from( 'blogimages' ) // Replace with your bucket name
+      .upload( `public/${ file.name }`, file, {
+        cacheControl: '3600',
+        upsert: false,
+      } );
+
+    if ( error )
+    {
+      console.error( 'Error uploading file:', error.message );
+      return null;
+    }
+
+    const { data: publicUrlData } = createClient().storage
+      .from( 'blogimages' )
+      .getPublicUrl( `public/${ file.name }` );
+
+    return publicUrlData?.publicUrl || '';
+  };
+
+
   const handleSubmit = async ( e: React.FormEvent ) =>
   {
     e.preventDefault();
+
+    // Check if a file is selected
+    if ( !featuredImage )
+    {
+      toast.error( 'Please select a featured image.' );
+      return;
+    }
+
+    // Proceed with uploading the image and creating the blog post
+    const imageUrl = await handleImageUpload( featuredImage );
+    if ( !imageUrl )
+    {
+      toast.error( 'Failed to upload the image.' );
+      return;
+    }
 
     // Create a FormData object
     const formData = new FormData();
@@ -56,6 +109,7 @@ const BlogPostForm: React.FC = () =>
     formData.append( 'author', author );
     formData.append( 'tags', tags );
     formData.append( 'slug', slug );
+    formData.append( 'featuredImage', imageUrl ); // Include the image URL
 
     const response = await createBlogPost( formData );
 
@@ -71,6 +125,7 @@ const BlogPostForm: React.FC = () =>
       setAuthor( '' );
       setTags( '' );
       setSlug( '' );
+      setFeaturedImage( null );
     } else
     {
       // Show error toast notification
@@ -101,7 +156,17 @@ const BlogPostForm: React.FC = () =>
             required
           />
         </div>
-
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Featured Image
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={ ( e ) => setFeaturedImage( e.target.files?.[ 0 ] || null ) }
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
             URL Slug

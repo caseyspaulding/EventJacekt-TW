@@ -22,6 +22,13 @@
       "when": 1723128516497,
       "tag": "0002_unusual_silverclaw",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1723240296437,
+      "tag": "0003_strong_jackal",
+      "breakpoints": true
     }
   ]
 }
