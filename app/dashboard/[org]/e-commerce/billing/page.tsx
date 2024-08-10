@@ -2,7 +2,7 @@ import billingData from '@/data/e-commerce/billing.json';
 import type {
     ECommerceBillingNextPayment,
     ECommerceBillingTransaction
-} from '../../../../../../types/e-commerce/billing';
+} from '@/types/e-commerce/billing';
 import ECommerceBillingPageContent from './content';
 
 export interface ECommerceBillingPageData {

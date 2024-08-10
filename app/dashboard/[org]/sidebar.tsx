@@ -188,7 +188,14 @@ function MobileSidebar ( { orgName, pathname }: DashboardSidebarProps )
     );
 }
 
-function SidebarItem ( { href, target, icon, label, items, badge, pathname } )
+function SidebarItem ( { href,
+    target,
+    icon,
+    label,
+    items,
+    badge,
+    pathname,
+}: SidebarItemProps )
 {
     const { user } = useUser();
     const orgName = user?.orgName;
@@ -201,7 +208,7 @@ function SidebarItem ( { href, target, icon, label, items, badge, pathname } )
 
     if ( items )
     {
-        const isOpen = items.some( ( item ) => pathname.startsWith( `/dashboard/${ orgName }${ item.href }` ) );
+        const isOpen = items.some( ( item : SidebarItem) => pathname.startsWith( `/dashboard/${ orgName }${ item.href }` ) );
 
         return (
             <Sidebar.Collapse
@@ -210,7 +217,7 @@ function SidebarItem ( { href, target, icon, label, items, badge, pathname } )
                 open={ isOpen }
                 theme={ { list: 'space-y-2 py-2  [&>li>div]:w-full' } }
             >
-                { items.map( ( item ) => (
+                { items.map( ( item : SidebarItem ) => (
                     <Sidebar.Item
                         key={ item.label }
                         as={ Link }
@@ -228,7 +235,10 @@ function SidebarItem ( { href, target, icon, label, items, badge, pathname } )
             </Sidebar.Collapse>
         );
     }
-
+    if ( !href )
+    {
+        return null; // Return null if no href is provided and there are no items
+    }
     const finalHref = target ? href : `/dashboard/${ orgName }${ href }`;
     return (
         <Sidebar.Item

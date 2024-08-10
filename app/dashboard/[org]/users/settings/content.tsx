@@ -12,7 +12,7 @@ import {
     HiOutlineDeviceMobile
 } from 'react-icons/hi';
 import type { UserSettingsPageData } from './page';
-import type { UserSettings, UserSettingsSocialAccount } from '../../../../../../types/user/settings'
+import type { UserSettings, UserSettingsSocialAccount } from '@/types/user/settings'
 const UserSettingsPageContent: FC<UserSettingsPageData> = function ({
     languages,
     timezones,
