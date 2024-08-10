@@ -1,11 +1,12 @@
 'use client';
 
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from "@headlessui/react";
-import { Bars3Icon, ChatBubbleBottomCenterTextIcon, ChatBubbleLeftRightIcon, ChevronDownIcon, CodeBracketIcon, InboxIcon, QrCodeIcon, QuestionMarkCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { ChatBubbleBottomCenterTextIcon, ChatBubbleLeftRightIcon, ChevronDownIcon, CodeBracketIcon, InboxIcon, QrCodeIcon, QuestionMarkCircleIcon, TicketIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import AuthButton from "../AuthButton";
+import { Bars3CenterLeftIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 
 const solutions = [
   {
@@ -13,25 +14,25 @@ const solutions = [
     description:
       "Get a better understanding of where your traffic is coming from.",
     href: "/ticketing",
-    icon: InboxIcon,
+    icon: BuildingStorefrontIcon,
   },
   {
     name: "CRM",
     description: "Build and Maintain your relationships.",
     href: "/crm",
-    icon: ChatBubbleBottomCenterTextIcon,
+    icon: HeartIcon,
   },
   {
     name: "Marketing",
     description: "Get the word out.",
     href: "/marketing",
-    icon: ChatBubbleLeftRightIcon,
+    icon: MegaphoneIcon,
   },
   {
     name: "Analytics",
     description: "Data you need to make the right decisions.",
     href: "/analytics",
-    icon: QuestionMarkCircleIcon,
+    icon: ChartBarIcon,
   },
   {
     name: "QR Code",
@@ -99,7 +100,7 @@ export default function NavBar1 ()
               <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open menu</span>
-                <Bars3Icon aria-hidden="true" className="h-6 w-6" />
+                <Bars3CenterLeftIcon aria-hidden="true" className="h-6 w-6" />
               </PopoverButton>
             </div>
             <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
@@ -154,7 +155,7 @@ export default function NavBar1 ()
             </PopoverGroup>
 
             <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-             
+
               <a
                 href="/login"
                 className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"

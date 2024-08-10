@@ -6,28 +6,14 @@ import Link from 'next/link';
 import { redirect, usePathname } from 'next/navigation';
 import type { ComponentProps, FC } from 'react';
 import { useEffect, useState } from 'react';
-import
-{
-    HiAdjustments,
-    HiChartPie,
-    HiClipboardList,
-    HiCog,
-    HiCollection,
-    HiDocumentReport,
-    HiInboxIn,
-    HiLockClosed,
-    HiMail,
-    HiSearch,
-    HiShoppingBag,
-    HiSupport,
-    HiTicket,
-    HiUsers,
-    HiViewGrid
-} from 'react-icons/hi';
+
+
 import { twMerge } from 'tailwind-merge';
 import { useUser } from '@/contexts/UserContext';
 import type { HTMLAttributeAnchorTarget } from 'react';
-
+import { ChartPieIcon, ClipboardIcon, CogIcon, EnvelopeOpenIcon, TableCellsIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import { ClipboardDocumentIcon, QuestionMarkCircleIcon, TicketIcon } from '@heroicons/react/20/solid';
+import {Dashboard} from 'tabler-icons-react'
 
 interface SidebarItem
 {
@@ -267,7 +253,7 @@ function BottomMenu ( { isCollapsed }: { isCollapsed: boolean } )
                     className="inline-flex cursor-pointer justify-center rounded p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                     <span className="sr-only">Settings page</span>
-                    <HiCog className="h-6 w-6" />
+                    <CogIcon className="h-6 w-6" />
                 </Link>
             </Tooltip>
             <div>
@@ -278,12 +264,12 @@ function BottomMenu ( { isCollapsed }: { isCollapsed: boolean } )
 }
 
 const pages: SidebarItem[] = [
-    { href: '/', icon: HiChartPie, label: 'Dashboard' },
-    { href: '/kanban', icon: HiViewGrid, label: 'Kanban' },
+    { href: '/', icon: Dashboard, label: 'Dashboard' },
+    { href: '/kanban', icon: TableCellsIcon, label: 'Kanban' },
     //{ href: '/mailing/inbox', icon: HiInboxIn, label: 'Inbox', badge: '3' },
-    { href: '', icon: HiClipboardList, label: 'Forms' },
+    { href: '', icon: ClipboardDocumentIcon, label: 'Forms' },
     {
-        icon: HiMail,
+        icon: EnvelopeOpenIcon,
         label: 'Mail',
         items: [
             { href: '/mailing/inbox', label: 'Inbox' },
@@ -292,7 +278,7 @@ const pages: SidebarItem[] = [
         ]
     },
     {
-        icon: HiTicket,
+        icon: TicketIcon,
         label: 'Tickets',
         items: [
             { href: '/e-commerce/products', label: 'Tickets' },
@@ -301,7 +287,7 @@ const pages: SidebarItem[] = [
         ]
     },
     {
-        icon: HiUsers,
+        icon: UserGroupIcon,
         label: 'Users',
         items: [
             { href: '/users/list', label: 'Users list' },
@@ -317,14 +303,14 @@ const externalPages: SidebarItem[] = [
     {
         href: '/docs',
         target: '_blank',
-        icon: HiClipboardList,
+        icon: ClipboardIcon,
         label: 'Docs'
     },
 
     {
         href: '/support',
         target: '_blank',
-        icon: HiSupport,
+        icon: QuestionMarkCircleIcon,
         label: 'Help'
     }
 ];
