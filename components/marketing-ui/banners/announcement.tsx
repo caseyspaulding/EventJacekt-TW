@@ -1,21 +1,21 @@
 import { Badge, Banner } from "flowbite-react";
 import { HiX } from "react-icons/hi";
 
-export function AnnouncementBanner() {
+export function AnnouncementBanner ()
+{
   return (
     <Banner>
       <div className="flex w-full items-center justify-between border border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
         <div className="mx-auto flex items-center gap-x-3">
-          <Badge className="hidden w-fit md:inline">New</Badge>
+          <Badge className="hidden w-fit md:inline">Under Construction</Badge>
           <p className="text-sm font-medium text-gray-900 dark:text-white md:my-0">
-            We have launched Flowbite Blocks including over 120+ website
-            sections!
-            <a
-              href="#"
+            Please keep in mind. We are still under construction. We are working hard to make this better for you.
+            <p
+
               className="ml-2 inline-flex items-center text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
             >
-              Check it out!
-            </a>
+              Thanks for stopping by!
+            </p>
           </p>
         </div>
         <Banner.CollapseButton

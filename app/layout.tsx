@@ -7,6 +7,7 @@ import { twMerge } from 'tailwind-merge';
 import { customTheme } from './theme';
 import { Toaster } from 'react-hot-toast';
 import './globals.css';
+import { AnnouncementBanner } from '@/components/marketing-ui/banners/announcement';
 
 const inter = Inter( { subsets: [ 'latin' ], display: 'swap' } );
 
@@ -31,6 +32,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
             </head>
 
             <body className={ twMerge( 'bg-white dark:bg-gray-900', inter.className ) }>
+                <AnnouncementBanner />
                 <Toaster />
                 <Flowbite theme={ { theme: customTheme } }>{ children }</Flowbite>
             </body>
