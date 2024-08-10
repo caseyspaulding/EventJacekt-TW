@@ -1,15 +1,22 @@
 import FooterFull from "@/components/Footers/FooterFull";
+import Header from "@/components/Header";
+import HeaderCentered from "@/components/HeaderCentered";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import { Footer } from "flowbite-react";
+import Head from "next/head";
 
 export default function PrivacyPolicy() {
 
   return ( <>
     <NavBar1 />
+    <HeaderCentered
+      title="Privacy Policy"
+      description="Your privacy is important to us. It is EventJacket's policy to respect your privacy regarding any information we may collect from you across our website, http://eventjacket.com, and other sites we own and operate."
+    />
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl mb-7">
         <br />
-        <h1 className="text-3xl font-extrabold">Privacy Policy</h1> 
+       
         <br />
        
 
