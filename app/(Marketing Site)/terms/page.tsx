@@ -13,7 +13,7 @@ export default function PrivacyPolicy ()
       description="Welcome to EventJacket (&quot;Service&quot;). By accessing or using our Service, you agree to comply with and be bound by these Terms of Service (&quot;Terms&quot;). If you do not agree with these Terms, please do not use the Service."
     />
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl mb-7 p-6 bg-white text-gray-800 rounded-lg shadow-md">
+      <div className="mx-auto max-w-7xl mb-7 p-6 bg-white text-gray-800 ">
         <h2 className="text-xl font-bold mb-4">Description of Service</h2>
         <p className="mb-6">
           Event Jacket provides a cloud-based software solution designed to assist event organizers in managing their operations, ticketing, communications, marketing, invoicing, and other related tasks.

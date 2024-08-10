@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
       description="Your privacy is important to us. It is EventJacket's policy to respect your privacy regarding any information we may collect from you across our website, http://eventjacket.com, and other sites we own and operate."
     />
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl mb-7 p-6 bg-white text-gray-800 rounded-lg shadow-md">
+      <div className="mx-auto max-w-7xl mb-7 p-6 bg-white text-gray-800  ">
         <p className="mb-6">
           At EventJacket, accessible from EventJacket.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Event Jacket and how we use it.
         </p>

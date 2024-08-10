@@ -1,18 +1,18 @@
 import FooterFull from "@/components/Footers/FooterFull";
+import HeaderCentered from "@/components/HeaderCentered";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 
 export default function AffiliatePage() {
   return (
     <div>
       <NavBar1 /> 
-
+      <HeaderCentered title="Affiliate Program" description="Earn money by referring customers to EventJacket" /> 
+      
       <div className="container mx-auto px-4">
-        <div className="py-20">
-          <h1 className="text-4xl font-bold text-center">Affiliate Program</h1>
-          <p className="text-center mt-4">Earn money by referring customers to EventJacket</p>
-        </div>
+       
 
         <div className="py-20">
+          <h2 className="text-5xl font-extrabold text-center ">Coming Soon!</h2>
           <h2 className="text-2xl font-bold">How it works</h2>
           <p className="mt-4">You will receive a unique link that you can share with your audience. When someone signs up for EventJacket using your link, you will earn a commission on their subscription fees.</p>
 
