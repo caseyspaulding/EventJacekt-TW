@@ -1,7 +1,7 @@
 'use client';
 
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from "@headlessui/react";
-import { Bars3Icon, ChatBubbleBottomCenterTextIcon, ChatBubbleLeftRightIcon, ChevronDownIcon, InboxIcon, QuestionMarkCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { Bars3Icon, ChatBubbleBottomCenterTextIcon, ChatBubbleLeftRightIcon, ChevronDownIcon, CodeBracketIcon, InboxIcon, QrCodeIcon, QuestionMarkCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -32,6 +32,12 @@ const solutions = [
     description: "Data you need to make the right decisions.",
     href: "/analytics",
     icon: QuestionMarkCircleIcon,
+  },
+  {
+    name: "QR Code",
+    description: "Free Custom QR Code Generator.",
+    href: "/qrcode",
+    icon: QrCodeIcon,
   },
 ];
 const navigation = [
