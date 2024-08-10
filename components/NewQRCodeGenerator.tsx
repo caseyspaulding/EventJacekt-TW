@@ -87,7 +87,7 @@ export default function NewQRCodeGenerator ()
               <button
                 type="button"
                 onClick={ handleDownload }
-                className="mt-5 mb-5 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                className="mt-5 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
               >
                 Download QR Code
               </button>
@@ -227,7 +227,12 @@ export default function NewQRCodeGenerator ()
           <div className='w-full  p-4'>
             <h2 className='font-extrabold text-blue-600 text-center text-3xl'>Add Logo</h2>
             <div className='flex flex-col space-y-4'>
-              <ImageUploadField name='logoImage' handleChange={ handleChange } />
+              <ImageUploadField
+                name="logoImage"  // This remains fixed for your app logic
+                label="Upload Logo"  // Custom label displayed instead of the name
+                handleChange={ handleChange }
+                hideName={ true }  // Hide the default name label
+              />
               <InputField name='logoWidth' type='range' handleChange={ handleChange } min={ 20 } max={ 500 } />
               <InputField name='logoHeight' type='range' handleChange={ handleChange } min={ 20 } max={ 500 } />
               <InputField name='logoOpacity' type='range' handleChange={ handleChange } min={ 0 } max={ 1 } step={ 0.1 } defaultValue={ 1 } />
