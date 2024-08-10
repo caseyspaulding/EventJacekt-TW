@@ -20,7 +20,7 @@ export default function ClientDashboard ( { orgName, dashboardData, events }: Cl
   return (
     <div className="flex">
       <DashboardSidebar />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 ">
         <h1 className="mb-6 text-3xl font-bold">Dashboard for { orgName }</h1>
         <p className="mb-4 text-xl">Welcome to { dashboardData.organizationName }</p>
 

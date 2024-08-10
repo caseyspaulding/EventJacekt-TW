@@ -26,7 +26,7 @@ export default async function DashboardLayout ( { children }: PropsWithChildren<
         <UserProvider user={ user }>
             <SidebarProvider initialCollapsed={ sidebarCookie.get().isCollapsed }>
                 <DashboardNavbar />
-                <div className="mt-16 flex items-start">
+                <div className=" flex items-start">
                     <DashboardSidebar />
                     <LayoutContent>{ children }</LayoutContent>
                 </div>
