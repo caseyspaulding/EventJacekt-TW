@@ -4,7 +4,7 @@ import type { JSX, SVGProps } from "react"
 const navigation = {
   solutions: [
     { name: 'Ticketing', href: '/ticketing' },
-    { name: 'Forms', href: '/forms' },
+    { name: 'QR Code Generator', href: '/qrcode' },
     { name: 'CRM', href: '/crm' },
     { name: 'Analytics', href: '/analytics' },
   ],

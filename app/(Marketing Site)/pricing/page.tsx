@@ -151,7 +151,7 @@ export default function Example ()
             <div>
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
                 <span className="text-gray-900">Everything you need for</span>
-                <span className="text-blue-600 ml-2">$19 a month</span>
+                <span className="text-blue-600 ml-2">$ ?? a month</span>
               </h1>
               <p className="mt-5 text-xl text-gray-500">
                 Includes every feature we offer plus unlimited projects and unlimited users.
