@@ -12,11 +12,12 @@ export function AnnouncementBanner ()
           </Badge>
           <p className="text-sm font-medium text-gray-900 dark:text-white md:my-0">
             🚧 We’re still working on things here, so please pardon the dust while we improve the site. 🚧
-            <p className="ml-2 inline-flex items-center text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+            <span className="ml-2 inline-flex items-center text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
               Thanks for stopping by!
-            </p>
+            </span>
           </p>
         </div>
+
         <Banner.CollapseButton
           color="gray"
           className="border-0 bg-transparent px-0 text-gray-400 enabled:hover:bg-gray-200 enabled:hover:text-gray-900 dark:enabled:hover:bg-gray-600 dark:enabled:hover:text-white [&>span]:px-2"
