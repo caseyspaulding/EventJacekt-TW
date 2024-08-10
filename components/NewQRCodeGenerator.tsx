@@ -42,7 +42,7 @@ export default function NewQRCodeGenerator ()
     <>
       <div className='mx-auto max-w-7xl px-6 pb-2 sm:pt-14 lg:px-8 lg:pt-1'>
         <div className='app mt-10 flex justify-center items-center '>
-          <h1 className="text-4xl font-extrabold text-center bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-extrabold text-center bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
             Free QR Code Generator
           </h1>
         </div>
@@ -228,7 +228,7 @@ export default function NewQRCodeGenerator ()
 
 
             <div className='w-full  p-4'>
-              <h2 className='font-extrabold text-blue-600 text-center text-3xl'>Add Logo</h2>
+              <h2 className='text-2xl font-extrabold text-center bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-transparent'>Add Your Logo</h2>
               <div className='flex flex-col space-y-4'>
                 <ImageUploadField
                   name="logoImage"  // This remains fixed for your app logic
