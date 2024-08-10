@@ -70,10 +70,13 @@ export default function NavBar1 ()
     };
   }, [] );
   return (
-    <div className={ `sticky top-0 z-50 bg-white transition-all duration-300 ${ isSticky ? 'shadow-lg' : '' }` }>
+    <div
+      className={ `sticky top-0 z-50 transition-all duration-300 ${ isSticky ? 'bg-white/70 backdrop-blur-lg' : 'bg-white/30 backdrop-blur-none'
+        }` }
+    >
       <header>
-        <Popover className="relative bg-white">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 md:justify-start md:space-x-10 lg:px-8">
+        <Popover className="relative bg-transparent">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:justify-start md:space-x-10 lg:px-8">
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <Link href="/">
                 <span className="sr-only">EventJacket</span>
@@ -92,7 +95,7 @@ export default function NavBar1 ()
               </Link>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
-              <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+              <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open menu</span>
                 <Bars3Icon aria-hidden="true" className="h-6 w-6" />
@@ -100,7 +103,7 @@ export default function NavBar1 ()
             </div>
             <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
               <Popover className="relative">
-                <PopoverButton className="group inline-flex items-center rounded-md bg-white text-base font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[open]:text-gray-900">
+                <PopoverButton className="group inline-flex items-center rounded-md  text-base font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[open]:text-gray-900">
                   <span>Solutions</span>
                   <ChevronDownIcon
                     aria-hidden="true"
