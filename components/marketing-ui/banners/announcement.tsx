@@ -7,13 +7,12 @@ export function AnnouncementBanner ()
     <Banner>
       <div className="flex w-full items-center justify-between border border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
         <div className="mx-auto flex items-center gap-x-3">
-          <Badge className="hidden w-fit md:inline">Under Construction</Badge>
+          <Badge className="hidden bg-yellow-300 text-zinc-900 w-fit md:inline">
+            🚧 Under Construction 🚧
+          </Badge>
           <p className="text-sm font-medium text-gray-900 dark:text-white md:my-0">
-            Please keep in mind. We are still under construction. We are working hard to make this better for you.
-            <p
-
-              className="ml-2 inline-flex items-center text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-            >
+            🚧 We’re still working on things here, so please pardon the dust while we improve the site. 🚧
+            <p className="ml-2 inline-flex items-center text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
               Thanks for stopping by!
             </p>
           </p>
