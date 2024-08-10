@@ -1,6 +1,6 @@
 'use client';
 
-import { formatToUSD } from '../../../../../../helpers/format-number';
+import { formatToUSD } from '@/helpers/format-number';
 import { Badge, Breadcrumb, Button, Card, Label, Table, Textarea, TextInput } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';

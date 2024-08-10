@@ -14,14 +14,14 @@ export function RootNavbar() {
     <Navbar fluid rounded>
       <NavbarBrand as={Link} href="/">
         <img
-          alt="Flowbite React Logo"
+          alt=""
           src="https://flowbite.com/docs/images/logo.svg"
           width={36}
           height={36}
           className="mr-3 h-6 sm:h-9"
         />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Flowbite React
+          Eventjacket
         </span>
       </NavbarBrand>
       <div className="flex gap-2 md:order-2">

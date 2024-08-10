@@ -88,7 +88,7 @@ export function DashboardNavbar ()
                                 width={ 32 }
                                 height={ 32 }
                             />
-                            <span className="self-center whitespace-nowrap text-xl font-extrabold text-blue-700 dark:text-white">
+                            <span className="self-center whitespace-nowrap text-xl font-bold bg-gradient-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent">
                                 EventJacket
                             </span>
                         </Navbar.Brand>
@@ -156,10 +156,10 @@ function AppDrawerDropdown ()
                     <div className="text-sm font-medium text-gray-900 dark:text-white">Users</div>
                 </Link>
                 <Link
-                    href="#"
+                    href="/"
                     className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
                 >
-                    <HiInbox className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
+                    <HiEye className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
                     <div className="text-sm font-medium text-gray-900 dark:text-white">Inbox</div>
                 </Link>
                 <Link

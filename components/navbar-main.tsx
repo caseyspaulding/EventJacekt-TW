@@ -15,10 +15,10 @@ export function NavbarMain() {
                 height={32}
                 src="/images/logo.svg"
                 className="mr-3 h-8"
-                alt="Flowbite Logo"
+                alt=""
               />
               <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-                Flowbite
+                EventJacket
               </span>
             </Link>
             <div className="hidden sm:ml-6 sm:flex">

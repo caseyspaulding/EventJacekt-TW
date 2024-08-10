@@ -16,9 +16,11 @@ import
     HiDocumentReport,
     HiInboxIn,
     HiLockClosed,
+    HiMail,
     HiSearch,
     HiShoppingBag,
     HiSupport,
+    HiTicket,
     HiUsers,
     HiViewGrid
 } from 'react-icons/hi';
@@ -259,14 +261,24 @@ function BottomMenu ( { isCollapsed }: { isCollapsed: boolean } )
 }
 
 const pages: SidebarItem[] = [
-    { href: '/dashboard', icon: HiChartPie, label: 'Dashboard' },
+    { href: '/', icon: HiChartPie, label: 'Dashboard' },
     { href: '/kanban', icon: HiViewGrid, label: 'Kanban' },
-    { href: '/mailing/inbox', icon: HiInboxIn, label: 'Inbox', badge: '3' },
+    //{ href: '/mailing/inbox', icon: HiInboxIn, label: 'Inbox', badge: '3' },
+    { href: '', icon: HiClipboardList, label: 'Forms' },
     {
-        icon: HiShoppingBag,
-        label: 'E-commerce',
+        icon: HiMail,
+        label: 'Mail',
         items: [
-            { href: '/e-commerce/products', label: 'Products' },
+            { href: '/mailing/inbox', label: 'Inbox' },
+            { href: '/mailing/compose', label: 'Compose' },
+            { href: '/mailing/message', label: 'Message' }
+        ]
+    },
+    {
+        icon: HiTicket,
+        label: 'Tickets',
+        items: [
+            { href: '/e-commerce/products', label: 'Tickets' },
             { href: '/e-commerce/billing', label: 'Billing' },
             { href: '/e-commerce/invoice', label: 'Invoice' }
         ]
@@ -281,16 +293,7 @@ const pages: SidebarItem[] = [
             { href: '/users/settings', label: 'Settings' }
         ]
     },
-    {
-        icon: HiDocumentReport,
-        label: 'Marketing',
-        items: [
-            { href: '/pages/pricing', label: 'Pricing' },
-            { href: '/pages/maintenance', label: 'Maintenace' },
-            { href: '/pages/404', label: '404 not found' },
-            { href: '/pages/500', label: '500 server error' }
-        ]
-    },
+   
 ];
 
 const externalPages: SidebarItem[] = [
