@@ -44,6 +44,7 @@ const navigation = [
   { name: "Pricing", href: "/pricing" },
   { name: "FAQs", href: "/faqs" },
   { name: "Blog", href: "/blog" },
+  { name: "About", href: "/about" },
 ];
 export default function NavBar1 ()
 {
