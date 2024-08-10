@@ -11,8 +11,10 @@ export function AnnouncementBanner ()
             🚧 Under Construction 🚧
           </Badge>
           <p className="text-sm font-medium text-gray-900 dark:text-white md:my-0">
-            🚧 Under Construction🚧
-            
+            🚧 We’re still working on things here, so please pardon the dust.🚧
+            <span className="ml-2 inline-flex items-center text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+              Thanks for stopping by!
+            </span>
           </p>
         </div>
 
