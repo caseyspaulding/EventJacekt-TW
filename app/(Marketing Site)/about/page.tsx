@@ -40,7 +40,7 @@ export default function About ()
   return (
     <><NavBar1 />
     <AboutHeroBig />
-      <FooterFull />
+    <FooterFull />    
     </>
   )
 }

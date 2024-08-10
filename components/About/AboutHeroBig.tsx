@@ -34,13 +34,7 @@ const timeline = [
     date: 'Dec 2025',
     dateTime: '2025-03',
   },
-  {
-    name: 'First Major Event',
-    description:
-      'We supported our first major event, showcasing the full potential of EventJacket and proving its value in a real-world setting.',
-    date: 'Jan 2025',
-    dateTime: '2025-06',
-  },
+ 
 ];
 
 
@@ -107,7 +101,7 @@ const team = [
 
 export default function AboutHeroBig ()
 {
-  const [ mobileMenuOpen, setMobileMenuOpen ] = useState( false )
+  
 
   return (
     <div className="bg-white">
@@ -153,7 +147,7 @@ export default function AboutHeroBig ()
             />
           </div>
           <div className="overflow-hidden">
-            <div className="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
+            <div className="mx-auto max-w-7xl px-6 pb-32 pt-35 sm:pt-60 lg:px-8 lg:pt-1">
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
                   <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -168,7 +162,7 @@ export default function AboutHeroBig ()
                     <div className="relative">
                       <img
                         alt=""
-                        src="/images/avatars/caseyandlaura.jpg"
+                        src="https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
                         className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                       />
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -178,7 +172,7 @@ export default function AboutHeroBig ()
                     <div className="relative">
                       <img
                         alt=""
-                        src="https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
+                        src="/images/avatars/caseyandlaura.jpg"
                         className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                       />
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -204,7 +198,7 @@ export default function AboutHeroBig ()
                     <div className="relative">
                       <img
                         alt=""
-                        src="https://images.unsplash.com/photo-1670272505284-8faba1c31f7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
+                        src="/images/festival-4.png"
                         className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                       />
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -356,7 +350,7 @@ export default function AboutHeroBig ()
         {/* Blog section */ }
        
       </main>
-<FooterFull />
+
       {/* Footer */ }
    
     </div>
