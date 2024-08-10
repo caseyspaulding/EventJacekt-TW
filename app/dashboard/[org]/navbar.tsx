@@ -88,7 +88,7 @@ export function DashboardNavbar ()
                                 width={ 32 }
                                 height={ 32 }
                             />
-                            <span className="self-center whitespace-nowrap text-xl font-bold bg-gradient-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent">
+                            <span className="self-center whitespace-nowrap text-xl font-bold bg-gradient-to-r from-blue-700 to-blue-600 bg-clip-text text-transparent">
                                 EventJacket
                             </span>
                         </Navbar.Brand>

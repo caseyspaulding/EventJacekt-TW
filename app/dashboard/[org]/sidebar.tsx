@@ -188,10 +188,16 @@ function MobileSidebar ( { orgName, pathname }: DashboardSidebarProps )
     );
 }
 
-function SidebarItem ( { href, target, icon, label, items, badge, pathname }: SidebarItemProps )
+function SidebarItem ( { href, target, icon, label, items, badge, pathname } )
 {
     const { user } = useUser();
     const orgName = user?.orgName;
+    const { close } = useSidebarContext().mobile; // Access the close function from the mobile sidebar context
+
+    const handleClick = () =>
+    {
+        if ( close ) close(); // Close the sidebar if the close function is available
+    };
 
     if ( items )
     {
@@ -214,6 +220,7 @@ function SidebarItem ( { href, target, icon, label, items, badge, pathname }: Si
                             'justify-center [&>*]:font-normal',
                             pathname === item.href && 'bg-gray-100 dark:bg-gray-700'
                         ) }
+                        onClick={ handleClick } // Close the sidebar when an item is clicked
                     >
                         { item.label }
                     </Sidebar.Item>
@@ -231,12 +238,12 @@ function SidebarItem ( { href, target, icon, label, items, badge, pathname }: Si
             icon={ icon }
             label={ badge }
             className={ twMerge( pathname === finalHref && 'bg-gray-100 dark:bg-gray-700' ) }
+            onClick={ handleClick } // Close the sidebar when an item is clicked
         >
             { label }
         </Sidebar.Item>
     );
 }
-
 function BottomMenu ( { isCollapsed }: { isCollapsed: boolean } )
 {
     return (
