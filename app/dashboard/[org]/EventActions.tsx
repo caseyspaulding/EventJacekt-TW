@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { createEvent, updateEvent, deleteEvent } from './actions';
+import { createEvent, updateEvent, deleteEvent } from '@/app/actions/eventActions';
 import { useFormStatus } from 'react-dom';
 
 interface EventActionsProps {

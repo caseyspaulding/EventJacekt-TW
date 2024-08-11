@@ -6,6 +6,30 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
 import { generateSlug } from '@/utils/stringUtils';
 
+import toast from 'react-hot-toast';
+import { createEvent } from '@/app/actions/eventActions';
+
+// Explicitly define the type for your event object
+type NewEvent = {
+  orgId: string;
+  name: string;
+  slug: string;
+  description?: string;
+  startDate?: Date;
+  endDate?: Date;
+  venue?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  zipCode?: string;
+  maxAttendees?: number;
+  featuredImage?: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 const CreateEventPage = () =>
 {
   const [ name, setName ] = useState( '' );
@@ -20,42 +44,94 @@ const CreateEventPage = () =>
   const [ zipCode, setZipCode ] = useState( '' );
   const [ maxAttendees, setMaxAttendees ] = useState( 0 );
   const slug = generateSlug( name );
-  const router = useRouter();
+
   const { user } = useUser();
+  const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
+
+  type PublicUrlResponse = {
+    data: {
+      publicUrl: string;
+    };
+    error: any;
+  };
+
+  const handleImageUpload = async ( file: File | null ) =>
+  {
+    if ( !file )
+    {
+      console.error( 'No file selected' );
+      return null;
+    }
+
+    const { data, error } = await createClient().storage
+      .from( 'blogimages' ) // Replace with your bucket name
+      .upload( `public/${ file.name }`, file, {
+        cacheControl: '3600',
+        upsert: false,
+      } );
+
+    if ( error )
+    {
+      console.error( 'Error uploading file:', error.message );
+      return null;
+    }
+
+    const { data: publicUrlData } = createClient().storage
+      .from( 'blogimages' )
+      .getPublicUrl( `public/${ file.name }` );
+
+    return publicUrlData?.publicUrl || '';
+  };
 
   const handleSubmit = async ( e: { preventDefault: () => void } ) =>
   {
     e.preventDefault();
     if ( !user ) return;
-    const supabase = createClient();
+   
     const orgId = user.organizationId; // Get the orgId from the context
+    const imageUrl = await handleImageUpload( featuredImage );
+    if ( !imageUrl )
+    {
+      toast.error( 'Failed to upload the image.' );
+      return;
+    }
+    const formData = new FormData();
+    formData.append( 'orgId', orgId );
+    formData.append( 'name', name );
+    formData.append( 'slug', slug );
+    formData.append( 'description', description );
+    formData.append( 'startDate', startDate );
+    formData.append( 'endDate', endDate );
+    formData.append( 'venue', venue );
+    formData.append( 'address', address );
+    formData.append( 'city', city );
+    formData.append( 'state', state );
+    formData.append( 'country', country );
+    formData.append( 'zipCode', zipCode );
+    formData.append( 'maxAttendees', maxAttendees.toString() );
+    formData.append( 'status', 'draft' );
 
-    const { data, error } = await supabase.from( 'events' ).insert( [
+    if ( featuredImage )
+    {  // Check if featuredImage is not null or undefined
+      formData.append( 'featuredImage', featuredImage );
+    }
+
+    try
+    {
+      const response = await createEvent( formData );
+
+      if ( response.success )
       {
-        orgId,
-        name,
-        slug,
-        description,
-        startDate,
-        endDate,
-        venue,
-        address,
-        city,
-        state,
-        country,
-        zipCode,
-        maxAttendees,
-        status: 'draft', // default status
-      },
-    ] );
-
-    if ( error )
+        toast.success( 'Event created successfully!' );
+        // Clear form or redirect user, etc.
+      } else
+      {
+        toast.error( 'Failed to create event: ' + response.message );
+      }
+    } catch ( error )
     {
       console.error( 'Error creating event:', error );
-    } else
-    {
-      console.log( 'Event created successfully:', data );
-      router.push( `/dashboard/[org]/create-event/create-tickets` );
+      toast.error( 'An unexpected error occurred.' );
     }
   };
 
@@ -91,7 +167,17 @@ const CreateEventPage = () =>
             required
           />
         </div>
-
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Featured Image
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={ ( e ) => setFeaturedImage( e.target.files?.[ 0 ] || null ) }
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
         <div>
           <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
             Start Date

@@ -5,6 +5,8 @@ import { createClient } from '@/utils/supabase/server';
 
 export async function getEventIdBySlug ( slug: string )
 {
+
+  console.log( 'Fetching event ID for slug:', slug ); // Debug log
   const supabase = createClient();
 
   const { data: event, error } = await supabase
