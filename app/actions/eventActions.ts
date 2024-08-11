@@ -5,7 +5,8 @@ import { events, organizations } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
 import { and, eq } from 'drizzle-orm/expressions';
 import { revalidatePath } from 'next/cache';
-import { v4 as uuidv4 } from 'uuid';
+
+
 
 
 
@@ -79,6 +80,7 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
   const zipCode = formData.get( 'zipCode' ) as string;
   const maxAttendees = Number( formData.get( 'maxAttendees' ) );
   const featuredImage = formData.get( 'featuredImage' ) as string;
+  
 
   const updatedEvent = {
     name,
@@ -91,6 +93,7 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
     state,
     country,
     zipCode,
+ 
     maxAttendees,
     featuredImage,
     updatedAt: new Date(),

@@ -1,8 +1,7 @@
-// app/dashboard/[org]/create-event/create-tickets/page.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { use, useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
 import { createClient } from '@/utils/supabase/client';
 import { getEventIdBySlug } from '../../../../../actions/getEventIdBySlug';
@@ -20,7 +19,7 @@ const CreateTicketsPage = () =>
   const [ eventId, setEventId ] = useState<string | null>( null );
   const router = useRouter();
   const { user } = useUser();
-  const { eventSlug } = router.query;
+  const { eventSlug } = useParams();
 
   useEffect( () =>
   {
@@ -41,14 +40,12 @@ const CreateTicketsPage = () =>
     return <p>Loading...</p>;
   }
 
-  const handleSubmit = async ( e: { preventDefault: () => void; } ) =>
+  const handleSubmit = async ( e: { preventDefault: () => void } ) =>
   {
     e.preventDefault();
     if ( !user ) return;
     const supabase = createClient();
-    const eventId = "some-event-id"; // This should be dynamic based on the created event
-    const orgId = user.organizationId; // Get the orgId from the context
-    const orgName = user.orgName; // Get the orgName from the context
+    const orgId = user.organizationId;
 
     const { data, error } = await supabase.from( 'ticket_types' ).insert( [
       {
@@ -71,7 +68,7 @@ const CreateTicketsPage = () =>
     } else
     {
       console.log( 'Ticket created successfully:', data );
-      router.push( `/dashboard/${ encodeURIComponent( orgName ) }/manage-events` ); // Redirect to manage events or any other relevant page
+      router.push( `/dashboard/${ encodeURIComponent( user.orgName ) }/manage-events` );
     }
   };
 
@@ -80,17 +77,82 @@ const CreateTicketsPage = () =>
       <h1>Create Tickets for Event</h1>
       <p>Event ID: { eventId }</p>
       <form onSubmit={ handleSubmit }>
-        <input type="text" value={ ticketName } onChange={ ( e ) => setTicketName( e.target.value ) } placeholder="Ticket Name" required />
-        <textarea value={ description } onChange={ ( e ) => setDescription( e.target.value ) } placeholder="Description" required />
-        <input type="number" value={ price } onChange={ ( e ) => setPrice( Number( e.target.value ) ) } placeholder="Price" required />
-        <input type="number" value={ quantity } onChange={ ( e ) => setQuantity( Number( e.target.value ) ) } placeholder="Quantity" required />
-        <input type="datetime-local" value={ saleStartDate } onChange={ ( e ) => setSaleStartDate( e.target.value ) } required />
-        <input type="datetime-local" value={ saleEndDate } onChange={ ( e ) => setSaleEndDate( e.target.value ) } required />
-        <label>
-          <input type="checkbox" checked={ isEarlyBird } onChange={ ( e ) => setIsEarlyBird( e.target.checked ) } />
-          Early Bird
-        </label>
-        <input type="number" value={ maxPerCustomer } onChange={ ( e ) => setMaxPerCustomer( Number( e.target.value ) ) } placeholder="Max Per Customer" />
+        <div>
+          <label>Ticket Name</label>
+          <input
+            type="text"
+            value={ ticketName }
+            onChange={ ( e ) => setTicketName( e.target.value ) }
+            placeholder="Ticket Name"
+            required
+          />
+        </div>
+        <div>
+          <label>Description</label>
+          <textarea
+            value={ description }
+            onChange={ ( e ) => setDescription( e.target.value ) }
+            placeholder="Description"
+            required
+          />
+        </div>
+        <div>
+          <label>Price</label>
+          <input
+            type="number"
+            value={ price }
+            onChange={ ( e ) => setPrice( Number( e.target.value ) ) }
+            placeholder="Price"
+            required
+          />
+        </div>
+        <div>
+          <label>Quantity</label>
+          <input
+            type="number"
+            value={ quantity }
+            onChange={ ( e ) => setQuantity( Number( e.target.value ) ) }
+            placeholder="Quantity"
+            required
+          />
+        </div>
+        <div>
+          <label>Sale Start Date</label>
+          <input
+            type="datetime-local"
+            value={ saleStartDate }
+            onChange={ ( e ) => setSaleStartDate( e.target.value ) }
+            required
+          />
+        </div>
+        <div>
+          <label>Sale End Date</label>
+          <input
+            type="datetime-local"
+            value={ saleEndDate }
+            onChange={ ( e ) => setSaleEndDate( e.target.value ) }
+            required
+          />
+        </div>
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={ isEarlyBird }
+              onChange={ ( e ) => setIsEarlyBird( e.target.checked ) }
+            />
+            Early Bird
+          </label>
+        </div>
+        <div>
+          <label>Max Per Customer</label>
+          <input
+            type="number"
+            value={ maxPerCustomer }
+            onChange={ ( e ) => setMaxPerCustomer( Number( e.target.value ) ) }
+            placeholder="Max Per Customer"
+          />
+        </div>
         <button type="submit">Create Ticket</button>
       </form>
     </div>

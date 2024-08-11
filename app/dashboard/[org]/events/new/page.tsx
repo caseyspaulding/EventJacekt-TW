@@ -6,8 +6,8 @@ import { useUser } from '@/contexts/UserContext';
 import { generateSlug } from '@/utils/stringUtils';
 import toast from 'react-hot-toast';
 import { createEvent } from '@/app/actions/eventActions';
-import router from 'next/router';
 
+import ModalBasic from '@/components/modals/ModalBasic';
 
 const CreateEventPage = () =>
 {
@@ -22,10 +22,11 @@ const CreateEventPage = () =>
   const [ country, setCountry ] = useState( '' );
   const [ zipCode, setZipCode ] = useState( '' );
   const [ maxAttendees, setMaxAttendees ] = useState( 0 );
-  const slug = generateSlug( name );
 
+  const [ isModalOpen, setIsModalOpen ] = useState( false );
   const { user } = useUser();
   const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
+  const [ slug, setSlug ] = useState<string | null>( null ); // Initialize slug state
 
 
 
@@ -79,10 +80,14 @@ const CreateEventPage = () =>
       return;
     }
 
+
+    const generatedSlug = generateSlug( name ); // Generate slug here before event creation
+    setSlug( generatedSlug ); // Set slug in state
+
     const formData = new FormData();
     formData.append( 'orgId', orgId );
     formData.append( 'name', name );
-    formData.append( 'slug', slug );
+    formData.append( 'slug', generatedSlug );
     formData.append( 'description', description );
     formData.append( 'startDate', startDate );
     formData.append( 'endDate', endDate );
@@ -104,8 +109,9 @@ const CreateEventPage = () =>
       if ( response.success )
       {
         toast.success( 'Event created successfully!' );
+        setIsModalOpen( true );
 
-        // Clear the form
+
         // Clear the form state
         setName( '' );
         setDescription( '' );
@@ -120,14 +126,13 @@ const CreateEventPage = () =>
         setMaxAttendees( 0 );
         setFeaturedImage( null );
 
-        // Redirect to create tickets page
 
-        const eventSlug = slug; // Use the slug from the event creation
-        
-        router.push( `/dashboard/${ orgId }/events/${ eventSlug }/create-tickets` );
+       
+
       } else
       {
         toast.error( 'Failed to create event: ' + response.message );
+        console.error( 'Failed to create event:', response.message );
       }
     } catch ( error )
     {
@@ -136,8 +141,16 @@ const CreateEventPage = () =>
     }
   };
 
+  const handleModalClose = () =>
+  {
+    setIsModalOpen( false );
+  };
+
+
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-md">
+
+
       <h1 className="text-2xl font-bold mb-6 text-center">Create an Event</h1>
       <form onSubmit={ handleSubmit } className="space-y-6">
         <div>
@@ -319,6 +332,12 @@ const CreateEventPage = () =>
           </button>
         </div>
       </form>
+      <ModalBasic
+        isOpen={ isModalOpen }
+        onClose={ handleModalClose }
+        user={ user }
+        slug={ slug as string }
+      />
     </div>
   );
 };
