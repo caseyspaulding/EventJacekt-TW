@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 import './globals.css';
 import { AnnouncementBanner } from '@/components/marketing-ui/banners/announcement';
 
+
 const inter = Inter( { subsets: [ 'latin' ], display: 'swap' } );
 
 export default function RootLayout ( { children }: PropsWithChildren )

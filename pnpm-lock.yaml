@@ -23,6 +23,9 @@ importers:
       '@markdoc/markdoc':
         specifier: ^0.4.0
         version: 0.4.0(@types/react@18.3.3)(react@18.3.1)
+      '@sinclair/typebox':
+        specifier: ^0.33.4
+        version: 0.33.4
       '@stripe/stripe-js':
         specifier: ^4.2.0
         version: 4.2.0
@@ -56,6 +59,9 @@ importers:
       drizzle-orm:
         specifier: ^0.32.2
         version: 0.32.2(@types/react@18.3.3)(postgres@3.4.4)(react@18.3.1)
+      drizzle-typebox:
+        specifier: ^0.1.1
+        version: 0.1.1(@sinclair/typebox@0.33.4)(drizzle-orm@0.32.2(@types/react@18.3.3)(postgres@3.4.4)(react@18.3.1))
       easymde:
         specifier: ^2.18.0
         version: 2.18.0
@@ -140,6 +146,9 @@ importers:
       sharp:
         specifier: ^0.33.4
         version: 0.33.4
+      slugify:
+        specifier: ^1.6.6
+        version: 1.6.6
       stripe:
         specifier: ^16.7.0
         version: 16.7.0
@@ -1671,6 +1680,9 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@sinclair/typebox@0.33.4':
+    resolution: {integrity: sha512-IUMFWdOtTqJ5F/rCjy2f3InRS9i4EWaCAMRsXVpUUQVi8hVByz/ifOi41Qt0Law8lz01/6zTz67vT70sB1VZbw==}
+
   '@sindresorhus/slugify@1.1.2':
     resolution: {integrity: sha512-V9nR/W0Xd9TSGXpZ4iFUcFGhuOJtZX82Fzxj1YISlbSgKvIiNa7eLEZrT0vAraPOt++KHauIVNYgGRgjc13dXA==}
     engines: {node: '>=10'}
@@ -2808,6 +2820,12 @@ packages:
         optional: true
       sqlite3:
         optional: true
+
+  drizzle-typebox@0.1.1:
+    resolution: {integrity: sha512-eNIDe+EOCB96/bbRHOPbrC+bsuCXFd2H0/96Fl0cJkY+NKnu2qLTnGI6ILXPbyu82Yr1tsShlzDypw+VeCDqaQ==}
+    peerDependencies:
+      '@sinclair/typebox': '>=0.17.6'
+      drizzle-orm: '>=0.23.13'
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -5230,6 +5248,10 @@ packages:
 
   slate@0.91.4:
     resolution: {integrity: sha512-aUJ3rpjrdi5SbJ5G1Qjr3arytfRkEStTmHjBfWq2A2Q8MybacIzkScSvGJjQkdTk3djCK9C9SEOt39sSeZFwTw==}
+
+  slugify@1.6.6:
+    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
+    engines: {node: '>=8.0.0'}
 
   sort-keys@5.0.0:
     resolution: {integrity: sha512-Pdz01AvCAottHTPQGzndktFNdbRA75BgOfeT1hH+AMnJFv8lynkPi42rfeEhpx1saTEI3YNMWxfqu0sFD1G8pw==}
@@ -7894,6 +7916,8 @@ snapshots:
   '@rollup/rollup-linux-x64-gnu@4.20.0':
     optional: true
 
+  '@sinclair/typebox@0.33.4': {}
+
   '@sindresorhus/slugify@1.1.2':
     dependencies:
       '@sindresorhus/transliterate': 0.1.2
@@ -9099,6 +9123,11 @@ snapshots:
       '@types/react': 18.3.3
       postgres: 3.4.4
       react: 18.3.1
+
+  drizzle-typebox@0.1.1(@sinclair/typebox@0.33.4)(drizzle-orm@0.32.2(@types/react@18.3.3)(postgres@3.4.4)(react@18.3.1)):
+    dependencies:
+      '@sinclair/typebox': 0.33.4
+      drizzle-orm: 0.32.2(@types/react@18.3.3)(postgres@3.4.4)(react@18.3.1)
 
   eastasianwidth@0.2.0: {}
 
@@ -12547,6 +12576,8 @@ snapshots:
       immer: 9.0.21
       is-plain-object: 5.0.0
       tiny-warning: 1.0.3
+
+  slugify@1.6.6: {}
 
   sort-keys@5.0.0:
     dependencies:

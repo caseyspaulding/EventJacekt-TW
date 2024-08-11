@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1722170603361,
-      "tag": "0000_careless_starhawk",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1722347216048,
-      "tag": "0001_melodic_mandarin",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1723128516497,
-      "tag": "0002_unusual_silverclaw",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1723240296437,
-      "tag": "0003_strong_jackal",
+      "when": 1723402063031,
+      "tag": "0000_red_sandman",
       "breakpoints": true
     }
   ]

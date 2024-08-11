@@ -1,5 +1,7 @@
-import { pgTable, uuid, text, timestamp, numeric, serial, varchar } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
+import { pgTable, uuid, text, timestamp, numeric, serial, varchar, integer, boolean, PgColumn, PgTableWithColumns } from 'drizzle-orm/pg-core';
+
+
 
 // Organizations Table
 export const organizations = pgTable( 'organizations', {
@@ -27,16 +29,26 @@ export const userProfiles = pgTable( 'user_profiles', {
 
 // Events Table
 export const events = pgTable( 'events', {
-    id: uuid( 'id' )
-        .primaryKey()
-        .default( sql`uuid_generate_v4()` ),
-    orgId: uuid( 'org_id' )
-        .notNull()
-        .references( () => organizations.id ),
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
     name: text( 'name' ).notNull(),
+    featuredImage: varchar( 'featured_image', { length: 255 } ), // URL of the featured image
+    slug: text( 'slug' ).notNull().unique(), // Add a slug column for SEO-friendly URLs
+    description: text( 'description' ),
+    startDate: timestamp( 'start_date' ).notNull(),
+    endDate: timestamp( 'end_date' ).notNull(),
+    venue: text( 'venue' ),
+    address: text( 'address' ),
+    city: text( 'city' ),
+    state: text( 'state' ),
+    country: text( 'country' ),
+    zipCode: text( 'zip_code' ),
+    maxAttendees: integer( 'max_attendees' ),
+    status: text( 'status' ).notNull().default( 'draft' ), // e.g., 'draft', 'published', 'cancelled'
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
-    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
 } );
+
 
 // Customers Table
 export const customers = pgTable( 'customers', {
@@ -65,25 +77,42 @@ export const orgPayments = pgTable( 'org_payments', {
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
 
-// Tickets Table
-export const tickets = pgTable( 'tickets', {
-    id: uuid( 'id' )
-        .primaryKey()
-        .default( sql`uuid_generate_v4()` ),
-    eventId: uuid( 'event_id' )
-        .notNull()
-        .references( () => events.id ),
-    orgId: uuid( 'org_id' )
-        .notNull()
-        .references( () => organizations.id ), // Reference to organizations
-    customerId: uuid( 'customer_id' )
-        .notNull()
-        .references( () => customers.id ), // Reference to customers
+
+// Ticket Types Table
+export const ticketTypes = pgTable( 'ticket_types', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    eventId: uuid( 'event_id' ).notNull().references( () => events.id ),
+    orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
     name: text( 'name' ).notNull(),
-    price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(), // Ticket price
+    description: text( 'description' ),
+    price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
+    quantity: integer( 'quantity' ).notNull(),
+    saleStartDate: timestamp( 'sale_start_date' ).notNull(),
+    saleEndDate: timestamp( 'sale_end_date' ).notNull(),
+    isEarlyBird: boolean( 'is_early_bird' ).default( false ),
+    maxPerCustomer: integer( 'max_per_customer' ),
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
+
+// Tickets Table
+export const tickets = pgTable( 'tickets', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    eventId: uuid( 'event_id' ).notNull().references( () => events.id ),
+    orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
+    customerId: uuid( 'customer_id' ).references( () => customers.id ),
+    ticketTypeId: uuid( 'ticket_type_id' ).notNull().references( () => ticketTypes.id ), // New field
+    name: text( 'name' ).notNull(),
+    price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
+    status: text( 'status' ).notNull().default( 'available' ), // e.g., 'available', 'sold', 'reserved'
+    validFrom: timestamp( 'valid_from' ).notNull(),
+    validUntil: timestamp( 'valid_until' ).notNull(),
+    barcode: text( 'barcode' ).unique(),
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+
 
 // Orders Table
 export const orders = pgTable( 'orders', {
@@ -199,5 +228,81 @@ export const blogPosts = pgTable( 'blog_posts', {
     updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
     publishedAt: timestamp( 'published_at' ),
     tags: text( 'tags' ).array(),
-    featuredImage: varchar( 'featured_image', { length: 255 } ), // New column for storing featured image URL
+    featuredImage: varchar( 'featured_image', { length: 255 } ), 
 } );
+
+// Ticket Sales Pages Table
+export const ticketPages = pgTable( 'ticket_pages', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    eventId: uuid( 'event_id' ).notNull().references( () => events.id ),
+    orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
+    url: text( 'url' ).notNull().unique(), // Unique URL for the ticket sales page
+    pageTitle: text( 'page_title' ).notNull(), // Custom title for the page
+    description: text( 'description' ), // Description or details for the sales page
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+// Ticket Analytics Table
+export const ticketAnalytics = pgTable( 'ticket_analytics', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    ticketPageId: uuid( 'ticket_page_id' ).notNull().references( () => ticketPages.id ),
+    views: integer( 'views' ).default( 0 ), // Number of times the page was viewed
+    clicks: integer( 'clicks' ).default( 0 ), // Number of times tickets were clicked on the page
+    purchases: integer( 'purchases' ).default( 0 ), // Number of ticket purchases
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+export type TicketType = {
+    id: string;
+    eventId: string;
+    orgId: string;
+    name: string;
+    description?: string;
+    price: number;
+    quantity: number;
+    saleStartDate: Date;
+    saleEndDate: Date;
+    isEarlyBird?: boolean;
+    maxPerCustomer?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+};
+
+export type Ticket = {
+    id: string;
+    eventId: string;
+    orgId: string;
+    customerId?: string;
+    ticketTypeId: string;
+    name: string;
+    price: number;
+    status: 'available' | 'sold' | 'reserved';
+    validFrom: Date;
+    validUntil: Date;
+    barcode?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+};
+
+export type Event = {
+    id: string;
+    orgId: string;
+    organizationName: string;
+    name: string;
+    featuredImage?: string;
+    description?: string;
+    startDate: Date;
+    endDate: Date;
+    venue?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    zipCode?: string;
+    maxAttendees?: number;
+    status: 'draft' | 'published' | 'cancelled';
+    createdAt?: Date;
+    updatedAt?: Date;
+};

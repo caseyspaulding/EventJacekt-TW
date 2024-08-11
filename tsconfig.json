@@ -31,8 +31,11 @@
     "target": "esnext"
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/dashboard/[org]/create-event/[eventSlug]/create-tickets"
+  ]
 }
-
-
- 
