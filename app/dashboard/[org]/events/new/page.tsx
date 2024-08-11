@@ -6,6 +6,7 @@ import { useUser } from '@/contexts/UserContext';
 import { generateSlug } from '@/utils/stringUtils';
 import toast from 'react-hot-toast';
 import { createEvent } from '@/app/actions/eventActions';
+import router from 'next/router';
 
 
 const CreateEventPage = () =>
@@ -38,10 +39,10 @@ const CreateEventPage = () =>
     }
 
     // Generate a unique filename by appending the organization name and a UUID
-    const uniqueFilename = `${ orgName }_${ uuidv4() }_${ file.name }`;
+    const uniqueFilename = `${ orgName }_${ file.name }`;
 
     const { data, error } = await createClient().storage
-      .from( 'eventFeaturedImages' ) // Replace with your bucket name
+      .from( 'eventFeaturedImages' ) // bucket name
       .upload( `public/${ uniqueFilename }`, file, {
         cacheControl: '3600',
         upsert: false,
@@ -66,16 +67,18 @@ const CreateEventPage = () =>
     if ( !user ) return;
 
     const orgId = user.organizationId; // Get the orgId from the context
-    
-    let featuredImageUrl = '';
+
+
 
 
     const imageUrl = await handleImageUpload( featuredImage, user.orgName );
+
     if ( !imageUrl )
     {
       toast.error( 'Failed to upload the image.' );
       return;
     }
+
     const formData = new FormData();
     formData.append( 'orgId', orgId );
     formData.append( 'name', name );
@@ -92,10 +95,7 @@ const CreateEventPage = () =>
     formData.append( 'maxAttendees', maxAttendees.toString() );
     formData.append( 'status', 'draft' );
 
-    if ( featuredImageUrl )
-    {
-      formData.append( 'featuredImage', featuredImageUrl );
-    }
+    formData.append( 'featuredImage', imageUrl );
 
     try
     {
@@ -104,7 +104,27 @@ const CreateEventPage = () =>
       if ( response.success )
       {
         toast.success( 'Event created successfully!' );
-        // Clear form or redirect user, etc.
+
+        // Clear the form
+        // Clear the form state
+        setName( '' );
+        setDescription( '' );
+        setStartDate( '' );
+        setEndDate( '' );
+        setVenue( '' );
+        setAddress( '' );
+        setCity( '' );
+        setState( '' );
+        setCountry( '' );
+        setZipCode( '' );
+        setMaxAttendees( 0 );
+        setFeaturedImage( null );
+
+        // Redirect to create tickets page
+
+        const eventSlug = slug; // Use the slug from the event creation
+        
+        router.push( `/dashboard/${ orgId }/events/${ eventSlug }/create-tickets` );
       } else
       {
         toast.error( 'Failed to create event: ' + response.message );
@@ -129,7 +149,7 @@ const CreateEventPage = () =>
             id="name"
             value={ name }
             onChange={ ( e ) => setName( e.target.value ) }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Event Name"
             required
           />
@@ -143,7 +163,7 @@ const CreateEventPage = () =>
             id="description"
             value={ description }
             onChange={ ( e ) => setDescription( e.target.value ) }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Description"
             required
           />
@@ -156,7 +176,7 @@ const CreateEventPage = () =>
             type="file"
             accept="image/*"
             onChange={ ( e ) => setFeaturedImage( e.target.files?.[ 0 ] || null ) }
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
         <div>
@@ -168,7 +188,7 @@ const CreateEventPage = () =>
             id="startDate"
             value={ startDate }
             onChange={ ( e ) => setStartDate( e.target.value ) }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             required
           />
         </div>
@@ -182,7 +202,7 @@ const CreateEventPage = () =>
             id="endDate"
             value={ endDate }
             onChange={ ( e ) => setEndDate( e.target.value ) }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             required
           />
         </div>
@@ -196,7 +216,7 @@ const CreateEventPage = () =>
             id="venue"
             value={ venue }
             onChange={ ( e ) => setVenue( e.target.value ) }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Venue"
             required
           />
@@ -211,7 +231,7 @@ const CreateEventPage = () =>
             id="address"
             value={ address }
             onChange={ ( e ) => setAddress( e.target.value ) }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Address"
           />
         </div>
@@ -226,7 +246,7 @@ const CreateEventPage = () =>
               id="city"
               value={ city }
               onChange={ ( e ) => setCity( e.target.value ) }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               placeholder="City"
             />
           </div>
@@ -240,7 +260,7 @@ const CreateEventPage = () =>
               id="state"
               value={ state }
               onChange={ ( e ) => setState( e.target.value ) }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               placeholder="State"
             />
           </div>
@@ -256,7 +276,7 @@ const CreateEventPage = () =>
               id="country"
               value={ country }
               onChange={ ( e ) => setCountry( e.target.value ) }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               placeholder="Country"
             />
           </div>
@@ -270,7 +290,7 @@ const CreateEventPage = () =>
               id="zipCode"
               value={ zipCode }
               onChange={ ( e ) => setZipCode( e.target.value ) }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               placeholder="Zip Code"
             />
           </div>
@@ -285,7 +305,7 @@ const CreateEventPage = () =>
             id="maxAttendees"
             value={ maxAttendees }
             onChange={ ( e ) => setMaxAttendees( Number( e.target.value ) ) }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Max Attendees"
           />
         </div>
@@ -293,7 +313,7 @@ const CreateEventPage = () =>
         <div className="text-center">
           <button
             type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Create Event
           </button>
@@ -304,8 +324,4 @@ const CreateEventPage = () =>
 };
 
 export default CreateEventPage;
-function uuidv4 ()
-{
-  throw new Error( 'Function not implemented.' );
-}
 

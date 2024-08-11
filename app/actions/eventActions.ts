@@ -32,7 +32,7 @@ export const createEvent = async ( formData: FormData ) =>
   // const slug = name.toLowerCase().replace( /\s+/g, '-' ); // Example slug generation
 
   const newEvent = {
-    id: uuidv4(),
+
     orgId,
     name,
     slug,
@@ -63,21 +63,22 @@ export const createEvent = async ( formData: FormData ) =>
 };
 
 // Update an existing event
-export const updateEvent = async (eventId: string, formData: FormData) => {
+export const updateEvent = async ( eventId: string, formData: FormData ) =>
+{
   const { orgId } = await getUserAndOrgId();
 
-  const name = formData.get('name') as string;
-  const description = formData.get('description') as string;
-  const startDate = new Date(formData.get('startDate') as string);
-  const endDate = new Date(formData.get('endDate') as string);
-  const venue = formData.get('venue') as string;
-  const address = formData.get('address') as string;
-  const city = formData.get('city') as string;
-  const state = formData.get('state') as string;
-  const country = formData.get('country') as string;
-  const zipCode = formData.get('zipCode') as string;
-  const maxAttendees = Number(formData.get('maxAttendees'));
-  const featuredImage = formData.get('featuredImage') as string;
+  const name = formData.get( 'name' ) as string;
+  const description = formData.get( 'description' ) as string;
+  const startDate = new Date( formData.get( 'startDate' ) as string );
+  const endDate = new Date( formData.get( 'endDate' ) as string );
+  const venue = formData.get( 'venue' ) as string;
+  const address = formData.get( 'address' ) as string;
+  const city = formData.get( 'city' ) as string;
+  const state = formData.get( 'state' ) as string;
+  const country = formData.get( 'country' ) as string;
+  const zipCode = formData.get( 'zipCode' ) as string;
+  const maxAttendees = Number( formData.get( 'maxAttendees' ) );
+  const featuredImage = formData.get( 'featuredImage' ) as string;
 
   const updatedEvent = {
     name,
@@ -97,12 +98,12 @@ export const updateEvent = async (eventId: string, formData: FormData) => {
   };
 
   await db
-    .update(events)
-    .set(updatedEvent)
-    .where(and(eq(events.id, eventId), eq(events.orgId, orgId)));
+    .update( events )
+    .set( updatedEvent )
+    .where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
 
   // Revalidate the path to refresh the page
-  revalidatePath(`/dashboard/${orgId}`);
+  revalidatePath( `/dashboard/${ orgId }` );
 
   return updatedEvent;
 };
