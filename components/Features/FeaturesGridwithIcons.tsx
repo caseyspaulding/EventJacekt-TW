@@ -6,6 +6,8 @@ import {
   TicketIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
+import { Svg } from "tabler-icons-react";
+import SvgBackground from "../Backgrounds/SquareSvgBackground";
 
 const features = [
   {
@@ -48,7 +50,8 @@ const features = [
 
 export default function FeaturesGridWithIcons() {
   return (
-    <div className="relative bg-white py-24 sm:py-32 lg:py-20">
+    <div className="relative py-24 sm:py-32 lg:py-20">
+      <SvgBackground /> 
       <div className="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8">
         <h2 className="text-lg font-semibold text-blue-600">
           EventJacket Features

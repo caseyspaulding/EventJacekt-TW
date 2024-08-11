@@ -2,13 +2,15 @@
 
 
 import Image from "next/image";
+import { Svg } from "tabler-icons-react";
+import SvgBackground from "../Backgrounds/SquareSvgBackground";
 
 
 export default function NavBarTW ()
 {
   return (
-    <div className="bg-white">
-
+    <div className="">
+<SvgBackground />
       <main>
         <div>
           {/* Hero card */ }
