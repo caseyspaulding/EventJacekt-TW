@@ -35,8 +35,8 @@ export const events = pgTable( 'events', {
     featuredImage: varchar( 'featured_image', { length: 255 } ), // URL of the featured image
     slug: text( 'slug' ).notNull().unique(), // Add a slug column for SEO-friendly URLs
     description: text( 'description' ),
-    startDate: timestamp( 'start_date' ).notNull(),
-    endDate: timestamp( 'end_date' ).notNull(),
+    startDate: timestamp( 'start_date' ),
+    endDate: timestamp( 'end_date' ),
     venue: text( 'venue' ),
     address: text( 'address' ),
     city: text( 'city' ),

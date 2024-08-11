@@ -36,6 +36,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/dashboard/[org]/create-event/[eventSlug]/create-tickets"
+    "app/dashboard/[org]/events/[eventSlug]/create-tickets"
   ]
 }

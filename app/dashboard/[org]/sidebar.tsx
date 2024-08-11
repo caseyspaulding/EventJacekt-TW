@@ -266,8 +266,11 @@ function BottomMenu ( { isCollapsed }: { isCollapsed: boolean } )
 const pages: SidebarItem[] = [
     { href: '/', icon: Dashboard, label: 'Dashboard' },
     { href: '/kanban', icon: TableCellsIcon, label: 'Kanban' },
+    { href: '/events/new', icon: TableCellsIcon, label: 'Create Event' },
     //{ href: '/mailing/inbox', icon: HiInboxIn, label: 'Inbox', badge: '3' },
+    
     { href: '', icon: ClipboardDocumentIcon, label: 'Forms' },
+    
     {
         icon: EnvelopeOpenIcon,
         label: 'Mail',
