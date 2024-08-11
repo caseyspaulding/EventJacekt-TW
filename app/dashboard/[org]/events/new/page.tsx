@@ -2,33 +2,11 @@
 
 import { useState } from 'react';
 import { createClient } from '@utils/supabase/client';
-import { useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
 import { generateSlug } from '@/utils/stringUtils';
-
 import toast from 'react-hot-toast';
 import { createEvent } from '@/app/actions/eventActions';
 
-// Explicitly define the type for your event object
-type NewEvent = {
-  orgId: string;
-  name: string;
-  slug: string;
-  description?: string;
-  startDate?: Date;
-  endDate?: Date;
-  venue?: string;
-  address?: string;
-  city?: string;
-  state?: string;
-  country?: string;
-  zipCode?: string;
-  maxAttendees?: number;
-  featuredImage?: string;
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
 
 const CreateEventPage = () =>
 {
@@ -48,24 +26,23 @@ const CreateEventPage = () =>
   const { user } = useUser();
   const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
 
-  type PublicUrlResponse = {
-    data: {
-      publicUrl: string;
-    };
-    error: any;
-  };
 
-  const handleImageUpload = async ( file: File | null ) =>
+
+  const handleImageUpload = async ( file: File | null, orgName: string ) =>
   {
+
     if ( !file )
     {
       console.error( 'No file selected' );
       return null;
     }
 
+    // Generate a unique filename by appending the organization name and a UUID
+    const uniqueFilename = `${ orgName }_${ uuidv4() }_${ file.name }`;
+
     const { data, error } = await createClient().storage
-      .from( 'blogimages' ) // Replace with your bucket name
-      .upload( `public/${ file.name }`, file, {
+      .from( 'eventFeaturedImages' ) // Replace with your bucket name
+      .upload( `public/${ uniqueFilename }`, file, {
         cacheControl: '3600',
         upsert: false,
       } );
@@ -77,8 +54,8 @@ const CreateEventPage = () =>
     }
 
     const { data: publicUrlData } = createClient().storage
-      .from( 'blogimages' )
-      .getPublicUrl( `public/${ file.name }` );
+      .from( 'eventFeaturedImages' )
+      .getPublicUrl( `public/${ uniqueFilename }` );
 
     return publicUrlData?.publicUrl || '';
   };
@@ -87,9 +64,13 @@ const CreateEventPage = () =>
   {
     e.preventDefault();
     if ( !user ) return;
-   
+
     const orgId = user.organizationId; // Get the orgId from the context
-    const imageUrl = await handleImageUpload( featuredImage );
+    
+    let featuredImageUrl = '';
+
+
+    const imageUrl = await handleImageUpload( featuredImage, user.orgName );
     if ( !imageUrl )
     {
       toast.error( 'Failed to upload the image.' );
@@ -111,9 +92,9 @@ const CreateEventPage = () =>
     formData.append( 'maxAttendees', maxAttendees.toString() );
     formData.append( 'status', 'draft' );
 
-    if ( featuredImage )
-    {  // Check if featuredImage is not null or undefined
-      formData.append( 'featuredImage', featuredImage );
+    if ( featuredImageUrl )
+    {
+      formData.append( 'featuredImage', featuredImageUrl );
     }
 
     try
@@ -323,3 +304,8 @@ const CreateEventPage = () =>
 };
 
 export default CreateEventPage;
+function uuidv4 ()
+{
+  throw new Error( 'Function not implemented.' );
+}
+
