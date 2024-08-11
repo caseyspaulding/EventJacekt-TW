@@ -2,6 +2,12 @@ import FooterFull from "@/components/Footers/FooterFull";
 import HeaderCentered from "@/components/HeaderCentered";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import AnalyticsFeatures from "./AnalyticsFeatures";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Analytics - EventJacket',
+  description: 'Get a better understanding of where your event data.',
+};
 
 export default function AnalyticsPage ()
 {
@@ -9,7 +15,7 @@ export default function AnalyticsPage ()
     
     <div>
       <NavBar1 />
-      <HeaderCentered title="Analytics" description="Get a better understanding of where your traffic is coming from." />
+      <HeaderCentered title="Analytics" description="Get a better understanding of where your event data." />
       
      <AnalyticsFeatures />
       <FooterFull />

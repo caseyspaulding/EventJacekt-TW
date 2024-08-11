@@ -2,6 +2,12 @@ import FooterFull from "@/components/Footers/FooterFull";
 import HeaderCentered from "@/components/HeaderCentered";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import { Footer } from "flowbite-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Guides - EventJacket',
+  description: 'Here you will find a collection of helpful articles and tutorials to assist you with using EventJacket. Whether you’re just getting started or looking to master advanced features, we’ve got you covered.',
+};
 
 export default function Guides ()
 {

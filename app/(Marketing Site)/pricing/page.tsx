@@ -1,25 +1,31 @@
 
 import
-  {
-    ArrowPathIcon,
-    Bars3Icon,
-    BookmarkSquareIcon,
-    CalendarIcon,
-    ChartBarIcon,
-    CheckIcon,
-    CursorArrowRaysIcon,
-    LifebuoyIcon,
-    PhoneIcon,
-    PlayIcon,
-    ShieldCheckIcon,
-    Squares2X2Icon,
-    XMarkIcon,
-  } from '@heroicons/react/24/outline'
+{
+  ArrowPathIcon,
+  Bars3Icon,
+  BookmarkSquareIcon,
+  CalendarIcon,
+  ChartBarIcon,
+  CheckIcon,
+  CursorArrowRaysIcon,
+  LifebuoyIcon,
+  PhoneIcon,
+  PlayIcon,
+  ShieldCheckIcon,
+  Squares2X2Icon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import NavBar1 from '@/components/NavBarTW/NavBar1'
 import Link from 'next/link'
 import HeaderCentered from '@/components/HeaderCentered'
 import FooterFull from '@/components/Footers/FooterFull'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Pricing - EventJacket',
+  description: 'Learn more about EventJacket pricing plans and features.',
+};
 
 const solutions = [
   {
@@ -139,7 +145,7 @@ export default function Example ()
   return (
 
     <div className="bg-white">
-     <NavBar1 />  
+      <NavBar1 />
       <HeaderCentered
         title="Pricing"
         description=""
@@ -169,7 +175,7 @@ export default function Example ()
               <h2 className="text-lg font-semibold text-blue-600">Everything you need</h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900">All-in-one platform</p>
               <p className="mt-4 text-lg text-gray-500">
-                
+
               </p>
             </div>
             <div className="mt-4 sm:mt-8 md:mt-10 md:grid md:grid-cols-2 md:gap-x-8 xl:col-span-2 xl:mt-0">
@@ -234,8 +240,8 @@ export default function Example ()
         </div>
       </div>
       <FooterFull />
-     
+
     </div>
-   
+
   )
 }

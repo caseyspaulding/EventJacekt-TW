@@ -1,6 +1,12 @@
 import FooterFull from "@/components/Footers/FooterFull";
 import HeaderCentered from "@/components/HeaderCentered";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Affiliate Program - EventJacket',
+  description: 'Earn money by referring customers to EventJacket',
+};
 
 export default function AffiliatePage() {
   return (

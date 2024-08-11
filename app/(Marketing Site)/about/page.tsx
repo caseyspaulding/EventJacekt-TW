@@ -1,12 +1,12 @@
-'use client'
-
 import AboutHeroBig from "@/components/About/AboutHeroBig"
-import { FooterMain } from "@/components/footer-main"
 import FooterFull from "@/components/Footers/FooterFull"
-import FooterTW from "@/components/Footers/FooterTW"
 import NavBar1 from "@/components/NavBarTW/NavBar1"
-import { Footer } from "flowbite-react"
-import { JSX, SVGProps } from "react"
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'About Us - EventJacket',
+  description: 'Learn more about EventJacket and our mission to simplify event management.',
+};
 
 const timeline = [
   {

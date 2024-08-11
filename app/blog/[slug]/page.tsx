@@ -1,15 +1,37 @@
 import React from 'react';
 import DOMPurify from 'isomorphic-dompurify';
 import { getBlogPostBySlug, getAllBlogSlugs } from '@/app/actions/blogActions';
-import { Footer } from 'flowbite-react';
 import FooterFull from '@/components/Footers/FooterFull';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
+import type { Metadata } from 'next';
 
 // This function generates all static paths for the blog post pages
 export async function generateStaticParams ()
 {
   const slugs = await getAllBlogSlugs();
   return slugs.map( ( slug: string ) => ( { slug } ) );
+}
+
+// Function to generate dynamic metadata
+export async function generateMetadata ( { params }: { params: { slug: string } } ): Promise<Metadata>
+{
+  const post = await getBlogPostBySlug( params.slug );
+
+  if ( !post )
+  {
+    return {
+      title: 'Post not found',
+      description: 'The post you are looking for does not exist.',
+    };
+  }
+
+  return {
+    title: post.title,
+    description: post.excerpt || post.content.slice( 0, 160 ), // Use excerpt or first 160 characters of content
+    openGraph: {
+      images: post.featuredImage ? [ post.featuredImage ] : [],
+    },
+  };
 }
 
 export default async function BlogPost ( { params }: { params: { slug: string } } )
@@ -25,17 +47,22 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
   const sanitizedContent = DOMPurify.sanitize( post.content );
 
   return (
-    <><NavBar1 /><article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-4xl font-bold text-gray-800 mb-4">{ post.title }</h1>
-      <p className="text-sm text-gray-500 mb-8">
-        By { post.author } on { new Date( post.createdAt ).toLocaleDateString() }
-      </p>
-      <div
-        className="prose prose-lg max-w-none"
-        dangerouslySetInnerHTML={ { __html: sanitizedContent } } />
-      <div className="mt-8">
-        <p className="text-sm text-gray-500">Tags: { post.tags ? post.tags.join( ', ' ) : 'No tags' }</p>
-      </div>
-    </article><FooterFull /></>
+    <>
+      <NavBar1 />
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">{ post.title }</h1>
+        <p className="text-sm text-gray-500 mb-8">
+          By { post.author } on { new Date( post.createdAt ).toLocaleDateString() }
+        </p>
+        <div
+          className="prose prose-lg max-w-none"
+          dangerouslySetInnerHTML={ { __html: sanitizedContent } }
+        />
+        <div className="mt-8">
+          <p className="text-sm text-gray-500">Tags: { post.tags ? post.tags.join( ', ' ) : 'No tags' }</p>
+        </div>
+      </article>
+      <FooterFull />
+    </>
   );
 }

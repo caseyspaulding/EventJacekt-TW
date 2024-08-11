@@ -5,7 +5,12 @@ import { blogPosts } from '@/db/schema';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
 import HeaderCentered from '@/components/HeaderCentered';
-import Image from 'next/image';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog - EventJacket',
+  description: 'Read the latest articles from our blog for tips to grow and organize stellar events with EventJacket.',
+};
 
 export default async function BlogList ()
 {

@@ -10,12 +10,6 @@ import { AnnouncementBanner } from '@/components/marketing-ui/banners/announceme
 
 const inter = Inter( { subsets: [ 'latin' ], display: 'swap' } );
 
-export const metadata: Metadata = {
-    title: 'EventJacket',
-    description:
-        'All-in-one event management platform for nonprofits, schools, and businesses. Manage events, sell tickets, and engage with your audience.',
-};
-
 export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (

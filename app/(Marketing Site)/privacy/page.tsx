@@ -1,9 +1,12 @@
 import FooterFull from "@/components/Footers/FooterFull";
-import Header from "@/components/Header";
 import HeaderCentered from "@/components/HeaderCentered";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
-import { Footer } from "flowbite-react";
-import Head from "next/head";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy - EventJacket',
+  description: 'Your privacy is important to us. It is EventJacket\'s policy to respect your privacy regarding any information we may collect from you across our website, http://eventjacket.com, and other sites we own and operate.',
+};
 
 export default function PrivacyPolicy() {
 

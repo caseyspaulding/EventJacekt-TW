@@ -7,6 +7,12 @@ import { signUp } from "./signup"; // Adjust the path as necessary
 import { Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Get Started - EventJacket',
+  description: 'Create a free account to start managing your events, vendors, performers and attendees.',
+};
 
 interface SearchParams
 {

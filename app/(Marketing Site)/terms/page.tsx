@@ -1,7 +1,12 @@
 import FooterFull from "@/components/Footers/FooterFull";
 import HeaderCentered from "@/components/HeaderCentered";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
-import { Footer } from "flowbite-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Terms of Service - EventJacket',
+  description: 'Read the Terms of Service for EventJacket, a cloud-based event management software solution.',
+};
 
 export default function PrivacyPolicy ()
 {
