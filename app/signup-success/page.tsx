@@ -4,10 +4,6 @@ import Link from 'next/link';
 import Confetti from 'react-confetti'
 import { useWindowSize } from '../../hooks/useWindowSize';
 
-export const metadata: Metadata = {
-    title: 'Success - EventJacket',
-    description: 'Sign up successful! Check your email for a verification link to activate your account.',
-};
 
 export default function SignUpSuccess ()
 {

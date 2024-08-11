@@ -1,9 +1,8 @@
-'use client'; 
+
 
 import FAQ_TW from "@/components/FAQ/FAQ_TW";
 import FooterFull from "@/components/Footers/FooterFull";
 import HeaderCentered from "@/components/HeaderCentered";
-import { FAQSectionAsAccordion } from "@/components/marketing-ui/faq-sections/accordion";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import { Metadata } from "next";
 

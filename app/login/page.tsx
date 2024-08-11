@@ -8,10 +8,6 @@ import Link from 'next/link';
 import { signIn } from './signin'; // Adjust the path as necessary
 import { Metadata } from 'next';
 
-export const metadata: Metadata = {
-    title: 'Login - EventJacket',
-    description: 'Login to your EventJacket account to manage your events, vendors, performers and attendees.',
-};
 
 interface SearchParams
 {
