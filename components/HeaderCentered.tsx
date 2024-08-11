@@ -38,7 +38,7 @@ export default function HeaderCentered ( { title, description }: HeaderCenteredP
         />
       </div>
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">{ title }</h2>
+        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">{ title }</h1>
         <p className="mt-6 text-lg leading-8 text-gray-300">{ description }</p>
       </div>
     </div>
