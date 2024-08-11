@@ -41,8 +41,8 @@ export default async function EventPage ( { params }: { params: Params } )
     <div>
       <h1>{ eventData.name }</h1>
       <p>{ eventData.description }</p>
-      <p>Start Date: { eventData.startDate.toLocaleDateString() ? new Date( eventData.startDate ).toLocaleDateString() : 'No start date available' }</p>
-      <p>End Date: { eventData.endDate.toLocaleDateString() ? new Date( eventData.startDate ).toLocaleDateString() : 'No start date available' }</p>
+      <p>Start Date: { eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : 'No start date available' }</p>
+      <p>End Date: { eventData.endDate ? new Date( eventData.endDate ).toLocaleDateString() : 'No start date available' }</p>
       <p>Venue: { eventData.venue }</p>
 
      
