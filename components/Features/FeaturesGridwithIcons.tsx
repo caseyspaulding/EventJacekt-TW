@@ -60,7 +60,7 @@ export default function FeaturesGridWithIcons() {
         <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Everything you need to manage your event
         </p>
-        <p className="mx-auto mt-5 max-w-prose text-xl text-gray-500">
+        <p className="mx-auto mt-5 max-w-prose text-xl text-gray-700">
           EventJacket provides a comprehensive suite of tools to help you manage
           your events efficiently and effectively.
         </p>
