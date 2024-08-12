@@ -81,7 +81,7 @@ export default function NavBarTW ()
                
                 <div
                   
-                  className="relative block w-full overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  className="relative block w-full  shadow-2xl overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                  
                   <VideoFacade
