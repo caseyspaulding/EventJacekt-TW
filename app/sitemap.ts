@@ -49,6 +49,26 @@ export default async function sitemap (): Promise<MetadataRoute.Sitemap>
             url: `${ process.env.NEXT_PUBLIC_SITE_URL }/marketing`,
             lastModified: new Date().toISOString(),
         },
+        {
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/analytics`,
+            lastModified: new Date().toISOString(),
+        },
+        {
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/qrcode`,
+            lastModified: new Date().toISOString(),
+        },
+        {
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/blog`,
+            lastModified: new Date().toISOString(),
+        },
+        {
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/privacy`,
+            lastModified: new Date().toISOString(),
+        },
+        {
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/terms`,
+            lastModified: new Date().toISOString(),
+        },
         // Add more static pages here as needed...
     ];
 
