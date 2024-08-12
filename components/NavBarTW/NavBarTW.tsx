@@ -58,7 +58,7 @@ export default function NavBarTW ()
                 EventJacket is your all-in-one event management platform, offering tools to create, manage, and sell tickets for events with ease.
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
-                <p className="text-base font-medium mb-2  text-gray-700">Sign up to get notified when it’s ready.</p>
+                <p className="text-base font-medium mb-2  text-gray-400">Sign up to get notified when it’s ready.</p>
 
                 <Button
                   
@@ -95,15 +95,19 @@ export default function NavBarTW ()
                 <rect x={ 118 } fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" width={ 404 } height={ 784 } />
               </svg>
               <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+                <div className="text-center text-gray-400">
+                  <span className="text-center">Featured Video by Whidbey Ren Faire</span>
+                </div>
+               
                 <div
                   
                   className="relative block w-full overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
-                  <span className="sr-only">Featured Video</span>
-                  <VideoFacadeAutoPlay
+                 
+                  <VideoFacade
                     videoUrl="https://mphgaanpbwsetutodyvl.supabase.co/storage/v1/object/sign/videos/whidbey_ren_faire_recap_video%20(720p).mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ2aWRlb3Mvd2hpZGJleV9yZW5fZmFpcmVfcmVjYXBfdmlkZW8gKDcyMHApLm1wNCIsImlhdCI6MTcyMzQ4NDgyOSwiZXhwIjoxNzg2NTU2ODI5fQ.6LeGBAjUPUZxoDAl8YOQ9IqCHnotJWud_y8VW-2VEVI&t=2024-08-12T17%3A47%3A07.983Z"
                     thumbnailUrl="/images/avatars/wrf.jpg"
-                    caption="Whidbey Island Renaissance Faire Recap Video from Whidbey Ren Faire"
+                    caption=""
                   />
                   
 
