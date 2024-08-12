@@ -10,7 +10,7 @@ export default function NavBarTW ()
 {
   return (
     <div className="">
-<SvgBackground />
+      <SvgBackground />
       <main>
         <div>
           {/* Hero card */ }
@@ -32,9 +32,9 @@ export default function NavBarTW ()
                 <div className="relative px-6 py-16 sm:py-24 lg:px-8 lg:py-32">
                   <h1 className="text-center text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                     <span className="block text-white">
-                      Simplify Event Management, 
+                      Event Management Software
                     </span>
-                    <span className="block text-blue-200">Maximize Attendee Satisfaction</span>
+                    <span className="block text-blue-200">For Non Profits</span>
                   </h1>
                   <p className="mx-auto mt-6 max-w-lg text-center text-xl text-blue-200 sm:max-w-3xl">
                     Our platform has everything you need to run your events from
