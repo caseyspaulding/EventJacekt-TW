@@ -86,7 +86,7 @@ export default function NavBarTW ()
                  
                   <VideoFacade
                     videoUrl="https://mphgaanpbwsetutodyvl.supabase.co/storage/v1/object/sign/videos/whidbey_ren_faire_recap_video%20(720p).mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ2aWRlb3Mvd2hpZGJleV9yZW5fZmFpcmVfcmVjYXBfdmlkZW8gKDcyMHApLm1wNCIsImlhdCI6MTcyMzQ4NDgyOSwiZXhwIjoxNzg2NTU2ODI5fQ.6LeGBAjUPUZxoDAl8YOQ9IqCHnotJWud_y8VW-2VEVI&t=2024-08-12T17%3A47%3A07.983Z"
-                    thumbnailUrl="/images//icons/166.png"
+                    thumbnailUrl="/images/icons/166.png"
                     caption=""
                   />
                   
