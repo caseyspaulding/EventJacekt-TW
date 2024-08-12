@@ -8,11 +8,14 @@ import { Toaster } from 'react-hot-toast';
 import './globals.css';
 import { AnnouncementBanner } from '@/components/marketing-ui/banners/announcement';
 
-export const metadata: Metadata = {
-    title: 'EventJacket - Event Management Platform for Non-Profits',
-    description: 'EventJacket is your all-in-one event management solution, offering tools to create, manage, and sell tickets for events with ease. Perfect for organizers of conferences, festivals, and more.',
-};
 
+export const metadata = {
+    title: 'EventJacket - Event Management Platform for Non-Profits',
+    openGraph: {
+        title: 'EventJacket - Event Management Platform for Non-Profits',
+        description: 'EventJacket is your all-in-one event management solution, offering tools to create, manage, and sell tickets for events with ease. Perfect for organizers of conferences, festivals, and more.',
+    },
+}
 const inter = Inter( { subsets: [ 'latin' ], display: 'swap' } );
 
 export default function RootLayout ( { children }: PropsWithChildren )
@@ -20,6 +23,9 @@ export default function RootLayout ( { children }: PropsWithChildren )
     return (
         <html lang="en">
             <head>
+                <meta charSet="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                
                 <link
                     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
                     rel="stylesheet"
