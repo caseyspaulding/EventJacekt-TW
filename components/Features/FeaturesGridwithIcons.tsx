@@ -76,7 +76,7 @@ export default function FeaturesGridWithIcons() {
                   <div className="-mt-6">
                     <span
                       className="inline-flex items-center justify-center rounded-xl p-3 shadow-lg"
-                      style={ { background: 'linear-gradient(185deg, #1D4ED8, #38bdf8)' } }
+                      style={ { background: 'linear-gradient(185deg, #1D4ED8, #93c5fd)' } }
                     >
                       <feature.icon aria-hidden="true" className="h-8 w-8 text-white" />
                     </span>
