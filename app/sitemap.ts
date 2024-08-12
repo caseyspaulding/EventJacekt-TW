@@ -1,24 +1,57 @@
-import type { MetadataRoute } from 'next';
+import { MetadataRoute } from 'next';
+import { getAllBlogPosts } from '@/app/actions/blogActions';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    return [
+e
+export default async function sitemap (): Promise<MetadataRoute.Sitemap>
+{
+    const blogResult = await getAllBlogPosts();
+
+    if ( !blogResult.success || !blogResult.data )
+    {
+        return []; // Return an empty sitemap if there's an issue
+    }
+
+    const blogPosts = blogResult.data;
+
+    // Generate sitemap URLs for dynamic blog posts
+    const blogSitemapUrls = blogPosts.map( ( post ) => ( {
+        url: `${ process.env.NEXT_PUBLIC_SITE_URL }/blog/${ post.slug }`,
+        lastModified: new Date( post.updatedAt ).toISOString(),
+    } ) );
+
+    // Manually add static pages
+    const staticUrls = [
         {
-            url: 'https://eventjacket.com',
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 1
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/`,
+            lastModified: new Date().toISOString(),
         },
         {
-            url: 'https://eventjacket.com/about',
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/about`,
+            lastModified: new Date().toISOString(),
         },
         {
-            url: 'https://eventjacket.com/blog',
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5
-        }
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/crm`,
+            lastModified: new Date().toISOString(),
+        },
+        {
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/pricing`,
+            lastModified: new Date().toISOString(),
+        },
+        {
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/faqs`,
+            lastModified: new Date().toISOString(),
+        },
+        {
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/ticketing`,
+            lastModified: new Date().toISOString(),
+        },
+        {
+            url: `${ process.env.NEXT_PUBLIC_SITE_URL }/marketing`,
+            lastModified: new Date().toISOString(),
+        },
+        // Add more static pages here as needed...
     ];
+
+    // Combine both dynamic and static URLs
+    return [ ...blogSitemapUrls, ...staticUrls ];
 }

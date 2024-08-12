@@ -26,6 +26,19 @@ export async function getBlogPostBySlug ( slug: string )
   }
 }
 
+export async function getAllBlogPosts ()
+{
+  try
+  {
+    const posts = await db.select().from( blogPosts ).then(); // Execute the query and get the results
+    return { success: true, data: posts };
+  } catch ( error )
+  {
+    console.error( 'Error fetching blog posts:', error );
+    return { success: false, data: [] };
+  }
+}
+
 export async function createBlogPost ( formData: FormData )
 {
   const title = formData.get( 'title' ) as string;
