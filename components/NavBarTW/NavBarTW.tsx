@@ -96,7 +96,7 @@ export default function NavBarTW ()
               </svg>
               <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
                 <div className="text-center text-gray-400">
-                  <span className="text-center">Featured Video by Whidbey Ren Faire</span>
+                  <span className="text-center text-sm">Featured Video by Whidbey Ren Faire</span>
                 </div>
                
                 <div
