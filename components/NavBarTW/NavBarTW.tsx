@@ -65,7 +65,7 @@ export default function NavBarTW ()
                 <Button
                   size="lg"
                   href="/signup"
-                  className="relative px-7 py-3 bg-blue-700 text-white font-bold text-2xl rounded-lg leading-none ring-1 ring-gray-900/5"
+                  className="relative px-6 py-1 bg-blue-700 text-white font-bold text-2xl rounded-lg leading-none ring-1 ring-gray-900/5"
                 >
                   Get Started
                   </Button>
