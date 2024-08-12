@@ -7,6 +7,8 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import SvgBackground from "../Backgrounds/SquareSvgBackground";
+import SlantedDivider3 from "../Divider/SlantedDivider3";
+import SlantedDividerSolid from "../Divider/SlantedDividerSolidProps";
 
 const features = [
   {
@@ -49,8 +51,8 @@ const features = [
 
 export default function FeaturesGridWithIcons() {
   return (
-    <div className="relative py-24 sm:py-32 lg:py-20">
-      
+     <><div className="relative py-24 sm:py-32 lg:py-20 bg-slate-100">
+
       <div className="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8">
         <h2 className="text-lg font-semibold text-blue-600">
           EventJacket Features
@@ -64,9 +66,10 @@ export default function FeaturesGridWithIcons() {
         </p>
         <div className="mt-20">
           <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature) => (
+            
+            { features.map( ( feature ) => (
               <div
-                key={feature.name}
+                key={ feature.name }
                 className="pt-6 transform transition-transform duration-300 hover:scale-105"
               >
                 <div className="flow-root rounded-lg bg-slate-50  hover:bg-blue-100 px-6 pb-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -75,23 +78,24 @@ export default function FeaturesGridWithIcons() {
                       <span className="inline-flex items-center justify-center rounded-xl bg-blue-500 p-3 shadow-lg">
                         <feature.icon
                           aria-hidden="true"
-                          className="h-8 w-8 text-white"
-                        />
+                          className="h-8 w-8 text-white" />
                       </span>
                     </div>
                     <h3 className="mt-8 text-lg font-semibold leading-8 tracking-tight text-gray-900">
-                      {feature.name}
+                      { feature.name }
                     </h3>
                     <p className="mt-5 text-base leading-7 text-gray-600">
-                      {feature.description}
+                      { feature.description }
                     </p>
                   </div>
                 </div>
               </div>
-            ))}
+            ) ) }
+
           </div>
         </div>
       </div>
-    </div>
+
+    </div></>
   );
 }

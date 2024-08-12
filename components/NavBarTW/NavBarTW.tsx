@@ -15,31 +15,30 @@ export default function NavBarTW ()
     <>
       <div className="relative overflow-hidden pb-36">
 
-        <div aria-hidden="true" className="hidden lg:absolute lg:inset-0 lg:block">
-
-          <svg
-            fill="none"
-            width={ 640 }
-            height={ 784 }
-            viewBox="0 0 640 784"
-            className="absolute left-1/2 top-0 -translate-y-8 translate-x-64 transform"
-          >
-            <defs>
-              <pattern
-                x={ 118 }
-                y={ 0 }
-                id="9ebea6f4-a1f5-4d96-8c4e-4c2abf658047"
-                width={ 20 }
-                height={ 20 }
-                patternUnits="userSpaceOnUse"
-              >
-                <rect x={ 0 } y={ 0 } fill="currentColor" width={ 4 } height={ 4 } className="text-gray-200" />
-              </pattern>
-            </defs>
-            <rect y={ 72 } fill="currentColor" width={ 640 } height={ 640 } className="text-gray-50" />
-            <rect x={ 118 } fill="url(#9ebea6f4-a1f5-4d96-8c4e-4c2abf658047)" width={ 404 } height={ 784 } />
-          </svg>
-        </div>
+        <div aria-hidden="true" className="absolute inset-0 hidden lg:block">
+  <svg
+    fill="none"
+    width={640}
+    height={784}
+    viewBox="0 0 640 784"
+    className="absolute left-1/2 top-0 -translate-y-8 translate-x-64 transform"
+  >
+    <defs>
+      <pattern
+        x={118}
+        y={0}
+        id="9ebea6f4-a1f5-4d96-8c4e-4c2abf658047"
+        width={20}
+        height={20}
+        patternUnits="userSpaceOnUse"
+      >
+        <rect x={0} y={0} fill="currentColor" width={4} height={4} className="text-gray-200" />
+      </pattern>
+    </defs>
+    <rect y={72} fill="currentColor" width={640} height={640} className="text-gray-50" />
+    <rect x={118} fill="url(#9ebea6f4-a1f5-4d96-8c4e-4c2abf658047)" width={404} height={784} />
+  </svg>
+</div>
 
 
         <main className="mx-auto mt-16 max-w-7xl px-4  sm:mt-24 lg:mt-32">
@@ -71,29 +70,7 @@ export default function NavBarTW ()
               </div>
             </div>
             <div className="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-none lg:items-center">
-              <svg
-                fill="none"
-                width={ 640 }
-                height={ 784 }
-                viewBox="0 0 640 784"
-                aria-hidden="true"
-                className="absolute left-1/2 top-0 origin-top -translate-x-1/2 -translate-y-8 scale-75 transform sm:scale-100 lg:hidden"
-              >
-                <defs>
-                  <pattern
-                    x={ 118 }
-                    y={ 0 }
-                    id="4f4f415c-a0e9-44c2-9601-6ded5a34a13e"
-                    width={ 20 }
-                    height={ 20 }
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <rect x={ 0 } y={ 0 } fill="currentColor" width={ 4 } height={ 4 } className="text-gray-200" />
-                  </pattern>
-                </defs>
-                <rect y={ 72 } fill="currentColor" width={ 640 } height={ 640 } className="text-gray-50" />
-                <rect x={ 118 } fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" width={ 404 } height={ 784 } />
-              </svg>
+              
               <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
                 <div className="text-center text-gray-400">
                   <span className="text-center text-sm">Featured Video by Whidbey Ren Faire</span>
@@ -118,7 +95,7 @@ export default function NavBarTW ()
           </div>
         </main>
       </div>
-
+      
     </>
   );
 }
