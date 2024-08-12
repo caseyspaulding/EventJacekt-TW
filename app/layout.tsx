@@ -8,6 +8,10 @@ import { Toaster } from 'react-hot-toast';
 import './globals.css';
 import { AnnouncementBanner } from '@/components/marketing-ui/banners/announcement';
 
+export const metadata: Metadata = {
+    title: 'EventJacket - Event Management Platform for Non-Profits',
+    description: 'EventJacket is your all-in-one event management solution, offering tools to create, manage, and sell tickets for events with ease. Perfect for organizers of conferences, festivals, and more.',
+};
 
 const inter = Inter( { subsets: [ 'latin' ], display: 'swap' } );
 
