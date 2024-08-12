@@ -29,12 +29,12 @@ export default async function Index ()
       <NavBar1 />
 
       <NavBarTW />
-      <SlantedDividerSolid color="#f1f5f9" height="80px" zIndex={ 2 } />
+      <SlantedDividerSolid color="#f1f5f9" height="81px" zIndex={ 2 } />
       <SlantedDivider
         topColor="#f1f5f9"
         bottomColor="#1D4ED8" // Tailwind's blue-700 color
         gradient="linear-gradient(135deg, #38bdf8, #1D4ED8)"
-        height="50px"
+        height="49px"
         flip={ false } // Flip the slant if needed
         invert={ true } // Invert the angle if needed
         zIndex={ 1 } // Control stacking order
@@ -46,11 +46,11 @@ export default async function Index ()
       <FeaturesGridWithIcons />
 
 
-      <SlantedDividerSolid color="#f1f5f9" height="50px" flip invert zIndex={ 2 } />
+      <SlantedDividerSolid color="#f1f5f9" height="50px" flip invert zIndex={ 3 } />
       <SlantedDivider
-        topColor="#3b82f6"
-        bottomColor="#3b82f6" // Tailwind's blue-700 color
-        gradient="linear-gradient(135deg, #3b82f6, #3b82f6)"
+        topColor="#2563eb"
+        bottomColor="#2563eb" // Tailwind's blue-700 color
+        gradient="linear-gradient(135deg, #2563eb, #2563eb)"
         height="50px"
         flip={ false } // Flip the slant if needed
         invert={ true } // Invert the angle if needed

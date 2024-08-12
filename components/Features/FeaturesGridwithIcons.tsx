@@ -51,10 +51,10 @@ const features = [
 
 export default function FeaturesGridWithIcons() {
   return (
-     <><div className="relative py-24 sm:py-32 lg:py-20 bg-slate-100">
+     <><div className="relative py-14 sm:py-22 lg:py-10 bg-slate-100">
 
       <div className="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8">
-        <h2 className="text-lg font-semibold text-blue-600">
+        <h2 className="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-b from-blue-500 to-sky-500">
           EventJacket Features
         </h2>
         <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -74,13 +74,12 @@ export default function FeaturesGridWithIcons() {
               >
                 <div className="flow-root rounded-lg bg-slate-50  hover:bg-blue-100 px-6 pb-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <div className="-mt-6">
-                    <div>
-                      <span className="inline-flex items-center justify-center rounded-xl bg-blue-500 p-3 shadow-lg">
-                        <feature.icon
-                          aria-hidden="true"
-                          className="h-8 w-8 text-white" />
-                      </span>
-                    </div>
+                    <span
+                      className="inline-flex items-center justify-center rounded-xl p-3 shadow-lg"
+                      style={ { background: 'linear-gradient(185deg, #1D4ED8, #38bdf8)' } }
+                    >
+                      <feature.icon aria-hidden="true" className="h-8 w-8 text-white" />
+                    </span>
                     <h3 className="mt-8 text-lg font-semibold leading-8 tracking-tight text-gray-900">
                       { feature.name }
                     </h3>

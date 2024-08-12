@@ -82,7 +82,7 @@ export default function FooterFull ()
 {
   const currentYear = new Date().getFullYear(); // Get the current year
   return (
-    <><footer className='bg-blue-500 ' aria-labelledby="footer-heading" >
+    <><footer className='bg-blue-600 ' aria-labelledby="footer-heading" >
 
       <h2 id="footer-heading" className="sr-only">
         Footer
@@ -99,8 +99,8 @@ export default function FooterFull ()
               src="/images/logo.svg"
               className="h-7" />
 
-            <p className="text-sm leading-6 text-slate-200">
-              All in one event management platform
+            <p className="text-sm leading-6 text-slate-100">
+              All in one event management platform for non-profits.
             </p>
             <div className="flex space-x-6">
               { navigation.social.map( ( item ) => (
@@ -114,7 +114,7 @@ export default function FooterFull ()
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-gray-200">Solutions</h3>
+                <h3 className="text-sm font-semibold leading-6 text-gray-100">Solutions</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.solutions.map( ( item ) => (
                     <li key={ item.name }>
@@ -126,7 +126,7 @@ export default function FooterFull ()
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-gray-200">Support</h3>
+                <h3 className="text-sm font-semibold leading-6 text-gray-100">Support</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.support.map( ( item ) => (
                     <li key={ item.name }>
@@ -140,7 +140,7 @@ export default function FooterFull ()
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-gray-200">Company</h3>
+                <h3 className="text-sm font-semibold leading-6 text-gray-100">Company</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.company.map( ( item ) => (
                     <li key={ item.name }>
@@ -152,7 +152,7 @@ export default function FooterFull ()
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-gray-200">Legal</h3>
+                <h3 className="text-sm font-semibold leading-6 text-gray-100">Legal</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.legal.map( ( item ) => (
                     <li key={ item.name }>
@@ -166,7 +166,7 @@ export default function FooterFull ()
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
+        <div className="mt-16 border-t border-gray-100/10 pt-8 sm:mt-20 lg:mt-24">
           <p className="text-xs leading-5 text-gray-200">&copy; { currentYear } EventJacket, Inc. All rights reserved.</p>
         </div>
       </div>

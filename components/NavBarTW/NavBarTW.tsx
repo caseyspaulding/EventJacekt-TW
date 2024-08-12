@@ -57,16 +57,19 @@ export default function NavBarTW ()
                 EventJacket is your all-in-one event management platform, offering tools to create, manage, and sell tickets for events with ease.
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
-                <p className="text-base font-medium mb-2  text-gray-400">Sign up to get notified when it’s ready.</p>
-
+                <p className="text-base font-medium mb-3  text-gray-400">Sign up to get notified when it’s ready.</p>
+                <div className="relative group cursor-pointer">
+                  <div
+                    className="absolute -inset-1 bg-gradient-to-r from-blue-700 to-blue-600 rounded-lg blur opacity-35 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
+                  ></div>
                 <Button
-                  
-                  size = "lg"
+                  size="lg"
                   href="/signup"
-                  className=" bg-blue-700   hover:bg-green-500 sm:px-5"
+                  className="relative px-7 py-3 bg-blue-700 text-white font-bold text-2xl rounded-lg leading-none ring-1 ring-gray-900/5"
                 >
                   Get Started
-                </Button>
+                  </Button>
+                </div>
               </div>
             </div>
             <div className="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-none lg:items-center">
