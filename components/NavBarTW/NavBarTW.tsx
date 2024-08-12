@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Svg } from "tabler-icons-react";
 import SvgBackground from "../Backgrounds/SquareSvgBackground";
 import { Button } from "flowbite-react";
+import VideoFacade from "../VideoFacade";
 
 
 export default function NavBarTW ()
@@ -92,24 +93,20 @@ export default function NavBarTW ()
                 <rect x={ 118 } fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" width={ 404 } height={ 784 } />
               </svg>
               <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-                <button
-                  type="button"
+                <div
+                  
                   className="relative block w-full overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   <span className="sr-only">Featured Video</span>
-                  <iframe
-                    width="100%"
-                    height="315"
-                    src="https://player.vimeo.com/video/964426661?h=21b1f36f9b"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-64 rounded-lg"
-                  ></iframe>
+                  <VideoFacade
+                    videoUrl="https://player.vimeo.com/video/964426661?h=21b1f36f9b"
+                    thumbnailUrl="/images/avatars/wrf.jpg"
+                    caption="Our latest feature update video"
+                  />
+                  
 
-                  <p className='text-sm'><a className='text-sm'href="https://vimeo.com/964426661">Whidbey Ren Faire Recap Video</a> from <a href="https://whidbeyislandrenfaire.org">Whidbey Ren Faire</a></p>
-                </button>
+                  
+                </div>
               </div>
             </div>
           </div>
