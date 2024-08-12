@@ -6,6 +6,7 @@ import { Svg } from "tabler-icons-react";
 import SvgBackground from "../Backgrounds/SquareSvgBackground";
 import { Button } from "flowbite-react";
 import VideoFacade from "../VideoFacade";
+import VideoFacadeAutoPlay from "../VideoFacadeAutoPlay";
 
 
 export default function NavBarTW ()
@@ -98,10 +99,10 @@ export default function NavBarTW ()
                   className="relative block w-full overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   <span className="sr-only">Featured Video</span>
-                  <VideoFacade
-                    videoUrl="https://player.vimeo.com/video/964426661?h=21b1f36f9b"
+                  <VideoFacadeAutoPlay
+                    videoUrl="https://mphgaanpbwsetutodyvl.supabase.co/storage/v1/object/sign/videos/whidbey_ren_faire_recap_video%20(720p).mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ2aWRlb3Mvd2hpZGJleV9yZW5fZmFpcmVfcmVjYXBfdmlkZW8gKDcyMHApLm1wNCIsImlhdCI6MTcyMzQ4NDgyOSwiZXhwIjoxNzg2NTU2ODI5fQ.6LeGBAjUPUZxoDAl8YOQ9IqCHnotJWud_y8VW-2VEVI&t=2024-08-12T17%3A47%3A07.983Z"
                     thumbnailUrl="/images/avatars/wrf.jpg"
-                    caption="Our latest feature update video"
+                    caption="Whidbey Island Renaissance Faire Recap Video from Whidbey Ren Faire"
                   />
                   
 
