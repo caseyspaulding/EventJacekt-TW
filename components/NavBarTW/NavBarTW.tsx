@@ -108,7 +108,7 @@ export default function NavBarTW ()
                     className="w-full h-64 rounded-lg"
                   ></iframe>
 
-                  <p><a href="https://vimeo.com/964426661">Whidbey Ren Faire Recap Video</a> from <a href="https://vimeo.com/user197883641">Whidbey Ren Faire</a></p>
+                  <p className='text-sm'><a className='text-sm'href="https://vimeo.com/964426661">Whidbey Ren Faire Recap Video</a> from <a href="https://whidbeyislandrenfaire.org">Whidbey Ren Faire</a></p>
                 </button>
               </div>
             </div>
