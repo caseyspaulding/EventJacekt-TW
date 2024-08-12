@@ -6,7 +6,6 @@ import { useUser } from '@/contexts/UserContext';
 import { generateSlug } from '@/utils/stringUtils';
 import toast from 'react-hot-toast';
 import { createEvent } from '@/app/actions/eventActions';
-
 import ModalBasic from '@/components/modals/ModalBasic';
 
 const CreateEventPage = () =>
@@ -22,28 +21,22 @@ const CreateEventPage = () =>
   const [ country, setCountry ] = useState( '' );
   const [ zipCode, setZipCode ] = useState( '' );
   const [ maxAttendees, setMaxAttendees ] = useState( 0 );
-
   const [ isModalOpen, setIsModalOpen ] = useState( false );
   const { user } = useUser();
   const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
-  const [ slug, setSlug ] = useState<string | null>( null ); // Initialize slug state
-
-
+  const [ slug, setSlug ] = useState<string | null>( null );
 
   const handleImageUpload = async ( file: File | null, orgName: string ) =>
   {
-
     if ( !file )
     {
       console.error( 'No file selected' );
       return null;
     }
 
-    // Generate a unique filename by appending the organization name and a UUID
     const uniqueFilename = `${ orgName }_${ file.name }`;
-
     const { data, error } = await createClient().storage
-      .from( 'eventFeaturedImages' ) // bucket name
+      .from( 'eventFeaturedImages' )
       .upload( `public/${ uniqueFilename }`, file, {
         cacheControl: '3600',
         upsert: false,
@@ -67,22 +60,17 @@ const CreateEventPage = () =>
     e.preventDefault();
     if ( !user ) return;
 
-    const orgId = user.organizationId; // Get the orgId from the context
-
-
-
+    const orgId = user.organizationId;
 
     const imageUrl = await handleImageUpload( featuredImage, user.orgName );
-
     if ( !imageUrl )
     {
       toast.error( 'Failed to upload the image.' );
       return;
     }
 
-
-    const generatedSlug = generateSlug( name ); // Generate slug here before event creation
-    setSlug( generatedSlug ); // Set slug in state
+    const generatedSlug = generateSlug( name );
+    setSlug( generatedSlug );
 
     const formData = new FormData();
     formData.append( 'orgId', orgId );
@@ -99,7 +87,6 @@ const CreateEventPage = () =>
     formData.append( 'zipCode', zipCode );
     formData.append( 'maxAttendees', maxAttendees.toString() );
     formData.append( 'status', 'draft' );
-
     formData.append( 'featuredImage', imageUrl );
 
     try
@@ -110,9 +97,7 @@ const CreateEventPage = () =>
       {
         toast.success( 'Event created successfully!' );
         setIsModalOpen( true );
-
-
-        // Clear the form state
+        // Clear form
         setName( '' );
         setDescription( '' );
         setStartDate( '' );
@@ -125,14 +110,9 @@ const CreateEventPage = () =>
         setZipCode( '' );
         setMaxAttendees( 0 );
         setFeaturedImage( null );
-
-
-       
-
       } else
       {
         toast.error( 'Failed to create event: ' + response.message );
-        console.error( 'Failed to create event:', response.message );
       }
     } catch ( error )
     {
@@ -146,11 +126,8 @@ const CreateEventPage = () =>
     setIsModalOpen( false );
   };
 
-
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-md">
-
-
       <h1 className="text-2xl font-bold mb-6 text-center">Create an Event</h1>
       <form onSubmit={ handleSubmit } className="space-y-6">
         <div>
@@ -181,6 +158,7 @@ const CreateEventPage = () =>
             required
           />
         </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Featured Image
@@ -192,6 +170,7 @@ const CreateEventPage = () =>
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
+
         <div>
           <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
             Start Date
@@ -343,4 +322,3 @@ const CreateEventPage = () =>
 };
 
 export default CreateEventPage;
-
