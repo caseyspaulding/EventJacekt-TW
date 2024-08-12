@@ -20,6 +20,7 @@ export function AnnouncementBanner ()
 
         <Banner.CollapseButton
           color="gray"
+          aria-label="Close"
           className="border-0 bg-transparent px-0 text-gray-400 enabled:hover:bg-gray-200 enabled:hover:text-gray-900 dark:enabled:hover:bg-gray-600 dark:enabled:hover:text-white [&>span]:px-2"
         >
           <HiX className="h-5 w-5" />

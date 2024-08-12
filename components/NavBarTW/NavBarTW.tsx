@@ -17,11 +17,11 @@ export default function NavBarTW ()
           <div className="relative">
             <div className="absolute inset-x-0 bottom-0 h-1/2" />
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-              <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
+              <div className="relative shadow-xl sm:overflow-hidden sm:rounded-xl">
                 <div className="absolute inset-0">
                   <Image
                     priority
-                    alt="People working on laptops"
+                    alt="People at a festival"
                     height={ 1024 }
                     width={ 1536 }
                     src="/images/festival-2.webp"

@@ -23,7 +23,7 @@ export default function CTAwPicture ()
             />
             <div className="w-full flex-auto">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Boost your productivity today.</h2>
-              <p className="mt-6 text-lg leading-8 text-gray-300">
+              <p className="mt-6 text-lg leading-8 text-white">
                 Get Started Today. No credit card required.
               </p>
               <ul
