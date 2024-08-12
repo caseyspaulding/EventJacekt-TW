@@ -1,33 +1,33 @@
 
-import AuthButton from "@/components/AuthButton";
-import { CloudBackground } from "@/components/Backgrounds/CouldBackground";
+
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import CTAwPicture from "@components/CTA/CTAwPicture";
 import FeaturesGridWithIcons from "@components/Features/FeaturesGridwithIcons";
 import FooterFull from "@components/Footers/FooterFull";
 import NavBarTW from "@components/NavBarTW/NavBarTW";
 import { Metadata } from "next";
-import { Cloud } from "tabler-icons-react";
+
 
 
 export const metadata: Metadata = {
-  title: 'EventJacket - Event Management Platform',
+  title: 'EventJacket - Event Management Platform for Non-Profits',
   description: 'EventJacket is your all-in-one event management solution, offering tools to create, manage, and sell tickets for events with ease. Perfect for organizers of conferences, festivals, and more.',
 };
 
-export default async function Index() {
+export default async function Index ()
+{
   return (
     <>
-      
-      <NavBar1 /> 
-      
+
+      <NavBar1 />
+
       <NavBarTW />
-    
+
       <FeaturesGridWithIcons />
-      
-      <CTAwPicture /> 
+
+      <CTAwPicture />
       <FooterFull />
-  
+
     </>
   );
 }
