@@ -61,9 +61,10 @@ export default function NavBarTW ()
                 <p className="text-base font-medium mb-2  text-gray-700">Sign up to get notified when it’s ready.</p>
 
                 <Button
-                  color="blue"
+                  
+                  size = "lg"
                   href="/signup"
-                  className="flex items-center justify-center rounded-md border border-transparent bg-blue-700 px-3 py-3 text-5xl font-bold text-white shadow-sm hover:bg-green-500 sm:px-5"
+                  className=" bg-blue-700   hover:bg-green-500 sm:px-5"
                 >
                   Get Started
                 </Button>

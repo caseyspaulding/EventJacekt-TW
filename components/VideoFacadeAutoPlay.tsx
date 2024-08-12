@@ -12,7 +12,7 @@ export default function VideoFacadeAutoPlay ( { videoUrl, thumbnailUrl, caption 
     <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
       <iframe
         width="100%"
-        height="315"
+        height="100%"
         src={ `${ videoUrl }?autoplay=1&mute=1` } // Add autoplay=1 and mute=1 to the URL
         title="Video player"
         frameBorder="0"
