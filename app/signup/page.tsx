@@ -89,7 +89,7 @@ export default function SignUp ( { searchParams }: SignUpProps )
             },
           } }
         >
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white lg:text-3xl">
+          <h1 className="text-2xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-b from-blue-700 to-blue-500 lg:text-3xl">
             Create a Free Account
           </h1>
           <form onSubmit={ handleSubmit } className="mt-8 space-y-6">
