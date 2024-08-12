@@ -8,6 +8,7 @@ import { Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
+import SvgBackground from "@/components/Backgrounds/SquareSvgBackground";
 
 
 
@@ -62,6 +63,7 @@ export default function SignUp ( { searchParams }: SignUpProps )
         <meta name="robots" content="noindex, nofollow" />
       </Head>
       <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
+        <SvgBackground />
         <Link
           href="/"
           className="mb-8 flex items-center justify-center text-2xl font-semibold dark:text-white lg:mb-10"
@@ -75,7 +77,7 @@ export default function SignUp ( { searchParams }: SignUpProps )
           horizontal
           imgSrc="/images/authentication/create-account.jpg"
           imgAlt=""
-          className="w-full md:max-w-screen-lg"
+          className="w-full md:max-w-screen-lg shadow-2xl"
           theme={ {
             root: {
               children: "my-auto w-full gap-0 space-y-8 p-6 sm:p-8 lg:p-16",

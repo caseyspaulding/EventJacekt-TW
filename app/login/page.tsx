@@ -7,6 +7,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from './signin'; // Adjust the path as necessary
 import Head from 'next/head';
+import SvgBackground from '@/components/Backgrounds/SquareSvgBackground';
+import { Svg } from 'tabler-icons-react';
 
 
 
@@ -41,7 +43,8 @@ export default function Login ( { searchParams }: LoginProps )
                 <meta name="description" content="Login to your EventJacket account to manage your events." />
                 <meta name="robots" content="noindex, nofollow" />
             </Head>
-            <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
+            <div className=" mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
+                <SvgBackground />   
                 <Link
                     href="/"
                     className="mb-8 flex items-center justify-center text-2xl font-semibold dark:text-white lg:mb-10"
@@ -51,14 +54,17 @@ export default function Login ( { searchParams }: LoginProps )
                         EventJacket
                     </span>
                 </Link>
+               
                 <Card
+                   
                     horizontal
-                    imgAlt=""
+                   
+                    imgAlt="login"
                     imgSrc="/images/authentication/login.png"
-                    className="w-full md:max-w-screen-lg"
+                    className="w-full md:max-w-screen-lg shadow-2xl"
                     theme={ {
                         root: {
-                            children: 'my-auto w-full gap-0 space-y-8 p-6 sm:p-8 lg:p-16'
+                            children: ' my-auto w-full gap-0 space-y-8 p-6 sm:p-8 lg:p-16'
                         },
                         img: {
                             horizontal: {
@@ -66,8 +72,8 @@ export default function Login ( { searchParams }: LoginProps )
                             }
                         }
                     } }
-                >
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white lg:text-3xl">
+                > 
+                    <h2 className=" bg-transparent text-2xl text-center font-bold text-blue-700 dark:text-white lg:text-3xl">
                         Sign in
                     </h2>
                     <form className="mt-8 space-y-6">

@@ -1,6 +1,7 @@
 
 
 
+import SvgBackgroundReversed from "@/components/Backgrounds/SquareSvgBackgroundReverse";
 import SlantedDivider2 from "@/components/Divider/SlantedDivider2";
 import SlantedDivider3 from "@/components/Divider/SlantedDivider3";
 import SlantedDividerSolid from "@/components/Divider/SlantedDividerSolidProps";
@@ -24,20 +25,42 @@ export default async function Index ()
 {
   return (
     <>
-
+      <SvgBackgroundReversed />
       <NavBar1 />
 
       <NavBarTW />
-      <SlantedDividerSolid color="#f1f5f9" height="80px"  />
+      <SlantedDividerSolid color="#f1f5f9" height="80px" zIndex={ 2 } />
+      <SlantedDivider
+        topColor="#f1f5f9"
+        bottomColor="#1D4ED8" // Tailwind's blue-700 color
+        gradient="linear-gradient(135deg, #38bdf8, #1D4ED8)"
+        height="50px"
+        flip={ false } // Flip the slant if needed
+        invert={ true } // Invert the angle if needed
+        zIndex={ 1 } // Control stacking order
+        overlap="-50px" // Control overlap between sections
+      />
 
 
 
       <FeaturesGridWithIcons />
-      <SlantedDividerSolid color="#f1f5f9" height="80px" flip invert zIndex={ 2 } />
-      <SlantedDividerSolid color="transparent" height="80px"  zIndex={ 1 } />
-      
-      
-      
+
+
+      <SlantedDividerSolid color="#f1f5f9" height="50px" flip invert zIndex={ 2 } />
+      <SlantedDivider
+        topColor="#3b82f6"
+        bottomColor="#3b82f6" // Tailwind's blue-700 color
+        gradient="linear-gradient(135deg, #3b82f6, #3b82f6)"
+        height="50px"
+        flip={ false } // Flip the slant if needed
+        invert={ true } // Invert the angle if needed
+        zIndex={ 1 } // Control stacking order
+        overlap="-50px" // Control overlap between sections
+      />
+
+
+
+
 
       <FooterFull />
 
