@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -7,6 +7,7 @@ import { signUp } from "./signup"; // Adjust the path as necessary
 import { Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
 
 
 
@@ -55,6 +56,11 @@ export default function SignUp ( { searchParams }: SignUpProps )
 
   return (
     <>
+      <Head>
+        <title>Create Free Account - EventJacket</title>
+        <meta name="description" content="Create your EventJacket account to manage your events." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
       <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
         <Link
           href="/"
@@ -81,9 +87,9 @@ export default function SignUp ( { searchParams }: SignUpProps )
             },
           } }
         >
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white lg:text-3xl">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white lg:text-3xl">
             Create a Free Account
-          </h2>
+          </h1>
           <form onSubmit={ handleSubmit } className="mt-8 space-y-6">
             <div className="flex flex-col gap-y-2">
               <Label htmlFor="email">Your email</Label>

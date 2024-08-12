@@ -6,7 +6,8 @@ import { Card, Checkbox, Label, TextInput } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from './signin'; // Adjust the path as necessary
-import { Metadata } from 'next';
+import Head from 'next/head';
+
 
 
 interface SearchParams
@@ -35,6 +36,11 @@ export default function Login ( { searchParams }: LoginProps )
 
     return (
         <>
+            <Head>
+                <title>Login - EventJacket</title>
+                <meta name="description" content="Login to your EventJacket account to manage your events." />
+                <meta name="robots" content="noindex, nofollow" />
+            </Head>
             <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
                 <Link
                     href="/"

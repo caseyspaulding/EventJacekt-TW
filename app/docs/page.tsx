@@ -1,11 +1,17 @@
 import FooterFull from "@/components/Footers/FooterFull";
 import HeaderCentered from "@/components/HeaderCentered";
 import { CheckCircleIcon, InformationCircleIcon } from "@heroicons/react/20/solid";
+import { Metadata } from "next";
 
-export default function docs() {
+export const metadata: Metadata = {
+  title: 'Documentation - EventJacket',
+  description: 'Welcome to the documentation! Below, you\'ll find everything you need to get started with our platform.',
+};
+export default function docs ()
+{
   return (
     <div>
-      <HeaderCentered title={ "Documentation" } description={ "" } />  
+      <HeaderCentered title={ "Documentation" } description={ "" } />
 
       <div className="bg-white px-6 py-32 lg:px-8">
         <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
@@ -88,8 +94,8 @@ export default function docs() {
           </div>
         </div>
       </div>
-     
-    <FooterFull />  
+
+      <FooterFull />
     </div>
   )
 }
