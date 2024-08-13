@@ -34,7 +34,7 @@ const timeline = [
     date: 'Dec 2025',
     dateTime: '2025-03',
   },
- 
+
 ];
 
 
@@ -92,8 +92,8 @@ const team = [
     role: 'Advisory Council',
     imageUrl: '/images/avatars/wrf.jpg',
   },
-  
-  
+
+
   // More people...
 ]
 
@@ -101,11 +101,11 @@ const team = [
 
 export default function AboutHeroBig ()
 {
-  
+
 
   return (
-    <div className="bg-white">
-    
+    <div className="bg-white mb-10">
+
 
       <main className="isolate">
         {/* Hero section */ }
@@ -235,8 +235,8 @@ export default function AboutHeroBig ()
           </div>
         </div>
         <div className='py-10'>
-          
-</div>
+
+        </div>
         {/* Content section */ }
         <div className="mx-auto -mt-12 max-w-7xl px-6 sm:mt-4 lg:px-8 xl:-mt-10">
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
@@ -322,11 +322,11 @@ export default function AboutHeroBig ()
               <rect fill="url(#e9033f3e-f665-41a6-84ef-756f6778e6fe)" width="100%" height="100%" strokeWidth={ 0 } />
             </svg>
           </div>
-         
+
         </div>
 
         {/* Team section */ }
-        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8">
+        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8 mb-11">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Meet Our Team</h2>
             <p className="mt-6 text-lg leading-8 text-gray-600">
@@ -348,11 +348,11 @@ export default function AboutHeroBig ()
         </div>
 
         {/* Blog section */ }
-       
+
       </main>
 
       {/* Footer */ }
-   
+
     </div>
   )
 }
