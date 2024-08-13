@@ -13,6 +13,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@emotion/react": "^11.13.0",
         "@headlessui/react": "^2.1.2",
         "@heroicons/react": "^2.1.5",
         "@keystatic/core": "^0.5.32",
@@ -37,6 +38,7 @@
         "framer-motion": "^11.3.24",
         "fs": "0.0.1-security",
         "heroicons-react": "^1.4.1",
+        "hover.css": "^2.3.2",
         "isomorphic-dompurify": "^2.14.0",
         "js-cookie": "^3.0.5",
         "net": "^1.0.2",
@@ -48,6 +50,7 @@
         "quill": "^2.0.2",
         "react": "^18.3.1",
         "react-apexcharts": "^1.4.1",
+
         "react-confetti": "^6.1.0",
         "react-dom": "^18.3.1",
         "react-hot-toast": "^2.4.1",
@@ -65,7 +68,7 @@
         "stripe": "^16.7.0",
         "svgmap": "^2.11.1",
         "tabler-icons-react": "^1.56.0",
-        "tailwind-merge": "^2.4.0",
+        "tailwind-merge": "^2.5.2",
         "tinymce": "^7.3.0",
         "tls": "^0.0.1"
     },
