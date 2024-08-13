@@ -7,6 +7,9 @@ import { useUser } from '@/contexts/UserContext';
 import { getEventIdBySlug } from '../../../../../actions/getEventIdBySlug';
 import toast from 'react-hot-toast';
 import { createTicketType } from '@/app/actions/ticketActions';
+import ModalBasic from '@/components/modals/ModalBasic';
+import { Link } from 'tabler-icons-react';
+import ModalEventCreation from '@/components/modals/ModalEventCreation';
 
 const CreateTicketsPage = () =>
 {
@@ -20,7 +23,7 @@ const CreateTicketsPage = () =>
   const [ maxPerCustomer, setMaxPerCustomer ] = useState( 1 );
   const [ eventId, setEventId ] = useState<string | null>( null );
   const [ eventDate, setEventDate ] = useState( '' );
-
+  const [ isModalOpen, setIsModalOpen ] = useState( false );
   const { user } = useUser();
   const { eventSlug } = useParams();
 
@@ -80,6 +83,7 @@ const CreateTicketsPage = () =>
         setEventDate( '' );
         setIsEarlyBird( false );
         setMaxPerCustomer( 1 );
+        setIsModalOpen( true );
       } else
       {
         toast.error( 'Failed to create ticket type: ' + response.message );
@@ -204,6 +208,17 @@ const CreateTicketsPage = () =>
           Create Ticket
         </button>
       </form>
+      { isModalOpen && (
+        <ModalEventCreation onClose={ () => setIsModalOpen( false ) }  >
+          <div>
+            <h1>Ticket Types Created Successfully!</h1>
+            <p>Your ticket types for the event have been created. You can now share the event page with your audience.</p>
+            <Link href={ `/events/${ eventSlug }` }>
+              <a>Go to Event Page</a>
+            </Link>
+          </div>
+        </ModalEventCreation>
+      ) }
     </div>
   );
 };

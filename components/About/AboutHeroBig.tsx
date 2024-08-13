@@ -89,7 +89,7 @@ const team = [
   },
   {
     name: 'Whidbey Ren Faire',
-    role: 'Advisory Council',
+    role: 'Advisor',
     imageUrl: '/images/avatars/wrf.jpg',
   },
 
