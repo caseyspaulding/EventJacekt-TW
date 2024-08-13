@@ -27,6 +27,7 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl, caption }: Video
           className="relative block w-full overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           <Image
+            priority
             src={ thumbnailUrl }
             alt="Video thumbnail"
             className="w-full h-64 rounded-lg object-cover"
