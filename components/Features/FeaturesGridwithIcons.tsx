@@ -1,3 +1,5 @@
+'use client'; 
+
 import
 {
   CalendarIcon,
@@ -7,7 +9,10 @@ import
   TicketIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
+
+import useOnScreen from '@/hooks/useOnScreen';
 import 'animate.css';
+import { useRef } from "react";
 
 const features = [
   {
@@ -50,6 +55,8 @@ const features = [
 
 export default function FeaturesGridWithIcons ()
 {
+  const ref = useRef<HTMLParagraphElement>( null );
+  const isVisible = useOnScreen( ref );
   return (
     <><div className="relative py-14 sm:py-22 lg:py-10 bg-slate-100">
 
@@ -57,7 +64,11 @@ export default function FeaturesGridWithIcons ()
         <h2 className="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-b from-blue-500 to-sky-500">
           EventJacket Features
         </h2>
-        <p className=" mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        <p
+          ref={ ref }
+          className={ `mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl ${ isVisible ? 'animate__animated animate__fadeInUp' : ''
+            }` }
+        >
           Everything you need to manage your event
         </p>
         <p className="animate__animated animate__fadeInLeft mx-auto mt-5 max-w-prose text-xl text-gray-700">
