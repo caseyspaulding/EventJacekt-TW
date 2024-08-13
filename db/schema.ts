@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { pgTable, uuid, text, timestamp, numeric, serial, varchar, integer, boolean, PgColumn, PgTableWithColumns } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, numeric, serial, varchar, integer, boolean, PgColumn, PgTableWithColumns, date } from 'drizzle-orm/pg-core';
 
 
 
@@ -83,10 +83,11 @@ export const ticketTypes = pgTable( 'ticket_types', {
     id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
     eventId: uuid( 'event_id' ).notNull().references( () => events.id ),
     orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
-    name: text( 'name' ).notNull(),
+    name: text( 'name' ).notNull(), // e.g., "Friday Ticket", "Saturday Ticket"
     description: text( 'description' ),
     price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
     quantity: integer( 'quantity' ).notNull(),
+    eventDate: date( 'event_date' ).notNull(), // New column to represent the specific day of the event
     saleStartDate: timestamp( 'sale_start_date' ).notNull(),
     saleEndDate: timestamp( 'sale_end_date' ).notNull(),
     isEarlyBird: boolean( 'is_early_bird' ).default( false ),
@@ -101,7 +102,7 @@ export const tickets = pgTable( 'tickets', {
     eventId: uuid( 'event_id' ).notNull().references( () => events.id ),
     orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
     customerId: uuid( 'customer_id' ).references( () => customers.id ),
-    ticketTypeId: uuid( 'ticket_type_id' ).notNull().references( () => ticketTypes.id ), // New field
+    ticketTypeId: uuid( 'ticket_type_id' ).notNull().references( () => ticketTypes.id ), // Reference to ticketTypes
     name: text( 'name' ).notNull(),
     price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
     status: text( 'status' ).notNull().default( 'available' ), // e.g., 'available', 'sold', 'reserved'
@@ -111,8 +112,6 @@ export const tickets = pgTable( 'tickets', {
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
-
-
 
 // Orders Table
 export const orders = pgTable( 'orders', {
