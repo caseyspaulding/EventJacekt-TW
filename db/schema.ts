@@ -88,8 +88,8 @@ export const ticketTypes = pgTable( 'ticket_types', {
     price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
     quantity: integer( 'quantity' ).notNull(),
     eventDate: date( 'event_date' ).notNull(), // New column to represent the specific day of the event
-    saleStartDate: timestamp( 'sale_start_date' ).notNull(),
-    saleEndDate: timestamp( 'sale_end_date' ).notNull(),
+    saleStartDate: date( 'sale_start_date' ).notNull(),
+    saleEndDate: date( 'sale_end_date' ).notNull(),
     isEarlyBird: boolean( 'is_early_bird' ).default( false ),
     maxPerCustomer: integer( 'max_per_customer' ),
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
@@ -106,8 +106,8 @@ export const tickets = pgTable( 'tickets', {
     name: text( 'name' ).notNull(),
     price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
     status: text( 'status' ).notNull().default( 'available' ), // e.g., 'available', 'sold', 'reserved'
-    validFrom: timestamp( 'valid_from' ).notNull(),
-    validUntil: timestamp( 'valid_until' ).notNull(),
+    validFrom: date( 'valid_from' ).notNull(),
+    validUntil: date( 'valid_until' ).notNull(),
     barcode: text( 'barcode' ).unique(),
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )

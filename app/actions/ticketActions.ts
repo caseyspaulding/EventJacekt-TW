@@ -3,7 +3,7 @@
 import { db } from '@/db';
 import { ticketTypes, tickets } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
-import { s } from '@markdoc/markdoc/dist/src/schema';
+
 import { and, eq } from 'drizzle-orm/expressions';
 import { revalidatePath } from 'next/cache';
 
@@ -19,24 +19,26 @@ export async function createTicketType ( formData: FormData )
   const quantity = parseInt( formData.get( 'quantity' ) as string, 10 );
   const saleStartDate = new Date( formData.get( 'saleStartDate' ) as string );
   const saleEndDate = new Date( formData.get( 'saleEndDate' ) as string );
+  const eventDate = new Date( formData.get( 'eventDate' ) as string );
   const isEarlyBird = formData.get( 'isEarlyBird' ) === 'true';
   const maxPerCustomer = formData.get( 'maxPerCustomer' )
     ? parseInt( formData.get( 'maxPerCustomer' ) as string, 10 )
     : null; // Handle optional field
 
   const newTicketType = {
-    eventId,
-    orgId,
-    name,
-    description,
-    price: price.toString(), // Ensure price is a string
-    quantity,
-    saleStartDate,
-    saleEndDate,
-    isEarlyBird,
-    maxPerCustomer,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    eventId: eventId,
+    orgId: orgId,
+    name: name,
+    description: description,
+    price: price,
+    quantity: quantity,
+    saleStartDate: saleStartDate.toISOString().split( 'T' )[ 0 ], // Convert to 'YYYY-MM-DD'
+    saleEndDate: saleEndDate.toISOString().split( 'T' )[ 0 ],     // Convert to 'YYYY-MM-DD'
+    eventDate: eventDate.toISOString().split( 'T' )[ 0 ],         // Convert to 'YYYY-MM-DD'
+    isEarlyBird: isEarlyBird,
+    maxPerCustomer: maxPerCustomer,
+    createdAt: new Date(), // You can keep this as a Date object if it will be converted later
+    updatedAt: new Date(), // You can keep this as a Date object if it will be converted later
   };
 
   try
@@ -62,6 +64,7 @@ export async function updateTicketType ( ticketTypeId: string, formData: FormDat
   const quantity = parseInt( formData.get( 'quantity' ) as string, 10 );
   const saleStartDate = new Date( formData.get( 'saleStartDate' ) as string );
   const saleEndDate = new Date( formData.get( 'saleEndDate' ) as string );
+  const eventDate = new Date( formData.get( 'eventDate' ) as string );
   const isEarlyBird = formData.get( 'isEarlyBird' ) === 'true';
   const maxPerCustomer = parseInt( formData.get( 'maxPerCustomer' ) as string, 10 );
 
@@ -70,8 +73,9 @@ export async function updateTicketType ( ticketTypeId: string, formData: FormDat
     description,
     price: price.toString(),
     quantity,
-    saleStartDate,
-    saleEndDate,
+    saleStartDate: saleStartDate.toISOString().split( 'T' )[ 0 ], // Convert to 'YYYY-MM-DD'
+    saleEndDate: saleEndDate.toISOString().split( 'T' )[ 0 ],     // Convert to 'YYYY-MM-DD'
+    eventDate: eventDate.toISOString().split( 'T' )[ 0 ],
     isEarlyBird,
     maxPerCustomer,
     updatedAt: new Date(),

@@ -19,6 +19,7 @@ const CreateTicketsPage = () =>
   const [ isEarlyBird, setIsEarlyBird ] = useState( false );
   const [ maxPerCustomer, setMaxPerCustomer ] = useState( 1 );
   const [ eventId, setEventId ] = useState<string | null>( null );
+  const [ eventDate, setEventDate ] = useState( '' );
 
   const { user } = useUser();
   const { eventSlug } = useParams();
@@ -58,6 +59,7 @@ const CreateTicketsPage = () =>
     formData.append( 'quantity', quantity.toString() ); // Convert number to string
     formData.append( 'saleStartDate', saleStartDate );
     formData.append( 'saleEndDate', saleEndDate );
+    formData.append( 'eventDate', eventDate );
     formData.append( 'isEarlyBird', isEarlyBird.toString() ); // Convert boolean to string
     formData.append( 'maxPerCustomer', maxPerCustomer?.toString() ?? '' ); // Handle nullable field
 
@@ -75,6 +77,7 @@ const CreateTicketsPage = () =>
         setQuantity( 0 );
         setSaleStartDate( '' );
         setSaleEndDate( '' );
+        setEventDate( '' );
         setIsEarlyBird( false );
         setMaxPerCustomer( 1 );
       } else
@@ -145,7 +148,7 @@ const CreateTicketsPage = () =>
         <div>
           <label className="block text-sm font-medium text-gray-700">Sale Start Date</label>
           <input
-            type="datetime-local"
+            type="date"
             value={ saleStartDate }
             onChange={ ( e ) => setSaleStartDate( e.target.value ) }
             required
@@ -156,14 +159,23 @@ const CreateTicketsPage = () =>
         <div>
           <label className="block text-sm font-medium text-gray-700">Sale End Date</label>
           <input
-            type="datetime-local"
+            type="date"
             value={ saleEndDate }
             onChange={ ( e ) => setSaleEndDate( e.target.value ) }
             required
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           />
         </div>
-
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Ticket Event Date</label>
+          <input
+            type="date"
+            value={ eventDate }
+            onChange={ ( e ) => setEventDate( e.target.value ) }
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+          />
+        </div>
         <div className="flex items-center">
           <input
             type="checkbox"
