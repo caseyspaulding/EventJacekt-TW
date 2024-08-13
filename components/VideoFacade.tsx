@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 
 type VideoFacadeProps = {
@@ -25,7 +26,7 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl, caption }: Video
           onClick={ handleClick }
           className="relative block w-full overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          <img
+          <Image
             src={ thumbnailUrl }
             alt="Video thumbnail"
             className="w-full h-64 rounded-lg object-cover"
