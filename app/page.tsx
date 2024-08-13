@@ -2,6 +2,7 @@
 
 
 import SvgBackgroundReversed from "@/components/Backgrounds/SquareSvgBackgroundReverse";
+import { ThreeDCard } from "@/components/Cards/ThreeDCard";
 import SlantedDivider2 from "@/components/Divider/SlantedDivider2";
 import SlantedDivider3 from "@/components/Divider/SlantedDivider3";
 import SlantedDividerSolid from "@/components/Divider/SlantedDividerSolidProps";

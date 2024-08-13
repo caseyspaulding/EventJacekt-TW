@@ -6,10 +6,10 @@ import { useState } from 'react';
 type VideoFacadeProps = {
   videoUrl: string;
   thumbnailUrl: string;
-  caption?: string; // caption is optional
+
 };
 
-export default function VideoFacade ( { videoUrl, thumbnailUrl, caption }: VideoFacadeProps )
+export default function VideoFacade ( { videoUrl, thumbnailUrl }: VideoFacadeProps )
 {
   const [ isVideoLoaded, setIsVideoLoaded ] = useState( false );
 
@@ -27,6 +27,8 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl, caption }: Video
           className="relative block w-full overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           <Image
+            width={ 300 }
+            height={ 300 }
             priority
             src={ thumbnailUrl }
             alt="Video thumbnail"
@@ -42,18 +44,17 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl, caption }: Video
       ) : (
         <iframe
           width="100%"
-          height="315"
+          height="100%"
           src={ videoUrl }
           title="Video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           className="w-full h-64 rounded-lg"
+
         ></iframe>
       ) }
-      { caption && (
-        <p className="mt-2 text-center text-sm text-gray-500">{ caption }</p>
-      ) }
+
     </div>
   );
 }
