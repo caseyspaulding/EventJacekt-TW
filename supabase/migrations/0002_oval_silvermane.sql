@@ -1,1 +1,0 @@
-ALTER TABLE "ticket_types" ADD COLUMN "event_date" date NOT NULL;

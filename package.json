@@ -20,6 +20,7 @@
         "@keystatic/next": "^5.0.1",
         "@markdoc/markdoc": "^0.4.0",
         "@sinclair/typebox": "^0.33.4",
+        "@stripe/connect-js": "^3.3.12",
         "@stripe/stripe-js": "^4.2.0",
         "@supabase/ssr": "^0.4.0",
         "@supabase/supabase-js": "^2.45.1",
@@ -50,7 +51,6 @@
         "quill": "^2.0.2",
         "react": "^18.3.1",
         "react-apexcharts": "^1.4.1",
-
         "react-confetti": "^6.1.0",
         "react-dom": "^18.3.1",
         "react-hot-toast": "^2.4.1",

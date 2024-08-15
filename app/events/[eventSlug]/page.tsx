@@ -1,7 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { db } from '@/db';
-import { events, ticketTypes } from '@/db/schema'; // Import the ticketTypes table schema
+import { events, orgTicketTypes } from '@/db/schema'; // Import the ticketTypes table schema
 import { getEventIdBySlug } from '@/app/actions/getEventIdBySlug';
 import { eq } from 'drizzle-orm/expressions';
 
@@ -39,32 +39,40 @@ export default async function EventPage ( { params }: { params: Params } )
   // Fetch the ticket types associated with the event
   const tickets = await db
     .select()
-    .from( ticketTypes )
-    .where( eq( ticketTypes.eventId, eventId ) );
+    .from( orgTicketTypes )
+    .where( eq( orgTicketTypes.eventId, eventId ) );
 
   return (
-    <div>
-      <h1>{ eventData.name }</h1>
-      <p>{ eventData.description }</p>
-      <p>Start Date: { eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : 'No start date available' }</p>
-      <p>End Date: { eventData.endDate ? new Date( eventData.endDate ).toLocaleDateString() : 'No end date available' }</p>
-      <p>Venue: { eventData.venue }</p>
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <h1 className="text-3xl font-bold text-gray-900 mb-4">{ eventData.name }</h1>
+      <p className="text-lg text-gray-700 mb-2">{ eventData.description }</p>
+      <p className="text-sm text-gray-500 mb-2">
+        Start Date: { eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : 'No start date available' }
+      </p>
+      <p className="text-sm text-gray-500 mb-2">
+        End Date: { eventData.endDate ? new Date( eventData.endDate ).toLocaleDateString() : 'No end date available' }
+      </p>
+      <p className="text-sm text-gray-500 mb-6">Venue: { eventData.venue }</p>
 
-      <h2>Available Tickets</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Available Tickets</h2>
       { tickets.length > 0 ? (
-        <ul>
+        <ul className="space-y-4">
           { tickets.map( ticket => (
-            <li key={ ticket.id }>
-              <h3>{ ticket.name }</h3>
-              <p>{ ticket.description }</p>
-              <p>Price: ${ parseFloat( ticket.price ).toFixed( 2 ) }</p>
-              <p>Event Date: { ticket.eventDate ? new Date( ticket.eventDate ).toLocaleDateString() : 'No date available' }</p>
-              <button>Buy Ticket</button> {/* Implement the purchase logic here */ }
+            <li key={ ticket.id } className="p-4 bg-gray-50 border border-gray-200 rounded-md">
+              <h3 className="text-xl font-medium text-gray-900">{ ticket.name }</h3>
+              <p className="text-gray-700">{ ticket.description }</p>
+              <p className="text-lg text-gray-800 font-semibold">Price: ${ parseFloat( ticket.price ).toFixed( 2 ) }</p>
+              <p className="text-sm text-gray-500">
+                Event Date: { ticket.eventDate ? new Date( ticket.eventDate ).toLocaleDateString() : 'No date available' }
+              </p>
+              <button className="mt-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700">
+                Buy Ticket
+              </button>
             </li>
           ) ) }
         </ul>
       ) : (
-        <p>No tickets available for this event.</p>
+        <p className="text-red-500">No tickets available for this event.</p>
       ) }
     </div>
   );

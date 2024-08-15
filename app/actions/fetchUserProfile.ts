@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import { db } from '@/db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq } from 'drizzle-orm/expressions';
+import { stripe } from '@/utils/stripe';
 
 export async function fetchUserProfile ()
 {
@@ -20,7 +21,14 @@ export async function fetchUserProfile ()
     .select( {
       id: userProfiles.id,
       organizationId: userProfiles.orgId,
-      organizationName: organizations.name
+      organizationName: organizations.name,
+
+      stripeConnectedAccountId: userProfiles.stripeConnectedAccountId,
+      stripeCustomerId: userProfiles.stripeCustomerId,
+      stripeSubscriptionId: userProfiles.stripeSubscriptionId,
+      stripeConnectLinked: userProfiles.stripeConnectLinked
+
+
     } )
     .from( userProfiles )
     .innerJoin( organizations, eq( userProfiles.orgId, organizations.id ) )
@@ -34,6 +42,12 @@ export async function fetchUserProfile ()
       email: supabaseUser.email!,
       orgName: userProfileData[ 0 ].organizationName,
       organizationId: userProfileData[ 0 ].organizationId,
+      stripeConnectedAccountId: userProfileData[ 0 ].stripeConnectedAccountId,
+      stripeCustomerId: userProfileData[ 0 ].stripeCustomerId,
+      stripeSubscriptionId: userProfileData[ 0 ].stripeSubscriptionId,
+      stripeConnectLinked: userProfileData[ 0 ].stripeConnectLinked
+
+
     };
   }
 

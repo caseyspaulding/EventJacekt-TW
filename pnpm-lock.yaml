@@ -29,6 +29,9 @@ importers:
       '@sinclair/typebox':
         specifier: ^0.33.4
         version: 0.33.4
+      '@stripe/connect-js':
+        specifier: ^3.3.12
+        version: 3.3.12
       '@stripe/stripe-js':
         specifier: ^4.2.0
         version: 4.2.0
@@ -1723,6 +1726,9 @@ packages:
   '@sindresorhus/transliterate@0.1.2':
     resolution: {integrity: sha512-5/kmIOY9FF32nicXH+5yLNTX4NJ4atl7jRgqAJuIn/iyDFXBktOKDxCvyGE/EzmF4ngSUvjXxQUQlQiZ5lfw+w==}
     engines: {node: '>=10'}
+
+  '@stripe/connect-js@3.3.12':
+    resolution: {integrity: sha512-hXbgvGq9Lb6BYgsb8lcbjL76Yqsxr0yAj6T9ZFTfUK0O4otI5GSEWum9do9rf/E5OfYy6fR1FG/77Jve2w1o6Q==}
 
   '@stripe/stripe-js@4.2.0':
     resolution: {integrity: sha512-MdTpmXqtm+B9rIAmaSlCkF6qv3793UrghA95SFI4Ge7KGYWZAMYyxbX/z9FXs6XnU5gUbKtGtlVgZQp1T88UfQ==}
@@ -8081,6 +8087,8 @@ snapshots:
     dependencies:
       escape-string-regexp: 2.0.0
       lodash.deburr: 4.1.0
+
+  '@stripe/connect-js@3.3.12': {}
 
   '@stripe/stripe-js@4.2.0': {}
 

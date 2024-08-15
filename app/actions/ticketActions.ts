@@ -1,7 +1,8 @@
 'use server';
 
 import { db } from '@/db';
-import { ticketTypes, tickets } from '@/db/schema';
+import { orgTicketTypes } from '@/db/schema';
+
 import { createClient } from '@/utils/supabase/server';
 
 import { and, eq } from 'drizzle-orm/expressions';
@@ -43,7 +44,7 @@ export async function createTicketType ( formData: FormData )
 
   try
   {
-    await db.insert( ticketTypes ).values( newTicketType );
+    await db.insert( orgTicketTypes ).values( newTicketType );
     revalidatePath( `/dashboard/${ orgId }/events/${ eventId }/create-tickets` );
     return { success: true, message: 'Ticket type created successfully' };
   } catch ( error )
@@ -83,7 +84,7 @@ export async function updateTicketType ( ticketTypeId: string, formData: FormDat
 
   try
   {
-    await db.update( ticketTypes ).set( updatedTicketType ).where( and( eq( ticketTypes.id, ticketTypeId ), eq( ticketTypes.orgId, orgId ) ) );
+    await db.update( orgTicketTypes ).set( updatedTicketType ).where( and( eq( orgTicketTypes.id, ticketTypeId ), eq( orgTicketTypes.orgId, orgId ) ) );
     revalidatePath( `/dashboard/${ orgId }/events/${ ticketTypeId }/manage-tickets` );
     return { success: true, message: 'Ticket type updated successfully' };
   } catch ( error )
@@ -100,7 +101,7 @@ export async function deleteTicketType ( ticketTypeId: string )
 
   try
   {
-    await db.delete( ticketTypes ).where( and( eq( ticketTypes.id, ticketTypeId ), eq( ticketTypes.orgId, orgId ) ) );
+    await db.delete( orgTicketTypes ).where( and( eq( orgTicketTypes.id, ticketTypeId ), eq( orgTicketTypes.orgId, orgId ) ) );
     revalidatePath( `/dashboard/${ orgId }/manage-events` );
     return { success: true, message: 'Ticket type deleted successfully' };
   } catch ( error )
@@ -117,7 +118,7 @@ export async function fetchTicketTypesForEvent ( eventId: string )
 
   try
   {
-    const ticketTypesData = await db.select().from( ticketTypes ).where( and( eq( ticketTypes.eventId, eventId ), eq( ticketTypes.orgId, orgId ) ) );
+    const ticketTypesData = await db.select().from( orgTicketTypes ).where( and( eq( orgTicketTypes.eventId, eventId ), eq( orgTicketTypes.orgId, orgId ) ) );
     return ticketTypesData;
   } catch ( error )
   {

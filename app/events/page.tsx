@@ -40,7 +40,7 @@ export default async function EventsList ()
         title="Events"
         description="Explore the events organized with EventJacket."
       />
-      <div className="bg-white ">
+      <div className="bg-white mb-28 ">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             {/* You can add some introductory text or a subtitle here */ }

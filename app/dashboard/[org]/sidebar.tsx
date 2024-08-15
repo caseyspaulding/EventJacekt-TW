@@ -11,9 +11,9 @@ import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useUser } from '@/contexts/UserContext';
 import type { HTMLAttributeAnchorTarget } from 'react';
-import { ChartPieIcon, ClipboardIcon, CogIcon, EnvelopeOpenIcon, TableCellsIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, ChartPieIcon, ClipboardIcon, CogIcon, EnvelopeOpenIcon, TableCellsIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 import { ClipboardDocumentIcon, QuestionMarkCircleIcon, TicketIcon } from '@heroicons/react/20/solid';
-import {Dashboard} from 'tabler-icons-react'
+import { Dashboard } from 'tabler-icons-react'
 
 interface SidebarItem
 {
@@ -194,7 +194,7 @@ function SidebarItem ( { href,
 
     if ( items )
     {
-        const isOpen = items.some( ( item : SidebarItem) => pathname.startsWith( `/dashboard/${ orgName }${ item.href }` ) );
+        const isOpen = items.some( ( item: SidebarItem ) => pathname.startsWith( `/dashboard/${ orgName }${ item.href }` ) );
 
         return (
             <Sidebar.Collapse
@@ -203,7 +203,7 @@ function SidebarItem ( { href,
                 open={ isOpen }
                 theme={ { list: 'space-y-2 py-2  [&>li>div]:w-full' } }
             >
-                { items.map( ( item : SidebarItem ) => (
+                { items.map( ( item: SidebarItem ) => (
                     <Sidebar.Item
                         key={ item.label }
                         as={ Link }
@@ -268,9 +268,9 @@ const pages: SidebarItem[] = [
     { href: '/kanban', icon: TableCellsIcon, label: 'Kanban' },
     { href: '/events/new', icon: TableCellsIcon, label: 'Create Event' },
     //{ href: '/mailing/inbox', icon: HiInboxIn, label: 'Inbox', badge: '3' },
-    
+
     { href: '', icon: ClipboardDocumentIcon, label: 'Forms' },
-    
+
     {
         icon: EnvelopeOpenIcon,
         label: 'Mail',
@@ -290,6 +290,15 @@ const pages: SidebarItem[] = [
         ]
     },
     {
+        icon: BanknotesIcon,
+        label: 'Banking',
+        items: [
+            { href: '/banking', label: 'Link Account' },
+            { href: '/e-commerce/billing', label: 'Billing' },
+            { href: '/e-commerce/invoice', label: 'Invoice' }
+        ]
+    },
+    {
         icon: UserGroupIcon,
         label: 'Users',
         items: [
@@ -299,7 +308,7 @@ const pages: SidebarItem[] = [
             { href: '/users/settings', label: 'Settings' }
         ]
     },
-   
+
 ];
 
 const externalPages: SidebarItem[] = [
