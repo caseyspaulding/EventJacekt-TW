@@ -1,4 +1,5 @@
 import { stripe } from '@/utils/stripe';
+import { db } from '@/db';
 
 export async function POST ( req: Request )
 {
@@ -13,6 +14,8 @@ export async function POST ( req: Request )
       return_url: `${ req.headers.get( 'origin' ) }/return/${ account }`,
       type: 'account_onboarding',
     } );
+
+
 
     console.log( 'Stripe account link created successfully:', accountLink.url );
     return new Response( JSON.stringify( { url: accountLink.url } ), { status: 200 } );
