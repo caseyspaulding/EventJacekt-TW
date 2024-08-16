@@ -12,7 +12,7 @@ export default function StripeConnectOnboarding ( { orgId }: { orgId: string } )
 
   const [ error, setError ] = useState<string | null>( null );
   const [ connectedAccountId, setConnectedAccountId ] = useState<string | null>( null );
-  const stripeConnectInstance = useStripeConnect( connectedAccountId );
+  const stripeConnectInstance = useStripeConnect( connectedAccountId || undefined );
 
   useEffect( () =>
   {

@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
-import { stripe } from '@/utils/stripe';
+import { stripe } from '@/utils/stripe'; // Adjust the path according to your project's structure
 
-// Exporting a POST function for the App Router
 export async function POST ( req: Request )
 {
   try
   {
-    const body = await req.json(); // Parsing the request body
+    const body = await req.json();
 
     const accountSession = await stripe.accountSessions.create( {
       account: body.account,
@@ -18,14 +17,12 @@ export async function POST ( req: Request )
     return NextResponse.json( {
       client_secret: accountSession.client_secret,
     } );
-  } catch ( error: any )
+  } catch ( error )
   {
     console.error(
-      "An error occurred when calling the Stripe API to create an account session",
+      'An error occurred when calling the Stripe API to create an account session',
       error
     );
-    return NextResponse.json( { error: error.message }, { status: 500 } );
+    return NextResponse.json( { error: ( error as Error ).message }, { status: 500 } );
   }
 }
-
-// You can add other HTTP method handlers (e.g., GET, DELETE) if needed
