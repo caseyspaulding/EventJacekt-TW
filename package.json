@@ -21,6 +21,7 @@
         "@markdoc/markdoc": "^0.4.0",
         "@sinclair/typebox": "^0.33.4",
         "@stripe/connect-js": "^3.3.12",
+        "@stripe/react-connect-js": "^3.3.13",
         "@stripe/stripe-js": "^4.2.0",
         "@supabase/ssr": "^0.4.0",
         "@supabase/supabase-js": "^2.45.1",

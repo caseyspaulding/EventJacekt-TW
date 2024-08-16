@@ -1,6 +1,6 @@
 import Error from "@/app/dashboard/error";
 import { db } from "@/db";
-import { userProfiles } from "@/db/schema";
+import { organizations, userProfiles } from "@/db/schema";
 import { stripe } from "@/utils/stripe";
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
@@ -60,3 +60,35 @@ export async function POST ()
   }
 }
 
+// app/api/stripe/create-account/route.ts
+
+//import { NextResponse } from 'next/server';
+
+
+
+//export async function POST ( req: Request )
+//{
+//  const { orgId } = await req.json();
+
+//  try
+//  {
+//    const account = await stripe.accounts.create( {
+//      type: 'express',
+//      country: 'US', // Adjust based on your requirements
+//      capabilities: {
+//        card_payments: { requested: true },
+//        transfers: { requested: true },
+//      },
+//      business_type: 'company',
+//    } );
+
+//    // Save the account ID to your database
+//    await db.update( organizations ).set( { stripeConnectAccountId: account.id } ).where( eq( organizations.id, orgId ) );
+
+//    return NextResponse.json( { accountId: account.id } );
+//  } catch ( error: any )
+//  {
+//    console.error( 'Error creating Stripe account:', error );
+//    return NextResponse.json( { error: error.message }, { status: 500 } );
+//  }
+//}

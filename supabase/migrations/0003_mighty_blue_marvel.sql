@@ -1,1 +1,0 @@
-ALTER TABLE "user_profiles" RENAME COLUMN "stripe_connected_linked" TO "stripe_connect_linked";
