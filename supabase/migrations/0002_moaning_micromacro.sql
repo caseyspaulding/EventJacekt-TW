@@ -1,1 +1,0 @@
-ALTER TABLE "organizations" RENAME COLUMN "stripe_customer_id" TO "stripe_account_id";

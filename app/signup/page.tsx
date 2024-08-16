@@ -46,9 +46,9 @@ export default function SignUp ( { searchParams }: SignUpProps )
     const formData = new FormData( event.currentTarget );
     const result = await signUp( formData );
 
-    if ( result.success && typeof result.redirectUrl === "string" )
+    if ( result.success )
     {
-      router.push( result.redirectUrl );
+      router.push( '/success' );
     } else
     {
       console.error( result.message );

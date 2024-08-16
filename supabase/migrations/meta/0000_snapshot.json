@@ -1,5 +1,5 @@
 {
-  "id": "602fff94-040c-4d50-87b1-a0172d245b87",
+  "id": "b1fa760b-cde6-414c-a8b0-6c7671affa49",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -3331,12 +3331,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "contact_email": {
-          "name": "contact_email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "contact_phone": {
           "name": "contact_phone",
           "type": "text",
@@ -3453,6 +3447,31 @@
           "notNull": true,
           "default": "'active'"
         },
+        "stripe_account_id": {
+          "name": "stripe_account_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stripe_connect_linked": {
+          "name": "stripe_connect_linked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stripe_account_created": {
+          "name": "stripe_account_created",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
         "metadata": {
           "name": "metadata",
           "type": "jsonb",
@@ -3461,13 +3480,6 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -4321,12 +4333,6 @@
         },
         "stripe_account_country": {
           "name": "stripe_account_country",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "stripe_connect_account_id": {
-          "name": "stripe_connect_account_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false

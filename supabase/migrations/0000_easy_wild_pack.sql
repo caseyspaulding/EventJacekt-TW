@@ -446,7 +446,6 @@ CREATE TABLE IF NOT EXISTS "org_vendors" (
 CREATE TABLE IF NOT EXISTS "organizations" (
 	"id" uuid PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
 	"name" text NOT NULL,
-	"contact_email" text,
 	"contact_phone" text,
 	"website" text,
 	"address" text,
@@ -466,9 +465,12 @@ CREATE TABLE IF NOT EXISTS "organizations" (
 	"subscription_status" text,
 	"last_activity" timestamp,
 	"status" text DEFAULT 'active' NOT NULL,
+	"stripe_account_id" varchar,
+	"stripe_connect_linked" boolean,
+	"stripe_account_created" date,
+	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP,
 	"metadata" jsonb,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "organizations_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
@@ -594,7 +596,6 @@ CREATE TABLE IF NOT EXISTS "user_profiles" (
 	"stripe_account_type" text,
 	"stripe_account_status" text,
 	"stripe_account_country" text,
-	"stripe_connect_account_id" text,
 	"stripe_account_created" timestamp,
 	"stripe_subscription_id" text,
 	"stripe_last_payout_date" timestamp,

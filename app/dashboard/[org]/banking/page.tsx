@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useStripeConnect } from "@/hooks/useStripeConnect";
 import { ConnectAccountOnboarding, ConnectComponentsProvider } from "@stripe/react-connect-js";
+import { updateOrganizationStripeData } from "@/app/actions/updateOrg";
 
 export default function BankingPage ( { params }: { params: { org: string } } )
 {
@@ -11,7 +12,7 @@ export default function BankingPage ( { params }: { params: { org: string } } )
   const [ error, setError ] = useState( false );
   const [ connectedAccountId, setConnectedAccountId ] = useState<string | undefined>();
   const stripeConnectInstance = useStripeConnect( connectedAccountId );
-
+  const [ stripeAccountDetails, setStripeAccountDetails ] = useState( null );
 
   const handleCreateAccount = async () =>
   {
@@ -22,10 +23,12 @@ export default function BankingPage ( { params }: { params: { org: string } } )
     {
       const response = await fetch( "/api/stripe/account", { method: "POST" } );
       const json = await response.json();
+      
+      
 
       if ( json.account )
       {
-
+        const decodedOrgName = decodeURIComponent( params.org );
         const accountDetails = {
           stripeConnectAccountId: json.account,
           stripeConnectLinked: true,
@@ -33,31 +36,24 @@ export default function BankingPage ( { params }: { params: { org: string } } )
         };
         console.log( accountDetails );
 
-        // Save the details to the state
+       
+        // Optionally, save to the database
+        await updateOrganizationStripeData( decodedOrgName, accountDetails );
 
+        // Save the details to the state
+        setStripeAccountDetails( stripeAccountDetails );
 
         setConnectedAccountId( json.account );
+        
 
         try
         {
-          // Create the account session
-          const sessionResponse = await fetch( "/api/stripe/createAccountSession", {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify( { account: json.account } )
-          } );
-
-          const sessionJson = await sessionResponse.json();
-          console.log( "Stripe Account Session Created:", sessionJson );
-
-        } catch ( sessionError )
+         
+        } catch ( updateError )
         {
-          console.error( 'Error creating Stripe account session:', sessionError );
+          console.error( 'Error updating organization Stripe data:', updateError );
           setError( true );
         }
-
       } else
       {
         setError( true );
@@ -133,3 +129,5 @@ export default function BankingPage ( { params }: { params: { org: string } } )
     </div>
   );
 }
+
+

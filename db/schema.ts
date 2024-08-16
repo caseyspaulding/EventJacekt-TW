@@ -9,7 +9,7 @@ export const organizations = pgTable( 'organizations', {
         .primaryKey()
         .default( sql`uuid_generate_v4()` ),
     name: text( 'name' ).notNull().unique(),
-    contactEmail: text( 'contact_email' ),
+
     contactPhone: text( 'contact_phone' ),
     website: text( 'website' ),
     address: text( 'address' ),
@@ -29,9 +29,13 @@ export const organizations = pgTable( 'organizations', {
     subscriptionStatus: text( 'subscription_status' ), // e.g., 'active', 'expired', 'trial'
     lastActivity: timestamp( 'last_activity' ),
     status: text( 'status' ).default( 'active' ).notNull(),
+    stripeAccountId: varchar( 'stripe_account_id' ),
+    stripeConnectLinked: boolean( 'stripe_connect_linked' ),
+    stripeAccountCreated: date( 'stripe_account_created' ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`CURRENT_TIMESTAMP` ),
     metadata: jsonb( 'metadata' ),
     createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
-    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull()
+
 } );
 
 
@@ -62,7 +66,7 @@ export const userProfiles = pgTable( 'user_profiles', {
     role: text( 'role' ).notNull().default( 'user' ), // User's role within the organization
     contactNumber: text( 'contact_number' ), // Contact phone number
     bio: text( 'bio' ), // User biography or description
-    
+
     socialLinks: jsonb( 'social_links' ), // Links to social media profiles
     isActive: boolean( 'is_active' ).default( true ), // Active status flag
     lastLogin: timestamp( 'last_login' ), // Last login timestamp
@@ -84,7 +88,7 @@ export const userProfiles = pgTable( 'user_profiles', {
     stripeTaxInformation: jsonb( 'stripe_tax_information' ), // JSON field for tax-related information
     stripePayoutMethod: text( 'stripe_payout_method' ), // e.g., 'bank_transfer', 'debit_card'
     stripeDefaultCurrency: text( 'stripe_default_currency' ), // e.g., 'USD', 'EUR'
-   
+
     stripeConnectLinked: boolean( 'stripe_connect_linked' ).default( false ), // Indicates if the Stripe account is linked
 } );
 

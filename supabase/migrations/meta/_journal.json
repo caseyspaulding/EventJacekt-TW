@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1723767073735,
-      "tag": "0000_outgoing_switch",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1723767529230,
-      "tag": "0001_aberrant_eternity",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1723812459913,
-      "tag": "0002_moaning_micromacro",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1723826658207,
-      "tag": "0003_zippy_silver_samurai",
+      "when": 1723838779944,
+      "tag": "0000_easy_wild_pack",
       "breakpoints": true
     }
   ]
