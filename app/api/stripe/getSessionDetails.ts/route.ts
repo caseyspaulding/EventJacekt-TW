@@ -16,6 +16,7 @@ export async function GET ( req: Request )
   {
     // Retrieve the session details from Stripe
     const session = await stripe.checkout.sessions.retrieve( sessionId );
+    console.log( 'Fetched session details:', session );
     return NextResponse.json( session );
   } catch ( error )
   {

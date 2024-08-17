@@ -66,7 +66,10 @@ export default function SuccessPage ( { params }: { params: Params } )
       <div className="bg-white p-8 rounded-lg shadow-md max-w-lg w-full text-center">
         <h1 className="text-3xl font-bold text-green-600 mb-4">Success!</h1>
         <p className="text-lg mb-4">
-          Thank you for purchasing a ticket to <span className="font-semibold">{ eventSlug }</span>.
+          Thank you for purchasing a ticket to <span className="font-extrabold">{ eventSlug }</span>.
+        </p>
+        <p className="text-lg mb-4">
+          Your ticket will be sent to your email address. Please check your inbox.
         </p>
         <p className="text-sm text-gray-700 mb-6">
           Your session ID is: <span className="font-mono text-gray-800">{ sessionId }</span>
