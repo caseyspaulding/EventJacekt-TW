@@ -36,6 +36,13 @@
       "when": 1723922427959,
       "tag": "0004_wakeful_maximus",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1723923703152,
+      "tag": "0005_glorious_chimera",
+      "breakpoints": true
     }
   ]
 }

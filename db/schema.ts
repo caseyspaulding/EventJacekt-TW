@@ -329,8 +329,8 @@ export const orgEventTickets = pgTable( 'org_event_tickets', {
     price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
     currency: text( 'currency' ).notNull(), // Currency of the ticket price
     status: text( 'status' ).notNull().default( 'available' ), // e.g., 'available', 'sold', 'reserved', 'used', 'expired', 'canceled'
-    validFrom: date( 'valid_from' ).notNull(),
-    validUntil: date( 'valid_until' ).notNull(),
+    validFrom: date( 'valid_from' ),
+    validUntil: date( 'valid_until' ),
     barcode: text( 'barcode' ).unique(), // Barcode for ticket validation
     qrCode: text( 'qr_code' ), // QR Code for ticket validation
     purchaseDate: timestamp( 'purchase_date' ), // Date of purchase
