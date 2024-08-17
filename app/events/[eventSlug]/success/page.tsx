@@ -21,35 +21,15 @@ export default function SuccessPage ( { params }: { params: Params } )
   const { eventSlug } = params;
   const searchParams = useSearchParams();
   const sessionId = searchParams.get( 'session_id' );
+  console.log( 'Session ID:', sessionId );
+  console.log( 'Event Slug:', eventSlug );
+  console.log( 'Search Params:', searchParams );
 
-  const [ sessionDetails, setSessionDetails ] = useState<SessionDetails | null>( null );
+
   const [ loading, setLoading ] = useState( true );
   const [ error, setError ] = useState<string | null>( null );
 
-  useEffect( () =>
-  {
-    if ( sessionId )
-    {
-      fetch( `/api/stripe/getSessionDetails?sessionId=${ sessionId }` )
-        .then( ( res ) => res.json() )
-        .then( ( data ) =>
-        {
-          if ( data.error )
-          {
-            setError( data.error );
-          } else
-          {
-            setSessionDetails( data );
-          }
-          setLoading( false );
-        } )
-        .catch( () =>
-        {
-          setError( 'Failed to load session details.' );
-          setLoading( false );
-        } );
-    }
-  }, [ sessionId ] );
+
 
   if ( loading )
   {
@@ -69,20 +49,13 @@ export default function SuccessPage ( { params }: { params: Params } )
           Thank you for purchasing a ticket to <span className="font-extrabold">{ eventSlug }</span>.
         </p>
         <p className="text-lg mb-4">
-          Your ticket will be sent to your email address. Please check your inbox.
+          Your ticket will be sent to your email address. Please check your inbox for further details.
         </p>
-        <p className="text-sm text-gray-700 mb-6">
-          Your session ID is: <span className="font-mono text-gray-800">{ sessionId }</span>
-        </p>
-        { sessionDetails && (
-          <div className="mt-4">
-            <p>Amount Paid: ${ sessionDetails.amount_total / 100 }</p>
-            <p>Payment Status: { sessionDetails.payment_status }</p>
-            <p>Customer Email: { sessionDetails.customer_email || 'N/A' }</p>
-            {/* Add more details as needed */ }
-          </div>
-        ) }
-        <p className="text-gray-600">You can add more details or fetch additional data using the session ID.</p>
+
+
+
+
+
       </div>
     </div>
   );
