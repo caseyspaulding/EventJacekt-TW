@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { orgTicketTypes } from '@/db/schema';
+import { orgTicketTypes, organizations } from '@/db/schema';
 
 import { createClient } from '@/utils/supabase/server';
 
@@ -150,3 +150,101 @@ export async function getUserAndOrgId ()
 
   return { user, orgId: profile.org_id };
 };
+
+
+/**
+ * Retrieves all ticket types associated with a specific event.
+ *
+ * @param {string} eventId - The ID of the event for which to retrieve ticket types.
+ * @returns {Promise<Array>} A promise that resolves to an array of ticket types associated with the event.
+ * If no ticket types are found, the array will be empty.
+ *
+ * Example usage:
+ * const ticketTypes = await getTicketTypesByEvent(event.id);
+ * 
+ * if (ticketTypes.length === 0) {
+ *   console.log('No ticket types found for this event.');
+ * } else {
+ *   console.log('Ticket types:', ticketTypes);
+ * }
+ */
+export async function getTicketTypesByEvent ( eventId: string )
+{
+  const ticketTypesResult = await db
+    .select( {
+      id: orgTicketTypes.id,
+      eventId: orgTicketTypes.eventId,
+      name: orgTicketTypes.name,
+      price: orgTicketTypes.price,
+      // Add other fields you need from the `ticketTypes` table
+    } )
+    .from( orgTicketTypes )
+    .where( eq( orgTicketTypes.eventId, eventId ) );
+
+  return ticketTypesResult;
+}
+
+/**
+ * Retrieves a ticket type by its ID.
+ *
+ * @param {string} ticketTypeId - The ID of the ticket type to retrieve.
+ * @returns {Promise<Object>} A promise that resolves to the ticket type data.
+ * If the ticket type is not found, an error is thrown.
+ */
+
+
+export async function getTicketTypeById ( ticketTypeId: string )
+{
+  // Select the fields from the ticketTypes table where the ID matches
+
+  const [ ticketType ] = await db
+    .select( {
+      id: orgTicketTypes.id,          // The ID of the ticket type
+      eventId: orgTicketTypes.eventId, // The ID of the associated event
+      name: orgTicketTypes.name,       // The name of the ticket type
+      price: orgTicketTypes.price,     // The price of the ticket type
+      // Add other fields as necessary
+    } )
+    .from( orgTicketTypes )               // Specify the table to select from
+    .where( eq( orgTicketTypes.id, ticketTypeId ) ); // Filter by the provided ticketTypeId
+
+  // If no ticket type is found, throw an error
+  if ( !ticketType )
+  {
+    throw new Error( 'Ticket type not found' );
+  }
+
+  // Return the ticket type data
+  return ticketType;
+}
+export async function getOrgIdFromTicketType ( ticketTypeId: string )
+{
+  const result = await db
+    .select( { orgId: orgTicketTypes.orgId } )
+    .from( orgTicketTypes )
+    .where( eq( orgTicketTypes.id, ticketTypeId ) )
+    .execute();
+
+  if ( result.length === 0 )
+  {
+    throw new Error( 'No organization found for the given ticket type' );
+  }
+
+  return result[ 0 ].orgId;
+}
+
+export async function getStripeAccountIdFromOrgId ( orgId: string )
+{
+  const result = await db
+    .select( { stripeAccountId: organizations.stripeAccountId } )
+    .from( organizations )
+    .where( eq( organizations.id, orgId ) )
+    .execute();
+
+  if ( result.length === 0 )
+  {
+    throw new Error( 'No Stripe account ID found for the given organization' );
+  }
+
+  return result[ 0 ].stripeAccountId;
+}

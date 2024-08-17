@@ -1,9 +1,11 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { db } from '@/db';
-import { events, orgTicketTypes } from '@/db/schema'; // Import the ticketTypes table schema
+import { events, orgTicketTypes } from '@/db/schema';
 import { getEventIdBySlug } from '@/app/actions/getEventIdBySlug';
 import { eq } from 'drizzle-orm/expressions';
+import TicketPurchaseClient from './TicketPurchaseClient';
+
 
 interface Params
 {
@@ -14,7 +16,6 @@ export default async function EventPage ( { params }: { params: Params } )
 {
   const eventSlug = params.eventSlug;
 
-  // Fetch the event ID by slug
   const eventId = await getEventIdBySlug( eventSlug );
 
   if ( !eventId )
@@ -22,7 +23,6 @@ export default async function EventPage ( { params }: { params: Params } )
     notFound();
   }
 
-  // Fetch the event details using the event ID
   const event = await db
     .select()
     .from( events )
@@ -36,9 +36,33 @@ export default async function EventPage ( { params }: { params: Params } )
     notFound();
   }
 
-  // Fetch the ticket types associated with the event
+  
+
   const tickets = await db
-    .select()
+    .select( {
+      id: orgTicketTypes.id,
+      eventId: orgTicketTypes.eventId,
+      orgId: orgTicketTypes.orgId,
+      name: orgTicketTypes.name,
+      description: orgTicketTypes.description,
+      price: orgTicketTypes.price,
+      quantity: orgTicketTypes.quantity,
+      eventDate: orgTicketTypes.eventDate,
+      saleStartDate: orgTicketTypes.saleStartDate,
+      saleEndDate: orgTicketTypes.saleEndDate,
+      isEarlyBird: orgTicketTypes.isEarlyBird,
+      maxPerCustomer: orgTicketTypes.maxPerCustomer,
+      isFree: orgTicketTypes.isFree,
+      category: orgTicketTypes.category,
+      promoCodeRequired: orgTicketTypes.promoCodeRequired,
+      availableOnline: orgTicketTypes.availableOnline,
+      groupDiscountAvailable: orgTicketTypes.groupDiscountAvailable,
+      refundable: orgTicketTypes.refundable,
+      currency: orgTicketTypes.currency,
+      salesLimitPerDay: orgTicketTypes.salesLimitPerDay,
+      createdAt: orgTicketTypes.createdAt,
+      updatedAt: orgTicketTypes.updatedAt,
+    } )
     .from( orgTicketTypes )
     .where( eq( orgTicketTypes.eventId, eventId ) );
 
@@ -65,9 +89,7 @@ export default async function EventPage ( { params }: { params: Params } )
               <p className="text-sm text-gray-500">
                 Event Date: { ticket.eventDate ? new Date( ticket.eventDate ).toLocaleDateString() : 'No date available' }
               </p>
-              <button className="mt-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700">
-                Buy Ticket
-              </button>
+              <TicketPurchaseClient ticket={ ticket } eventSlug={ eventSlug } />
             </li>
           ) ) }
         </ul>

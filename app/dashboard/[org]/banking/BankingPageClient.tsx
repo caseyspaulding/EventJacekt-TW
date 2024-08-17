@@ -92,22 +92,22 @@ export default function BankingPageClient ( { params, isStripeConnected, initial
         </div>
       ) }
 
-      { isStripeConnected && (
+      {/*{ isStripeConnected && (
         <div className="review-callout mt-8 bg-blue-50 p-4 rounded-lg">
           <h3 className="text-lg font-semibold text-blue-800">Review Connected Account Details</h3>
           <p className="text-blue-600">Your Stripe account is successfully connected. You can now start accepting payments through EventJacket!</p>
         </div>
-      ) }
-      <div className="content mt-8 space-y-6">
+      ) }*/}
+      <div className="content mt-8 space-y-6 text-center">
         { !connectedAccountId && (
           <>
-            <h2 className="text-xl font-semibold text-gray-700">Get ready for take off</h2>
-            <p className="text-gray-600">EventJacket helps you receive payments securely.</p>
+            <h2 className="text-2xl text-center font-semibold text-gray-700">Get ready for take off</h2>
+            <p className="text-gray-600 text-center">EventJacket helps you receive payments securely.</p>
             <button
               onClick={ handleCreateAccount }
               className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
-              Create an account!
+              Connect your account!
             </button>
           </>
         ) }

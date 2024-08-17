@@ -297,6 +297,7 @@ export const orgTicketTypes = pgTable( 'org_ticket_types', {
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
 } );
 
+
 // Tickets Table
 export const orgEventTickets = pgTable( 'org_event_tickets', {
     id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),

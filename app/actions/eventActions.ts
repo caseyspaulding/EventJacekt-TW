@@ -8,7 +8,26 @@ import { revalidatePath } from 'next/cache';
 
 
 
+// Get an event by its slug
+export async function getEventBySlug ( eventSlug: string )
+{
+  const [ event ] = await db
+    .select( {
+      id: events.id,
+      name: events.name,
+      slug: events.slug,
+      // Add other fields you need from the `events` table
+    } )
+    .from( events )
+    .where( eq( events.slug, eventSlug ) );
 
+  if ( !event )
+  {
+    throw new Error( 'Event not found' );
+  }
+
+  return event;
+}
 
 // Create a new event
 export const createEvent = async ( formData: FormData ) =>
