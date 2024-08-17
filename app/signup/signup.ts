@@ -69,7 +69,7 @@ export const signUp = async ( formData: FormData ) =>
         console.log( 'Sign up process completed successfully.' );
 
         // Redirect after successful signup
-        redirect( `${ origin }/signup-success` );
+        return { success: true, message: 'Sign up successful!' };
     } catch ( error )
     {
         console.error( 'Error during signup:', error );

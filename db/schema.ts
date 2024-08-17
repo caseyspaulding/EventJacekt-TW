@@ -31,7 +31,7 @@ export const organizations = pgTable( 'organizations', {
     status: text( 'status' ).default( 'active' ).notNull(),
     stripeAccountId: varchar( 'stripe_account_id' ),
     stripeConnectLinked: boolean( 'stripe_connect_linked' ),
-    stripeAccountCreated: date( 'stripe_account_created' ),
+    stripeAccountCreated: timestamp( 'stripe_account_created' ),
     updatedAt: timestamp( 'updated_at' ).default( sql`CURRENT_TIMESTAMP` ),
     metadata: jsonb( 'metadata' ),
     createdAt: timestamp( 'created_at' ).defaultNow().notNull(),

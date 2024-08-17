@@ -48,7 +48,12 @@ export default function SignUp ( { searchParams }: SignUpProps )
 
     if ( result.success )
     {
-      router.push( '/success' );
+      // Clear the form fields
+      //setEmail( '' );
+      //setPassword( '' );
+      //setOrgName( '' );
+
+      router.push( '/signup-success' );
     } else
     {
       console.error( result.message );

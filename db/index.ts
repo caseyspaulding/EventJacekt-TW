@@ -5,5 +5,4 @@ config( { path: '.env' } );
 const client = postgres( process.env.DATABASE_URL! );
 export const db = drizzle( client );
 
-// Export all data access operations
-export * from './dataAccess/userProfiles';
+

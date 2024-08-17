@@ -1,6 +1,6 @@
 {
-  "id": "632deaab-ea7c-4239-bc3e-7844bda7ec5f",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "641bd64f-7e01-4613-8262-86ad5f4df5d1",
+  "prevId": "632deaab-ea7c-4239-bc3e-7844bda7ec5f",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -3461,7 +3461,7 @@
         },
         "stripe_account_created": {
           "name": "stripe_account_created",
-          "type": "date",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
