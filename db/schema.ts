@@ -92,6 +92,26 @@ export const userProfiles = pgTable( 'user_profiles', {
     stripeConnectLinked: boolean( 'stripe_connect_linked' ).default( false ), // Indicates if the Stripe account is linked
 } );
 
+// Ticket Buyer Profiles Table
+export const ticketBuyerProfiles = pgTable( 'ticket_buyer_profiles', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    userId: uuid( 'user_id' ).notNull(), // Will reference auth.users table in Supabase
+    profileImageUrl: text( 'profile_image_url' ), // Optional profile image
+    contactNumber: text( 'contact_number' ), // Contact phone number
+    bio: text( 'bio' ), // Optional bio or description
+    socialLinks: jsonb( 'social_links' ), // Links to social media profiles
+    isActive: boolean( 'is_active' ).default( true ), // Active status flag
+    lastLogin: timestamp( 'last_login' ), // Last login timestamp
+    preferences: jsonb( 'preferences' ), // JSON field for storing user preferences
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
+
+    // Stripe-related fields
+    stripeCustomerId: text( 'stripe_customer_id' ), // Stripe Customer ID
+    stripeDefaultCurrency: text( 'stripe_default_currency' ), // e.g., 'USD', 'EUR'
+} );
 
 // Subscription Products Table
 export const subscriptionProducts = pgTable( 'subscription_products', {
@@ -298,31 +318,50 @@ export const orgTicketTypes = pgTable( 'org_ticket_types', {
 } );
 
 
-// Tickets Table
+// Enhanced Tickets Table
 export const orgEventTickets = pgTable( 'org_event_tickets', {
     id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
     eventId: uuid( 'event_id' ).notNull().references( () => events.id ),
     orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
-    customerId: uuid( 'customer_id' ).references( () => orgCustomers.id ),
+    customerId: uuid( 'customer_id' ).references( () => orgCustomers.id ), // Who bought the ticket
     ticketTypeId: uuid( 'ticket_type_id' ).notNull().references( () => orgTicketTypes.id ), // Reference to ticketTypes
     name: text( 'name' ).notNull(),
     price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
-    status: text( 'status' ).notNull().default( 'available' ), // e.g., 'available', 'sold', 'reserved'
+    currency: text( 'currency' ).notNull(), // Currency of the ticket price
+    status: text( 'status' ).notNull().default( 'available' ), // e.g., 'available', 'sold', 'reserved', 'used', 'expired', 'canceled'
     validFrom: date( 'valid_from' ).notNull(),
     validUntil: date( 'valid_until' ).notNull(),
-    barcode: text( 'barcode' ).unique(),
+    barcode: text( 'barcode' ).unique(), // Barcode for ticket validation
+    qrCode: text( 'qr_code' ), // QR Code for ticket validation
     purchaseDate: timestamp( 'purchase_date' ), // Date of purchase
     salesChannel: text( 'sales_channel' ), // e.g., 'online', 'box office', 'partner'
     promotionCode: text( 'promotion_code' ), // Applied promotion or discount code
+    promotionName: text( 'promotion_name' ), // Name of the applied promotion
+    discountAmount: numeric( 'discount_amount', { precision: 10, scale: 2 } ), // Amount of the discount applied
+    finalPrice: numeric( 'final_price', { precision: 10, scale: 2 } ), // Final price after discount
     seatNumber: text( 'seat_number' ), // Seat number or location (if applicable)
     isRefunded: boolean( 'is_refunded' ).default( false ), // Indicate if ticket was refunded
     refundDate: timestamp( 'refund_date' ), // Date of refund (if applicable)
     checkInStatus: text( 'check_in_status' ).default( 'not_checked_in' ), // e.g., 'checked_in', 'not_checked_in'
     notes: text( 'notes' ), // Additional notes or information
+    isVIP: boolean( 'is_vip' ).default( false ), // Indicates if the ticket grants VIP access
+    accessLevel: text( 'access_level' ), // Access level for the event (e.g., general admission, VIP)
+    transferredToUserId: uuid( 'transferred_to_user_id' ), // ID of the user to whom the ticket was transferred
+    transferDate: timestamp( 'transfer_date' ), // Date of the ticket transfer
+    isTransferred: boolean( 'is_transferred' ).default( false ), // Indicates if the ticket was transferred
+    loyaltyPointsEarned: numeric( 'loyalty_points_earned', { precision: 10, scale: 2 } ), // Points earned by the buyer
+    loyaltyPointsRedeemed: numeric( 'loyalty_points_redeemed', { precision: 10, scale: 2 } ), // Points redeemed by the buyer
+    isDigitalOnly: boolean( 'is_digital_only' ).default( true ), // Indicates if the ticket is digital-only
+    physicalTicketStatus: text( 'physical_ticket_status' ), // Status of the physical ticket (e.g., 'shipped', 'delivered', 'not shipped')
+    insuranceProvider: text( 'insurance_provider' ), // Insurance provider's name, if applicable
+    insurancePolicyNumber: text( 'insurance_policy_number' ), // Insurance policy number, if applicable
+    isInsured: boolean( 'is_insured' ).default( false ), // Indicates if the ticket is insured
+    exchangeRate: numeric( 'exchange_rate', { precision: 15, scale: 6 } ), // Exchange rate applied, if applicable
+    permissions: jsonb( 'permissions' ), // JSON field for event-specific permissions
+    salesChannelDetails: jsonb( 'sales_channel_details' ), // Detailed information about the sales channel
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
 } );
-
 
 // Event Attendance Table
 export const orgEventAttendance = pgTable( 'org_event_attendance', {

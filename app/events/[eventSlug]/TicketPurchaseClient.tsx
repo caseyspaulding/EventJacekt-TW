@@ -4,15 +4,25 @@ import { useState } from 'react';
 import getStripe from '@/utils/stripeClient';
 
 // @ts-ignore
-export default function TicketPurchase ( { ticket, eventSlug } )
+export default function TicketPurchaseClient ( { ticket, eventSlug } )
 {
   const [ loading, setLoading ] = useState( false );
   const [ errorMessage, setErrorMessage ] = useState<string | null>( null );
+  const [ firstName, setFirstName ] = useState( '' );
+  const [ lastName, setLastName ] = useState( '' );
+  const [ email, setEmail ] = useState( '' );
 
   const handleBuyTicket = async () =>
   {
     setLoading( true );
     setErrorMessage( null ); // Reset error message
+
+    if ( !firstName || !lastName || !email )
+    {
+      setErrorMessage( 'Please fill in all the required fields.' );
+      setLoading( false );
+      return;
+    }
 
     try
     {
@@ -21,7 +31,11 @@ export default function TicketPurchase ( { ticket, eventSlug } )
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify( { ticket, eventSlug } ),
+        body: JSON.stringify( {
+          ticket,
+          eventSlug,
+          buyer: { firstName, lastName, email }
+        } ),
       } );
 
       const data = await response.json();
@@ -56,16 +70,40 @@ export default function TicketPurchase ( { ticket, eventSlug } )
   };
 
   return (
-    <div>
+    <div className="space-y-4">
       { errorMessage && (
         <div className="mb-4 text-red-600">
           { errorMessage }
         </div>
       ) }
+      <input
+        type="text"
+        placeholder="First Name"
+        value={ firstName }
+        onChange={ ( e ) => setFirstName( e.target.value ) }
+        className="w-full px-4 py-2 border rounded-md"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Last Name"
+        value={ lastName }
+        onChange={ ( e ) => setLastName( e.target.value ) }
+        className="w-full px-4 py-2 border rounded-md"
+        required
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={ email }
+        onChange={ ( e ) => setEmail( e.target.value ) }
+        className="w-full px-4 py-2 border rounded-md"
+        required
+      />
       <button
         onClick={ handleBuyTicket }
         disabled={ loading }
-        className="mt-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700"
+        className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700"
       >
         { loading ? 'Processing...' : 'Buy Ticket' }
       </button>
