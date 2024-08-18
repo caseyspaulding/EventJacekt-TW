@@ -1,5 +1,3 @@
 export default function EditPost() {
-  return (
-    <div>EditPost</div>
-  )
+    return <div>EditPost</div>;
 }

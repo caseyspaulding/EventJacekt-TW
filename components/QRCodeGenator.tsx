@@ -8,6 +8,7 @@ const QRCodeGenerator = () =>
   const [ inputValue, setInputValue ] = useState( '' );
   const qrRef = useRef<HTMLDivElement>( null );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const downloadQRCode = async () =>
   {
     const svgElement = qrRef.current?.querySelector( 'svg' );

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 
 interface IImageUploadFieldProps
@@ -11,6 +12,7 @@ interface IImageUploadFieldProps
 export const ImageUploadField = ( { name, handleChange, label, hideName }: IImageUploadFieldProps ) =>
 {
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const retrievePathFile = ( files: any ) =>
 	{
 		const file = files[ 0 ];
@@ -19,9 +21,11 @@ export const ImageUploadField = ( { name, handleChange, label, hideName }: IImag
 			console.error( 'Only png and jpg/jpeg allowed.' )
 		} else
 		{
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const target: any = {};
 			const reader = new FileReader();
 			reader.readAsDataURL( file );
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			reader.onloadend = e =>
 			{
 				target.name = name;
@@ -39,10 +43,7 @@ export const ImageUploadField = ( { name, handleChange, label, hideName }: IImag
 				type='file'
 				accept='image/*'
 				name={ name }
-				onChange={ e => retrievePathFile( e.target.files )
-				
-				 }
-			/>
+				onChange={ e => retrievePathFile( e.target.files )}/>
 		</div>
 	);
 }

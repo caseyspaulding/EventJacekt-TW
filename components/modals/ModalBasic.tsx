@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const ModalBasic = ( { isOpen, onClose, user, slug }:
-  { isOpen: boolean; onClose: () => void; user: any; slug: string } ) =>
+  { isOpen: boolean; onClose: () => void; user: unknown; slug: string } ) =>
 {
 
   const [ isModalOpen, setIsModalOpen ] = useState( isOpen );
@@ -33,7 +33,7 @@ const ModalBasic = ( { isOpen, onClose, user, slug }:
           <button onClick={ handleClose } className="px-4 py-2 bg-gray-500 text-white rounded-lg">
             No, Thanks
           </button>
-          <Link href={ `/dashboard/${ encodeURIComponent( user?.orgName ?? '' ) }/events/${ slug }/create-tickets` } passHref>
+          <Link href={ `/dashboard/${ encodeURIComponent( slug ) }/events/${ slug }/create-tickets` } passHref>
             <Button className="px-4 py-2 bg-blue-600 text-white rounded-lg">
               Yes, Create Tickets
             </Button>

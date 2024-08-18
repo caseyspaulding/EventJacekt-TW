@@ -1,5 +1,3 @@
 export default function AttendeeManagment() {
-  return (
-    <div>AttendeeManagment</div>
-  )
+    return <div>AttendeeManagment</div>;
 }

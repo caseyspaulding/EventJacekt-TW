@@ -1,5 +1,3 @@
 export default function CheckinSettings() {
-  return (
-    <div>CheckinSettings</div>
-  )
+    return <div>CheckinSettings</div>;
 }

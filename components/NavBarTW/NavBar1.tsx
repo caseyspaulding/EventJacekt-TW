@@ -1,11 +1,11 @@
 'use client';
 
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from "@headlessui/react";
-import { ChatBubbleBottomCenterTextIcon, ChatBubbleLeftRightIcon, ChevronDownIcon, CodeBracketIcon, InboxIcon, QrCodeIcon, QuestionMarkCircleIcon, TicketIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import {  ChevronDownIcon, QrCodeIcon,XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import AuthButton from "../AuthButton";
+
 import { Bars3CenterLeftIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 
 const solutions = [

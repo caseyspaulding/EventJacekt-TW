@@ -1,12 +1,10 @@
 
 
 
-import Image from "next/image";
-import { Svg } from "tabler-icons-react";
-import SvgBackground from "../Backgrounds/SquareSvgBackground";
+
 import { Button } from "flowbite-react";
 import VideoFacade from "../VideoFacade";
-import VideoFacadeAutoPlay from "../VideoFacadeAutoPlay";
+
 import 'animate.css';
 
 

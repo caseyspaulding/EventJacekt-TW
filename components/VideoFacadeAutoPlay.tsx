@@ -6,6 +6,7 @@ type VideoFacadeProps = {
   caption?: string; // caption is optional
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function VideoFacadeAutoPlay ( { videoUrl, thumbnailUrl, caption }: VideoFacadeProps )
 {
   return (

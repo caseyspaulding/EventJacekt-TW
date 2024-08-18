@@ -1,7 +1,3 @@
 export default function VolunteerSignUpForms() {
-  return (
-    <div>VolunteerSignUpForms
-    
-    </div>
-  )
+    return <div>VolunteerSignUpForms</div>;
 }

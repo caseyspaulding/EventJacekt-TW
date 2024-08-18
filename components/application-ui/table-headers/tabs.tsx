@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Button, Select, Tabs, theme } from "flowbite-react";
 import {
   FaBriefcase,

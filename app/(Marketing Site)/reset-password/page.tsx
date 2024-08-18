@@ -1,11 +1,11 @@
 import { Button, Card, Checkbox, Label, TextInput } from 'flowbite-react';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Reset Password - EventJacket',
-    description: 'Reset your password for your EventJacket account.',
+    description: 'Reset your password for your EventJacket account.'
 };
 export default function ResetPasswordPage() {
     return (

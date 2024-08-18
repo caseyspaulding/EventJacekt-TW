@@ -7,7 +7,7 @@ interface ITextAreaProps
 	cols?: number;
 	role?: string;
 	defaultValue?: string | number;
-	handleChange: ( target: any ) => void;
+	handleChange: ( target: unknown ) => void;
 	hideLabel?: boolean;
 	value?: string | number;
 	label?: string;

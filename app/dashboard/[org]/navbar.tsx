@@ -2,39 +2,41 @@
 
 import { useSidebarContext } from '../../../contexts/sidebar-context';
 import { useMediaQuery } from '../../../hooks/use-media-query';
-import { SupabaseClient } from '@supabase/supabase-js';
-import
-    {
-        Avatar,
-        DarkThemeToggle,
-        Dropdown,
-        Label,
-        Navbar,
-        TextInput,
-        Tooltip
-    } from 'flowbite-react';
+
+import {
+    DarkThemeToggle,
+    Dropdown,
+   
+    Navbar,
+   
+    Tooltip
+} from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Cog8ToothIcon, CogIcon, CurrencyDollarIcon, PresentationChartBarIcon, SquaresPlusIcon, TicketIcon, UserCircleIcon, UserIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import {
+
+    CogIcon,
+    CurrencyDollarIcon,
+    PresentationChartBarIcon,
+    SquaresPlusIcon,
+    TicketIcon,
+    UserCircleIcon,
+ 
+    UsersIcon,
+    XMarkIcon
+} from '@heroicons/react/24/outline';
 import UserDropdown from './components/UserDropdownDash';
 import { ArchiveBoxIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { Bars3CenterLeftIcon, EnvelopeOpenIcon } from '@heroicons/react/20/solid';
 
-
-export function DashboardNavbar ()
-{
-
-
+export function DashboardNavbar() {
     const sidebar = useSidebarContext();
-    const isDesktop = useMediaQuery( '(min-width: 1024px)' );
+    const isDesktop = useMediaQuery('(min-width: 1024px)');
 
-    function handleToggleSidebar ()
-    {
-        if ( isDesktop )
-        {
+    function handleToggleSidebar() {
+        if (isDesktop) {
             sidebar.desktop.toggle();
-        } else
-        {
+        } else {
             sidebar.mobile.toggle();
         }
     }
@@ -48,32 +50,32 @@ export function DashboardNavbar ()
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
                         <button
-                            onClick={ handleToggleSidebar }
+                            onClick={handleToggleSidebar}
                             className="mr-3 cursor-pointer rounded p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                         >
                             <span className="sr-only">Toggle sidebar</span>
-                            {/* mobile */ }
+                            {/* mobile */}
                             <div className="lg:hidden">
-                                { sidebar.mobile.isOpen ? (
+                                {sidebar.mobile.isOpen ? (
                                     <XMarkIcon className="h-6 w-6" />
                                 ) : (
-                                        <Bars3CenterLeftIcon className="h-6 w-6" />
-                                ) }
+                                    <Bars3CenterLeftIcon className="h-6 w-6" />
+                                )}
                             </div>
-                            {/* desktop */ }
+                            {/* desktop */}
                             <div className="hidden lg:block">
                                 <Bars3CenterLeftIcon className="h-6 w-6" />
                             </div>
                         </button>
-                        <Navbar.Brand as={ Link } href="/" className="mr-14">
+                        <Navbar.Brand as={Link} href="/" className="mr-14">
                             <Image
                                 className="mr-1 h-8"
                                 alt=""
                                 src="/images/logo.svg"
-                                width={ 32 }
-                                height={ 32 }
+                                width={32}
+                                height={32}
                             />
-                            <span className="self-center whitespace-nowrap text-xl font-bold bg-gradient-to-r from-blue-700 to-blue-600 bg-clip-text text-transparent">
+                            <span className="self-center whitespace-nowrap bg-gradient-to-r from-blue-700 to-blue-600 bg-clip-text text-xl font-bold text-transparent">
                                 EventJacket
                             </span>
                         </Navbar.Brand>
@@ -102,14 +104,11 @@ export function DashboardNavbar ()
     );
 }
 
-
-
-function AppDrawerDropdown ()
-{
+function AppDrawerDropdown() {
     return (
         <Dropdown
             className="rounded"
-            arrowIcon={ false }
+            arrowIcon={false}
             inline
             label={
                 <span className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -117,7 +116,7 @@ function AppDrawerDropdown ()
                     <SquaresPlusIcon className="h-6 w-6" />
                 </span>
             }
-            theme={ { content: 'py-0' } }
+            theme={{ content: 'py-0' }}
         >
             <div className="block border-b bg-gray-50 px-4 py-2 text-center text-base font-medium text-gray-700 dark:border-b-gray-600 dark:bg-gray-700 dark:text-gray-400">
                 Apps
@@ -194,8 +193,7 @@ function AppDrawerDropdown ()
         </Dropdown>
     );
 }
-<UserDropdown />    
-
+<UserDropdown />;
 
 //function UserDropdown ()
 //{

@@ -1,5 +1,3 @@
 export default function FormResponses() {
-  return (
-    <div>FormResponses</div>
-  )
+    return <div>FormResponses</div>;
 }

@@ -1,5 +1,3 @@
 export default function CreateLandingPages() {
-  return (
-    <div>CreateLandingPages</div>
-  )
+    return <div>CreateLandingPages</div>;
 }

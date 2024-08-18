@@ -10,8 +10,7 @@ type SlantedDivider3Props = {
 };
 
 export const SlantedDivider3: React.FC<SlantedDivider3Props> = ( {
-  topColor,
-  bottomColor,
+
   gradient,
   height = '100px',
   slantSide = 'right',

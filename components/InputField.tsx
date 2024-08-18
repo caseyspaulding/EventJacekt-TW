@@ -7,6 +7,7 @@ interface IInputFieldProps {
 	max?: number;
 	step?: number;
 	defaultValue?: string | number;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	handleChange: (target: any) => void;
 	hideLabel?: boolean;
 	value?: string | number;

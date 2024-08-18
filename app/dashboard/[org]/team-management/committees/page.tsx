@@ -1,5 +1,3 @@
 export default function Committees() {
-  return (
-    <div>Committees</div>
-  )
+    return <div>Committees</div>;
 }

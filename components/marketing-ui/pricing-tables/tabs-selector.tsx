@@ -1,3 +1,4 @@
+
 import { Tabs, theme } from "flowbite-react";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -34,6 +35,7 @@ export function TabsSelectorPricingCards() {
                       theme.tabs.tablist.tabitem.base,
                       "dark:focus:ring-0",
                     ),
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     variant: {
                       fullWidth: {

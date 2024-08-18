@@ -1,5 +1,3 @@
 export default function EventAgendaBuilder() {
-  return (
-    <div>EventAgendaBuilder</div>
-  )
+    return <div>EventAgendaBuilder</div>;
 }

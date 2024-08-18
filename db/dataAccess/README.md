@@ -1,5 +1,3 @@
-
-
 ## Data Access Layer (Data Access folder):
 
 This is where all your direct database interactions occur.
@@ -7,14 +5,12 @@ It contains pure functions that perform CRUD (Create, Read, Update, Delete) oper
 These functions are database-agnostic and don't know anything about HTTP requests, forms, or Next.js-specific features.
 They can be easily tested in isolation and reused across different parts of your application.
 
-
 ## Server Actions:
 
 These act as an intermediary between your UI and the data access layer.
 They handle form submissions, process incoming data, and call the appropriate functions from the data access layer.
 Server Actions can also handle Next.js-specific operations like revalidatePath for cache management.
 They can perform additional logic such as data validation, transformation, or combining multiple data access operations.
-
 
 ## This separation provides several benefits:
 
@@ -27,12 +23,12 @@ Scalability: As your application grows, this structure helps maintain organizati
 Here's a visual representation of the flow:
 
 UI (React Components)
-        │
-        ▼
-Server Actions (app/actions/*.ts)
-        │
-        ▼
-Data Access Layer (db/dataAccess/*.ts)
-        │
-        ▼
+│
+▼
+Server Actions (app/actions/_.ts)
+│
+▼
+Data Access Layer (db/dataAccess/_.ts)
+│
+▼
 Database (via Drizzle ORM)

@@ -1,5 +1,3 @@
 export default function AttendeeMapViews() {
-  return (
-    <div>AttendeeMapViews</div>
-  )
+    return <div>AttendeeMapViews</div>;
 }

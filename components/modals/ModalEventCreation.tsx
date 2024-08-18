@@ -14,7 +14,7 @@ const ModalEventCreation = ( { children, onClose }: { children: React.ReactNode,
 
 const styles = {
   overlay: {
-    position: 'fixed' as 'fixed',
+    position: 'fixed' as const,
     top: 0,
     left: 0,
     width: '100%',
@@ -32,7 +32,7 @@ const styles = {
     width: '100%',
   },
   closeButton: {
-    position: 'absolute' as 'absolute',
+    position: 'absolute' as const,
     top: '10px',
     right: '10px',
     background: 'transparent',

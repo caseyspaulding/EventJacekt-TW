@@ -2,9 +2,7 @@ import userProfile from '@/data/user/profile.json';
 import type { UserProfile } from '@/types/user/profile';
 import UserProfilePageContent from './content';
 
-
-interface SoftwareSkill
-{
+interface SoftwareSkill {
     icon: string;
     label: string;
 }

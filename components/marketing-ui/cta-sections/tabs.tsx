@@ -11,6 +11,7 @@ export function CTASectionWithTabsAndMobileApp() {
               tablist: {
                 tabitem: {
                   base: "relative mx-6 flex items-center justify-center rounded-t-lg p-2 text-sm font-medium first:ml-0 focus:outline-none focus:ring-4 focus:ring-gray-300 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500",
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   // @ts-ignore
                   variant: {
                     pills: {

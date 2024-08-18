@@ -1,5 +1,3 @@
 export default function OrgMembers() {
-  return (
-    <div>OrgMembers</div>
-  )
+    return <div>OrgMembers</div>;
 }

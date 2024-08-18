@@ -1,5 +1,3 @@
 export default function payouts() {
-  return (
-    <div>payouts</div>
-  )
+    return <div>payouts</div>;
 }

@@ -20,6 +20,7 @@ export function EventScheduleTabs() {
                 },
                 tabitem: {
                   base: "flex items-center justify-center rounded-3xl p-4 text-sm font-medium first:ml-0 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500",
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   // @ts-ignore
                   variant: {
                     pills: {

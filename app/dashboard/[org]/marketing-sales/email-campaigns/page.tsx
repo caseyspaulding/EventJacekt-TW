@@ -1,5 +1,3 @@
 export default function EmailCampaigns() {
-  return (
-    <div>EmailCampaigns</div>
-  )
+    return <div>EmailCampaigns</div>;
 }

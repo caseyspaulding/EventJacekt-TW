@@ -1,5 +1,3 @@
 export default function CreateEditVenueMaps() {
-  return (
-    <div>CreateEditVenueMaps</div>
-  )
+    return <div>CreateEditVenueMaps</div>;
 }

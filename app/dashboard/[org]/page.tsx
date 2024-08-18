@@ -1,12 +1,11 @@
 import { fetchEventsForOrg } from './actions';
 import { notFound } from 'next/navigation';
-import EventActions from './EventActions';
+
 import { createClient } from '@/utils/supabase/server';
 import { db } from '../../../db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq, and } from 'drizzle-orm/expressions';
 import ClientDashboard from './ClientDashboard';
-
 
 interface DashboardPageProps {
     params: { org: string };
@@ -49,9 +48,9 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
 
         return (
             <ClientDashboard
-                orgName={ decodedOrgName }
-                dashboardData={ dashboardData }
-                events={ events }
+                orgName={decodedOrgName}
+                dashboardData={dashboardData}
+                events={events}
             />
         );
     } catch (error) {

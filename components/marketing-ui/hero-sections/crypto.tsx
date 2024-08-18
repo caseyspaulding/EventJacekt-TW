@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Button, Label, Tabs, TextInput } from "flowbite-react";
 
 export function FinancialExchangeCryptoHero() {

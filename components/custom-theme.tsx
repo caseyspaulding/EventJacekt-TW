@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Flowbite, theme } from "flowbite-react";
 import type { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";

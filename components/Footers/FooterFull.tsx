@@ -1,6 +1,5 @@
 import Image from "next/image";
 import type { JSX, SVGProps } from "react"
-import SvgBackgroundReversed from "../Backgrounds/SquareSvgBackgroundReverse";
 
 const navigation = {
   solutions: [

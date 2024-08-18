@@ -1,5 +1,3 @@
 export default function Branding() {
-  return (
-    <div>Branding</div>
-  )
+    return <div>Branding</div>;
 }

@@ -1,5 +1,3 @@
 export default function DiscountCodes() {
-  return (
-    <div>DiscountCodes</div>
-  )
+    return <div>DiscountCodes</div>;
 }

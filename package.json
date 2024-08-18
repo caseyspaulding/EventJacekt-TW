@@ -13,6 +13,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@aws-sdk/client-cloud9": "^3.632.0",
         "@emotion/react": "^11.13.0",
         "@headlessui/react": "^2.1.2",
         "@heroicons/react": "^2.1.5",
@@ -32,6 +33,7 @@
         "@types/stripe": "^8.0.417",
         "@uiw/react-md-editor": "^4.0.4",
         "animate.css": "^4.1.1",
+        "aws-sdk": "^2.1677.0",
         "clsx": "^2.1.1",
         "dompurify": "^3.1.6",
         "drizzle-orm": "^0.32.2",
@@ -90,6 +92,7 @@
         "drizzle-kit": "^0.23.2",
         "encoding": "^0.1.13",
         "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-jsx-a11y": "^6.9.0",
         "eslint-plugin-prettier": "^5.2.1",
         "eslint-plugin-react": "^7.35.0",

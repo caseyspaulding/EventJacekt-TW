@@ -7,7 +7,7 @@ import { createBlogPost } from '../app/actions/blogActions';
 import { createClient } from '@/utils/supabase/client';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { User } from '@supabase/supabase-js'; // Import the User type
+import type { User } from '@supabase/supabase-js'; // Import the User type
 
 const BlogPostForm: React.FC = () =>
 {
@@ -45,12 +45,7 @@ const BlogPostForm: React.FC = () =>
   }, [ router, supabase ] );
 
 
-  type PublicUrlResponse = {
-    data: {
-      publicUrl: string;
-    };
-    error: any;
-  };
+ 
 
 
   const handleImageUpload = async ( file: File | null ) =>
@@ -61,7 +56,7 @@ const BlogPostForm: React.FC = () =>
       return null;
     }
 
-    const { data, error } = await createClient().storage
+    const { error } = await createClient().storage
       .from( 'blogimages' ) // Replace with your bucket name
       .upload( `public/${ file.name }`, file, {
         cacheControl: '3600',

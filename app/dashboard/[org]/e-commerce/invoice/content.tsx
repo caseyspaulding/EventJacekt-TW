@@ -1,9 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { Breadcrumb, Label, Table, TextInput } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { AwaitedReactNode, FC, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
+import type {
+    AwaitedReactNode,
+    FC,
+    JSXElementConstructor,
+    Key,
+    ReactElement,
+    ReactNode,
+    ReactPortal
+} from 'react';
 import { HiCog, HiDotsVertical, HiDownload, HiHome, HiPrinter } from 'react-icons/hi';
 import type { ECommerceInvoicePageData } from './page';
 
@@ -153,30 +162,74 @@ const Invoice: FC<ECommerceInvoicePageData> = function ({ invoice }) {
                                     <Table.HeadCell>Total</Table.HeadCell>
                                 </Table.Head>
                                 <Table.Body>
-                                    {invoice.services.map((service: { item: boolean | Key | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | null | undefined; category: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; price: number; quantity: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; discount: number; }) => (
-                                        <Table.Row key={service.item?.toString() ?? ''}>
-                                            <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal">
-                                                <div className="text-base font-semibold text-gray-900 dark:text-white">
-                                                    {service.item}
-                                                </div>
-                                                <div className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                                    {service.category}
-                                                </div>
-                                            </Table.Cell>
-                                            <Table.Cell className="whitespace-nowrap p-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                                                ${service.price.toFixed(2)}
-                                            </Table.Cell>
-                                            <Table.Cell className="whitespace-nowrap p-4 text-base font-semibold text-gray-900 dark:text-white">
-                                                {service.quantity}
-                                            </Table.Cell>
-                                            <Table.Cell className="whitespace-nowrap p-4 text-base font-normal text-gray-900 dark:text-white">
-                                                {(1 - service.discount) * 100}%
-                                            </Table.Cell>
-                                            <Table.Cell className="whitespace-nowrap p-4 text-base font-semibold text-gray-900 dark:text-white">
-                                                ${(service.price * service.discount).toFixed(2)}
-                                            </Table.Cell>
-                                        </Table.Row>
-                                    ))}
+                                    {invoice.services.map(
+                                        (service: {
+                                            item:
+                                                | boolean
+                                                | Key
+                                                | ReactElement<
+                                                      any,
+                                                      string | JSXElementConstructor<any>
+                                                  >
+                                                | Iterable<ReactNode>
+                                                | Promise<AwaitedReactNode>
+                                                | null
+                                                | undefined;
+                                            category:
+                                                | string
+                                                | number
+                                                | bigint
+                                                | boolean
+                                                | ReactElement<
+                                                      any,
+                                                      string | JSXElementConstructor<any>
+                                                  >
+                                                | Iterable<ReactNode>
+                                                | ReactPortal
+                                                | Promise<AwaitedReactNode>
+                                                | null
+                                                | undefined;
+                                            price: number;
+                                            quantity:
+                                                | string
+                                                | number
+                                                | bigint
+                                                | boolean
+                                                | ReactElement<
+                                                      any,
+                                                      string | JSXElementConstructor<any>
+                                                  >
+                                                | Iterable<ReactNode>
+                                                | ReactPortal
+                                                | Promise<AwaitedReactNode>
+                                                | null
+                                                | undefined;
+                                            discount: number;
+                                        }) => (
+                                            <Table.Row key={service.item?.toString() ?? ''}>
+                                                <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal">
+                                                    <div className="text-base font-semibold text-gray-900 dark:text-white">
+                                                        {service.item}
+                                                    </div>
+                                                    <div className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                                        {service.category}
+                                                    </div>
+                                                </Table.Cell>
+                                                <Table.Cell className="whitespace-nowrap p-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                                                    ${service.price.toFixed(2)}
+                                                </Table.Cell>
+                                                <Table.Cell className="whitespace-nowrap p-4 text-base font-semibold text-gray-900 dark:text-white">
+                                                    {service.quantity}
+                                                </Table.Cell>
+                                                <Table.Cell className="whitespace-nowrap p-4 text-base font-normal text-gray-900 dark:text-white">
+                                                    {(1 - service.discount) * 100}%
+                                                </Table.Cell>
+                                                <Table.Cell className="whitespace-nowrap p-4 text-base font-semibold text-gray-900 dark:text-white">
+                                                    ${(service.price * service.discount).toFixed(2)}
+                                                </Table.Cell>
+                                            </Table.Row>
+                                        )
+                                    )}
                                 </Table.Body>
                             </Table>
                         </div>

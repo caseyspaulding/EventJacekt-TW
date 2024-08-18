@@ -1,7 +1,7 @@
 import { Button } from "flowbite-react";
 import { createClient } from "../utils/supabase/server";
 import { signOut } from "app/actions/SignOut";
-import { redirect } from "next/navigation";
+
 
 export default async function AuthButton() {
   const supabase = createClient();

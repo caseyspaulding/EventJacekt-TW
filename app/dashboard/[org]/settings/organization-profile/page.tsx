@@ -1,5 +1,3 @@
 export default function OrgProfile() {
-  return (
-    <div>OrgProfile</div>
-  )
+    return <div>OrgProfile</div>;
 }

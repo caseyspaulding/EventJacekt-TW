@@ -1,4 +1,4 @@
-'use client';   
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { SubmitButton } from './submit-button';
@@ -8,61 +8,61 @@ import Link from 'next/link';
 import { signIn } from './signin'; // Adjust the path as necessary
 import Head from 'next/head';
 import SvgBackground from '@/components/Backgrounds/SquareSvgBackground';
-import { Svg } from 'tabler-icons-react';
 
-
-
-interface SearchParams
-{
+interface SearchParams {
     message?: string;
 }
 
-interface LoginProps
-{
+interface LoginProps {
     searchParams: SearchParams;
 }
 
-export default function Login ( { searchParams }: LoginProps )
-{
-    const [ email, setEmail ] = useState( '' );
-    const [ password, setPassword ] = useState( '' );
-    const [ isValid, setIsValid ] = useState( false );
+export default function Login({ searchParams }: LoginProps) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isValid, setIsValid] = useState(false);
 
-    useEffect( () =>
-    {
+    useEffect(() => {
         // Basic email validation regex
-        const isEmailValid = /\S+@\S+\.\S+/.test( email );
+        const isEmailValid = /\S+@\S+\.\S+/.test(email);
         // Validate both email and password
-        setIsValid( isEmailValid && password.length > 0 );
-    }, [ email, password ] );
+        setIsValid(isEmailValid && password.length > 0);
+    }, [email, password]);
 
     return (
         <>
             <Head>
                 <title>Login - EventJacket</title>
-                <meta name="description" content="Login to your EventJacket account to manage your events." />
+                <meta
+                    name="description"
+                    content="Login to your EventJacket account to manage your events."
+                />
                 <meta name="robots" content="noindex, nofollow" />
             </Head>
             <div className=" mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
-                <SvgBackground />   
+                <SvgBackground />
                 <Link
                     href="/"
                     className="mb-8 flex items-center justify-center text-2xl font-semibold dark:text-white lg:mb-10"
                 >
-                    <Image alt="" src="/images/logo.svg" width={ 43 } height={ 44 } className="mr-2 h-11" />
-                    <span className="self-center text-blue-600 whitespace-nowrap text-2xl font-extrabold dark:text-white">
+                    <Image
+                        alt=""
+                        src="/images/logo.svg"
+                        width={43}
+                        height={44}
+                        className="mr-2 h-11"
+                    />
+                    <span className="self-center whitespace-nowrap text-2xl font-extrabold text-blue-600 dark:text-white">
                         EventJacket
                     </span>
                 </Link>
-               
+
                 <Card
-                   
                     horizontal
-                   
                     imgAlt="login"
                     imgSrc="/images/authentication/login.png"
-                    className="w-full md:max-w-screen-lg shadow-2xl"
-                    theme={ {
+                    className="w-full shadow-2xl md:max-w-screen-lg"
+                    theme={{
                         root: {
                             children: ' my-auto w-full gap-0 space-y-8 p-6 sm:p-8 lg:p-16'
                         },
@@ -71,9 +71,9 @@ export default function Login ( { searchParams }: LoginProps )
                                 on: 'hidden w-2/3 rounded-l-lg md:w-96 md:p-0 lg:block'
                             }
                         }
-                    } }
-                > 
-                    <h2 className=" bg-transparent text-2xl text-center font-bold text-blue-700 dark:text-white lg:text-3xl">
+                    }}
+                >
+                    <h2 className=" bg-transparent text-center text-2xl font-bold text-blue-700 dark:text-white lg:text-3xl">
                         Sign in
                     </h2>
                     <form className="mt-8 space-y-6">
@@ -82,8 +82,8 @@ export default function Login ( { searchParams }: LoginProps )
                             <TextInput
                                 name="email"
                                 placeholder="name@company.com"
-                                value={ email }
-                                onChange={ ( e ) => setEmail( e.target.value ) }
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </div>
@@ -94,8 +94,8 @@ export default function Login ( { searchParams }: LoginProps )
                                 name="password"
                                 placeholder="••••••••"
                                 type="password"
-                                value={ password }
-                                onChange={ ( e ) => setPassword( e.target.value ) }
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
                         </div>
@@ -114,19 +114,19 @@ export default function Login ( { searchParams }: LoginProps )
                         <div className="mb-6">
                             <SubmitButton
                                 color="blue"
-                                formAction={ signIn }
-                                className="w-full px-0 py-px sm:w-auto bg-blue-600"
+                                formAction={signIn}
+                                className="w-full bg-blue-600 px-0 py-px sm:w-auto"
                                 pendingText="Signing In..."
-                                disabled={ !isValid } // Disable the button if the form is invalid
+                                disabled={!isValid} // Disable the button if the form is invalid
                             >
                                 Login to your account
                             </SubmitButton>
 
-                            { searchParams?.message && (
-                                <p className="bg-red-100 border border-red-500 text-red-700 p-4 mt-4 rounded text-center">
-                                    { searchParams.message }
+                            {searchParams?.message && (
+                                <p className="mt-4 rounded border border-red-500 bg-red-100 p-4 text-center text-red-700">
+                                    {searchParams.message}
                                 </p>
-                            ) }
+                            )}
                         </div>
                         <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                             Not registered?&nbsp;

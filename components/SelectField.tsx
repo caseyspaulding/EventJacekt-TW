@@ -3,7 +3,7 @@ import * as React from 'react';
 interface ISelectFieldProps {
 	name: string;
 	options: string[];
-	handleChange: (target: any) => void;
+	handleChange: (target: unknown) => void;
 }
 
 export const SelectField = ({ name, options, handleChange }: ISelectFieldProps) => {

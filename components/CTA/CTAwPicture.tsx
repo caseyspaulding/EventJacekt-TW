@@ -1,5 +1,5 @@
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
-import SlantedDividerSolid from '../Divider/SlantedDividerSolidProps'
+
 
 const benefits = [
   'Sell tickets online',

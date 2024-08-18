@@ -1,20 +1,22 @@
 'use client';
 
-import { MutableRefObject, useRef, useState } from "react";
+import type { MutableRefObject} from "react";
+import { useRef, useState } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { InputField } from "./InputField";
 import { TextArea } from "./TextArea";
 import { CheckboxField } from "./CheckboxField";
 import { SelectField } from "./SelectField";
 import { ImageUploadField } from "./ImageUploadField";
-import ReactJson from 'react-json-view';
 
 export default function NewQRCodeGenerator ()
 {
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [ state, setState ] = useState<{ [ key: string ]: any }>( {} );
   const ref = useRef<QRCode>()
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = ( { target }: any ) =>
   {
     setState( prevState => ( { ...prevState, [ target.name ]: target.value } ) )
@@ -34,7 +36,7 @@ export default function NewQRCodeGenerator ()
       min={ 0 }
       max={ 50 }
       hideLabel
-      defaultValue={ ( state as any )[ id ] }
+      defaultValue={ ( state  )[ id ] }
     />
   };
 

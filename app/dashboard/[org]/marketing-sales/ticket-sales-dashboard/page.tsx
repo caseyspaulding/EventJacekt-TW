@@ -1,5 +1,3 @@
 export default function TicketSalesDashboard() {
-  return (
-    <div>TicketSalesDashboard</div>
-  )
+    return <div>TicketSalesDashboard</div>;
 }

@@ -1,5 +1,3 @@
 export default function Volunteers() {
-  return (
-    <div>Volunteers</div>
-  )
+    return <div>Volunteers</div>;
 }

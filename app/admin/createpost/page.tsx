@@ -2,16 +2,14 @@
 
 import dynamic from 'next/dynamic';
 
-const BlogPostForm = dynamic( () => import( '@/components/BlogPostForm' ), {
-  ssr: false,
-} );
+const BlogPostForm = dynamic(() => import('@/components/BlogPostForm'), {
+    ssr: false
+});
 
-export default function BlogPost ()
-{
-  return (
-    <div>
-
-      <BlogPostForm />
-    </div>
-  );
+export default function BlogPost() {
+    return (
+        <div>
+            <BlogPostForm />
+        </div>
+    );
 }

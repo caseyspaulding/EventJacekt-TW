@@ -1,5 +1,3 @@
 export default function DeletePost() {
-  return (
-    <div>DeletePost</div>
-  )
+    return <div>DeletePost</div>;
 }
