@@ -43,6 +43,13 @@
       "when": 1723923703152,
       "tag": "0005_glorious_chimera",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1723943057519,
+      "tag": "0006_flat_jubilee",
+      "breakpoints": true
     }
   ]
 }

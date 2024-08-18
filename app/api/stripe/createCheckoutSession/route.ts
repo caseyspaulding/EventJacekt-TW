@@ -1,9 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/utils/stripe';
 import { db } from '@/db';
-import { orgEventTickets } from '@/db/schema';
+import { orgEventTickets, orgCustomers } from '@/db/schema';
 import { getOrgIdFromTicketType, getStripeAccountIdFromOrgId } from '@/app/actions/ticketActions';
-import { v4 as uuidv4 } from 'uuid';
+
+import { eq } from 'drizzle-orm';
+
+type Customer = {
+  id: string;
+  orgId: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  address: string | null;
+  city: string | null;
+  state: string | null;
+  country: string | null;
+  zipCode: string | null;
+  profileImageUrl: string | null;
+  status: string | null; // Adjusted to allow for null values
+  metadata: any;
+  notes: string | null;
+  favoriteEventId: string | null;
+  favoritePerformerId: string | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+};
 
 export async function POST ( req: NextRequest )
 {
@@ -25,7 +47,47 @@ export async function POST ( req: NextRequest )
       throw new Error( 'Organization ID not found.' );
     }
 
-    // Step 2: Get the Stripe account ID by organization ID
+    // Step 2: Check if the customer already exists
+    let customers: Customer[] = await db.select().from( orgCustomers )
+      .where( eq( orgCustomers.email, buyer.email ) )
+      .execute();
+
+    let customer = customers[ 0 ]; // Assuming there's at most one customer with a given email
+
+    if ( !customer )
+    {
+      // Step 3: Insert the new customer if they do not exist
+      await db.insert( orgCustomers ).values( {
+        orgId: orgId,
+        name: `${ buyer.firstName } ${ buyer.lastName }`,
+        email: buyer.email,
+        phone: buyer.phone || null, // Add additional fields as necessary
+        address: buyer.address || null,
+        city: buyer.city || null,
+        state: buyer.state || null,
+        country: buyer.country || null,
+        zipCode: buyer.zipCode || null,
+        profileImageUrl: buyer.profileImageUrl || null,
+        status: 'active',
+        metadata: buyer.metadata || null,
+        notes: buyer.notes || null,
+        favoriteEventId: null, // Or set this dynamically if needed
+        favoritePerformerId: null, // Or set this dynamically if needed
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      } );
+
+      // Fetch the customer again after insertion to get the new ID
+      const insertedCustomers: Customer[] = await db.select().from( orgCustomers )
+        .where( eq( orgCustomers.email, buyer.email ) )
+        .execute();
+
+      customer = insertedCustomers[ 0 ];
+    }
+
+    // At this point, customer should be defined with an ID
+    const customerId = customer.id;
+
     const orgStripeAccountId = await getStripeAccountIdFromOrgId( orgId );
 
     if ( !orgStripeAccountId )
@@ -41,7 +103,7 @@ export async function POST ( req: NextRequest )
 
     const unitAmount = Math.round( ticket.price * 100 );
 
-    // Step 3: Create the Stripe Checkout session
+    // Step 4: Create the Stripe Checkout session
     const session = await stripe.checkout.sessions.create( {
       payment_method_types: [ 'card' ],
       line_items: [
@@ -69,11 +131,11 @@ export async function POST ( req: NextRequest )
       cancel_url: `https://eventjacket.com/events/${ eventSlug }/cancel`,
     } );
 
-    // Step 4: Save the ticket purchase details directly to the database
+    // Step 5: Save the ticket purchase details directly to the database
     const ticketData = {
       eventId: ticket.eventId,
       orgId: orgId,
-      customerId: buyer.customerId, // Ensure that `customerId` is available
+      customerId: customerId, // Use the fetched customer ID
       ticketTypeId: ticket.id,
       name: ticket.name,
       price: ticket.price,
@@ -89,8 +151,6 @@ export async function POST ( req: NextRequest )
     };
 
     await db.insert( orgEventTickets ).values( ticketData );
-
-
 
     return NextResponse.json( session );
   } catch ( error )

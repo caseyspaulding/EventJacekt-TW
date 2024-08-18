@@ -238,9 +238,7 @@ export const orgCustomers = pgTable( 'org_customers', {
     id: uuid( 'id' )
         .primaryKey()
         .default( sql`uuid_generate_v4()` ),
-    orgPaymentId: uuid( 'org_payment_id' )
-        .notNull()
-        .references( () => orgPayments.id ), // Reference to org_payments
+    
     orgId: uuid( 'org_id' )
         .notNull()
         .references( () => organizations.id ),
