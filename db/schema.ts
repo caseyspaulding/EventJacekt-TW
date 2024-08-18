@@ -357,6 +357,7 @@ export const orgEventTickets = pgTable( 'org_event_tickets', {
     exchangeRate: numeric( 'exchange_rate', { precision: 15, scale: 6 } ), // Exchange rate applied, if applicable
     permissions: jsonb( 'permissions' ), // JSON field for event-specific permissions
     salesChannelDetails: jsonb( 'sales_channel_details' ), // Detailed information about the sales channel
+    stripeSessionId: text( 'stripe_session_id' ), // Store the Stripe session ID for reference
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
 } );

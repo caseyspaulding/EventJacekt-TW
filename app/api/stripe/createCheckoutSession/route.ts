@@ -139,8 +139,8 @@ export async function POST ( req: NextRequest )
       ticketTypeId: ticket.id,
       name: ticket.name,
       price: ticket.price,
-      currency: 'USD', // Assuming you have a fixed currency or dynamically fetch it
-      status: 'sold', // Directly setting the status if it’s pre-defined
+      currency: 'USD',
+      status: 'sold', // Directly setting the status 
       validFrom: ticket.validFrom,
       validUntil: ticket.validUntil,
       purchaseDate: new Date(),
