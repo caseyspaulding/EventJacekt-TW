@@ -169,9 +169,38 @@ export async function POST(req: NextRequest) {
             // Add any additional fields as required
         };
 
-        await db.insert(orgEventTickets).values(ticketData);
+        // Insert the ticket and return the full row including the id
+        
+        const [ insertedTicket ] = await db.insert( orgEventTickets )
+            .values( ticketData )
+            .returning( {
+                id: orgEventTickets.id,
+                name: orgEventTickets.name,
+                price: orgEventTickets.price,
+                status: orgEventTickets.status,
+                eventId: orgEventTickets.eventId,
+                orgId: orgEventTickets.orgId,
+                customerId: orgEventTickets.customerId,
+                ticketTypeId: orgEventTickets.ticketTypeId,
+                currency: orgEventTickets.currency,
+                validFrom: orgEventTickets.validFrom,
+                validUntil: orgEventTickets.validUntil,
+                purchaseDate: orgEventTickets.purchaseDate,
+                stripeSessionId: orgEventTickets.stripeSessionId,
+                createdAt: orgEventTickets.createdAt,
+                updatedAt: orgEventTickets.updatedAt
+            } )
+            .execute(); 
+       
+
+       // await db.insert( orgEventTickets ).values( ticketData );
+        
         // Step 6: Send the ticket email with QR code
-        await sendTicketEmail( buyer, ticketData, ticketTypeData.eventName, ticketTypeData.description || 'No description available' );
+        await sendTicketEmail(
+            buyer,
+            insertedTicket, // Pass the inserted ticket with the id
+            ticketTypeData.eventName,
+            ticketTypeData.description || 'No description available' );
         return NextResponse.json(session);
     } catch (error) {
         console.error('Error creating Stripe Checkout session:', error);
