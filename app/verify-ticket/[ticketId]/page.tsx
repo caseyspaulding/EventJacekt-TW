@@ -52,7 +52,7 @@ async function handleCheckIn ( ticketId: string )
 {
   try
   {
-    const response = await fetch( '/api/check-in', {
+    const response = await fetch( '/api/tickets/check-in', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
