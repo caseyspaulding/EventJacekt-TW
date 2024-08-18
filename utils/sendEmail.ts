@@ -1,6 +1,7 @@
 import type { SendEmailCommandInput } from "@aws-sdk/client-ses";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
+
 // Initialize the SES client
 const sesClient = new SESClient( {
   region: process.env.AWS_REGION,
@@ -46,3 +47,4 @@ export async function sendEmail (
     throw new Error( 'Failed to send email' );
   }
 }
+

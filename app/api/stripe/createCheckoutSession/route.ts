@@ -6,6 +6,7 @@ import { orgEventTickets, orgCustomers, orgTicketTypes, events } from '@/db/sche
 import { getOrgIdFromTicketType, getStripeAccountIdFromOrgId } from '@/app/actions/ticketActions';
 
 import { eq } from 'drizzle-orm';
+import { sendTicketEmail } from '@/helpers/generateQRCodeURL';
 
 type Customer = {
     id: string;
@@ -169,7 +170,8 @@ export async function POST(req: NextRequest) {
         };
 
         await db.insert(orgEventTickets).values(ticketData);
-
+        // Step 6: Send the ticket email with QR code
+        await sendTicketEmail( buyer, ticketData, ticketTypeData.eventName, ticketTypeData.description || 'No description available' );
         return NextResponse.json(session);
     } catch (error) {
         console.error('Error creating Stripe Checkout session:', error);
