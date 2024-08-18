@@ -19,10 +19,10 @@ export async function POST ( request: Request )
     const result = await s3Client.send( command );
 
     return NextResponse.json( { message: "File uploaded successfully", result } );
-  } catch ( error: any )
+  } catch ( error: unknown )
   {
     return NextResponse.json(
-      { message: "Failed to upload file", error: error.message },
+      { message: "Failed to upload file", error },
       { status: 500 }
     );
   }
