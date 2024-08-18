@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Button } from 'flowbite-react/components/Button';
+
+
 
 type Params = {
   eventSlug: string;
@@ -44,6 +47,10 @@ export default function SuccessPage ( { params }: { params: Params } )
         <p className="text-lg mb-4">
           Your ticket will be sent to your email address. Please check your inbox for further details.
         </p>
+
+
+        <Button href='/' color='blue' className="text-white">Back to Home</Button>
+
 
 
 

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/utils/stripe';
 import { db } from '@/db';
-import { orgEventTickets, orgCustomers } from '@/db/schema';
+import { orgEventTickets, orgCustomers, orgTicketTypes, events } from '@/db/schema';
 import { getOrgIdFromTicketType, getStripeAccountIdFromOrgId } from '@/app/actions/ticketActions';
 
 import { eq } from 'drizzle-orm';
@@ -46,6 +46,23 @@ export async function POST ( req: NextRequest )
     {
       throw new Error( 'Organization ID not found.' );
     }
+
+    // Perform a join to fetch event name and description from orgTicketTypes and events tables
+    const [ ticketTypeData ] = await db
+      .select( {
+        eventName: events.name,
+        description: orgTicketTypes.description,
+      } )
+      .from( orgTicketTypes )
+      .innerJoin( events, eq( orgTicketTypes.eventId, events.id ) )
+      .where( eq( orgTicketTypes.id, ticket.id ) )
+      .execute();
+
+    if ( !ticketTypeData )
+    {
+      throw new Error( 'Event or ticket type not found.' );
+    }
+
 
     // Step 2: Check if the customer already exists
     let customers: Customer[] = await db.select().from( orgCustomers )
@@ -112,7 +129,7 @@ export async function POST ( req: NextRequest )
             currency: 'usd',
             product_data: {
               name: ticket.name,
-              description: `Ticket for ${ ticket.eventName }`,
+              description: `Ticket for ${ ticketTypeData.eventName }`, // Use the event name fetched via join
             },
             unit_amount: unitAmount,
           },
@@ -141,13 +158,15 @@ export async function POST ( req: NextRequest )
       price: ticket.price,
       currency: 'USD',
       status: 'sold', // Directly setting the status 
+      eventName: ticketTypeData.eventName, // Event name from join
+      description: ticketTypeData.description, // Description from join
       validFrom: ticket.validFrom,
       validUntil: ticket.validUntil,
       purchaseDate: new Date(),
       stripeSessionId: session.id,
       createdAt: new Date(),
       updatedAt: new Date(),
-      // Add any additional fields as required by your business logic
+      // Add any additional fields as required 
     };
 
     await db.insert( orgEventTickets ).values( ticketData );
