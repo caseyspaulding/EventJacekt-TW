@@ -122,7 +122,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
             fps={ 10 }
             qrbox={ 250 }
             disableFlip={ false }
-            qrCodeSuccessCallback={ handleCheckIn }
+            qrCodeSuccessCallback={ ( decodedText ) => handleCheckIn( decodedText ) }
           />
         </div>
 
