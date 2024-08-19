@@ -1,32 +1,24 @@
-'use client'; 
+'use client';
 
 import React, { useState, useEffect } from 'react';
-import { SubmitButton } from './Button';
-import { fetchTicketInfo, checkInTicket } from './action'; // Import the server action
+import { fetchTicketInfo } from './action';
+import { SubmitButton } from '@/app/login/submit-button';
 
-// Define the type for your ticket data
 type Ticket = {
   id: string;
   name: string;
   status: string;
   eventName: string;
-  validFrom: string | null;
-  validUntil: string | null;
   purchaseDate: string | null;
   checkInStatus: string | null;
 };
 
-interface VerifyTicketPageProps
-{
-  params: {
-    ticketId: string;
-  };
-}
-export default function VerifyTicketPage ( { params }: VerifyTicketPageProps )
+export default function VerifyTicketPage ( { params }: { params: { ticketId: string } } )
 {
   const { ticketId } = params;
-  const [ ticket, setTicket ] = useState<Ticket | null>( null ); // Explicitly set the type
+  const [ ticket, setTicket ] = useState<Ticket | null>( null );
   const [ isPending, setIsPending ] = useState( false );
+  const [ errorMessage, setErrorMessage ] = useState<string | null>( null );
 
   useEffect( () =>
   {
@@ -39,11 +31,58 @@ export default function VerifyTicketPage ( { params }: VerifyTicketPageProps )
       } catch ( error )
       {
         console.error( 'Error fetching ticket info:', error );
+        setErrorMessage( 'Failed to load ticket details.' );
       }
     };
 
     getTicketInfo();
   }, [ ticketId ] );
+
+  const handleCheckIn = async () =>
+  {
+    if ( ticket?.checkInStatus === 'checked_in' )
+    {
+      return;
+    }
+
+    setIsPending( true );
+
+    try
+    {
+      const response = await fetch( `/api/tickets/check-in`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify( { ticketId } ),
+      } );
+
+      if ( !response.ok )
+      {
+        throw new Error( 'Failed to check in ticket' );
+      }
+
+      const result = await response.json();
+      console.log( 'Check-In Result:', result );
+
+      // Update ticket status to 'checked-in'
+      setTicket( ( prevTicket ) =>
+        prevTicket ? { ...prevTicket, checkInStatus: 'checked_in' } : prevTicket
+      );
+    } catch ( error )
+    {
+      console.error( 'Error during check-in:', error );
+      setErrorMessage( 'Failed to check in the ticket. Please try again.' );
+    } finally
+    {
+      setIsPending( false );
+    }
+  };
+
+  if ( errorMessage )
+  {
+    return <p className="text-center text-red-600 font-semibold mt-8">{ errorMessage }</p>;
+  }
 
   if ( !ticket )
   {
@@ -59,7 +98,7 @@ export default function VerifyTicketPage ( { params }: VerifyTicketPageProps )
           <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Event:</span> { ticket.eventName }</p>
           <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Ticket Name:</span> { ticket.name }</p>
           <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Status:</span> { ticket.status }</p>
-          <p className="text-lg text-gray-700 mb-6"><span className="font-semibold">Check-In Status:</span> { ticket.checkInStatus }</p>
+
         </div>
       </div>
     );
@@ -72,20 +111,17 @@ export default function VerifyTicketPage ( { params }: VerifyTicketPageProps )
         <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Event:</span> { ticket.eventName }</p>
         <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Ticket Name:</span> { ticket.name }</p>
         <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Status:</span> { ticket.status }</p>
-        <p className="text-lg text-gray-700 mb-6"><span className="font-semibold">Check-In Status:</span> { ticket.checkInStatus }</p>
 
-        <form action={ checkInTicket } >
-          <input type="hidden" name="ticketId" value={ ticket.id } />
-          <SubmitButton
-            color="blue"
-            pendingText="Checking In..."
-            disabled={ isPending }
-            onClick={ () => setIsPending( true ) }
-            className="w-full bg-blue-600 px-0 py-px sm:w-auto"
-          >
-            Check-In
-          </SubmitButton>
-        </form>
+
+        <SubmitButton
+          onClick={ handleCheckIn }
+          color="blue"
+          disabled={ isPending || ticket.checkInStatus === 'checked_in' }
+          className="w-full"
+        >
+          { isPending ? 'Checking in...' : 'Check In Ticket' }
+        </SubmitButton>
+
       </div>
     </div>
   );

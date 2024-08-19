@@ -182,9 +182,8 @@ export async function POST(req: NextRequest) {
                 orgId: orgEventTickets.orgId,
                 customerId: orgEventTickets.customerId,
                 ticketTypeId: orgEventTickets.ticketTypeId,
-                currency: orgEventTickets.currency,
-                validFrom: orgEventTickets.validFrom,
-                validUntil: orgEventTickets.validUntil,
+               
+               
                 purchaseDate: orgEventTickets.purchaseDate,
                 stripeSessionId: orgEventTickets.stripeSessionId,
                 createdAt: orgEventTickets.createdAt,

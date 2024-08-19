@@ -12,10 +12,8 @@ export async function fetchTicketInfo ( ticketId: string )
       name: orgEventTickets.name,
       status: orgEventTickets.status,
       eventName: events.name,
-      validFrom: orgEventTickets.validFrom,
-      validUntil: orgEventTickets.validUntil,
       purchaseDate: orgEventTickets.purchaseDate,
-      checkInStatus: orgEventTickets.checkInStatus ,
+      checkInStatus: orgEventTickets.checkInStatus,
     } )
     .from( orgEventTickets )
     .innerJoin( events, eq( orgEventTickets.eventId, events.id ) )
@@ -24,45 +22,28 @@ export async function fetchTicketInfo ( ticketId: string )
 
   if ( !ticket )
   {
+    console.error( 'Ticket not found.' );
     return null;
   }
 
   return {
     ...ticket,
-    validFrom: ticket.validFrom ? ticket.validFrom.toString() : null,
-    validUntil: ticket.validUntil ? ticket.validUntil.toString() : null,
     purchaseDate: ticket.purchaseDate ? ticket.purchaseDate.toISOString() : null,
   };
 }
 
-export async function checkInTicket ( formData: FormData )
+export async function checkInTicket ( ticketId: string )
 {
-  const ticketId = formData.get( 'ticketId' ) as string;
+  const result = await db
+    .update( orgEventTickets )
+    .set( { checkInStatus: 'checked_in' } )
+    .where( eq( orgEventTickets.id, ticketId ) )
+    .execute();
 
-  if ( !ticketId )
+  if ( !result )
   {
-    throw new Error( 'Ticket ID is required.' );
+    throw new Error( 'Failed to check in ticket' );
   }
 
-  try
-  {
-    // Update the ticket's checkInStatus to 'checked_in'
-    const result = await db
-      .update( orgEventTickets )
-      .set( { checkInStatus: 'checked_in' } )
-      .where( eq( orgEventTickets.id, ticketId ) )
-      .returning( { id: orgEventTickets.id, checkInStatus: orgEventTickets.checkInStatus } )
-      .execute();
-
-    if ( result.length === 0 )
-    {
-      throw new Error( 'Ticket not found or could not be checked in.' );
-    }
-
-    return { success: true, ticketId: result[ 0 ].id };
-  } catch ( error )
-  {
-    console.error( 'Error checking in ticket:', error );
-    throw new Error( 'Failed to check in the ticket.' );
-  }
+  return { success: true };
 }
