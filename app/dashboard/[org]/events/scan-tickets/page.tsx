@@ -163,7 +163,7 @@ export default function ScanTicketsPage ()
             { scannedTickets.map( ( ticket, index ) => (
               <li
                 key={ index }
-                className={ `p-2 ${ ticket.checkInStatus ? 'text-green-600' : 'text-red-600' }` }
+                className={ `p-2 ${ ticket.message === 'This ticket has already been used.' ? 'text-red-600' : 'text-green-600' }` }
               >
                 { ticket.message } - { ticket.name ? ticket.name : 'Unknown Ticket' }
               </li>
