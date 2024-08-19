@@ -1,5 +1,6 @@
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { useEffect } from 'react';
+import styles from './Html5QrCodePlugin.module.css';  
 
 
 const qrcodeRegionId = "html5qr-code-full-region";
@@ -32,7 +33,36 @@ const Html5QrcodePlugin: React.FC<Html5QrcodePluginProps> = ( props ) =>
 
     const html5QrcodeScanner = new Html5QrcodeScanner( qrcodeRegionId, config, props.verbose ?? false );
     html5QrcodeScanner.render( props.qrCodeSuccessCallback, props.qrCodeErrorCallback );
+   
+    // Apply custom styles to the buttons and other elements
+    const button = document.getElementById( 'html5-qrcode-button-camera-permission' );
+    if ( button )
+    {
+      button.className = styles.qrCodeButton;
+    }
+    const stopButton = document.getElementById( 'html5-qrcode-button-camera-stop' );
+    if ( stopButton )
+    {
+      stopButton.className = styles.qrCodeStopButton;
+    }
+    
 
+    const scanLink = document.getElementById( 'html5-qrcode-anchor-scan-type-change' );
+    if ( scanLink )
+    {
+      scanLink.className = styles.qrCodeScanLink;
+    }
+
+    const cameraSelect = document.getElementById( 'html5-qrcode-select-camera' );
+    if ( cameraSelect )
+    {
+      cameraSelect.className = styles.qrCodeCameraSelect;
+    }
+
+    if ( button )
+    {
+      button.className = styles.qrCodeButton;
+    }
     return () =>
     {
       html5QrcodeScanner.clear().catch( ( error ) =>
