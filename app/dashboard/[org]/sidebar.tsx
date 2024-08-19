@@ -14,9 +14,14 @@ import type { HTMLAttributeAnchorTarget } from 'react';
 import {
     BanknotesIcon,
    
+    CalculatorIcon,
+   
+    CalendarDateRangeIcon,
+   
     ClipboardIcon,
     CogIcon,
     EnvelopeOpenIcon,
+    QrCodeIcon,
     TableCellsIcon,
     UserGroupIcon
 } from '@heroicons/react/24/outline';
@@ -25,7 +30,7 @@ import {
     QuestionMarkCircleIcon,
     TicketIcon
 } from '@heroicons/react/20/solid';
-import { Dashboard } from 'tabler-icons-react';
+import { Dashboard, FolderPlus } from 'tabler-icons-react';
 
 interface SidebarItem {
     href?: string;
@@ -248,18 +253,18 @@ function BottomMenu({ isCollapsed }: { isCollapsed: boolean }) {
 const pages: SidebarItem[] = [
     { href: '/', icon: Dashboard, label: 'Dashboard' },
     { href: '/kanban', icon: TableCellsIcon, label: 'Kanban' },
-    { href: '/events/new', icon: TableCellsIcon, label: 'Create Event' },
+    //{ href: '/events/new', icon: TableCellsIcon, label: 'Create Event' },
     //{ href: '/mailing/inbox', icon: HiInboxIn, label: 'Inbox', badge: '3' },
 
-    { href: '', icon: ClipboardDocumentIcon, label: 'Forms' },
+    //{ href: '', icon: ClipboardDocumentIcon, label: 'Forms' },
 
     {
-        icon: EnvelopeOpenIcon,
-        label: 'Mail',
+        icon: FolderPlus,
+        label: 'Events',
         items: [
-            { href: '/mailing/inbox', label: 'Inbox' },
-            { href: '/mailing/compose', label: 'Compose' },
-            { href: '/mailing/message', label: 'Message' }
+            { href: '/events/new', icon: CalendarDateRangeIcon, label: 'Create Event' },
+            { href: '/events/scan-tickets', icon: QrCodeIcon, label: 'Scan Tickets' },
+           
         ]
     },
     {
