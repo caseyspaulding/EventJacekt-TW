@@ -14,7 +14,6 @@ type ScannedTicket = {
 
 export default function ScanTicketsPage ()
 {
-
   const [ scannedTickets, setScannedTickets ] = useState<ScannedTicket[]>( [] );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ isPending, setIsPending ] = useState( false );
@@ -117,6 +116,11 @@ export default function ScanTicketsPage ()
   const showVisualFeedback = ( type: 'success' | 'error' ) =>
   {
     setFeedbackType( type );
+
+    // Play the corresponding sound
+    const audio = new Audio( type === 'success' ? '/sounds/success-sound.mp3' : '/sounds/error-sound.mp3' );
+    audio.play();
+
     // Hide feedback after 2 seconds
     setTimeout( () =>
     {
