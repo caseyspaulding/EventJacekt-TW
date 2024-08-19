@@ -18,9 +18,9 @@ export async function POST ( req: NextRequest )
     // Update the ticket status in the database
     const updatedTicket = await db
       .update( orgEventTickets )
-      .set( { status: 'checked-in' } )
+      .set( { checkInStatus: true } )
       .where( eq( orgEventTickets.id, ticketId ) )
-      .returning( { id: orgEventTickets.id, status: orgEventTickets.status } )
+      .returning( { id: orgEventTickets.id, checkInStatus: orgEventTickets.checkInStatus } )
       .execute();
 
     if ( !updatedTicket.length )
