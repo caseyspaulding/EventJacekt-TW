@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchTicketInfo } from './action';
 import { SubmitButton } from '@/app/login/submit-button';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import Html5QrcodePlugin from '@/components/QRCodeScanner/Html5QrCodePlugin';
+
 
 type Ticket = {
   id: string;
@@ -20,7 +21,6 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
   const [ ticket, setTicket ] = useState<Ticket | null>( null );
   const [ isPending, setIsPending ] = useState( false );
   const [ errorMessage, setErrorMessage ] = useState<string | null>( null );
-  const qrScannerInitialized = useRef( false );  // Use a ref to track initialization
   const lastProcessedTicketId = useRef<string | null>( null );
 
   useEffect( () =>
@@ -87,32 +87,6 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
     }
   };
 
-  useEffect( () =>
-  {
-    if ( !qrScannerInitialized.current && ticket )
-    {
-      const scanner = new Html5QrcodeScanner(
-        "qr-reader",
-        { fps: 10, qrbox: 250 },
-        false
-      );
-
-      scanner.render(
-        async ( decodedText: string ) =>
-        {
-          console.log( `Scanned QR Code: ${ decodedText }` );
-          await handleCheckIn( decodedText );
-        },
-        ( error: string ) =>
-        {
-          console.warn( `QR Code scan error: ${ error }` );
-        }
-      );
-
-      qrScannerInitialized.current = true;  // Ensure the scanner is only initialized once
-    }
-  }, [ ticket ] );  // This should only run once when the ticket is first loaded
-
   if ( errorMessage )
   {
     return <p className="text-center text-red-600 font-semibold mt-8">{ errorMessage }</p>;
@@ -146,7 +120,15 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
         <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Ticket Name:</span> { ticket?.name }</p>
         <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Status:</span> { ticket?.status }</p>
         <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Check-In Status:</span> { ticket?.checkInStatus }</p>
-        <div id="qr-reader" style={ { width: '100%' } }></div>
+
+        <div id="qr-reader" style={ { width: '100%' } }>
+          <Html5QrcodePlugin
+            fps={ 10 }
+            qrbox={ 250 }
+            disableFlip={ false }
+            qrCodeSuccessCallback={ handleCheckIn }
+          />
+        </div>
 
         <SubmitButton
           onClick={ () => handleCheckIn( ticketId ) }
