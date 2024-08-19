@@ -1,8 +1,8 @@
-'use client';
+'use client'; 
 
 import React, { useState } from 'react';
 import Html5QrcodePlugin from '@/components/QRCodeScanner/Html5QrCodePlugin';
-import { fetchTicketInfo } from './actions'; // Ensure this is the correct path
+import { fetchTicketInfo } from './actions';
 
 type ScannedTicket = {
   ticketId: string;
@@ -36,7 +36,6 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
 
     try
     {
-      // Fetch ticket info from the server
       const ticket = await fetchTicketInfo( ticketId );
 
       if ( !ticket )
@@ -44,7 +43,6 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
         throw new Error( 'Ticket not found' );
       }
 
-      // Update ticket check-in status
       const response = await fetch( '/api/tickets/check-in', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -68,10 +66,9 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
           checkInStatus: true,
           message: 'Ticket successfully checked in.',
         },
-        ...prev.slice( 0, 4 ), // Keep only the last 5 scanned tickets
+        ...prev.slice( 0, 4 ),
       ] );
 
-      // Show success visual feedback
       showVisualFeedback( 'success' );
     } catch ( error )
     {
@@ -89,7 +86,6 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
         ...prev.slice( 0, 4 ),
       ] );
 
-      // Show error visual feedback
       showVisualFeedback( 'error' );
     } finally
     {
@@ -106,7 +102,6 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
   const showVisualFeedback = ( type: 'success' | 'error' ) =>
   {
     setFeedbackType( type );
-    // Hide feedback after 2 seconds
     setTimeout( () =>
     {
       setFeedbackType( null );
@@ -141,15 +136,13 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
           <p className="text-center text-red-600 font-semibold mt-4">{ errorMessage }</p>
         ) }
 
-        {/* Display a summary of the last few scanned tickets */ }
         <div className="mt-6">
           <h2 className="text-lg font-bold mb-2">Scanned Tickets</h2>
           <ul>
             { scannedTickets.map( ( ticket, index ) => (
               <li
                 key={ index }
-                className={ `p-2 ${ ticket.checkInStatus ? 'text-green-600' : 'text-red-600'
-                  }` }
+                className={ `p-2 ${ ticket.checkInStatus ? 'text-green-600' : 'text-red-600' }` }
               >
                 { ticket.message } - { ticket.name ? ticket.name : 'Unknown Ticket' }
               </li>
