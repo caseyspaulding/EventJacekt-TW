@@ -36,7 +36,7 @@ export async function checkInTicket ( ticketId: string )
 {
   const result = await db
     .update( orgEventTickets )
-    .set( { checkInStatus: 'checked_in' } )
+    .set( { checkInStatus: true } )
     .where( eq( orgEventTickets.id, ticketId ) )
     .execute();
 

@@ -365,7 +365,7 @@ export const orgEventTickets = pgTable('org_event_tickets', {
     seatNumber: text('seat_number'), // Seat number or location (if applicable)
     isRefunded: boolean('is_refunded').default(false), // Indicate if ticket was refunded
     refundDate: timestamp('refund_date'), // Date of refund (if applicable)
-    checkInStatus: text('check_in_status').default('not_checked_in'), // e.g., 'checked_in', 'not_checked_in'
+    checkInStatus: boolean('check_in_status').default(false), // e.g., 'checked_in', 'not_checked_in'
     notes: text('notes'), // Additional notes or information
     isVIP: boolean('is_vip').default(false), // Indicates if the ticket grants VIP access
     accessLevel: text('access_level'), // Access level for the event (e.g., general admission, VIP)

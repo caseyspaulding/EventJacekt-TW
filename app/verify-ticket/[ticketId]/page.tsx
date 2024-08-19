@@ -5,14 +5,13 @@ import { fetchTicketInfo } from './action';
 import { SubmitButton } from '@/app/login/submit-button';
 import Html5QrcodePlugin from '@/components/QRCodeScanner/Html5QrCodePlugin';
 
-
 type Ticket = {
   id: string;
   name: string;
   status: string;
   eventName: string;
   purchaseDate: string | null;
-  checkInStatus: string | null;
+  checkInStatus: boolean | null;  // Updated to boolean
 };
 
 export default function VerifyTicketPage ( { params }: { params: { ticketId: string } } )
@@ -47,7 +46,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
   const handleCheckIn = async ( id: string ) =>
   {
     // Prevent multiple check-ins for the same ticket
-    if ( ticket?.checkInStatus === 'checked_in' || lastProcessedTicketId.current === id )
+    if ( ticket?.checkInStatus || lastProcessedTicketId.current === id )
     {
       return;
     }
@@ -67,7 +66,8 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
 
       if ( !response.ok )
       {
-        throw new Error( 'Failed to check in ticket' );
+        const errorData = await response.json();
+        throw new Error( errorData.error || 'Failed to check in ticket' );
       }
 
       const result = await response.json();
@@ -75,7 +75,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
 
       // Update ticket status to 'checked-in'
       setTicket( ( prevTicket ) =>
-        prevTicket ? { ...prevTicket, checkInStatus: 'checked_in' } : prevTicket
+        prevTicket ? { ...prevTicket, checkInStatus: true } : prevTicket
       );
     } catch ( error )
     {
@@ -97,7 +97,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
     return <p className="text-center text-red-600 font-semibold mt-8">Loading ticket details...</p>;
   }
 
-  if ( ticket?.checkInStatus === 'checked_in' )
+  if ( ticket?.checkInStatus )
   {
     return (
       <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
@@ -106,7 +106,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
           <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Event:</span> { ticket.eventName }</p>
           <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Ticket Name:</span> { ticket.name }</p>
           <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Status:</span> { ticket.status }</p>
-          <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Check-In Status:</span> { ticket.checkInStatus }</p>
+          <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Check-In Status:</span> { ticket.checkInStatus ? 'checked_in' : 'not_checked_in' }</p>
         </div>
       </div>
     );
@@ -119,7 +119,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
         <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Event:</span> { ticket?.eventName }</p>
         <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Ticket Name:</span> { ticket?.name }</p>
         <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Status:</span> { ticket?.status }</p>
-        <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Check-In Status:</span> { ticket?.checkInStatus }</p>
+        <p className="text-lg text-gray-700 mb-2"><span className="font-semibold">Check-In Status:</span> { ticket?.checkInStatus ? 'checked_in' : 'not_checked_in' }</p>
 
         <div id="qr-reader" style={ { width: '100%' } }>
           <Html5QrcodePlugin
@@ -133,7 +133,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
         <SubmitButton
           onClick={ () => handleCheckIn( ticketId ) }
           color="blue"
-          disabled={ isPending || ticket?.checkInStatus === 'checked_in' }
+          disabled={ isPending || !!ticket?.checkInStatus }
           className="w-full mt-4"
         >
           { isPending ? 'Checking in...' : 'Check In Ticket' }
