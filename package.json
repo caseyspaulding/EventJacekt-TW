@@ -47,6 +47,7 @@
         "fs": "0.0.1-security",
         "heroicons-react": "^1.4.1",
         "hover.css": "^2.3.2",
+        "html5-qrcode": "^2.3.8",
         "isomorphic-dompurify": "^2.14.0",
         "js-cookie": "^3.0.5",
         "net": "^1.0.2",
