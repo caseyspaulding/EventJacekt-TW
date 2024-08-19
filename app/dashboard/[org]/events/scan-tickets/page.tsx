@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import Html5QrcodePlugin from '@/components/QRCodeScanner/Html5QrCodePlugin';
-import { fetchTicketInfo, checkInTicket } from './actions'; // Ensure this is the correct path
+import { fetchTicketInfo, checkInTicket } from './actions';
+import QrCodeScanner from '@/components/QRCodeScanner/QRScanner';
 
 type ScannedTicket = {
   ticketId: string;
@@ -19,9 +19,21 @@ export default function ScanTicketsPage ()
   const [ isPending, setIsPending ] = useState( false );
   const [ errorMessage, setErrorMessage ] = useState<string | null>( null );
   const [ feedbackType, setFeedbackType ] = useState<'success' | 'error' | null>( null );
+  const [ scannerActive, setScannerActive ] = useState( false );
+  const [ lastScanTime, setLastScanTime ] = useState<number>( 0 );
 
   const handleScan = async ( ticketUrl: string ) =>
   {
+    const now = Date.now();
+
+    // Add a delay of 2 seconds between scans
+    if ( now - lastScanTime < 2000 )
+    {
+      return;
+    }
+
+    setLastScanTime( now );
+
     const ticketId = extractTicketIdFromUrl( ticketUrl );
     if ( !ticketId )
     {
@@ -35,7 +47,6 @@ export default function ScanTicketsPage ()
 
     try
     {
-      // Fetch ticket info from the server
       const ticket = await fetchTicketInfo( ticketId );
 
       if ( !ticket )
@@ -43,10 +54,9 @@ export default function ScanTicketsPage ()
         throw new Error( 'Ticket not found' );
       }
 
-      // Check if the ticket has already been checked in
       if ( ticket.checkInStatus )
       {
-        setScannedTickets( prev => [
+        setScannedTickets( ( prev ) => [
           {
             ticketId: ticket.id,
             eventId: ticket.eventName,
@@ -61,7 +71,6 @@ export default function ScanTicketsPage ()
         return;
       }
 
-      // Update ticket check-in status
       const response = await checkInTicket( ticketId );
 
       if ( !response.success )
@@ -70,7 +79,7 @@ export default function ScanTicketsPage ()
         throw new Error( 'Failed to check in ticket' );
       }
 
-      setScannedTickets( prev => [
+      setScannedTickets( ( prev ) => [
         {
           ticketId: ticket.id,
           eventId: ticket.eventName,
@@ -78,17 +87,16 @@ export default function ScanTicketsPage ()
           checkInStatus: true,
           message: 'Ticket successfully checked in.',
         },
-        ...prev.slice( 0, 4 ), // Keep only the last 5 scanned tickets
+        ...prev.slice( 0, 4 ),
       ] );
 
-      // Show success visual feedback
       showVisualFeedback( 'success' );
     } catch ( error )
     {
       console.error( 'Error during check-in:', error );
       setErrorMessage( 'Failed to check in the ticket. Please try again.' );
 
-      setScannedTickets( prev => [
+      setScannedTickets( ( prev ) => [
         {
           ticketId,
           eventId: '',
@@ -99,7 +107,6 @@ export default function ScanTicketsPage ()
         ...prev.slice( 0, 4 ),
       ] );
 
-      // Show error visual feedback
       showVisualFeedback( 'error' );
     } finally
     {
@@ -117,15 +124,18 @@ export default function ScanTicketsPage ()
   {
     setFeedbackType( type );
 
-    // Play the corresponding sound
     const audio = new Audio( type === 'success' ? '/sounds/success-sound.mp3' : '/sounds/error-sound.mp3' );
     audio.play();
 
-    // Hide feedback after 2 seconds
     setTimeout( () =>
     {
       setFeedbackType( null );
     }, 2000 );
+  };
+
+  const toggleScanner = () =>
+  {
+    setScannerActive( !scannerActive );
   };
 
   return (
@@ -133,13 +143,24 @@ export default function ScanTicketsPage ()
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">Scan Tickets</h1>
 
+        <button
+          onClick={ toggleScanner }
+          className={ `mb-4 px-4 py-2 rounded ${ scannerActive ? 'bg-red-600' : 'bg-green-600' } text-white` }
+        >
+          { scannerActive ? 'Stop Scanner' : 'Start Scanner' }
+        </button>
+
         <div id="qr-reader" style={ { width: '100%' } }>
-          <Html5QrcodePlugin
-            fps={ 10 }
-            qrbox={ 250 }
-            disableFlip={ false }
-            qrCodeSuccessCallback={ handleScan }
-          />
+          { scannerActive && (
+            <QrCodeScanner
+              qrCodeSuccessCallback={ handleScan }
+              onError={ ( err ) =>
+              {
+                console.error( 'Scanner error:', err );
+                setErrorMessage( 'Scanner error. Please try again.' );
+              } }
+            />
+          ) }
         </div>
 
         { feedbackType && (
@@ -156,7 +177,6 @@ export default function ScanTicketsPage ()
           <p className="text-center text-red-600 font-semibold mt-4">{ errorMessage }</p>
         ) }
 
-        {/* Display a summary of the last few scanned tickets */ }
         <div className="mt-6">
           <h2 className="text-lg font-bold mb-2">Scanned Tickets</h2>
           <ul>

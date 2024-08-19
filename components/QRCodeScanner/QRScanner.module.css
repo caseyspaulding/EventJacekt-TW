@@ -1,0 +1,23 @@
+/* QrCodeScanner.module.css */
+
+.qr-scanner-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.qr-scanner-video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.qr-scan-result {
+  margin-top: 12px;
+  color: green;
+}
+
+.qr-scan-error {
+  margin-top: 12px;
+  color: red;
+}
