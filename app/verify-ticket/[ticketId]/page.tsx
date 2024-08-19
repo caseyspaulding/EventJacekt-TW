@@ -45,7 +45,6 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
 
   const handleCheckIn = async ( id: string ) =>
   {
-    // Prevent multiple check-ins for the same ticket
     if ( ticket?.checkInStatus || lastProcessedTicketId.current === id )
     {
       return;
@@ -73,10 +72,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
       const result = await response.json();
       console.log( 'Check-In Result:', result );
 
-      // Update ticket status to 'checked-in'
-      setTicket( ( prevTicket ) =>
-        prevTicket ? { ...prevTicket, checkInStatus: true } : prevTicket
-      );
+      setTicket( ( prevTicket ) => ( prevTicket ? { ...prevTicket, checkInStatus: true } : prevTicket ) );
     } catch ( error )
     {
       console.error( 'Error during check-in:', error );
