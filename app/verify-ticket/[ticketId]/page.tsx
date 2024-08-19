@@ -122,7 +122,22 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
             fps={ 10 }
             qrbox={ 250 }
             disableFlip={ false }
-            qrCodeSuccessCallback={ ( decodedText ) => handleCheckIn( decodedText ) }
+            qrCodeSuccessCallback={ ( decodedText ) =>
+            {
+              // Extract the UUID from the URL
+              const urlSegments = decodedText.split( '/' );
+              const ticketId = urlSegments.pop(); // Extract the last part of the URL, which should be the UUID
+
+              // Validate if ticketId is a valid UUID (optional, but recommended)
+              const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+              if ( uuidRegex.test( ticketId! ) )
+              {
+                handleCheckIn( ticketId! );
+              } else
+              {
+                console.error( 'Invalid UUID extracted from QR code:', ticketId );
+              }
+            } }
           />
         </div>
 
