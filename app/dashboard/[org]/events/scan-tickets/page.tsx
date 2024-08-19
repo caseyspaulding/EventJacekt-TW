@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Html5QrcodePlugin from '@/components/QRCodeScanner/Html5QrCodePlugin';
-
+import { fetchTicketInfo } from './actions'; // Ensure this is the correct path
 
 type ScannedTicket = {
   ticketId: string;
@@ -36,6 +36,15 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
 
     try
     {
+      // Fetch ticket info from the server
+      const ticket = await fetchTicketInfo( ticketId );
+
+      if ( !ticket )
+      {
+        throw new Error( 'Ticket not found' );
+      }
+
+      // Update ticket check-in status
       const response = await fetch( '/api/tickets/check-in', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -55,7 +64,7 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
         {
           ticketId: result.id,
           eventId: result.eventId,
-          name: result.name,
+          name: ticket.name,
           checkInStatus: true,
           message: 'Ticket successfully checked in.',
         },
@@ -121,9 +130,9 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
         { feedbackType && (
           <div className="mt-4 flex justify-center">
             { feedbackType === 'success' ? (
-              <img src="/images/success-checkmark.png" alt="Success" width={ 50 } height={ 50 } />
+              <img src="/images/success-checkmark.png" alt="Success" width={ 500 } height={ 500 } />
             ) : (
-              <img src="/images/error-cross.png" alt="Error" width={ 50 } height={ 50 } />
+              <img src="/images/error-cross.png" alt="Error" width={ 500 } height={ 500 } />
             ) }
           </div>
         ) }
@@ -137,7 +146,11 @@ export default function ScanTicketsPage ( { params }: { params: { orgId: string 
           <h2 className="text-lg font-bold mb-2">Scanned Tickets</h2>
           <ul>
             { scannedTickets.map( ( ticket, index ) => (
-              <li key={ index } className={ `p-2 ${ ticket.checkInStatus ? 'text-green-600' : 'text-red-600' }` }>
+              <li
+                key={ index }
+                className={ `p-2 ${ ticket.checkInStatus ? 'text-green-600' : 'text-red-600'
+                  }` }
+              >
                 { ticket.message } - { ticket.name ? ticket.name : 'Unknown Ticket' }
               </li>
             ) ) }
