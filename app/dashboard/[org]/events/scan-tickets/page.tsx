@@ -124,7 +124,9 @@ export default function ScanTicketsPage ()
   return (
     <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">Scan Tickets</h1>
+        <h1 className="mt-8 text-3xl font-extrabold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">
+          Scan Tickets
+        </h1>
 
         <QrCodeScanner
           qrCodeSuccessCallback={ handleScan }

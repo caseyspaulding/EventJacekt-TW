@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import QrScanner from 'qr-scanner';
-import styles from './QRScanner.module.css';
+
 
 interface QrCodeScannerProps
 {
@@ -153,29 +153,46 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
     fileInputRef.current?.click();
   };
   return (
-    <div className="flex flex-col items-center p-4">
-      <div className="flex flex-col items-center space-y-4 w-full">
-        <select
-          onChange={ handleCameraChange }
-          value={ selectedCamera }
-          className="p-2 border rounded-md w-full sm:w-auto"
-        >
-          { cameraList && cameraList.map( ( camera ) => (
-            <option key={ camera.id } value={ camera.id }>
-              { camera.label }
-            </option>
-          ) ) }
-        </select>
-        <button
-          onClick={ toggleFlash }
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        >
-          Flash: { isFlashOn ? 'On' : 'Off' }
-        </button>
-        <div className="flex flex-col items-center p-4">
+    <div className="flex flex-col items-center p-1">
+      <div className="mt-4 w-full max-w-md relative rounded-2xl overflow-hidden" style={ { paddingBottom: '100%' } }>
+        { !isScanning && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white z-10">
+            <div className="text-center mb-4">
+              <img src="/images/QRCODE.jpg" alt="Scanning Placeholder" className="" />
+              <p>Ready to Scan</p>
+            </div>
+          </div>
+        ) }
+        <video ref={ videoRef } className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"></video>
+        <div className="qr-scanner-overlay">
+          <div className="qr-scan-region"></div>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center space-y-4 mt-6 w-full">
+        <div className="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <select
+            onChange={ handleCameraChange }
+            value={ selectedCamera }
+            className="p-2 border rounded-md w-full sm:w-auto"
+          >
+            { cameraList && cameraList.map( ( camera ) => (
+              <option key={ camera.id } value={ camera.id }>
+                { camera.label }
+              </option>
+            ) ) }
+          </select>
+          <button
+            onClick={ toggleFlash }
+            className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
+            Flash: { isFlashOn ? 'On' : 'Off' }
+          </button>
+        </div>
+        <div className="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
           <button
             onClick={ handleButtonClick }
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
             Upload QR Code Image
           </button>
@@ -186,27 +203,12 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
             accept="image/*"
             className="hidden"
           />
-        </div>
-        <button
-          onClick={ handleToggleScan }
-          className={ `px-4 py-2 rounded-md ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white` }
-        >
-          { isScanning ? 'Stop Scanning' : 'Start Scanning' }
-        </button>
-      </div>
-      <div className="mt-6 w-full max-w-md relative rounded-2xl overflow-hidden" style={ { paddingBottom: '100%' } }>
-        { !isScanning && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white z-10">
-            <div className="text-center mb-4">
-
-              <img src="/images/QRCODE.jpg" alt="Scanning Placeholder" className="" />
-              <p>Ready to Scan</p>
-            </div>
-          </div>
-        ) }
-        <video ref={ videoRef } className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"></video>
-        <div className="qr-scanner-overlay">
-          <div className="qr-scan-region"></div>
+          <button
+            onClick={ handleToggleScan }
+            className={ `px-4 py-2 w-full sm:w-auto rounded-md ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white` }
+          >
+            { isScanning ? 'Stop Scanning' : 'Start Scanning' }
+          </button>
         </div>
       </div>
     </div>
