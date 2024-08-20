@@ -45,3 +45,26 @@
   padding: 8px;
   font-size: 16px;
 }
+.bg-cover {
+  background-size: cover;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+.bg-slate-100 {
+  background-color: #f7fafc;
+}
+
+.relative {
+  position: relative;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.rounded-2xl {
+  border-radius: 1rem; /* Or use the same value as the rounded corners of your video */
+}

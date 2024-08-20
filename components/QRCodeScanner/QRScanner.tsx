@@ -13,11 +13,14 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
 {
   const videoRef = useRef<HTMLVideoElement>( null );
   const qrScannerRef = useRef<QrScanner | null>( null );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ scanResult, setScanResult ] = useState<string | null>( null );
   const [ cameraList, setCameraList ] = useState<QrScanner.Camera[]>();
   const [ selectedCamera, setSelectedCamera ] = useState<string>( 'environment' );
   const [ isFlashOn, setIsFlashOn ] = useState<boolean>( false );
   const [ isScanning, setIsScanning ] = useState<boolean>( false );
+  const fileInputRef = useRef<HTMLInputElement>( null );
+
 
   useEffect( () =>
   {
@@ -116,7 +119,7 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
         const result = await QrScanner.scanImage( file );
         setScanResult( result );
         qrCodeSuccessCallback( result );
-        console.log( 'QR Code detected:', scanResult );
+        console.log( 'QR Code detected:', result );
       } catch ( e )
       {
         console.error( 'Failed to scan the image:', e );
@@ -125,6 +128,10 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
     }
   };
 
+  const handleButtonClick = () =>
+  {
+    fileInputRef.current?.click();
+  };
   return (
     <div className="flex flex-col items-center p-4">
       <div className="flex flex-col items-center space-y-4 w-full">
@@ -145,12 +152,21 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
         >
           Flash: { isFlashOn ? 'On' : 'Off' }
         </button>
-        <input
-          type="file"
-          onChange={ handleFileScan }
-          accept="image/*"
-          className="p-2 border rounded-md w-full sm:w-auto"
-        />
+        <div className="flex flex-col items-center p-4">
+          <button
+            onClick={ handleButtonClick }
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            Upload QR Code Image
+          </button>
+          <input
+            type="file"
+            ref={ fileInputRef }
+            onChange={ handleFileScan }
+            accept="image/*"
+            className="hidden"
+          />
+        </div>
         <button
           onClick={ handleToggleScan }
           className={ `px-4 py-2 rounded-md ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white` }
@@ -158,8 +174,17 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
           { isScanning ? 'Stop Scanning' : 'Start Scanning' }
         </button>
       </div>
-      <div className="mt-6 bg-[url('/path-to-your-image.jpg')] bg-cover bg-center  bg-slate-100 w-full rounded-2xl max-w-md shadow-2xl">
-        <video ref={ videoRef } className="w-full rounded-2xl shadow-2xl"></video>
+      <div className="mt-6 w-full max-w-md relative rounded-2xl overflow-hidden" style={ { paddingBottom: '100%' } }>
+        { !isScanning && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white z-10">
+            <div className="text-center mb-4">
+
+              <img src="/images/QRCODE.jpg" alt="Scanning Placeholder" className="" />
+              <p>Ready to Scan</p>
+            </div>
+          </div>
+        ) }
+        <video ref={ videoRef } className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"></video>
       </div>
     </div>
   );
