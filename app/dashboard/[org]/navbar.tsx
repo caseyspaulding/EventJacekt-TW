@@ -44,14 +44,14 @@ export function DashboardNavbar() {
     return (
         <Navbar
             fluid
-            className="fixed top-0 z-30 w-full border-b border-gray-200 bg-white p-0 dark:border-gray-700 dark:bg-gray-800 sm:p-0"
+            className="fixed top-0 z-30 w-full border-b border-blue-300 shadow-xl bg-white p-0 dark:border-blue-700 dark:bg-blue-800 sm:p-0"
         >
             <div className="w-full p-3 pr-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
                         <button
                             onClick={handleToggleSidebar}
-                            className="mr-3 cursor-pointer rounded p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            className="mr-3 cursor-pointer rounded p-2 text-blue-600 hover:bg-blue-100 hover:text-blue-900 dark:text-blue-400 dark:hover:bg-blue-700 dark:hover:text-white"
                         >
                             <span className="sr-only">Toggle sidebar</span>
                             {/* mobile */}
@@ -81,16 +81,16 @@ export function DashboardNavbar() {
                         </Navbar.Brand>
                     </div>
                     <div className="flex items-center lg:gap-3">
-                        <div className="flex items-center">
+                        <div className="flex items-center text-blue-400">
                             <AppDrawerDropdown />
                             <div className="hidden dark:block">
                                 <Tooltip content="Toggle light mode">
-                                    <DarkThemeToggle />
+                                    <DarkThemeToggle className='text-blue-500' />
                                 </Tooltip>
                             </div>
                             <div className="dark:hidden">
                                 <Tooltip content="Toggle dark mode">
-                                    <DarkThemeToggle />
+                                    <DarkThemeToggle className='text-blue-500' />
                                 </Tooltip>
                             </div>
                             <div className="ml-3 flex items-center">
@@ -111,83 +111,83 @@ function AppDrawerDropdown() {
             arrowIcon={false}
             inline
             label={
-                <span className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                <span className="rounded-lg p-2 text-blue-500 hover:bg-blue-100 hover:text-blue-900 dark:text-blue-400 dark:hover:bg-blue-700 dark:hover:text-white">
                     <span className="sr-only">Apps</span>
                     <SquaresPlusIcon className="h-6 w-6" />
                 </span>
             }
             theme={{ content: 'py-0' }}
         >
-            <div className="block border-b bg-gray-50 px-4 py-2 text-center text-base font-medium text-gray-700 dark:border-b-gray-600 dark:bg-gray-700 dark:text-gray-400">
+            <div className="block border-b bg-blue-50 px-4 py-2 text-center text-base font-medium text-blue-700 dark:border-b-blue-600 dark:bg-blue-700 dark:text-blue-400">
                 Apps
             </div>
             <div className="grid grid-cols-3 gap-4 p-4">
                 <Link
                     href="#"
-                    className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="block rounded-lg p-4 text-center hover:bg-blue-100 dark:hover:bg-blue-600"
                 >
-                    <PresentationChartBarIcon className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">Sales</div>
+                    <PresentationChartBarIcon className="mx-auto mb-1 h-7 w-7 text-blue-500 dark:text-blue-400" />
+                    <div className="text-sm font-medium text-blue-900 dark:text-white">Sales</div>
                 </Link>
                 <Link
                     href="#"
-                    className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="block rounded-lg p-4 text-center hover:bg-blue-100 dark:hover:bg-blue-600"
                 >
-                    <UsersIcon className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">Users</div>
+                    <UsersIcon className="mx-auto mb-1 h-7 w-7 text-blue-500 dark:text-blue-400" />
+                    <div className="text-sm font-medium text-blue-900 dark:text-white">Users</div>
                 </Link>
                 <Link
                     href="/"
-                    className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="block rounded-lg p-4 text-center hover:bg-blue-100 dark:hover:bg-blue-600"
                 >
-                    <EnvelopeOpenIcon className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">Inbox</div>
+                    <EnvelopeOpenIcon className="mx-auto mb-1 h-7 w-7 text-blue-500 dark:text-blue-400" />
+                    <div className="text-sm font-medium text-blue-900 dark:text-white">Inbox</div>
                 </Link>
                 <Link
                     href="#"
-                    className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="block rounded-lg p-4 text-center hover:bg-blue-100 dark:hover:bg-blue-600"
                 >
-                    <UserCircleIcon className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">Profile</div>
+                    <UserCircleIcon className="mx-auto mb-1 h-7 w-7 text-blue-500 dark:text-blue-400" />
+                    <div className="text-sm font-medium text-blue-900 dark:text-white">Profile</div>
                 </Link>
                 <Link
                     href="#"
-                    className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="block rounded-lg p-4 text-center hover:bg-blue-100 dark:hover:bg-blue-600"
                 >
-                    <CogIcon className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                    <CogIcon className="mx-auto mb-1 h-7 w-7 text-blue-500 dark:text-blue-400" />
+                    <div className="text-sm font-medium text-blue-900 dark:text-white">
                         Settings
                     </div>
                 </Link>
                 <Link
                     href="#"
-                    className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="block rounded-lg p-4 text-center hover:bg-blue-100 dark:hover:bg-blue-600"
                 >
-                    <ArchiveBoxIcon className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                    <ArchiveBoxIcon className="mx-auto mb-1 h-7 w-7 text-blue-500 dark:text-blue-400" />
+                    <div className="text-sm font-medium text-blue-900 dark:text-white">
                         Products
                     </div>
                 </Link>
                 <Link
                     href="#"
-                    className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="block rounded-lg p-4 text-center hover:bg-blue-100 dark:hover:bg-blue-600"
                 >
-                    <CurrencyDollarIcon className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">Pricing</div>
+                    <CurrencyDollarIcon className="mx-auto mb-1 h-7 w-7 text-blue-500 dark:text-blue-400" />
+                    <div className="text-sm font-medium text-blue-900 dark:text-white">Pricing</div>
                 </Link>
                 <Link
                     href="#"
-                    className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="block rounded-lg p-4 text-center hover:bg-blue-100 dark:hover:bg-blue-600"
                 >
-                    <TicketIcon className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">Billing</div>
+                    <TicketIcon className="mx-auto mb-1 h-7 w-7 text-blue-500 dark:text-blue-400" />
+                    <div className="text-sm font-medium text-blue-900 dark:text-white">Billing</div>
                 </Link>
                 <Link
                     href="#"
-                    className="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="block rounded-lg p-4 text-center hover:bg-blue-100 dark:hover:bg-blue-600"
                 >
-                    <ArrowLeftIcon className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400" />
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">Logout</div>
+                    <ArrowLeftIcon className="mx-auto mb-1 h-7 w-7 text-blue-500 dark:text-blue-400" />
+                    <div className="text-sm font-medium text-blue-900 dark:text-white">Logout</div>
                 </Link>
             </div>
         </Dropdown>

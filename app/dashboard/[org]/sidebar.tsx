@@ -106,13 +106,13 @@ function DesktopSidebar({ orgName, pathname }: DashboardSidebarProps) {
             aria-label="Sidebar"
             collapsed={isCollapsed}
             className={twMerge(
-                'fixed inset-y-0 left-0 z-20 flex h-full shrink-0 flex-col border-r border-gray-200 pt-16 duration-75 dark:border-gray-700 lg:flex',
+                'fixed inset-y-0 left-0 z-20 flex h-full shrink-0 flex-col border-r   border-blue-200 pt-16 duration-75 dark:border-blue-700 lg:flex',
                 isCollapsed && 'hidden w-16'
             )}
             id="sidebar"
         >
-            <div className="flex h-full flex-col justify-between">
-                <div className="py-2">
+            <div className="flex h-full flex-col justify-between  ">
+                <div className="py-2  ">
                     <Sidebar.Items>
                         <Sidebar.ItemGroup className="mt-0 border-t-0 pb-1 pt-0">
                             {pages.map((item) => (
@@ -140,9 +140,9 @@ function MobileSidebar({ orgName, pathname }: DashboardSidebarProps) {
     return (
         <>
             <Sidebar
-                aria-label="Sidebar with multi-level dropdown example"
+                aria-label="Sidebar with multi-level dropdown"
                 className={twMerge(
-                    'fixed inset-y-0 left-0 z-20 hidden h-full shrink-0 flex-col border-r border-gray-200 pt-16 dark:border-gray-700 lg:flex',
+                    'fixed inset-y-0 left-0 z-20 hidden h-full shrink-0 flex-col border-r  border-blue-200 pt-16 dark:border-blue-700 lg:flex',
                     isOpen && 'flex'
                 )}
                 id="sidebar"
@@ -168,7 +168,7 @@ function MobileSidebar({ orgName, pathname }: DashboardSidebarProps) {
             <div
                 onClick={close}
                 aria-hidden="true"
-                className="fixed inset-0 z-10 h-full w-full bg-gray-900/50 pt-16 dark:bg-gray-900/90"
+                className="fixed inset-0 z-10 h-full w-full bg-blue-900/50 pt-16 dark:bg-blue-900/90"
             />
         </>
     );
@@ -203,7 +203,7 @@ function SidebarItem({ href, target, icon, label, items, badge, pathname }: Side
                         target={item.target}
                         className={twMerge(
                             'justify-center [&>*]:font-normal',
-                            pathname === item.href && 'bg-gray-100 dark:bg-gray-700'
+                            pathname === item.href && 'bg-blue-700 text-blue-600 dark:bg-blue-700'
                         )}
                         onClick={handleClick} // Close the sidebar when an item is clicked
                     >
@@ -224,7 +224,7 @@ function SidebarItem({ href, target, icon, label, items, badge, pathname }: Side
             target={target}
             icon={icon}
             label={badge}
-            className={twMerge(pathname === finalHref && 'bg-gray-100 dark:bg-gray-700')}
+            className={twMerge(pathname === finalHref && 'bg-blue-200 dark:bg-blue-700')}
             onClick={handleClick} // Close the sidebar when an item is clicked
         >
             {label}
@@ -239,10 +239,10 @@ function BottomMenu({ isCollapsed }: { isCollapsed: boolean }) {
             <Tooltip content="Settings page">
                 <Link
                     href="/users/settings"
-                    className="inline-flex cursor-pointer justify-center rounded p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-white"
+                    className="inline-flex cursor-pointer justify-center rounded p-2 text-gray-800 hover:bg-blue-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                     <span className="sr-only">Settings page</span>
-                    <CogIcon className="h-6 w-6" />
+                    <CogIcon className="h-6  w-6" />
                 </Link>
             </Tooltip>
             <div></div>
@@ -252,7 +252,7 @@ function BottomMenu({ isCollapsed }: { isCollapsed: boolean }) {
 
 const pages: SidebarItem[] = [
     { href: '/', icon: Dashboard, label: 'Dashboard' },
-    { href: '/kanban', icon: TableCellsIcon, label: 'Kanban' },
+    //{ href: '/kanban', icon: TableCellsIcon, label: 'Kanban' },
     //{ href: '/events/new', icon: TableCellsIcon, label: 'Create Event' },
     //{ href: '/mailing/inbox', icon: HiInboxIn, label: 'Inbox', badge: '3' },
 
@@ -267,15 +267,15 @@ const pages: SidebarItem[] = [
            
         ]
     },
-    {
-        icon: TicketIcon,
-        label: 'Tickets',
-        items: [
-            { href: '/e-commerce/products', label: 'Tickets' },
-            { href: '/e-commerce/billing', label: 'Billing' },
-            { href: '/e-commerce/invoice', label: 'Invoice' }
-        ]
-    },
+    //{
+    //    icon: TicketIcon,
+    //    label: 'Tickets',
+    //    items: [
+    //        { href: '/e-commerce/products', label: 'Tickets' },
+    //        { href: '/e-commerce/billing', label: 'Billing' },
+    //        { href: '/e-commerce/invoice', label: 'Invoice' }
+    //    ]
+    //},
     {
         icon: BanknotesIcon,
         label: 'Banking',
@@ -286,7 +286,7 @@ const pages: SidebarItem[] = [
         ]
     },
     {
-        icon: UserGroupIcon,
+        icon: UserGroupIcon ,  
         label: 'Users',
         items: [
             { href: '/users/list', label: 'Users list' },
