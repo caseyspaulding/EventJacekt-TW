@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import QrScanner from 'qr-scanner';
+import styles from './QRScanner.module.css';
 
 interface QrCodeScannerProps
 {
@@ -27,11 +28,19 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
     if ( !videoRef.current ) return;
 
     const qrScanner = new QrScanner(
+
       videoRef.current,
       ( result ) =>
       {
         setScanResult( result.data );
+
         qrCodeSuccessCallback( result.data );
+        qrScanner.pause();
+        setTimeout( () =>
+        {
+          qrScanner.start();
+        }
+          , 1000 );
         console.log( 'QR Code detected:', result );
       },
       {
@@ -59,10 +68,21 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
         qrScanner.setCamera( cameras[ 0 ].id );  // Set the first camera as default
       }
     } );
+    // Add an event listener for page unload to clean up
+    const handleBeforeUnload = () =>
+    {
+      if ( qrScannerRef.current )
+      {
+        qrScannerRef.current.destroy();
+        qrScannerRef.current = null;
+      }
+    };
+    window.addEventListener( 'beforeunload', handleBeforeUnload );
 
     return () =>
     {
-      qrScanner.stop();
+      // Remove the event listener when the component is unmounted
+      window.removeEventListener( 'beforeunload', handleBeforeUnload );
     };
   }, [ qrCodeSuccessCallback, onError ] );
 
@@ -185,6 +205,9 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
           </div>
         ) }
         <video ref={ videoRef } className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"></video>
+        <div className="qr-scanner-overlay">
+          <div className="qr-scan-region"></div>
+        </div>
       </div>
     </div>
   );

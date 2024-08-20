@@ -68,3 +68,15 @@
 .rounded-2xl {
   border-radius: 1rem; /* Or use the same value as the rounded corners of your video */
 }
+
+/* Style for the scanning region outline */
+.scan-region-highlight {
+  border: 4px dashed #4CAF50; /* Custom border style */
+  border-radius: 12px; /* Rounded corners */
+}
+
+/* Optional: Style for the SVG overlay */
+.scan-region-highlight-svg {
+  stroke: #4CAF50; /* Stroke color */
+  stroke-width: 3; /* Stroke width */
+}

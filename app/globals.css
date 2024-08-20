@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+.qr-scan-region {
+  position: absolute;
+  width: 222.667px; /* Match the size of the scan region */
+  height: 222.667px;
+  top: 55.6667px; /* Match the position of the scan region */
+  left: 55.6667px;
+  background: transparent; /* Keep the scan region transparent */
+  border: 1px dashed #0053df; /* Dashed border */
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6); /* Darken everything outside the scan region */
+  border-radius: 12px; /* Round the corners */
+}
+
+.scan-region-highlight-svg {
+  stroke: #0053df !important; /* Change stroke color to blue */
+}
+
+/* Custom styles for the code outline highlight */
+
 /* chart styles */
 .apexcharts-tooltip {
     @apply rounded-lg border-0 bg-white text-gray-500 shadow-lg dark:bg-gray-700 dark:text-gray-400 !important;
