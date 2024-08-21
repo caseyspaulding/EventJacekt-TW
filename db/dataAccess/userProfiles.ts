@@ -74,35 +74,35 @@ export async function getFullUserProfile(userId: string) {
     };
 }
 
-export async function updateUserStripeConnect(
-    userId: string,
-    stripeData: {
-        stripeConnectedAccountId: string;
-        stripeAccountType: string;
-        stripeAccountStatus: string;
-        stripeConnectLinked: boolean;
-    }
-) {
-    try {
-        const result = await db
-            .update(userProfiles)
-            .set({
-                stripeConnectedAccountId: stripeData.stripeConnectedAccountId,
-                stripeAccountType: stripeData.stripeAccountType,
-                stripeAccountStatus: stripeData.stripeAccountStatus,
-                stripeConnectLinked: stripeData.stripeConnectLinked,
-                updatedAt: new Date()
-            })
-            .where(eq(userProfiles.userId, userId))
-            .returning();
+//export async function updateUserStripeConnect(
+//    userId: string,
+//    stripeData: {
+//        stripeConnectedAccountId: string;
+//        stripeAccountType: string;
+//        stripeAccountStatus: string;
+//        stripeConnectLinked: boolean;
+//    }
+//) {
+//    try {
+//        const result = await db
+//            .update(userProfiles)
+//            .set({
+              
+//                stripeAccountType: stripeData.stripeAccountType,
+//                stripeAccountStatus: stripeData.stripeAccountStatus,
+//                stripeConnectLinked: stripeData.stripeConnectLinked,
+//                updatedAt: new Date()
+//            })
+//            .where(eq(userProfiles.userId, userId))
+//            .returning();
 
-        if (result.length === 0) {
-            throw new Error('User profile not found');
-        }
+//        if (result.length === 0) {
+//            throw new Error('User profile not found');
+//        }
 
-        return result[0];
-    } catch (error) {
-        console.error('Error updating user Stripe Connect information:', error);
-        throw new Error('Failed to update user Stripe Connect information');
-    }
-}
+//        return result[0];
+//    } catch (error) {
+//        console.error('Error updating user Stripe Connect information:', error);
+//        throw new Error('Failed to update user Stripe Connect information');
+//    }
+//}

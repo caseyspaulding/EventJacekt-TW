@@ -6,31 +6,31 @@ import { stripe } from '@/utils/stripe';
 import { redirect } from 'next/navigation';
 import { fetchUserProfile } from '@/app/actions/fetchUserProfile';
 
-import { getUserProfile, updateUserStripeConnect } from '@/db/dataAccess/userProfiles';
+import { getUserProfile } from '@/db/dataAccess/userProfiles';
 
-export async function updateStripeConnectStatus(userId: string) {
-    try {
-        const userProfile = await getUserProfile(userId);
-        if (!userProfile.stripeConnectedAccountId) {
-            throw new Error('User does not have a Stripe Connect account');
-        }
+//export async function updateStripeConnectStatus(userId: string) {
+//    try {
+//        const userProfile = await getUserProfile(userId);
+//        if (!userProfile.stripeConnectedAccountId) {
+//            throw new Error('User does not have a Stripe Connect account');
+//        }
 
-        const account = await stripe.accounts.retrieve(userProfile.stripeConnectedAccountId);
+//        const account = await stripe.accounts.retrieve(userProfile.stripeConnectedAccountId);
 
-        await updateUserStripeConnect(userId, {
-            stripeConnectedAccountId: account.id,
-            stripeAccountType: account.type,
-            stripeAccountStatus: account.details_submitted ? 'active' : 'pending',
+//        await updateUserStripeConnect(userId, {
+//            stripeConnectedAccountId: account.id,
+//            stripeAccountType: account.type,
+//            stripeAccountStatus: account.details_submitted ? 'active' : 'pending',
 
-            stripeConnectLinked: true
-        });
+//            stripeConnectLinked: true
+//        });
 
-        return { success: true, status: account.details_submitted ? 'active' : 'pending' };
-    } catch (error) {
-        console.error('Error updating Stripe Connect status:', error);
-        return { success: false, error: 'Failed to update Stripe Connect status' };
-    }
-}
+//        return { success: true, status: account.details_submitted ? 'active' : 'pending' };
+//    } catch (error) {
+//        console.error('Error updating Stripe Connect status:', error);
+//        return { success: false, error: 'Failed to update Stripe Connect status' };
+//    }
+//}
 
 export async function initiateStripeConnect(userId: string) {
     try {
@@ -50,14 +50,7 @@ export async function initiateStripeConnect(userId: string) {
         });
 
         // Update user profile with Stripe Connect information
-        await updateUserStripeConnect(userId, {
-            stripeConnectedAccountId: account.id,
-            stripeAccountType: 'express',
-            stripeAccountStatus: 'pending',
-
-            stripeConnectLinked: true
-        });
-
+       
         return { success: true, url: accountLinks.url };
     } catch (error) {
         console.error('Error creating Stripe Connect account:', error);
@@ -131,25 +124,25 @@ export async function createStripeAccountLink(account: string, org: string, orig
     }
 }
 
-export async function CreateStripeAccountLink2() {
-    const user = await fetchUserProfile();
+//export async function CreateStripeAccountLink2() {
+//    const user = await fetchUserProfile();
 
-    if (!user) {
-        throw new Error();
-    }
+//    if (!user) {
+//        throw new Error();
+//    }
 
-    const accountLink = await stripe.accountLinks.create({
-        account: user.stripeCustomerId as string,
-        refresh_url:
-            process.env.NODE_ENV === 'development'
-                ? `http://localhost:3000/billing`
-                : `https://eventjacket.com/billing`,
-        return_url:
-            process.env.NODE_ENV === 'development'
-                ? `http://localhost:3000/return/${user?.stripeConnectedAccountId}`
-                : `https://eventjacket.com/return/${user?.stripeConnectedAccountId}`,
-        type: 'account_onboarding'
-    });
+//    const accountLink = await stripe.accountLinks.create({
+//        account: user.stripeCustomerId as string,
+//        refresh_url:
+//            process.env.NODE_ENV === 'development'
+//                ? `http://localhost:3000/billing`
+//                : `https://eventjacket.com/billing`,
+//        return_url:
+//            process.env.NODE_ENV === 'development'
+//                ? `http://localhost:3000/return/${user?.stripeConnectedAccountId}`
+//                : `https://eventjacket.com/return/${user?.stripeConnectedAccountId}`,
+//        type: 'account_onboarding'
+//    });
 
-    return redirect(accountLink.url);
-}
+//    return redirect(accountLink.url);
+//}
