@@ -187,7 +187,6 @@ CREATE TABLE IF NOT EXISTS "guilds" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "org_customers" (
 	"id" uuid PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
-	"org_payment_id" uuid NOT NULL,
 	"org_id" uuid NOT NULL,
 	"name" text NOT NULL,
 	"email" text NOT NULL,
@@ -233,18 +232,39 @@ CREATE TABLE IF NOT EXISTS "org_event_tickets" (
 	"ticket_type_id" uuid NOT NULL,
 	"name" text NOT NULL,
 	"price" numeric(10, 2) NOT NULL,
+	"currency" text NOT NULL,
 	"status" text DEFAULT 'available' NOT NULL,
-	"valid_from" date NOT NULL,
-	"valid_until" date NOT NULL,
+	"valid_from" date,
+	"valid_until" date,
 	"barcode" text,
+	"qr_code" text,
 	"purchase_date" timestamp,
 	"sales_channel" text,
 	"promotion_code" text,
+	"promotion_name" text,
+	"discount_amount" numeric(10, 2),
+	"final_price" numeric(10, 2),
 	"seat_number" text,
 	"is_refunded" boolean DEFAULT false,
 	"refund_date" timestamp,
-	"check_in_status" text DEFAULT 'not_checked_in',
+	"check_in_status" boolean DEFAULT false,
 	"notes" text,
+	"is_vip" boolean DEFAULT false,
+	"access_level" text,
+	"transferred_to_user_id" uuid,
+	"transfer_date" timestamp,
+	"is_transferred" boolean DEFAULT false,
+	"loyalty_points_earned" numeric(10, 2),
+	"loyalty_points_redeemed" numeric(10, 2),
+	"is_digital_only" boolean DEFAULT true,
+	"physical_ticket_status" text,
+	"insurance_provider" text,
+	"insurance_policy_number" text,
+	"is_insured" boolean DEFAULT false,
+	"exchange_rate" numeric(15, 6),
+	"permissions" jsonb,
+	"sales_channel_details" jsonb,
+	"stripe_session_id" text,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now(),
 	CONSTRAINT "org_event_tickets_barcode_unique" UNIQUE("barcode")
@@ -467,7 +487,7 @@ CREATE TABLE IF NOT EXISTS "organizations" (
 	"status" text DEFAULT 'active' NOT NULL,
 	"stripe_account_id" varchar,
 	"stripe_connect_linked" boolean,
-	"stripe_account_created" date,
+	"stripe_account_created" timestamp,
 	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP,
 	"metadata" jsonb,
 	"created_at" timestamp DEFAULT now() NOT NULL,
@@ -553,6 +573,22 @@ CREATE TABLE IF NOT EXISTS "ticket_analytics" (
 	"purchases" integer DEFAULT 0,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "ticket_buyer_profiles" (
+	"id" uuid PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
+	"user_id" uuid NOT NULL,
+	"profile_image_url" text,
+	"contact_number" text,
+	"bio" text,
+	"social_links" jsonb,
+	"is_active" boolean DEFAULT true,
+	"last_login" timestamp,
+	"preferences" jsonb,
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now(),
+	"stripe_customer_id" text,
+	"stripe_default_currency" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ticket_pages" (
@@ -751,12 +787,6 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "guilds" ADD CONSTRAINT "guilds_event_id_events_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."events"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "org_customers" ADD CONSTRAINT "org_customers_org_payment_id_org_payments_id_fk" FOREIGN KEY ("org_payment_id") REFERENCES "public"."org_payments"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

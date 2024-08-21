@@ -81,7 +81,8 @@
         "tabler-icons-react": "^1.56.0",
         "tailwind-merge": "^2.5.2",
         "tinymce": "^7.3.0",
-        "tls": "^0.0.1"
+        "tls": "^0.0.1",
+        "vercel": "^37.0.0"
     },
     "devDependencies": {
         "@changesets/changelog-github": "^0.5.0",

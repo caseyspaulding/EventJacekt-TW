@@ -1,1 +1,0 @@
-ALTER TABLE "organizations" ALTER COLUMN "stripe_account_created" SET DATA TYPE timestamp;

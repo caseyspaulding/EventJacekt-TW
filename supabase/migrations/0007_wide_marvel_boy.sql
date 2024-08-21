@@ -1,1 +1,0 @@
-ALTER TABLE "org_event_tickets" ADD COLUMN "stripe_session_id" text;
