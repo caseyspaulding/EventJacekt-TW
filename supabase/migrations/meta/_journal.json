@@ -15,6 +15,13 @@
       "when": 1724275975008,
       "tag": "0001_pink_grim_reaper",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1724276184761,
+      "tag": "0002_great_quasar",
+      "breakpoints": true
     }
   ]
 }

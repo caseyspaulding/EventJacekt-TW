@@ -40,7 +40,7 @@ export const organizations = pgTable('organizations', {
     isVerified: boolean('is_verified').default(false), // Flag for verified organizations
     subscriptionStatus: text('subscription_status'), // e.g., 'active', 'expired', 'trial'
     lastActivity: timestamp('last_activity'),
-    status: text('status').default('active').notNull(),
+    status: text('status').default('active'),
     stripeAccountId: varchar('stripe_account_id'),
     stripeConnectLinked: boolean('stripe_connect_linked'),
     stripeAccountCreated: timestamp('stripe_account_created'),
