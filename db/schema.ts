@@ -1,4 +1,4 @@
-import { stripe } from '@/utils/stripe';
+
 import { sql } from 'drizzle-orm';
 import {
     pgTable,
@@ -10,8 +10,7 @@ import {
     varchar,
     integer,
     boolean,
-    PgColumn,
-    PgTableWithColumns,
+    
     date,
     jsonb
 } from 'drizzle-orm/pg-core';
@@ -90,21 +89,7 @@ export const userProfiles = pgTable('user_profiles', {
     department: text('department'), // Department within the organization
     createdAt: timestamp('created_at').default(sql`now()`),
     updatedAt: timestamp('updated_at').default(sql`now()`),
-    stripeConnectedAccountId: text('connected_account_id'), // Stripe Connect account ID
-    stripeCustomerId: text('stripe_customer_id'), // Stripe Customer ID
-    stripeAccountType: text('stripe_account_type'), // e.g., 'express', 'standard', 'custom'
-    stripeAccountStatus: text('stripe_account_status'), // e.g., 'active', 'pending', 'restricted'
-    stripeAccountCountry: text('stripe_account_country'), // e.g., 'US', 'CA', 'GB'
-    stripeAccountCreated: timestamp('stripe_account_created'), // Date when the Stripe account was created
-    stripeSubscriptionId: text('stripe_subscription_id'), // Stripe Subscription ID
-    stripeLastPayoutDate: timestamp('stripe_last_payout_date'), // Date of the last payout
-    stripeAccountBalance: numeric('stripe_account_balance', { precision: 15, scale: 2 }), // Current balance in the Stripe account
-    stripeVerificationDueDate: timestamp('stripe_verification_due_date'), // Due date for Stripe verification
-    stripeTaxInformation: jsonb('stripe_tax_information'), // JSON field for tax-related information
-    stripePayoutMethod: text('stripe_payout_method'), // e.g., 'bank_transfer', 'debit_card'
-    stripeDefaultCurrency: text('stripe_default_currency'), // e.g., 'USD', 'EUR'
-
-    stripeConnectLinked: boolean('stripe_connect_linked').default(false) // Indicates if the Stripe account is linked
+   
 });
 
 // Ticket Buyer Profiles Table
