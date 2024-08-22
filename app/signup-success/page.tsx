@@ -8,16 +8,8 @@ export default function SignUpSuccess() {
     const { width, height } = useWindowSize();
 
     return (
-        <div
-            style={{
-                position: 'relative',
-                minHeight: '100vh',
-                backgroundImage: "url('/images/happypeople.webp')",
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
-            }}
-        >
+
+        <div className="bg-gradient-to-tr from-cyan-400 via-blue-500 to-sky-400">
             {width && height && (
                 <Confetti
                     width={width}
@@ -35,12 +27,12 @@ export default function SignUpSuccess() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: 'rgba(255, 255, 255, 0.7)' // Optional: adds a semi-transparent white overlay
+                  
                 }}
             >
                 <div className="mx-auto max-w-sm">
                     <div className="rounded-lg bg-white p-6 shadow-lg">
-                        <h1 className="mb-4 text-center text-4xl font-bold">Sign Up Successful!</h1>
+                        <h1 className="mb-4 text-center text-blue-700 text-4xl font-bold">Sign Up Successful!</h1>
                         <p className="mb-4 text-center text-gray-600">
                             Check your email for a verification link to activate your account.
                         </p>
@@ -53,5 +45,7 @@ export default function SignUpSuccess() {
                 </div>
             </div>
         </div>
+  
+        
     );
 }
