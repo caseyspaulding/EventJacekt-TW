@@ -1,11 +1,8 @@
-import { Flowbite } from 'flowbite-react';
-
 import { Inter } from 'next/font/google';
 import type { PropsWithChildren } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { customTheme } from './theme';
-import { Toaster } from 'react-hot-toast';
 import './globals.css';
+import ClientProviders from './ClientProviders';
 
 export const metadata = {
     title: 'EventJacket - Event Management Platform for Non-Profits',
@@ -15,9 +12,11 @@ export const metadata = {
             'EventJacket is your all-in-one event management solution, offering tools to create, manage, and sell tickets for events with ease. Perfect for organizers of conferences, festivals, and more.'
     }
 };
-const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
-export default function RootLayout({ children }: PropsWithChildren) {
+const inter = Inter( { subsets: [ 'latin' ], display: 'swap' } );
+
+export default function RootLayout ( { children }: PropsWithChildren )
+{
     return (
         <html lang="en">
             <head>
@@ -29,21 +28,23 @@ export default function RootLayout({ children }: PropsWithChildren) {
                     rel="stylesheet"
                     type="text/css"
                 />
-                {/* Inline script to set theme */}
+                {/* Inline script to set theme */ }
                 <script
-                    dangerouslySetInnerHTML={{
+                    dangerouslySetInnerHTML={ {
                         __html: `
                             (function() {
                                 const theme = localStorage.getItem('theme') || 'light';
                                 document.documentElement.classList.add(theme);
                             })();
                         `
-                    }}
+                    } }
                 />
             </head>
-            <body className={twMerge('bg-white dark:bg-gray-900', inter.className)}>
-                <Toaster />
-                <Flowbite theme={{ theme: customTheme }}>{children}</Flowbite>
+
+            <body className={ twMerge( 'bg-white dark:bg-gray-900', inter.className ) }>
+                <ClientProviders>
+                    { children }
+                </ClientProviders>
             </body>
         </html>
     );

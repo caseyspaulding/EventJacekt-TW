@@ -1,30 +1,21 @@
+import { nextui } from '@nextui-org/react';
 import flowbite from 'flowbite-react/tailwind';
 import type { Config } from 'tailwindcss';
-import colors from 'tailwindcss/colors';
 
 export default {
-    content: ['./app/**/*.{ts,tsx,mdx}', './components/**/*.{ts,tsx,mdx}', flowbite.content()],
+    content: [
+        './app/**/*.{ts,tsx,mdx}',
+        './components/**/*.{ts,tsx,mdx}',
+        './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+        flowbite.content(),
+    ],
     theme: {
         extend: {
             colors: {
-                primary: colors.blue
+                // Customize colors if necessary
             }
         }
     },
-    plugins: [flowbite.plugin(), addVariablesForColors],
-    darkmode: 'class'
+    plugins: [  nextui() ],
+    darkMode: 'class',  // Fixed dark mode casing
 } satisfies Config;
-
-const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette');
-
-// This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
-function addVariablesForColors({ addBase, theme }: any) {
-    let allColors = flattenColorPalette(theme('colors'));
-    let newVars = Object.fromEntries(
-        Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-    );
-
-    addBase({
-        ':root': newVars
-    });
-}
