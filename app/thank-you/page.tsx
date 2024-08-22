@@ -40,7 +40,7 @@ export default function ThankYouPage ()
                   Thank you for confirming your email! You are all set to start
                   creating events!
                 </p>
-                <Link href="/" passHref>
+                <Link href="/login" passHref>
                   <div className="mt-3 inline-flex items-center px-6 py-3 text-white bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-400">
                     Get Started
                   </div>
@@ -51,6 +51,6 @@ export default function ThankYouPage ()
         </main>
       </div>
     </>
-    
+
   )
 }
