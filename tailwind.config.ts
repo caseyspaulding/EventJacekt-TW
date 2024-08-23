@@ -2,6 +2,7 @@ import { nextui } from '@nextui-org/react';
 import flowbite from 'flowbite-react/tailwind';
 import type { Config } from 'tailwindcss';
 
+
 export default {
     content: [
         './app/**/*.{ts,tsx,mdx}',
@@ -16,6 +17,6 @@ export default {
             }
         }
     },
-    plugins: [  nextui() ],
+    plugins: [ nextui() ],
     darkMode: 'class',  // Fixed dark mode casing
 } satisfies Config;

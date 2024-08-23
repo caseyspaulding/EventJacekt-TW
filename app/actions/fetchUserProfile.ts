@@ -6,22 +6,21 @@ import { eq } from 'drizzle-orm/expressions';
 export async function fetchUserProfile ()
 {
     const supabase = createClient();
-    const {
-        data: { user: supabaseUser }
-    } = await supabase.auth.getUser();
+
+    // Get user data from Supabase auth
+    const { data: { user: supabaseUser } } = await supabase.auth.getUser();
 
     if ( !supabaseUser )
     {
         return null;
     }
 
+    // Fetch user profile and organization data from your custom tables
     const userProfileData = await db
         .select( {
             id: userProfiles.id,
             organizationId: userProfiles.orgId,
             organizationName: organizations.name,
-
-
         } )
         .from( userProfiles )
         .innerJoin( organizations, eq( userProfiles.orgId, organizations.id ) )
@@ -30,12 +29,16 @@ export async function fetchUserProfile ()
 
     if ( userProfileData.length > 0 )
     {
-        return {
-            id: userProfileData[ 0 ].id,
-            email: supabaseUser.email!,
-            orgName: userProfileData[ 0 ].organizationName,
-            organizationId: userProfileData[ 0 ].organizationId,
+        const userProfile = userProfileData[ 0 ];
 
+        // Combine data from Supabase auth and your custom tables
+        return {
+            id: userProfile.id,
+            email: supabaseUser.email!,
+            orgName: userProfile.organizationName,
+            organizationId: userProfile.organizationId,
+            role: supabaseUser.user_metadata?.role || 'User',  // Use a default role if not present
+            avatar: supabaseUser.user_metadata?.avatar_url || '/images/avatars/user_avatar_default.png',  // Use a default avatar if not present
         };
     }
 

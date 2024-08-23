@@ -66,7 +66,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                 <div className="mt-2 flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 py-6 shadow-small">
                     <div className="flex flex-col items-center pb-6">
                         <img src='/images/logo.svg' alt='logo' className='h-11' />
-                        <p className="text-xl text-blue-600 font-medium">Create a Free Account</p>
+                        <p className="text-xl text-blue-600 font-bold">Create a Free Account</p>
                         <p className="text-small text-gray-800">Sign up to get started with EventJacket</p>
                     </div>
                     <form className="flex flex-col gap-3" onSubmit={ handleSubmit }>

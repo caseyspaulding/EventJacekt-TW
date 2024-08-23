@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 import { db } from '../../../db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq, and } from 'drizzle-orm/expressions';
-import ClientDashboard from './ClientDashboard';
+
 
 interface DashboardPageProps {
     params: { org: string };
@@ -47,11 +47,21 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         const events = await fetchEventsForOrg();
 
         return (
-            <ClientDashboard
-                orgName={decodedOrgName}
-                dashboardData={dashboardData}
-                events={events}
-            />
+            
+            <div className='mt-8'>
+                
+                <p>
+                    orgName={ decodedOrgName }
+                </p>
+                <p>
+                    orgId={ dashboardData.organizationId }
+                </p>
+               
+                <p>
+                    events={ JSON.stringify( events ) }
+                </p>
+             
+            </div>
         );
     } catch (error) {
         console.error('Error fetching dashboard data:', error);

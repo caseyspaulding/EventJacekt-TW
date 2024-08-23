@@ -1,33 +1,43 @@
 import { fetchUserProfile } from '../../actions/fetchUserProfile';
-import { SidebarProvider } from '../../../contexts/sidebar-context';
-import { sidebarCookie } from '../../../lib/sidebar-cookie';
+
 import type { PropsWithChildren } from 'react';
-import { LayoutContent } from './layout-content';
-import { DashboardNavbar } from './navbar';
-import { DashboardSidebar } from './sidebar';
+
 import { UserProvider } from '@/contexts/UserContext';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
+import Layout from './components/SidebarTW/LayoutTW';
 
-export default async function DashboardLayout({ children }: PropsWithChildren<unknown>) {
+export default async function DashboardLayout ( { children }: PropsWithChildren<unknown> )
+{
     const supabase = createClient();
     const {
         data: { session }
     } = await supabase.auth.getSession();
 
-    if (!session) {
-        redirect('/login');
+    if ( !session )
+    {
+        redirect( '/login' );
     }
+
     const user = await fetchUserProfile();
+    const org = user?.orgName
+    if ( !org )
+    {
+        return <div>Error: Organization not found</div>; // Or some other error handling
+    }
+
+    if ( !user.role || !user.avatar )
+    {
+        // Assign default values if these properties are missing
+        user.role = user.role || 'User';  // or some default role
+        user.avatar = user.avatar || '/images/avatars/user_avatar_default.png';  // or some default avatar
+    }
     return (
-        <UserProvider user={user}>
-            <SidebarProvider initialCollapsed={sidebarCookie.get().isCollapsed}>
-                <DashboardNavbar />
-                <div className=" flex items-start">
-                    <DashboardSidebar />
-                    <LayoutContent>{children}</LayoutContent>
-                </div>
-            </SidebarProvider>
+
+        <UserProvider user={ user }>
+            <Layout>
+                { children }
+            </Layout>
         </UserProvider>
     );
 }

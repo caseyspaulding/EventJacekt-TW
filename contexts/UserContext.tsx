@@ -1,12 +1,16 @@
 // contexts/UserContext.tsx
 'use client';
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 type UserType = {
     id: string;
     email: string;
     orgName: string;
     organizationId: string;
+    role: string;
+    avatar: string;
+
 };
 
 type UserContextType = {
