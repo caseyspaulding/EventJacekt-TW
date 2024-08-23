@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useStripeConnect } from '@/hooks/useStripeConnect';
 import { ConnectAccountOnboarding, ConnectComponentsProvider } from '@stripe/react-connect-js';
 import { updateOrganizationStripeData } from '@/app/actions/updateOrg';
+import BreadcrumbsPageHeader from '../components/BreadcrumbsPageHeading';
 
 interface BankingPageProps
 {
@@ -80,12 +81,14 @@ export default function BankingPageClient ( {
             setAccountCreatePending( false );
         }
     };
-
+    const breadcrumbs = [
+        { name: 'Dashboard', href: '/' },
+        { name: 'Banking', href: '/banking', current: true },
+      
+    ];
     return (
-        <div className="container bg-white ">
-            <div className="text-center bg-white">
-                <h2 className="text-3xl font-bold text-gray-800 mb-6">EventJacket Banking Setup</h2>
-            </div>
+        <div className="bg-white ">
+            <BreadcrumbsPageHeader title="Banking" breadcrumbs={ breadcrumbs } />
 
             { ( connectedAccountId || accountCreatePending || onboardingExited ) && (
                 <div className="mt-6 p-4 bg-gray-50 rounded-lg">

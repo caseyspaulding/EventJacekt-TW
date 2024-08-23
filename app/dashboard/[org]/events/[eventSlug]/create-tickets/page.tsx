@@ -7,8 +7,10 @@ import { useUser } from '@/contexts/UserContext';
 import { getEventIdBySlug } from '../../../../../actions/getEventIdBySlug';
 import toast from 'react-hot-toast';
 import { createTicketType } from '@/app/actions/ticketActions';
-import { Link } from 'tabler-icons-react';
+
 import ModalEventCreation from '@/components/modals/ModalEventCreation';
+import { Button, Input, Textarea } from '@nextui-org/react';
+
 
 const CreateTicketsPage = () =>
 {
@@ -95,7 +97,7 @@ const CreateTicketsPage = () =>
     };
 
     return (
-        <div className="container mx-auto  bg-white p-8 ">
+        <div className="container mx-auto max-w-3xl bg-white p-8 rounded-lg">
             <h1 className="mb-6 text-center text-2xl font-bold text-gray-900">Create Tickets for Event</h1>
             <p className="mb-8 text-center text-gray-600">
                 Fill in the details below to create a new ticket type for your event. Define different ticket types like General Admission, VIP, or Early Bird, and set their respective prices, quantities, and sale dates.
@@ -104,7 +106,7 @@ const CreateTicketsPage = () =>
             <form onSubmit={ handleSubmit } className="space-y-6">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Ticket Name</label>
-                    <input
+                    <Input
                         type="text"
                         value={ ticketName }
                         onChange={ ( e ) => setTicketName( e.target.value ) }
@@ -116,7 +118,7 @@ const CreateTicketsPage = () =>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea
+                    <Textarea
                         value={ description }
                         onChange={ ( e ) => setDescription( e.target.value ) }
                         placeholder="Description"
@@ -127,21 +129,20 @@ const CreateTicketsPage = () =>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Price</label>
-                    <input
-                        type="number"
-                        value={ price }
-                        onChange={ ( e ) => setPrice( Number( e.target.value ) ) }
+                    <Input
+                        value={ price.toString() } // Convert number to string
+                        onChange={ ( e ) => setPrice( Number( e.target.value ) ) } // Convert string back to number
                         placeholder="Price"
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                     />
                 </div>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Quantity</label>
-                    <input
+                    <Input
                         type="number"
-                        value={ quantity }
+                     value={quantity.toString()} // Convert number to string
                         onChange={ ( e ) => setQuantity( Number( e.target.value ) ) }
                         placeholder="Quantity"
                         required
@@ -151,7 +152,7 @@ const CreateTicketsPage = () =>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Sale Start Date</label>
-                    <input
+                    <Input
                         type="date"
                         value={ saleStartDate }
                         onChange={ ( e ) => setSaleStartDate( e.target.value ) }
@@ -162,7 +163,7 @@ const CreateTicketsPage = () =>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Sale End Date</label>
-                    <input
+                    <Input
                         type="date"
                         value={ saleEndDate }
                         onChange={ ( e ) => setSaleEndDate( e.target.value ) }
@@ -173,7 +174,7 @@ const CreateTicketsPage = () =>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Event Date</label>
-                    <input
+                    <Input
                         type="date"
                         value={ eventDate }
                         onChange={ ( e ) => setEventDate( e.target.value ) }
@@ -183,7 +184,7 @@ const CreateTicketsPage = () =>
                 </div>
 
                 <div className="flex items-center">
-                    <input
+                    <Input
                         type="checkbox"
                         checked={ isEarlyBird }
                         onChange={ ( e ) => setIsEarlyBird( e.target.checked ) }
@@ -194,21 +195,22 @@ const CreateTicketsPage = () =>
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Max Per Customer</label>
-                    <input
+                    <Input
                         type="number"
-                        value={ maxPerCustomer }
+                        value={ maxPerCustomer.toString() } // Convert number to string
                         onChange={ ( e ) => setMaxPerCustomer( Number( e.target.value ) ) }
                         placeholder="Max Per Customer"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                     />
                 </div>
 
-                <button
+                <Button
                     type="submit"
+                    color="warning" 
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                     Create Ticket
-                </button>
+                </Button>
             </form>
 
             { isModalOpen && (
@@ -218,12 +220,14 @@ const CreateTicketsPage = () =>
                         <p className="text-gray-700 mb-4">
                             Your ticket types for the event have been created. You can now share the event page with your audience.
                         </p>
-                        <Link
+                        <Button
+                            as="a"
                             href={ `/events/${ eventSlug }` }
-                            className="text-blue-600 hover:underline"
+                            color="warning" 
+                          
                         >
-                            Go to Event Page
-                        </Link>
+                            View Event Page
+                        </Button>
                     </div>
                 </ModalEventCreation>
             ) }

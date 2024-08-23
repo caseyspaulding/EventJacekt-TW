@@ -7,6 +7,10 @@ import { generateSlug } from '@/utils/stringUtils';
 import toast from 'react-hot-toast';
 import { createEvent } from '@/app/actions/eventActions';
 import ModalBasic from '@/components/modals/ModalBasic';
+import { Button, Input, Textarea } from '@nextui-org/react';
+import { FileUploadButton } from './FileUploadButton';
+
+import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
 
 const CreateEventPage = () => {
     const [name, setName] = useState('');
@@ -114,19 +118,24 @@ const CreateEventPage = () => {
     const handleModalClose = () => {
         setIsModalOpen(false);
     };
-
+    const breadcrumbs = [
+        { name: 'Dashboard', href: '/dashboard' },
+        { name: 'Events', href: '/events' },
+        { name: 'Create Event', href: '/events/create', current: true },
+    ];
     return (
-        <div className="mx-auto  bg-white p-8">
-            <h1 className="mb-6 text-center text-4xl font-extrabold">New Event</h1>
+        <div className="my-4">
+            <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                         Event Name
                     </label>
-                    <input
+                    <Input
                         type="text"
                         id="name"
+                        
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
@@ -142,7 +151,7 @@ const CreateEventPage = () => {
                     >
                         Description
                     </label>
-                    <textarea
+                    <Textarea
                         id="description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -153,22 +162,22 @@ const CreateEventPage = () => {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                        Featured Image
+                    <label className="block text-sm mb-3 font-medium text-gray-700">
+                        Event Featured Image
                     </label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => setFeaturedImage(e.target.files?.[0] || null)}
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                    <FileUploadButton
+                        
+                        setFeaturedImage={ setFeaturedImage }
                     />
+                    
+                   
                 </div>
 
                 <div>
                     <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
                         Start Date
                     </label>
-                    <input
+                    <Input
                         type="datetime-local"
                         id="startDate"
                         value={startDate}
@@ -182,7 +191,7 @@ const CreateEventPage = () => {
                     <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
                         End Date
                     </label>
-                    <input
+                    <Input
                         type="datetime-local"
                         id="endDate"
                         value={endDate}
@@ -196,7 +205,7 @@ const CreateEventPage = () => {
                     <label htmlFor="venue" className="block text-sm font-medium text-gray-700">
                         Venue
                     </label>
-                    <input
+                    <Input
                         type="text"
                         id="venue"
                         value={venue}
@@ -211,7 +220,7 @@ const CreateEventPage = () => {
                     <label htmlFor="address" className="block text-sm font-medium text-gray-700">
                         Address
                     </label>
-                    <input
+                    <Input
                         type="text"
                         id="address"
                         value={address}
@@ -226,7 +235,7 @@ const CreateEventPage = () => {
                         <label htmlFor="city" className="block text-sm font-medium text-gray-700">
                             City
                         </label>
-                        <input
+                        <Input
                             type="text"
                             id="city"
                             value={city}
@@ -240,7 +249,7 @@ const CreateEventPage = () => {
                         <label htmlFor="state" className="block text-sm font-medium text-gray-700">
                             State
                         </label>
-                        <input
+                        <Input
                             type="text"
                             id="state"
                             value={state}
@@ -259,7 +268,7 @@ const CreateEventPage = () => {
                         >
                             Country
                         </label>
-                        <input
+                        <Input
                             type="text"
                             id="country"
                             value={country}
@@ -276,7 +285,7 @@ const CreateEventPage = () => {
                         >
                             Zip Code
                         </label>
-                        <input
+                        <Input
                             type="text"
                             id="zipCode"
                             value={zipCode}
@@ -294,10 +303,10 @@ const CreateEventPage = () => {
                     >
                         Max Attendees
                     </label>
-                    <input
+                    <Input
                         type="number"
                         id="maxAttendees"
-                        value={maxAttendees}
+                        value={ maxAttendees.toString() }
                         onChange={(e) => setMaxAttendees(Number(e.target.value))}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         placeholder="Max Attendees"
@@ -305,12 +314,14 @@ const CreateEventPage = () => {
                 </div>
 
                 <div className="text-center">
-                    <button
+                    <Button
                         type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        radius="sm"
+                        
+                        color="warning"
                     >
                         Create Event
-                    </button>
+                    </Button>
                 </div>
             </form>
             <ModalBasic

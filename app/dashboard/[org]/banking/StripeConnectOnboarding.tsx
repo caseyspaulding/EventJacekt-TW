@@ -52,7 +52,7 @@ export default function StripeConnectOnboarding({ orgId }: { orgId: string }) {
     };
 
     return (
-        <div className="space-y-4">
+        <div className="">
             {!connectedAccountId && (
                 <h2 className="text-2xl font-bold">Connect your Stripe account</h2>
             )}
@@ -63,7 +63,7 @@ export default function StripeConnectOnboarding({ orgId }: { orgId: string }) {
             {!accountCreatePending && !connectedAccountId && (
                 <button
                     onClick={handleCreateAccount}
-                    className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                    className="rounded bg-orange-600 px-4 py-2 font-bold text-white hover:bg-blue-700"
                 >
                     Connect Stripe Account
                 </button>

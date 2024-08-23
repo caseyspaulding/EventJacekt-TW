@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 
 import { useState } from 'react';
 import { Disclosure, Dialog, Transition, Menu } from '@headlessui/react';
@@ -6,14 +6,15 @@ import { useUser } from '@/contexts/UserContext'; // Custom hook for user contex
 import type { ReactNode } from 'react';
 import React from 'react';
 import
-  {
-    BanknotesIcon,
-    Bars3CenterLeftIcon,
-    ChevronRightIcon,
-    FolderIcon,
-    HomeIcon,
-    XMarkIcon,
-  } from '@heroicons/react/24/outline';
+{
+  BanknotesIcon,
+  Bars3CenterLeftIcon,
+  ChevronRightIcon,
+  FolderIcon,
+  HomeIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: false },
@@ -92,11 +93,18 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                 </div>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                   <div className="flex-shrink-0 flex items-center px-4">
-                    <img
-                      className="h-8 w-auto"
-                      src="/images/logo.svg"
-                      alt="EventJacket"
-                    />
+                    <Link href="/">
+                      <img
+                        className="h-8 w-auto"
+                        src="/images/logo.svg"
+                        alt="EventJacket"
+                      />
+                    </Link>
+                    <Link href="/">
+                      <span className="pl-2 font-extrabold text-white">
+                        EventJacket
+                      </span>
+                    </Link>
                   </div>
                   <nav className="mt-5 px-2 space-y-1">
                     { navigation.map( ( item ) =>
@@ -169,11 +177,18 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
         <div className="flex flex-col flex-grow bg-blue-600 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
-            <img
-              className="h-8 w-auto"
-              src="/images/logo.svg"
-              alt="EventJacket"
-            />
+            <Link href="/">
+              <img
+                className="h-8 w-auto"
+                src="/images/logo.svg"
+                alt="EventJacket"
+              />
+            </Link>
+            <Link href="/">
+              <span className="pl-2 font-extrabold text-white">
+                EventJacket
+              </span>
+            </Link>
           </div>
           <nav className="mt-5 flex-1 px-2 space-y-1">
             { navigation.map( ( item ) =>
@@ -301,9 +316,9 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
           </div>
         </div>
 
-        <main className=" flex-1 relative z-0 overflow-y-auto focus:outline-none">
-          <div className=" py-2">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <main className="">
+          <div className="">
+            <div className="mx-auto py-4 max-w-6xl px-4 sm:px-6 lg:px-8">
               {/* Render children here */ }
               { children }
               {/* /End replace */ }

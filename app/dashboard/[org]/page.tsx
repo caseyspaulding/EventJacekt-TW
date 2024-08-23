@@ -52,15 +52,15 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
         const events = await fetchEventsForOrg();
 
         return (
-            <div className="container mx-auto mt-8 px-4 lg:px-8">
-                <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-                <div className="bg-white p-4 rounded-lg shadow">
-                    <p className="text-gray-700 mb-4">
+            <div className="">
+                <h1 className="text-3xl font-bold mb-4">Hi, Welcome back 👋 </h1>
+                <div className="bg-white  ">
+                    {/*<p className="text-gray-700 mb-4">
                         <strong>Organization Name:</strong> { decodedOrgName }
                     </p>
                     <p className="text-gray-700 mb-4">
                         <strong>Organization ID:</strong> { dashboardData.organizationId }
-                    </p>
+                    </p>*/}
                     <div>
                         <h2 className="text-xl font-semibold mb-4">Events</h2>
                         { events.length > 0 ? (
@@ -96,7 +96,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
     {
         console.error( 'Error fetching dashboard data:', error );
         return (
-            <div className="container mx-auto px-4 py-8">
+            <div className=" mx-auto">
                 <h1 className="mb-6 text-3xl font-bold">Error</h1>
                 <p className="text-xl text-red-600">
                     An error occurred while loading the dashboard. Please try again later.
