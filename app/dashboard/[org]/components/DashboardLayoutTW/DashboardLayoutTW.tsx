@@ -15,6 +15,7 @@ import
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { signOut } from '@/app/actions/SignOut';
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: false },
@@ -296,17 +297,32 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     { userNavigation.map( ( item ) => (
                       <Menu.Item key={ item.name }>
-                        { ( { active } ) => (
-                          <a
-                            href={ generateHref( item.href ) }
-                            className={ classNames(
-                              active ? 'bg-gray-100' : '',
-                              'block px-4 py-2 text-sm text-gray-700'
-                            ) }
-                          >
-                            { item.name }
-                          </a>
-                        ) }
+                        { ( { active } ) =>
+                          item.name === 'Sign out' ? (
+                            // Use a form to trigger the signOut server action
+                            <form action={ signOut } method="post" className="w-full">
+                              <button
+                                type="submit"
+                                className={ classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'w-full text-left px-4 py-2 text-sm text-gray-700'
+                                ) }
+                              >
+                                { item.name }
+                              </button>
+                            </form>
+                          ) : (
+                            <a
+                              href={ generateHref( item.href ) }
+                              className={ classNames(
+                                active ? 'bg-gray-100' : '',
+                                'block w-full px-4 py-2 text-sm text-gray-700'
+                              ) }
+                            >
+                              { item.name }
+                            </a>
+                          )
+                        }
                       </Menu.Item>
                     ) ) }
                   </Menu.Items>
