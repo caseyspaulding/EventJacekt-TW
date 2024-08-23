@@ -122,9 +122,9 @@ export default function ScanTicketsPage ()
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="max-w-md mx-auto  bg-white  overflow-hidden">
       <div className="p-6">
-        <h1 className="mt-8 text-3xl font-extrabold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">
+        <h1 className="text-4xl font-extrabold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">
           Scan Tickets
         </h1>
 
@@ -150,7 +150,7 @@ export default function ScanTicketsPage ()
         { errorMessage && <p className="text-center text-red-600 font-semibold mt-4">{ errorMessage }</p> }
 
         <div className="mt-6">
-          <h2 className="text-lg font-bold mb-2">Scanned Tickets</h2>
+          <h2 className="text-xl text-center font-bold mb-2">Scanned Tickets Log</h2>
           <ul>
             { scannedTickets.map( ( ticket, index ) => (
               <li

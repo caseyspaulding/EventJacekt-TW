@@ -116,8 +116,8 @@ const CreateEventPage = () => {
     };
 
     return (
-        <div className="mx-auto max-w-4xl rounded-lg bg-white p-8 shadow-md">
-            <h1 className="mb-6 text-center text-2xl font-bold">Create an Event</h1>
+        <div className="mx-auto  bg-white p-8">
+            <h1 className="mb-6 text-center text-4xl font-extrabold">New Event</h1>
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>

@@ -42,6 +42,8 @@ export default function RootLayout ( { children }: PropsWithChildren )
             </head>
 
             <body className={ twMerge( 'bg-white dark:bg-gray-900', inter.className ) }>
+                
+
                 <ClientProviders>
                     { children }
                 </ClientProviders>

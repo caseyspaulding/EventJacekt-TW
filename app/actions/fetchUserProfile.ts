@@ -2,8 +2,9 @@ import { createClient } from '@/utils/supabase/server';
 import { db } from '@/db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq } from 'drizzle-orm/expressions';
+import type { UserType } from '@/types/UserType'; // Assuming you store it in this path
 
-export async function fetchUserProfile ()
+export async function fetchUserProfile (): Promise<UserType | null>
 {
     const supabase = createClient();
 
@@ -21,6 +22,18 @@ export async function fetchUserProfile ()
             id: userProfiles.id,
             organizationId: userProfiles.orgId,
             organizationName: organizations.name,
+            profileImageUrl: userProfiles.profileImageUrl,
+            role: userProfiles.role,
+            contactNumber: userProfiles.contactNumber,
+            bio: userProfiles.bio,
+            socialLinks: userProfiles.socialLinks,
+            isActive: userProfiles.isActive,
+            lastLogin: userProfiles.lastLogin,
+            permissions: userProfiles.permissions,
+            preferences: userProfiles.preferences,
+            department: userProfiles.department,
+            createdAt: userProfiles.createdAt,
+            updatedAt: userProfiles.updatedAt,
         } )
         .from( userProfiles )
         .innerJoin( organizations, eq( userProfiles.orgId, organizations.id ) )
@@ -31,15 +44,28 @@ export async function fetchUserProfile ()
     {
         const userProfile = userProfileData[ 0 ];
 
-        // Combine data from Supabase auth and your custom tables
-        return {
+        // Combine data from Supabase auth and your custom tables into UserType
+        const user: UserType = {
             id: userProfile.id,
             email: supabaseUser.email!,
             orgName: userProfile.organizationName,
             organizationId: userProfile.organizationId,
-            role: supabaseUser.user_metadata?.role || 'User',  // Use a default role if not present
-            avatar: supabaseUser.user_metadata?.avatar_url || '/images/avatars/user_avatar_default.png',  // Use a default avatar if not present
+            role: userProfile.role || supabaseUser.user_metadata?.role || 'User',  // Use a default role if not present
+            avatar: userProfile.profileImageUrl || supabaseUser.user_metadata?.avatar_url || '/images/avatars/user_avatar_default.png',  // Use a default avatar if not present
+            contactNumber: userProfile.contactNumber || undefined,
+            bio: userProfile.bio || undefined,
+            socialLinks: userProfile.socialLinks as Record<string, string>,
+            isActive: userProfile.isActive as boolean, 
+            lastLogin: userProfile.lastLogin ? new Date( userProfile.lastLogin ) : undefined,
+           
+            preferences: userProfile.preferences as Record<string, unknown>,
+            department: userProfile.department || undefined,
+            createdAt: userProfile.createdAt ? new Date( userProfile.createdAt ) : new Date(),
+            updatedAt: userProfile.updatedAt ? new Date( userProfile.updatedAt ) : new Date(),
         };
+
+
+        return user;
     }
 
     return null;
