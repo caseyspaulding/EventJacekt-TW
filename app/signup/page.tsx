@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-"use client";
+'use client';
+
 import React, { useState, useEffect } from "react";
 import { Input, Divider, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
@@ -8,7 +8,13 @@ import Head from 'next/head';
 import { SubmitButton } from "./submit-button";
 import { signUp } from "./signup";
 
-
+declare global
+{
+    interface Window
+    {
+        handleSignInWithGoogle: ( response: { credential: string } ) => void;
+    }
+}
 
 export default function Component ()
 {
@@ -38,7 +44,7 @@ export default function Component ()
 
         if ( result.success )
         {
-            router.push( '/choose-account-type' );
+            router.push( result.redirectTo || '/choose-account-type' );
         } else
         {
             console.error( result.message );
@@ -47,31 +53,36 @@ export default function Component ()
 
     useEffect( () =>
     {
-       // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        window.handleSignInWithGoogle = async ( _response ) =>
+        window.handleSignInWithGoogle = async ( response ) =>
         {
-            const result = await signUp( new FormData() );
+            const formData = new FormData();
+            formData.append( 'googleToken', response.credential );
+
+            // Send the token to the server action
+            const result = await signUp( formData );
+
             if ( result.success )
             {
-                router.push( '/choose-account-type' );
+                router.push( result.redirectTo || '/choose-account-type' );
             } else
             {
                 console.error( result.message );
             }
         };
 
+        // Load Google Sign-In script only after the component mounts
         const script = document.createElement( 'script' );
         script.src = "https://accounts.google.com/gsi/client";
         script.async = true;
         script.defer = true;
         document.body.appendChild( script );
 
+        // Cleanup to avoid memory leaks
         return () =>
         {
             document.body.removeChild( script );
         };
-    }, [ router ] );
+    }, [] );
 
     return (
         <>
@@ -142,7 +153,6 @@ export default function Component ()
                         data-itp_support="true"
                         data-use_fedcm_for_prompt="true"
                     >
-                        
                     </div>
                     <div
                         className="g_id_signin"

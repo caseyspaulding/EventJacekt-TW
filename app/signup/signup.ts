@@ -11,7 +11,36 @@ export const signUp = async ( formData: FormData ) =>
   const password = formData.get( 'password' ) as string;
   const supabase = createClient();
 
-  // Input validation
+  // Check if Google Sign-In token is provided
+  const googleToken = formData.get( 'googleToken' ) as string;
+
+  if ( googleToken )
+  {
+    // Handle Google Sign-In
+    try
+    {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { data, error } = await supabase.auth.signInWithIdToken( {
+        provider: 'google',
+        token: googleToken,
+      } );
+
+      if ( error )
+      {
+        console.error( 'Google sign-in error:', error );
+        return { success: false, message: 'Google sign-in failed' };
+      }
+
+      // Redirect to choose account type
+      return { success: true, redirectTo: '/choose-account-type' };
+    } catch ( error )
+    {
+      console.error( 'Error during Google sign-in:', error );
+      return { success: false, message: 'Could not complete Google sign-in' };
+    }
+  }
+
+  // If Google token is not present, proceed with email/password sign-up
   if ( !email || !password )
   {
     return { success: false, message: 'Email and password are required' };
@@ -34,39 +63,11 @@ export const signUp = async ( formData: FormData ) =>
       return { success: false, message: 'Could not create user' };
     }
 
-    // Sign up was successful
-    return { success: true };
+    // Redirect to the next step
+    return { success: true, redirectTo: '/choose-account-type' };
   } catch ( error )
   {
     console.error( 'Error during signup:', error );
     return { success: false, message: 'Could not complete sign up' };
-  }
-};
-
-// Handle Google Sign-In
-export const googleSignIn = async ( token: string ) =>
-{
-  const supabase = createClient();
-
-  try
-  {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { data, error } = await supabase.auth.signInWithIdToken( {
-      provider: 'google',
-      token,
-    } );
-
-    if ( error )
-    {
-      console.error( 'Google sign-in error:', error );
-      return { success: false, message: 'Google sign-in failed' };
-    }
-
-    // Google sign-in was successful
-    return { success: true };
-  } catch ( error )
-  {
-    console.error( 'Error during Google sign-in:', error );
-    return { success: false, message: 'Could not complete Google sign-in' };
   }
 };
