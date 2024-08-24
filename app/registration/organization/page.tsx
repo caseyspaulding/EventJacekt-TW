@@ -24,7 +24,7 @@ const RegisterOrganizationPage = () =>
       router.push( `/dashboard/${ result.orgName }` );
     } else
     {
-      setErrorMessage( result.message as string  ); // Set the error message to display
+      setErrorMessage( result.message as string ); // Set the error message to display
     }
   };
 
