@@ -104,7 +104,11 @@ export const ticketBuyerProfiles = pgTable('ticket_buyer_profiles', {
     socialLinks: jsonb('social_links'), // Links to social media profiles
     isActive: boolean('is_active').default(true), // Active status flag
     lastLogin: timestamp('last_login'), // Last login timestamp
-    preferences: jsonb('preferences'), // JSON field for storing user preferences
+    preferences: jsonb( 'preferences' ), // JSON field for storing user preferences
+    metadata: jsonb( 'metadata' ),
+    notes: text( 'notes' ),
+    favoriteEventId: uuid( 'favorite_event_id' ).references( () => events.id ), // Reference to favorite event
+    favoritePerformerId: uuid( 'favorite_performer_id' ).references( () => orgPerformers.id ), // Reference to favorite performer
     createdAt: timestamp('created_at').default(sql`now()`),
     updatedAt: timestamp('updated_at').default(sql`now()`),
 
