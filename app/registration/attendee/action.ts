@@ -2,7 +2,7 @@
 
 import { db } from '@/db';
 import { ticketBuyerProfiles } from '@/db/schema';
-import { createClient } from '@/utils/supabase/server';
+
 
 export const registerAttendee = async ( formData: FormData ) =>
 {

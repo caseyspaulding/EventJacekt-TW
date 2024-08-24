@@ -2,7 +2,7 @@
 
 import { db } from '@/db';
 import { organizations, userProfiles } from '@/db/schema';
-import { createClient } from '@/utils/supabase/server';
+
 
 export const registerOrganization = async ( formData: FormData ) =>
 {

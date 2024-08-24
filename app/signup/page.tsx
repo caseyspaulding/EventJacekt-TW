@@ -1,30 +1,22 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import React, { useState, useEffect } from "react";
 import { Input, Divider, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { useRouter } from 'next/navigation';
-import { signUp, googleSignIn } from './signup'; // Adjust the path as necessary
-import { SubmitButton } from './submit-button';
 import Head from 'next/head';
+import { SubmitButton } from "./submit-button";
+import { signUp } from "./signup";
 
-interface SearchParams
-{
-    message?: string;
-}
 
-export default function Component ( { searchParams }: { searchParams: SearchParams } )
+
+export default function Component ()
 {
     const [ isVisible, setIsVisible ] = useState( false );
     const [ email, setEmail ] = useState( '' );
     const [ password, setPassword ] = useState( '' );
     const [ isFormValid, setIsFormValid ] = useState( false );
-    const [ isClient, setIsClient ] = useState( false ); // Add state to check if on client
     const router = useRouter();
-
-    useEffect( () =>
-    {
-        setIsClient( true ); // Set to true once on client
-    }, [] );
 
     useEffect( () =>
     {
@@ -35,10 +27,13 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
 
     const toggleVisibility = () => setIsVisible( !isVisible );
 
+    // Function to call the server action
     const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ) =>
     {
         event.preventDefault();
         const formData = new FormData( event.currentTarget );
+
+        // Calling server action here
         const result = await signUp( formData );
 
         if ( result.success )
@@ -52,12 +47,11 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
 
     useEffect( () =>
     {
-        if ( !isClient ) return; // Ensure script is only added on client
-
-        // Attach the Google Sign-In callback to the window object
-        window.handleSignInWithGoogle = async ( response: { credential: string } ) =>
+       // @ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        window.handleSignInWithGoogle = async ( _response ) =>
         {
-            const result = await googleSignIn( response.credential );
+            const result = await signUp( new FormData() );
             if ( result.success )
             {
                 router.push( '/choose-account-type' );
@@ -67,26 +61,23 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
             }
         };
 
-        // Load Google Sign-In script
         const script = document.createElement( 'script' );
         script.src = "https://accounts.google.com/gsi/client";
         script.async = true;
+        script.defer = true;
         document.body.appendChild( script );
 
         return () =>
         {
-            document.body.removeChild( script ); // Clean up script on unmount
+            document.body.removeChild( script );
         };
-    }, [ isClient, router ] );
+    }, [ router ] );
 
     return (
         <>
             <Head>
                 <title>Create Account - EventJacket</title>
-                <meta
-                    name="description"
-                    content="Create your EventJacket account to manage your events."
-                />
+                <meta name="description" content="Create your EventJacket account to manage your events." />
                 <meta name="robots" content="noindex, nofollow" />
             </Head>
             <div className="flex h-screen min-h-screen flex-col items-center justify-center bg-gradient-to-r from-blue-600 via-sky-400 to-blue-600 px-4">
@@ -112,15 +103,9 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             endContent={
                                 <button type="button" onClick={ toggleVisibility }>
                                     { isVisible ? (
-                                        <Icon
-                                            className="pointer-events-none text-2xl text-default-400"
-                                            icon="solar:eye-closed-linear"
-                                        />
+                                        <Icon className="pointer-events-none text-2xl text-default-400" icon="solar:eye-closed-linear" />
                                     ) : (
-                                        <Icon
-                                            className="pointer-events-none text-2xl text-default-400"
-                                            icon="solar:eye-bold"
-                                        />
+                                        <Icon className="pointer-events-none text-2xl text-default-400" icon="solar:eye-bold" />
                                     ) }
                                 </button>
                             }
@@ -133,7 +118,6 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             onChange={ ( e ) => setPassword( e.target.value ) }
                             required
                         />
-
                         <SubmitButton
                             type="submit"
                             className="w-full bg-blue-500"
@@ -142,41 +126,33 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                         >
                             Sign Up
                         </SubmitButton>
-
-                        { searchParams?.message && (
-                            <p className="mt-4 rounded border border-red-500 bg-red-100 p-4 text-center text-red-700">
-                                { searchParams.message }
-                            </p>
-                        ) }
                     </form>
                     <div className="flex items-center gap-4">
                         <Divider className="flex-1" />
                         <p className="shrink-0 text-tiny text-default-500">OR</p>
                         <Divider className="flex-1" />
                     </div>
-                    { isClient && (
-                        <>
-                            <div
-                                id="g_id_onload"
-                                data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
-                                data-context="signin"
-                                data-ux_mode="popup"
-                                data-callback="handleSignInWithGoogle"
-                                data-auto_select="true"
-                                data-itp_support="true"
-                                data-use_fedcm_for_prompt="true"
-                            ></div>
-                            <div
-                                className="g_id_signin"
-                                data-type="standard"
-                                data-shape="pill"
-                                data-theme="outline"
-                                data-text="signin_with"
-                                data-size="large"
-                                data-logo_alignment="left"
-                            ></div>
-                        </>
-                    ) }
+                    <div
+                        id="g_id_onload"
+                        data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
+                        data-context="signin"
+                        data-ux_mode="popup"
+                        data-callback="handleSignInWithGoogle"
+                        data-auto_select="true"
+                        data-itp_support="true"
+                        data-use_fedcm_for_prompt="true"
+                    >
+                        
+                    </div>
+                    <div
+                        className="g_id_signin"
+                        data-type="standard"
+                        data-shape="pill"
+                        data-theme="outline"
+                        data-text="signin_with"
+                        data-size="large"
+                        data-logo_alignment="left"
+                    ></div>
                     <p className="text-center text-small">
                         Already have an account?&nbsp;
                         <Link href="/login" size="sm">

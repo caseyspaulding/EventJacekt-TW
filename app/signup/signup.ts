@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/db';
+
 import { createClient } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
 
@@ -34,8 +34,8 @@ export const signUp = async ( formData: FormData ) =>
       return { success: false, message: 'Could not create user' };
     }
 
-    // Redirect to the next step
-    return { success: true, redirectTo: '/choose-account-type' };
+    // Sign up was successful
+    return { success: true };
   } catch ( error )
   {
     console.error( 'Error during signup:', error );
@@ -50,6 +50,7 @@ export const googleSignIn = async ( token: string ) =>
 
   try
   {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, error } = await supabase.auth.signInWithIdToken( {
       provider: 'google',
       token,
@@ -61,8 +62,8 @@ export const googleSignIn = async ( token: string ) =>
       return { success: false, message: 'Google sign-in failed' };
     }
 
-    // Redirect to choose account type
-    return { success: true, redirectTo: '/choose-account-type' };
+    // Google sign-in was successful
+    return { success: true };
   } catch ( error )
   {
     console.error( 'Error during Google sign-in:', error );
