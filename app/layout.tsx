@@ -39,6 +39,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
                         `
                     } }
                 />
+                <script src="https://accounts.google.com/gsi/client" async></script>
             </head>
 
             <body className={ twMerge( 'bg-white dark:bg-gray-900', inter.className ) }>
