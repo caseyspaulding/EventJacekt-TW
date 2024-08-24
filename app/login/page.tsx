@@ -5,9 +5,12 @@ import { Button, Input, Checkbox, Link, Divider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { signIn } from './signin'; // Adjust the path as necessary
 import { SubmitButton } from './submit-button';
+import { createClient } from '@/utils/supabase/client';
 import Head from 'next/head';
 
+import OneTapComponent from "@/components/GoogleOneTap";
 
+const supabase = createClient();
 interface SearchParams
 {
     message?: string;
@@ -41,19 +44,19 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                 />
                 <meta name="robots" content="noindex, nofollow" />
             </Head>
-            <div className="flex h-screen min-h-screen flex-col items-center justify-center bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-600 px-4">
-               
+            <div className="flex h-screen min-h-screen flex-col items-center justify-center bg-gradient-to-r from-blue-600 via-sky-400 to-blue-600 px-4">
+
                 <div className="mt-2 flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 py-6 shadow-small">
                     <div className="flex flex-col items-center pb-6">
                         <Link href="/">
                             <img src='/images/logo.svg' alt='EventJacket Logo' className='h-11' />
-                            </Link>
+                        </Link>
                         <p className="text-xl text-blue-700 font-bold">Welcome Back</p>
                         <p className="text-small text-gray-700">Log in to your account to continue</p>
                     </div>
                     <form className="flex flex-col gap-3" action={ signIn }>
                         <Input
-                            
+
                             label="Email Address"
                             name="email"
                             placeholder="Enter your email"
@@ -121,10 +124,24 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                         <Button
                             startContent={ <Icon icon="flat-color-icons:google" width={ 24 } /> }
                             variant="bordered"
+                            onPress={ async () =>
+                            {
+                                const { error } = await supabase.auth.signInWithOAuth( {
+                                    provider: 'google',
+                                    options: {
+                                        redirectTo: window.location.origin + '/auth/callback', // Ensure this matches your callback route
+                                    },
+                                } );
+
+                                if ( error )
+                                {
+                                    console.error( 'Google Sign-In Error:', error.message );
+                                }
+                            } }
                         >
                             Continue with Google
                         </Button>
-                        
+                        <OneTapComponent />
                     </div>
                     <p className="text-center text-small">
                         Need to create an account?&nbsp;

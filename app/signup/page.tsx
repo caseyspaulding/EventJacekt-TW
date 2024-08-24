@@ -1,18 +1,19 @@
 "use client";
-
+import OneTapComponent from '@/components/GoogleOneTap';
 import React, { useState, useEffect } from "react";
 import { Button, Input, Checkbox, Link, Divider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { useRouter } from 'next/navigation';
 import { signUp } from './signup'; // Adjust the path as necessary
 import { SubmitButton } from './submit-button';
+import { createClient } from '@/utils/supabase/client';
 import Head from 'next/head';
 
 interface SearchParams
 {
     message?: string;
 }
-
+const supabase = createClient();
 export default function Component ( { searchParams }: { searchParams: SearchParams } )
 {
     const [ isVisible, setIsVisible ] = useState( false );
@@ -22,6 +23,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
     const [ acceptTerms, setAcceptTerms ] = useState( false );
     const [ isFormValid, setIsFormValid ] = useState( false );
     const router = useRouter();
+    
 
     // Toggle visibility of password
     const toggleVisibility = () => setIsVisible( !isVisible );
@@ -61,8 +63,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                 />
                 <meta name="robots" content="noindex, nofollow" />
             </Head>
-            <div className="flex h-screen min-h-screen flex-col items-center justify-center bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-600 px-4">
-
+            <div className="flex h-screen min-h-screen flex-col items-center justify-center bg-gradient-to-r from-blue-600 via-sky-400 to-blue-600 px-4">
                 <div className="mt-2 flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 py-6 shadow-small">
                     <div className="flex flex-col items-center pb-6">
                         <img src='/images/logo.svg' alt='logo' className='h-11' />
@@ -71,8 +72,6 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                     </div>
                     <form className="flex flex-col gap-3" onSubmit={ handleSubmit }>
                         <Input
-
-
                             label="Email Address"
                             name="email"
                             placeholder="Enter your email"
@@ -83,7 +82,6 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             required
                         />
                         <Input
-
                             label="Organization Name"
                             name="orgName"
                             placeholder="Enter your organization's name"
@@ -94,7 +92,6 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             required
                         />
                         <Input
-
                             className="text-gray-500"
                             endContent={
                                 <button type="button" onClick={ toggleVisibility }>
@@ -157,9 +154,27 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                         <Button
                             startContent={ <Icon icon="flat-color-icons:google" width={ 24 } /> }
                             variant="bordered"
+                            onPress={ async () =>
+                            {
+                                const { error } = await supabase.auth.signInWithOAuth( {
+                                    provider: 'google',
+                                    options: {
+                                        redirectTo: window.location.origin + '/auth/callback', // Ensure this matches your callback route
+                                    },
+                                } );
+
+                                if ( error )
+                                {
+                                    console.error( 'Google Sign-In Error:', error.message );
+                                }
+                            } }
                         >
                             Continue with Google
                         </Button>
+                        {/* One Tap Component for Google Sign-In */ }
+                        <OneTapComponent />
+                       
+
                     </div>
                     <p className="text-center text-small">
                         Already have an account?&nbsp;
