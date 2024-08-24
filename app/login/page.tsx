@@ -126,22 +126,20 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             variant="bordered"
                             onPress={ async () =>
                             {
-                                const redirectTo = process.env.NEXT_PUBLIC_SITE_URL
-                                    ? `${ process.env.NEXT_PUBLIC_SITE_URL }/auth/callback`
-                                    : `${ window.location.origin }/auth/callback`;
-
-                                console.log( 'Redirecting to:', redirectTo );
-
-                                const { error } = await supabase.auth.signInWithOAuth( {
+                                const { data, error } = await supabase.auth.signInWithOAuth( {
                                     provider: 'google',
                                     options: {
-                                        redirectTo,
+                                        redirectTo: window.location.origin + '/auth/callback', // Ensure this matches your callback route
                                     },
                                 } );
 
                                 if ( error )
                                 {
                                     console.error( 'Google Sign-In Error:', error.message );
+                                } else if ( data.url )
+                                {
+                                    // Redirect to the provided URL from Supabase
+                                    window.location.href = data.url;
                                 }
                             } }
                         >

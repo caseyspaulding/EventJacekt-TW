@@ -156,7 +156,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             variant="bordered"
                             onPress={ async () =>
                             {
-                                const { error } = await supabase.auth.signInWithOAuth( {
+                                const { data, error } = await supabase.auth.signInWithOAuth( {
                                     provider: 'google',
                                     options: {
                                         redirectTo: window.location.origin + '/auth/callback', // Ensure this matches your callback route
@@ -166,6 +166,10 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                                 if ( error )
                                 {
                                     console.error( 'Google Sign-In Error:', error.message );
+                                } else if ( data.url )
+                                {
+                                    // Redirect to the provided URL from Supabase
+                                    window.location.href = data.url;
                                 }
                             } }
                         >
