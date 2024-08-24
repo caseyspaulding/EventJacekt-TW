@@ -156,33 +156,35 @@ export default function Component ()
                                 <span className="bg-white px-4 text-gray-900">Or continue with</span>
                             </div>
                         </div>
-                        <div
-                            id="g_id_onload"
-                            data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
-                            data-context="signin"
-                            data-ux_mode="popup"
-                            data-callback="handleSignInWithGoogle"
-                            data-auto_select="true"
-                            data-itp_support="true"
-                            data-use_fedcm_for_prompt="true"
-                            className="mt-4 text-center "
-                        >
+                        <div className='flex justify-center'>
+                            <div
+                                id="g_id_onload"
+                                data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
+                                data-context="signin"
+                                data-ux_mode="popup"
+                                data-callback="handleSignInWithGoogle"
+                                data-auto_select="true"
+                                data-itp_support="true"
+                                data-use_fedcm_for_prompt="true"
+                                className="text-center "
+                            >
+                            </div>
+                            <div
+                                className="g_id_signin mt-4"
+                                data-type="standard"
+                                data-shape="rectangular"
+                                data-theme="outline"
+                                data-text="signin_with"
+                                data-size="large"
+                                data-logo_alignment="left"
+                            ></div>
+                            <p className="text-center text-sm mt-4">
+                                Already have an account?&nbsp;
+                                <Link href="/login" size="sm">
+                                    Log In
+                                </Link>
+                            </p>
                         </div>
-                        <div
-                            className="g_id_signin mt-4"
-                            data-type="standard"
-                            data-shape="pill"
-                            data-theme="outline"
-                            data-text="signin_with"
-                            data-size="large"
-                            data-logo_alignment="left"
-                        ></div>
-                        <p className="text-center text-sm mt-4">
-                            Already have an account?&nbsp;
-                            <Link href="/login" size="sm">
-                                Log In
-                            </Link>
-                        </p>
                     </div>
                 </div>
                 <div className="relative hidden w-0 flex-1 lg:block">
