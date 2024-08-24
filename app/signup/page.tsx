@@ -23,7 +23,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
     const [ acceptTerms, setAcceptTerms ] = useState( false );
     const [ isFormValid, setIsFormValid ] = useState( false );
     const router = useRouter();
-    
+
 
     // Toggle visibility of password
     const toggleVisibility = () => setIsVisible( !isVisible );
@@ -159,7 +159,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                                 const { data, error } = await supabase.auth.signInWithOAuth( {
                                     provider: 'google',
                                     options: {
-                                        redirectTo: window.location.origin + '/auth/callback', // Ensure this matches your callback route
+                                        redirectTo: 'https://www.eventjacket.com/auth/callback', // Make sure this matches your desired callback route
                                     },
                                 } );
 
@@ -177,7 +177,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                         </Button>
                         {/* One Tap Component for Google Sign-In */ }
                         <OneTapComponent />
-                       
+
 
                     </div>
                     <p className="text-center text-small">

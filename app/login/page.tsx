@@ -129,7 +129,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                                 const { data, error } = await supabase.auth.signInWithOAuth( {
                                     provider: 'google',
                                     options: {
-                                        redirectTo: window.location.origin + '/auth/callback', // Ensure this matches your callback route
+                                        redirectTo: 'https://www.eventjacket.com/auth/callback', // Make sure this matches your desired callback route
                                     },
                                 } );
 
