@@ -3,8 +3,8 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { registerOrganization } from './registerOrganization'; // Update with correct path
-import { Button, Input } from '@nextui-org/react';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import {  Input } from '@nextui-org/react';
+import { UserCircleIcon } from '@heroicons/react/24/outline';
 
 const RegisterOrganizationPage = () =>
 {
