@@ -3,7 +3,6 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@nextui-org/react';
-import { Icon } from '@iconify/react/dist/iconify.js';
 
 export default function ChooseAccountTypePage ()
 {
