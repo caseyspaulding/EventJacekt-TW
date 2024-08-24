@@ -178,13 +178,14 @@ export default function Component ()
                                 data-size="large"
                                 data-logo_alignment="left"
                             ></div>
+                        </div>
                             <p className="text-center text-sm mt-4">
                                 Already have an account?&nbsp;
                                 <Link href="/login" size="sm">
                                     Log In
                                 </Link>
                             </p>
-                        </div>
+                       
                     </div>
                 </div>
                 <div className="relative hidden w-0 flex-1 lg:block">
