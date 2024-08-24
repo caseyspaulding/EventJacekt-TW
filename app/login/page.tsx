@@ -126,10 +126,16 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             variant="bordered"
                             onPress={ async () =>
                             {
+                                const redirectTo = process.env.NEXT_PUBLIC_SITE_URL
+                                    ? `${ process.env.NEXT_PUBLIC_SITE_URL }/auth/callback`
+                                    : `${ window.location.origin }/auth/callback`;
+
+                                console.log( 'Redirecting to:', redirectTo );
+
                                 const { error } = await supabase.auth.signInWithOAuth( {
                                     provider: 'google',
                                     options: {
-                                        redirectTo: window.location.origin + '/auth/callback', // Ensure this matches your callback route
+                                        redirectTo,
                                     },
                                 } );
 
@@ -141,6 +147,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                         >
                             Continue with Google
                         </Button>
+
                         <OneTapComponent />
                     </div>
                     <p className="text-center text-small">

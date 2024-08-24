@@ -15,6 +15,14 @@ extra_search_path = ["public", "extensions"]
 # for accidental or malicious requests.
 max_rows = 1000
 
+[auth.external.google]
+enabled = true
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_SECRET)"
+redirect_uri = "env(NEXT_PUBLIC_GOOGLE_REDIRECT_URI)"
+
+
+
 [api.tls]
 enabled = false
 
