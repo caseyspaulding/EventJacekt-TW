@@ -172,26 +172,28 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                                 <span className="bg-white px-4 text-gray-900">Or continue with</span>
                             </div>
                         </div>
-                        <div
-                            id="g_id_onload"
-                            data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
-                            data-context="signin"
-                            data-ux_mode="popup"
-                            data-callback="handleSignInWithGoogle"
-                            data-auto_select="true"
-                            data-itp_support="true"
-                            data-use_fedcm_for_prompt="true"
-                            className="mt-6"
-                        />
-                        <div
-                            className="g_id_signin mt-4"
-                            data-type="standard"
-                            data-shape="pill"
-                            data-theme="outline"
-                            data-text="signin_with"
-                            data-size="large"
-                            data-logo_alignment="left"
-                        />
+                        <div className='flex justify-center'>
+                            <div
+                                id="g_id_onload"
+                                data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
+                                data-context="signin"
+                                data-ux_mode="popup"
+                                data-callback="handleSignInWithGoogle"
+                                data-auto_select="true"
+                                data-itp_support="true"
+                                data-use_fedcm_for_prompt="true"
+                                className="mt-6"
+                            />
+                            <div
+                                className="g_id_signin mt-4"
+                                data-type="standard"
+                                data-shape="pill"
+                                data-theme="outline"
+                                data-text="signin_with"
+                                data-size="large"
+                                data-logo_alignment="left"
+                            />
+                        </div>
                         <p className="text-center mt-4 text-small">
                             Need to create an account?&nbsp;
                             <Link href="/signup" size="sm">
