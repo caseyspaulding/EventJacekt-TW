@@ -165,7 +165,7 @@ export default function Component ()
                             data-auto_select="true"
                             data-itp_support="true"
                             data-use_fedcm_for_prompt="true"
-                            className="mt-6"
+                            className="mt-4 text-center "
                         >
                         </div>
                         <div
