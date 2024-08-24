@@ -1,14 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { registerOrganization } from './registerOrganization'; // Update with correct path
-import {  Input } from '@nextui-org/react';
+import { Input } from '@nextui-org/react';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 
 const RegisterOrganizationPage = () =>
 {
   const router = useRouter();
+  const [ errorMessage, setErrorMessage ] = useState( '' );
 
   const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ) =>
   {
@@ -23,7 +24,7 @@ const RegisterOrganizationPage = () =>
       router.push( `/dashboard/${ result.orgName }` );
     } else
     {
-      console.error( result.message );
+      setErrorMessage( result.message ); // Set the error message to display
     }
   };
 
@@ -31,19 +32,22 @@ const RegisterOrganizationPage = () =>
     <div className="pt-8 flex min-h-screen items-center justify-center bg-gray-100">
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
         <div className="px-4 sm:px-0">
-          <img src='/images/logo.svg' alt='EventJacket' className="h-12 w-auto" /> 
+          <img src='/images/logo.svg' alt='EventJacket' className="h-12 w-auto" />
           <h2 className="text-base font-semibold leading-7 text-gray-900">Organization Registration</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             Please provide the details of your organization to complete the registration.
           </p>
+          { errorMessage && (
+            <p className="mt-2 text-sm text-red-600">{ errorMessage }</p> // Display error message
+          ) }
         </div>
 
         <form
           onSubmit={ handleSubmit }
           className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2"
         >
-          <div className="px-4 py-6 sm:p-8 ">
-            <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 ">
+          <div className="px-4 py-6 sm:p-8">
+            <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
                 <label htmlFor="orgName" className="block text-sm font-medium leading-6 text-gray-900">
                   Organization Name
@@ -52,10 +56,9 @@ const RegisterOrganizationPage = () =>
                   <Input
                     id="orgName"
                     name="orgName"
-                    type="text" 
+                    type="text"
                     required
-                    placeholder=" Enter your organization name"
-                
+                    placeholder="Enter your organization name"
                   />
                 </div>
               </div>
@@ -65,22 +68,17 @@ const RegisterOrganizationPage = () =>
                   Website
                 </label>
                 <div className="mt-2">
-                  <div className="">
-                   
-                    <Input
-                      id="website"
-                      name="website"
-                      type="text"
-                      placeholder="www.example.com"
-                     
-                    />
-                  </div>
+                  <Input
+                    id="website"
+                    name="website"
+                    type="text"
+                    placeholder="www.example.com"
+                  />
                 </div>
               </div>
 
               {/* Additional fields can be added here as needed */ }
 
-              
               <div className="col-span-full">
                 <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
                   Organization Logo
@@ -95,12 +93,9 @@ const RegisterOrganizationPage = () =>
                   </button>
                 </div>
               </div>
-
-              
             </div>
           </div>
           <div className="flex items-center justify-start gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
-            
             <button
               type="submit"
               className="rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"

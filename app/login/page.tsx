@@ -153,7 +153,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             data-size="large"
                             data-logo_alignment="left"
                         ></div>
-                        <p className="text-center text-small">
+                        <p className="text-center mt-4 text-small">
                             Need to create an account?&nbsp;
                             <Link href="/signup" size="sm">
                                 Sign Up
