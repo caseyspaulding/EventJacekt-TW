@@ -1,43 +1,40 @@
 "use client";
-import OneTapComponent from '@/components/GoogleOneTap';
 import React, { useState, useEffect } from "react";
-import { Button, Input, Checkbox, Link, Divider } from "@nextui-org/react";
+import { Input, Divider, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { useRouter } from 'next/navigation';
-import { signUp } from './signup'; // Adjust the path as necessary
+import { signUp, googleSignIn } from './signup'; // Adjust the path as necessary
 import { SubmitButton } from './submit-button';
-import { createClient } from '@/utils/supabase/client';
 import Head from 'next/head';
 
 interface SearchParams
 {
     message?: string;
 }
-const supabase = createClient();
+
 export default function Component ( { searchParams }: { searchParams: SearchParams } )
 {
     const [ isVisible, setIsVisible ] = useState( false );
     const [ email, setEmail ] = useState( '' );
     const [ password, setPassword ] = useState( '' );
-    const [ orgName, setOrgName ] = useState( '' );
-    const [ acceptTerms, setAcceptTerms ] = useState( false );
     const [ isFormValid, setIsFormValid ] = useState( false );
+    const [ isClient, setIsClient ] = useState( false ); // Add state to check if on client
     const router = useRouter();
 
+    useEffect( () =>
+    {
+        setIsClient( true ); // Set to true once on client
+    }, [] );
 
-    // Toggle visibility of password
-    const toggleVisibility = () => setIsVisible( !isVisible );
-
-    // Validate email, password, organization name, and terms acceptance
     useEffect( () =>
     {
         const emailIsValid = email.includes( '@' ) && email.includes( '.' );
         const passwordIsValid = password.length >= 8;
-        const orgNameIsValid = orgName.trim() !== '';
-        setIsFormValid( emailIsValid && passwordIsValid && orgNameIsValid && acceptTerms );
-    }, [ email, password, orgName, acceptTerms ] );
+        setIsFormValid( emailIsValid && passwordIsValid );
+    }, [ email, password ] );
 
-    // Handle form submission
+    const toggleVisibility = () => setIsVisible( !isVisible );
+
     const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ) =>
     {
         event.preventDefault();
@@ -46,12 +43,41 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
 
         if ( result.success )
         {
-            router.push( '/signup-success' );
+            router.push( '/choose-account-type' );
         } else
         {
             console.error( result.message );
         }
     };
+
+    useEffect( () =>
+    {
+        if ( !isClient ) return; // Ensure script is only added on client
+
+        // Attach the Google Sign-In callback to the window object
+        window.handleSignInWithGoogle = async ( response: { credential: string } ) =>
+        {
+            const result = await googleSignIn( response.credential );
+            if ( result.success )
+            {
+                router.push( '/choose-account-type' );
+            } else
+            {
+                console.error( result.message );
+            }
+        };
+
+        // Load Google Sign-In script
+        const script = document.createElement( 'script' );
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        document.body.appendChild( script );
+
+        return () =>
+        {
+            document.body.removeChild( script ); // Clean up script on unmount
+        };
+    }, [ isClient, router ] );
 
     return (
         <>
@@ -82,16 +108,6 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             required
                         />
                         <Input
-                            label="Organization Name"
-                            name="orgName"
-                            placeholder="Enter your organization's name"
-                            type="text"
-                            variant="bordered"
-                            value={ orgName }
-                            onChange={ ( e ) => setOrgName( e.target.value ) }
-                            required
-                        />
-                        <Input
                             className="text-gray-500"
                             endContent={
                                 <button type="button" onClick={ toggleVisibility }>
@@ -117,19 +133,7 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                             onChange={ ( e ) => setPassword( e.target.value ) }
                             required
                         />
-                        <div className="flex items-center justify-between px-1 py-2">
-                            <Checkbox
-                                name="acceptTerms"
-                                checked={ acceptTerms }
-                                onChange={ ( e ) => setAcceptTerms( e.target.checked ) }
-                                size="sm"
-                            >
-                                I accept the&nbsp;
-                                <Link href="/terms" size="sm">
-                                    Terms and Conditions
-                                </Link>
-                            </Checkbox>
-                        </div>
+
                         <SubmitButton
                             type="submit"
                             className="w-full bg-blue-500"
@@ -150,36 +154,29 @@ export default function Component ( { searchParams }: { searchParams: SearchPara
                         <p className="shrink-0 text-tiny text-default-500">OR</p>
                         <Divider className="flex-1" />
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <Button
-                            startContent={ <Icon icon="flat-color-icons:google" width={ 24 } /> }
-                            variant="bordered"
-                            onPress={ async () =>
-                            {
-                                const { data, error } = await supabase.auth.signInWithOAuth( {
-                                    provider: 'google',
-                                    options: {
-                                        redirectTo: 'https://www.eventjacket.com/auth/callback', // Make sure this matches your desired callback route
-                                    },
-                                } );
-
-                                if ( error )
-                                {
-                                    console.error( 'Google Sign-In Error:', error.message );
-                                } else if ( data.url )
-                                {
-                                    // Redirect to the provided URL from Supabase
-                                    window.location.href = data.url;
-                                }
-                            } }
-                        >
-                            Continue with Google
-                        </Button>
-                        {/* One Tap Component for Google Sign-In */ }
-                        <OneTapComponent />
-
-
-                    </div>
+                    { isClient && (
+                        <>
+                            <div
+                                id="g_id_onload"
+                                data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
+                                data-context="signin"
+                                data-ux_mode="popup"
+                                data-callback="handleSignInWithGoogle"
+                                data-auto_select="true"
+                                data-itp_support="true"
+                                data-use_fedcm_for_prompt="true"
+                            ></div>
+                            <div
+                                className="g_id_signin"
+                                data-type="standard"
+                                data-shape="pill"
+                                data-theme="outline"
+                                data-text="signin_with"
+                                data-size="large"
+                                data-logo_alignment="left"
+                            ></div>
+                        </>
+                    ) }
                     <p className="text-center text-small">
                         Already have an account?&nbsp;
                         <Link href="/login" size="sm">

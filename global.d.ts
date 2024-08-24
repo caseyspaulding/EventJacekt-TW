@@ -8,3 +8,7 @@ declare global
 }
 
 export { };
+interface Window
+{
+  handleSignInWithGoogle: ( response: { credential: string } ) => Promise<void>;
+}
