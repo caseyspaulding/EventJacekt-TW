@@ -225,16 +225,17 @@ export default function NavBar1 ()
                 <Menu as="div" className="ml-3 relative">
                   <div>
                     <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                      <span className="sr-only">Open user menu</span>
+                        <span className="sr-only">Open user menu</span>
+                        <div className='flex items-center space-x-4 mt-6'>
                       <img
                         className="h-8 w-8 rounded-full"
                         src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
                         alt=""
                         />
-                        <div className='flex justify-start'>
+                        
                           <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
                           <p className="text-xs text-gray-500">{ user?.email }</p>
-                        </div>
+                    </div>
                     </Menu.Button>
                   </div>
                   <Transition
@@ -280,6 +281,7 @@ export default function NavBar1 ()
           </div>
 
           {/* Mobile menu */ }
+          {/* Mobile menu */ }
           <PopoverPanel className="absolute inset-x-0 top-0 z-30 origin-top-right p-2 transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-100 data-[enter]:ease-out data-[leave]:ease-in md:hidden">
             <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
               <div className="px-5 pb-6 pt-5">
@@ -295,7 +297,62 @@ export default function NavBar1 ()
                     </PopoverButton>
                   </div>
                 </div>
-                { !isAuthenticated ? (
+
+                {/* Conditional rendering based on authentication */ }
+                { isAuthenticated ? (
+                  <div className="flex flex-col mt-6 space-y-2">
+                    {/* User profile dropdown for mobile */ }
+                    <Menu as="div" className="relative">
+                      <div>
+                        <Menu.Button className="flex items-center rounded-md text-base font-medium text-gray-700 hover:text-gray-900">
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
+                            alt=""
+                          />
+                          <span className="ml-2">{ user?.orgName || 'User' }</span>
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={ React.Fragment }
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          { userNavigation.map( ( item ) => (
+                            <Menu.Item key={ item.name }>
+                              { ( { active } ) =>
+                                item.name === 'Sign out' ? (
+                                  <form onSubmit={ handleSignOut } method="post" className="w-full">
+                                    <button
+                                      type="submit"
+                                      className={ `${ active ? 'bg-gray-100' : ''
+                                        } w-full text-left px-4 py-2 text-sm text-gray-700` }
+                                    >
+                                      { item.name }
+                                    </button>
+                                  </form>
+                                ) : (
+                                  <a
+                                    href={ item.href }
+                                    className={ `${ active ? 'bg-gray-100' : ''
+                                      } block w-full px-4 py-2 text-sm text-gray-700` }
+                                  >
+                                    { item.name }
+                                  </a>
+                                )
+                              }
+                            </Menu.Item>
+                          ) ) }
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                  </div>
+                ) : (
                   <div className="mt-6">
                     <a
                       href="/signup"
@@ -310,19 +367,9 @@ export default function NavBar1 ()
                       </Link>
                     </p>
                   </div>
-                ) : (
-                  <div className="flex items-center space-x-4 mt-6">
-                    <img
-                      className="h-8 w-8 rounded-full"
-                      src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
-                      alt=""
-                    />
-                    <div>
-                      <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
-                      <p className="text-xs text-gray-500">{ user?.email }</p>
-                    </div>
-                  </div>
                 ) }
+
+                {/* Solutions and additional links */ }
                 <div className="mt-6">
                   <nav className="grid grid-cols-1 gap-7">
                     { solutions.map( ( item ) => (
@@ -340,6 +387,8 @@ export default function NavBar1 ()
                   </nav>
                 </div>
               </div>
+
+              {/* Navigation Links */ }
               <div className="px-5 py-6">
                 <div className="grid grid-cols-2 gap-4">
                   { navigation.map( ( item ) => (
@@ -348,10 +397,10 @@ export default function NavBar1 ()
                     </a>
                   ) ) }
                 </div>
-               
               </div>
             </div>
           </PopoverPanel>
+
         </Popover>
       </header>
 
