@@ -7,6 +7,7 @@ import { createClient } from '@/utils/supabase/client';
 const ConfirmPage = () =>
 {
   const [ loading, setLoading ] = useState( true );
+  const [ message, setMessage ] = useState( '' );
   const router = useRouter();
   const supabase = createClient();
 
@@ -14,54 +15,56 @@ const ConfirmPage = () =>
   {
     const confirmUser = async () =>
     {
-      const { data, error } = await supabase.auth.getSession();
+      const params = new URLSearchParams( window.location.search );
+      const token = params.get( 'token_hash' );
+      const type = params.get( 'type' );
+
+      if ( !token || type !== 'signup' )
+      {
+        setMessage( 'Invalid or missing token.' );
+        setLoading( false );
+        return;
+      }
+
+      // Exchange token for a session
+      const { error } = await supabase.auth.exchangeCodeForSession( token );
 
       if ( error )
       {
-        console.error( 'Error fetching session:', error );
-      } else if ( data?.session )
-      {
-        // User is confirmed and has a session, redirect to continue registration
-        router.push( '/choose-account-type' );
-      } else
-      {
-        // Handle case where user is not confirmed or there was an issue
-        console.error( 'User confirmation failed.' );
+        console.error( 'Error confirming email:', error.message );
+        setMessage( 'Error confirming email: ' + error.message );
+        setLoading( false );
+        return;
       }
 
-      setLoading( false );
+      setMessage( 'Email confirmed successfully! Redirecting...' );
+      // Redirect to a specific page after successful confirmation
+      setTimeout( () => router.push( '/choose-account-type' ), 2000 );
     };
 
-    // Listen for changes in auth state (useful when confirming via email link)
-    const { data: authListener } = supabase.auth.onAuthStateChange( async ( event, session ) =>
+    confirmUser();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange( ( event, session ) =>
     {
       if ( session )
       {
         router.push( '/choose-account-type' );
-      } else if ( event === 'SIGNED_OUT' )
-      {
-        console.error( 'User signed out.' );
-      } else if ( event === 'SIGNED_IN' )
-      {
-        await confirmUser();
       }
     } );
 
-    // Call confirmUser when the component mounts
-    confirmUser();
-
     return () =>
     {
-      authListener.subscription.unsubscribe();
+      authListener?.subscription?.unsubscribe();
     };
   }, [ router, supabase ] );
 
-  if ( loading )
-  {
-    return <div> Loading...</div>;
-  }
-
-  return null;
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="p-6 max-w-md bg-white rounded-lg shadow-md text-center">
+        { loading ? <p>Loading...</p> : <p>{ message }</p> }
+      </div>
+    </div>
+  );
 };
 
 export default ConfirmPage;
