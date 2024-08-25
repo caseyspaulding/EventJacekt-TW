@@ -159,7 +159,7 @@ export default function NavBar1 ()
               </Link>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
-              <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+              <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-700 hover:bg-blue-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset">
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open menu</span>
                 <Bars3CenterLeftIcon aria-hidden="true" className="h-6 w-6" />
@@ -168,11 +168,11 @@ export default function NavBar1 ()
             <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
               {/* Solutions Popover */ }
               <Popover className="relative">
-                <PopoverButton className="group inline-flex items-center rounded-md text-base font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[open]:text-gray-900">
+                <PopoverButton className="group inline-flex items-center rounded-md text-base font-medium text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[open]:text-gray-900">
                   <span>Solutions</span>
                   <ChevronDownIcon
                     aria-hidden="true"
-                    className="ml-2 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-data-[open]:text-gray-600 group-data-[open]:group-hover:text-gray-500"
+                    className="ml-2 h-5 w-5 text-gray-700 group-hover:text-gray-500 group-data-[open]:text-gray-600 group-data-[open]:group-hover:text-gray-500"
                   />
                 </PopoverButton>
 
