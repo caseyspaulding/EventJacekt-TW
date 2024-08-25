@@ -9,6 +9,7 @@ import { Bars3CenterLeftIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, M
 import { createClient } from "@/utils/supabase/client";
 import React from "react";
 import type { Json } from "@/database.types";
+import { Button } from "@nextui-org/button";
 
 
 // Define your UserType
@@ -33,7 +34,7 @@ export interface User
 }
 
 
- 
+
 
 const solutions = [
   {
@@ -69,9 +70,9 @@ const solutions = [
 ];
 const navigation = [
   { name: "Pricing", href: "/pricing" },
-  
+
   { name: "Guides", href: "/blog" },
- 
+
 ];
 
 
@@ -224,21 +225,21 @@ export default function NavBar1 ()
               ) : (
                 <Menu as="div" className="ml-3 relative">
                   <div>
-                      <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        <span className="sr-only">Open user menu</span>
-                        <div className="flex items-center space-x-4">
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
-                            alt=""
-                          />
-                          {/* Container to stack the orgName and email vertically */ }
-                          <div className="flex flex-col items-start">
-                            <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
-                            <p className="text-xs text-gray-500">{ user?.email }</p>
-                          </div>
+                    <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                      <span className="sr-only">Open user menu</span>
+                      <div className="flex items-center space-x-4">
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
+                          alt=""
+                        />
+                        {/* Container to stack the orgName and email vertically */ }
+                        <div className="flex flex-col items-start">
+                          <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
+                          <p className="text-xs text-gray-500">{ user?.email }</p>
                         </div>
-                      </Menu.Button>
+                      </div>
+                    </Menu.Button>
                   </div>
                   <Transition
                     as={ React.Fragment }
@@ -282,7 +283,7 @@ export default function NavBar1 ()
             </div>
           </div>
 
-        
+
           {/* Mobile menu */ }
           <PopoverPanel className="absolute inset-x-0 top-0 z-30 origin-top-right p-2 transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-100 data-[enter]:ease-out data-[leave]:ease-in md:hidden">
             <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
@@ -359,15 +360,16 @@ export default function NavBar1 ()
                   </div>
                 ) : (
                   <div className="mt-6">
-                    <a
+                    <Button
+                      as='a'
                       href="/signup"
-                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+                      className="flex w-full items-center rounded-3xl justify-center  border border-transparent bg-orange-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-orange-600"
                     >
-                      Sign up
-                    </a>
+                      Create Account
+                    </Button>
                     <p className="mt-6 mr-2 text-center text-base font-medium text-gray-500">
                       Existing customer?
-                      <Link href="/login" className="ml-2 text-gray-900">
+                      <Link href="/login" className="ml-2 text-orange-500">
                         Sign in
                       </Link>
                     </p>
@@ -409,7 +411,7 @@ export default function NavBar1 ()
         </Popover>
       </header>
 
-     
+
     </div>
   );
 }

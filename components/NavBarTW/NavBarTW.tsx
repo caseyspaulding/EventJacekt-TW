@@ -1,5 +1,6 @@
 
-import { Button } from "flowbite-react";
+
+import { Button } from '@nextui-org/button'
 import VideoFacade from "../VideoFacade";
 
 import 'animate.css';
@@ -53,15 +54,16 @@ export default function NavBarTW ()
                 EventJacket is your all-in-one event management platform, offering tools to create, manage, and sell tickets for events with ease.
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
-              
+
                 <div className="relative group cursor-pointer">
                   <div
                     className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-orange-500 rounded-lg blur-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
                   ></div>
                   <Button
-                    size="lg"
                     href="/signup"
-                    className="relative px-6 py-2 bg-blue-600 text-white font-bold text-2xl rounded-3xl leading-none ring-1 ring-gray-900/5"
+                    as="a"
+                    className="relative z-10 py-2 bg-blue-600 text-white text-xl rounded-3xl 
+                 w-full sm:w-auto px-5 sm:px-52" 
                   >
                     Get Started
                   </Button>
