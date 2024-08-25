@@ -70,7 +70,7 @@ const solutions = [
 const navigation = [
   { name: "Pricing", href: "/pricing" },
   { name: "FAQs", href: "/faqs" },
-  { name: "Blog", href: "/blog" },
+  { name: "Guides", href: "/blog" },
   { name: "About", href: "/about" },
 ];
 
@@ -216,7 +216,7 @@ export default function NavBar1 ()
                   </a>
                   <a
                     href="/signup"
-                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
                   >
                     Sign up
                   </a>
@@ -291,31 +291,6 @@ export default function NavBar1 ()
                     </PopoverButton>
                   </div>
                 </div>
-                <div className="mt-6">
-                  <nav className="grid grid-cols-1 gap-7">
-                    { solutions.map( ( item ) => (
-                      <a
-                        key={ item.name }
-                        href={ item.href }
-                        className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
-                      >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-blue-600 text-white">
-                          <item.icon aria-hidden="true" className="h-6 w-6" />
-                        </div>
-                        <div className="ml-4 text-base font-medium text-gray-900">{ item.name }</div>
-                      </a>
-                    ) ) }
-                  </nav>
-                </div>
-              </div>
-              <div className="px-5 py-6">
-                <div className="grid grid-cols-2 gap-4">
-                  { navigation.map( ( item ) => (
-                    <a key={ item.name } href={ item.href } className="text-base font-medium text-gray-900 hover:text-gray-700">
-                      { item.name }
-                    </a>
-                  ) ) }
-                </div>
                 { !isAuthenticated ? (
                   <div className="mt-6">
                     <a
@@ -344,6 +319,32 @@ export default function NavBar1 ()
                     </div>
                   </div>
                 ) }
+                <div className="mt-6">
+                  <nav className="grid grid-cols-1 gap-7">
+                    { solutions.map( ( item ) => (
+                      <a
+                        key={ item.name }
+                        href={ item.href }
+                        className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
+                      >
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-blue-600 text-white">
+                          <item.icon aria-hidden="true" className="h-6 w-6" />
+                        </div>
+                        <div className="ml-4 text-base font-medium text-gray-900">{ item.name }</div>
+                      </a>
+                    ) ) }
+                  </nav>
+                </div>
+              </div>
+              <div className="px-5 py-6">
+                <div className="grid grid-cols-2 gap-4">
+                  { navigation.map( ( item ) => (
+                    <a key={ item.name } href={ item.href } className="text-base font-medium text-gray-900 hover:text-gray-700">
+                      { item.name }
+                    </a>
+                  ) ) }
+                </div>
+               
               </div>
             </div>
           </PopoverPanel>

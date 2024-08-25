@@ -120,13 +120,11 @@ function Brand() {
           alt="Flowbite Logo"
         />
         <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-          Flowbite
+          EventJacket
         </span>
       </Link>
       <p className="mt-4 max-w-lg text-gray-500 dark:text-gray-400">
-        Flowbite is a UI library of elements &amp; components based on Tailwind
-        CSS that can get you started building websites faster and more
-        efficiently.
+      
       </p>
     </div>
   );
