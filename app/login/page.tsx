@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Head from "next/head";
 import { SubmitButton } from "./submit-button";
 import { verifyAndRedirect } from "./signin";
-import OneTapComponent from "@/components/GoogleOneTap";
+
 import { createClient } from "@/utils/supabase/client";
 
 declare global
@@ -27,7 +27,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
     const [ isValid, setIsValid ] = useState( false );
     const router = useRouter();
     const supabase = createClient(); // Initialize Supabase client
-    
+
     const toggleVisibility = () => setIsVisible( !isVisible );
 
     useEffect( () =>
@@ -228,7 +228,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                     />
                 </div>
             </div>
-            <OneTapComponent />
+
         </>
     );
 }
