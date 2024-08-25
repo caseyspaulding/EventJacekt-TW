@@ -2,7 +2,7 @@
 
 import Confetti from 'react-confetti';
 import { useWindowSize } from '../../hooks/useWindowSize';
-import { Button } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
 
 export default function SignUpSuccess() {
     const { width, height } = useWindowSize();
