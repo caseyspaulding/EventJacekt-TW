@@ -11,7 +11,7 @@ export const signUp = async ( formData: FormData ) =>
   const supabase = createClient();
 
   // Define the redirect URL for email confirmation
-  const redirectTo = `${ origin }/auth/confirm`;
+  const redirectTo = `${ origin }/confirm`;
 
   const googleToken = formData.get( 'googleToken' ) as string;
 
