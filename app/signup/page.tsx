@@ -168,7 +168,7 @@ export default function Component ()
                                 <span className="bg-white px-4 text-gray-900">Or continue with</span>
                             </div>
                         </div>
-                        <div className='flex justify-center mx-2'>
+                        <div className='flex justify-center w-full mx-2'>
                             <div
                                 id="g_id_onload"
                                 data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
@@ -178,7 +178,7 @@ export default function Component ()
                                 data-auto_select="true"
                                 data-itp_support="true"
                                 data-use_fedcm_for_prompt="true"
-                                className="text-center "
+                                className="flex justify-center"
                             >
                             </div>
                             <div

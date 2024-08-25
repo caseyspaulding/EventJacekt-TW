@@ -10,6 +10,7 @@ import NavBarTW from '@components/NavBarTW/NavBarTW';
 import type { Metadata } from 'next';
 import { getEvents } from './actions/getEvents';
 import EventsListComponent from '@/components/EventListComponent';
+import HowItWorks from '@/components/Features/HowItWorks';
 
 export const metadata: Metadata = {
     title: 'EventJacket - Event Management Platform for Non-Profits',
@@ -26,10 +27,11 @@ export default async function Index ()
 
             <NavBarTW />
             <SlantedDividerSolid color="#f1f5f9" height="81px" zIndex={ 2 } />
-
+           
             <FeaturesGridWithIcons />
 
             <SlantedDividerSolid color="#f1f5f9" height="50px" flip invert zIndex={ 3 } />
+            <HowItWorks />
             <h2 className='text-center'>
                 <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
                     Coming soon
