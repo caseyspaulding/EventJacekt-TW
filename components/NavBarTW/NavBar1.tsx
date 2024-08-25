@@ -369,7 +369,7 @@ export default function NavBar1 ()
                     </Button>
                     <p className="mt-6 mr-2 text-center text-base font-medium text-gray-500">
                       Existing customer?
-                      <Link href="/login" className="ml-2 text-orange-500">
+                      <Link href="/login" className="ml-2 underline text-orange-500">
                         Sign in
                       </Link>
                     </p>
