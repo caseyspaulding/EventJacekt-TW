@@ -89,7 +89,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
             </Head>
             <div className="flex min-h-screen h-full">
                 <div className="flex flex-1 flex-col justify-center items-center px-4 py-12 bg-gray-100 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-                    <div className="w-full max-w-md lg:w-96 bg-white p-6 rounded-lg shadow-lg">
+                    <div className="w-full max-w-md lg:w-96 bg-white p-6 rounded-3xl shadow-lg">
                         <div className="mb-4">
                             <img
                                 alt="EventJacket Logo"

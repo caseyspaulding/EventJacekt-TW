@@ -105,7 +105,7 @@ export default function Component ()
             </Head>
             <div className="flex min-h-screen h-full">
                 <div className="flex flex-1 flex-col justify-center items-center px-4 py-12 bg-gray-100 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-                    <div className="w-full max-w-md lg:w-96 bg-white p-6 rounded-lg shadow-lg">
+                    <div className="w-full max-w-md lg:w-96 bg-white p-6 rounded-3xl shadow-lg">
                         <div className="mb-4">
                             <img
                                 alt="EventJacket Logo"
@@ -184,7 +184,7 @@ export default function Component ()
                             <div
                                 className="g_id_signin mt-4"
                                 data-type="standard"
-                                data-shape="rectangular"
+                                data-shape="pill"
                                 data-theme="outline"
                                 data-text="signin_with"
                                 data-size="large"
