@@ -15,26 +15,25 @@ const ConfirmPage = () =>
 
   useEffect( () =>
   {
-    const tokenHash = searchParams.get( 'token_hash' );
-    const type = searchParams.get( 'type' );
-
-    if ( !tokenHash || type !== 'signup' )
-    {
-      setErrorMessage( 'Invalid or missing confirmation link.' );
-      setLoading( false );
-      return;
-    }
     const confirmUser = async () =>
     {
       try
       {
-        // Assuming PKCE flow, directly use the tokenHash string
-        const {  error } = await supabase.auth.exchangeCodeForSession( tokenHash );
+        const tokenHash = searchParams.get( 'token_hash' );
+        const type = searchParams.get( 'type' );
+
+        if ( !tokenHash || type !== 'signup' )
+        {
+          setErrorMessage( 'Invalid or missing confirmation link.' );
+          setLoading( false );
+          return;
+        }
+
+        // Use the correct method to exchange the token hash for a session
+        const { error } = await supabase.auth.exchangeCodeForSession( tokenHash );
 
         if ( error )
         {
-          
-          console.error( 'Error confirming email:', error );
           throw error;
         }
 
@@ -42,12 +41,11 @@ const ConfirmPage = () =>
         router.push( '/choose-account-type' );
       } catch ( error )
       {
-        console.error( 'Error confirming email:', error );
-        setErrorMessage( 'Error confirming email: ' + error  );
+        setErrorMessage( 'Error confirming email: ' + error );
         setLoading( false );
       }
     };
-    // Call confirmUser when the component mounts
+
     confirmUser();
   }, [ router, searchParams, supabase ] );
 
