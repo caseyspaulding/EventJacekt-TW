@@ -1,6 +1,5 @@
 'use server';
 
-
 import { createClient } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
 
@@ -11,7 +10,9 @@ export const signUp = async ( formData: FormData ) =>
   const password = formData.get( 'password' ) as string;
   const supabase = createClient();
 
-  // Check if Google Sign-In token is provided
+  // Define the redirect URL for email confirmation
+  const redirectTo = `${ origin }/auth/confirm`;
+
   const googleToken = formData.get( 'googleToken' ) as string;
 
   if ( googleToken )
@@ -31,7 +32,12 @@ export const signUp = async ( formData: FormData ) =>
         return { success: false, message: 'Google sign-in failed' };
       }
 
-      // Redirect to choose account type
+      const { data: sessionData } = await supabase.auth.getSession();
+      if ( !sessionData?.session )
+      {
+        return { success: false, message: 'Session not created after Google sign-in' };
+      }
+
       return { success: true, redirectTo: '/choose-account-type' };
     } catch ( error )
     {
@@ -40,7 +46,6 @@ export const signUp = async ( formData: FormData ) =>
     }
   }
 
-  // If Google token is not present, proceed with email/password sign-up
   if ( !email || !password )
   {
     return { success: false, message: 'Email and password are required' };
@@ -48,12 +53,11 @@ export const signUp = async ( formData: FormData ) =>
 
   try
   {
-    // Step 1: Create user with Supabase
     const { data: userResponse, error: userError } = await supabase.auth.signUp( {
       email,
       password,
       options: {
-        emailRedirectTo: `${ origin }/auth/callback`,
+        emailRedirectTo: redirectTo,  // Set the redirect URL for email confirmation
       },
     } );
 
@@ -63,8 +67,12 @@ export const signUp = async ( formData: FormData ) =>
       return { success: false, message: 'Could not create user' };
     }
 
-    // Redirect to the next step
-    return { success: true, redirectTo: '/choose-account-type' };
+    // Return user data to check confirmation status
+    return {
+      success: true,
+      user: userResponse.user,
+      redirectTo: '/choose-account-type',
+    };
   } catch ( error )
   {
     console.error( 'Error during signup:', error );

@@ -75,9 +75,9 @@ const navigation = [
 ];
 
 const userNavigation = [
-  { name: 'Your Profile', href: '/profile' },
-  { name: 'Settings', href: '/settings' },
+  { name: 'Dashboard', href: '' },
   { name: 'Sign out', href: '#' },
+
 ];
 
 export default function NavBar1 ()

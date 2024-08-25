@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import Head from 'next/head';
 import { SubmitButton } from "./submit-button";
 import { signUp } from "./signup";
+import toast from "react-hot-toast";
+
 
 declare global
 {
@@ -44,10 +46,20 @@ export default function Component ()
 
         if ( result.success )
         {
-            router.push( result.redirectTo || '/choose-account-type' );
+            // Check if email confirmation is required
+            if ( result.user && !result.user.confirmed_at )
+            {
+                // Notify the user to check their email
+                router.push(  '/signup-success' );
+            } else
+            {
+                // Redirect to the next step
+                router.push( result.redirectTo || '/choose-account-type' );
+            }
         } else
         {
             console.error( result.message );
+            toast.error( 'Error creating account. ' );
         }
     };
 

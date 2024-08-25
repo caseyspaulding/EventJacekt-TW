@@ -9,6 +9,7 @@ export const registerOrganization = async ( formData: FormData ) =>
 {
   const orgName = formData.get( 'orgName' ) as string;
   const website = formData.get( 'website' ) as string;
+  const logoFile = formData.get( 'logo' ) as File; // Assuming 'logo' is the name of the file input in your form
   const supabase = createClient();
 
   // Get the authenticated user
@@ -16,6 +17,8 @@ export const registerOrganization = async ( formData: FormData ) =>
     data: { user },
     error: authError,
   } = await supabase.auth.getUser();
+
+  
 
   if ( authError || !user )
   {
@@ -38,13 +41,37 @@ export const registerOrganization = async ( formData: FormData ) =>
       return { success: false, message: 'Organization already exists' };
     }
 
+    // Handle image upload
+    let logoUrl = '';
+    if ( logoFile )
+    {
+      const { error: uploadError } = await supabase.storage
+        .from( 'blogimages' ) // Replace with your actual bucket name
+        .upload( `public/${ logoFile.name }`, logoFile, {
+          cacheControl: '3600',
+          upsert: false,
+        } );
+
+      if ( uploadError )
+      {
+        console.error( 'Error uploading logo:', uploadError.message );
+        return { success: false, message: 'Error uploading logo' };
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from( 'blogimages' )
+        .getPublicUrl( `public/${ logoFile.name }` );
+
+      logoUrl = publicUrlData?.publicUrl || '';
+    }
+
     // Use a transaction for organization and user profile creation
     await db.transaction( async ( trx ) =>
     {
       // Step 1: Create organization
       const [ org ] = await trx
         .insert( organizations )
-        .values( { name: orgName, website } )
+        .values( { name: orgName, website, logoUrl } ) // Update the organization with the logoUrl
         .returning( { id: organizations.id } );
 
       if ( !org )

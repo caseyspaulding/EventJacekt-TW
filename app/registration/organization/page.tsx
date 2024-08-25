@@ -1,30 +1,48 @@
+
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+
+import { useState } from 'react';
 import { registerOrganization } from './registerOrganization'; // Update with correct path
-import { Input } from '@nextui-org/react';
-import { UserCircleIcon } from '@heroicons/react/24/outline';
+import toast from 'react-hot-toast';
+import router from 'next/router';
+
+
+
+
 
 const RegisterOrganizationPage = () =>
 {
-  const router = useRouter();
-  const [ errorMessage, setErrorMessage ] = useState( '' );
+  const [ orgName, setOrgName ] = useState( '' );
+  const [ website, setWebsite ] = useState( '' );
+  const [ logoFile, setLogoFile ] = useState<File | null>( null );
+  const [ loading, setLoading ] = useState( false );
 
-  const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ) =>
+  const handleSubmit = async ( e: React.FormEvent ) =>
   {
-    event.preventDefault();
-    const formData = new FormData( event.currentTarget );
+    e.preventDefault();
+    setLoading( true );
 
-    const result = await registerOrganization( formData );
-
-    if ( result.success )
+    const formData = new FormData();
+    formData.append( 'orgName', orgName );
+    formData.append( 'website', website );
+    if ( logoFile )
     {
-      // Redirect to the organization's dashboard using dynamic routing
-      router.push( `/dashboard/${ result.orgName }` );
+      formData.append( 'logo', logoFile );
+    }
+
+    const response = await registerOrganization( formData );
+
+    setLoading( false );
+
+    if ( response.success )
+    {
+      toast.success( 'Organization registered successfully!' );
+      // Navigate to the organization's dashboard after successful registration
+      router.push( `/dashboard/${ response.orgName }` );
     } else
     {
-      setErrorMessage( result.message as string ); // Set the error message to display
+      toast.error( 'Error creating organization' );
     }
   };
 
@@ -35,74 +53,60 @@ const RegisterOrganizationPage = () =>
           <img src='/images/logo.svg' alt='EventJacket' className="h-12 w-auto" />
           <h2 className="text-base font-semibold leading-7 text-gray-900">Organization Registration</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
+          
             Please provide the details of your organization to complete the registration.
           </p>
-          { errorMessage && (
-            <p className="mt-2 text-sm text-red-600">{ errorMessage }</p> // Display error message
-          ) }
         </div>
 
-        <form
-          onSubmit={ handleSubmit }
-          className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2"
-        >
-          <div className="px-4 py-6 sm:p-8">
-            <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-4">
-                <label htmlFor="orgName" className="block text-sm font-medium leading-6 text-gray-900">
-                  Organization Name
-                </label>
-                <div className="mt-2">
-                  <Input
-                    id="orgName"
-                    name="orgName"
-                    type="text"
-                    required
-                    placeholder="Enter your organization name"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-4">
-                <label htmlFor="website" className="block text-sm font-medium leading-6 text-gray-900">
-                  Website
-                </label>
-                <div className="mt-2">
-                  <Input
-                    id="website"
-                    name="website"
-                    type="text"
-                    placeholder="www.example.com"
-                  />
-                </div>
-              </div>
-
-              {/* Additional fields can be added here as needed */ }
-
-              <div className="col-span-full">
-                <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
-                  Organization Logo
-                </label>
-                <div className="mt-2 flex items-center gap-x-3">
-                  <UserCircleIcon aria-hidden="true" className="h-12 w-12 text-gray-300" />
-                  <button
-                    type="button"
-                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    Change
-                  </button>
-                </div>
-              </div>
-            </div>
+        <form onSubmit={ handleSubmit } className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Organization Name
+            </label>
+            <input
+              type="text"
+              name="orgName"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              value={ orgName }
+              onChange={ ( e ) => setOrgName( e.target.value ) }
+              required
+            />
           </div>
-          <div className="flex items-center justify-start gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
-            <button
-              type="submit"
-              className="rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              Complete Registration
-            </button>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Website
+            </label>
+            <input
+              type="url"
+              name="website"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              value={ website }
+              onChange={ ( e ) => setWebsite( e.target.value ) }
+              required
+            />
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Upload Logo
+            </label>
+            <input
+              type="file"
+              name="logo"
+              accept="image/*"
+              onChange={ ( e ) => setLogoFile( e.target.files ? e.target.files[ 0 ] : null ) }
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+            disabled={ loading }
+          >
+            { loading ? 'Registering...' : 'Register Organization' }
+          </button>
         </form>
       </div>
     </div>

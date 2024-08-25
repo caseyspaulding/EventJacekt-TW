@@ -31,7 +31,7 @@ const BlogPostForm: React.FC = () =>
       } = await supabase.auth.getUser();
 
       // Authorization check
-      if ( user?.email !== 'casey.spaulding@outlook.com' )
+      if ( user?.email !== 'casey.spaulding@gmail.com' )
       { // Replace with your email
         toast.error( 'You do not have access to this page.' );
         router.push( '/' );
