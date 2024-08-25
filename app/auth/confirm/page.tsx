@@ -17,8 +17,9 @@ const ConfirmPage = () =>
   {
     const tokenHash = searchParams.get( 'token_hash' );
     const type = searchParams.get( 'type' );
+    const email = searchParams.get( 'email' ); // Extract the email from searchParams
 
-    if ( !tokenHash || type !== 'signup' )
+    if ( !tokenHash || type !== 'signup' || !email )
     {
       setErrorMessage( 'Invalid or missing confirmation link.' );
       setLoading( false );
@@ -29,19 +30,30 @@ const ConfirmPage = () =>
     {
       try
       {
-        // For email confirmation, you might need to directly call confirmSignup or similar
-        const { error } = await supabase.auth.exchangeCodeForSession( tokenHash ); // Use the method appropriate to your flow
+        // Step 1: Confirm the user's email using the tokenHash
+        const { error: confirmError } = await supabase.auth.exchangeCodeForSession( tokenHash );
 
-        if ( error )
+        if ( confirmError )
         {
-          throw error;
+          throw confirmError;
         }
 
-        // If confirmation is successful, redirect to the account type selection page
+        // Step 2: Sign in the user to create a session
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword( {
+          email: email, // Use the extracted email
+          password: 'your_password_here', // Use the user's password; if not available, you may need to handle it differently
+        } );
+
+        if ( signInError )
+        {
+          throw signInError;
+        }
+
+        // If sign-in and session creation is successful, redirect to the account type selection page
         router.push( '/choose-account-type' );
       } catch ( error )
       {
-        setErrorMessage( 'Error confirming email: ' + error );
+        setErrorMessage( 'Error confirming email: ' + error.message );
         setLoading( false );
       }
     };
