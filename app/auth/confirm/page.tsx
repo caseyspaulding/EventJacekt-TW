@@ -1,70 +1,62 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 
 const ConfirmPage = () =>
 {
   const [ loading, setLoading ] = useState( true );
-  const [ message, setMessage ] = useState( '' );
+  const [ errorMessage, setErrorMessage ] = useState( '' );
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClient();
 
   useEffect( () =>
   {
-    const confirmUser = async () =>
+    const tokenHash = searchParams.get( 'token_hash' );
+    const type = searchParams.get( 'type' );
+
+    if ( !tokenHash || type !== 'signup' )
     {
-      const params = new URLSearchParams( window.location.search );
-      const token = params.get( 'token_hash' );
-      const type = params.get( 'type' );
+      setErrorMessage( 'Invalid or missing confirmation link.' );
+      setLoading( false );
+      return;
+    }
 
-      if ( !token || type !== 'signup' )
-      {
-        setMessage( 'Invalid or missing token.' );
-        setLoading( false );
-        return;
-      }
-
-      // Exchange token for a session
-      const { error } = await supabase.auth.exchangeCodeForSession( token );
+    // When the component mounts, we handle the confirmation via the URL
+    const handleConfirmation = async () =>
+    {
+      const { error } = await supabase.auth.updateUser( {
+          // This is handled by the redirect URL after confirmation
+      } );
 
       if ( error )
       {
-        console.error( 'Error confirming email:', error.message );
-        setMessage( 'Error confirming email: ' + error.message );
+        setErrorMessage( 'Error confirming email: ' + error.message );
         setLoading( false );
         return;
       }
 
-      setMessage( 'Email confirmed successfully! Redirecting...' );
-      // Redirect to a specific page after successful confirmation
-      setTimeout( () => router.push( '/choose-account-type' ), 2000 );
+      // If confirmation is successful, redirect to the account type selection page
+      router.push( '/choose-account-type' );
     };
 
-    confirmUser();
+    // Call handleConfirmation when the component mounts
+    handleConfirmation();
+  }, [ router, searchParams, supabase ] );
 
-    const { data: authListener } = supabase.auth.onAuthStateChange( ( event, session ) =>
-    {
-      if ( session )
-      {
-        router.push( '/choose-account-type' );
-      }
-    } );
+  if ( loading )
+  {
+    return <div>Loading...</div>;
+  }
 
-    return () =>
-    {
-      authListener?.subscription?.unsubscribe();
-    };
-  }, [ router, supabase ] );
+  if ( errorMessage )
+  {
+    return <div>Error: { errorMessage }</div>;
+  }
 
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="p-6 max-w-md bg-white rounded-lg shadow-md text-center">
-        { loading ? <p>Loading...</p> : <p>{ message }</p> }
-      </div>
-    </div>
-  );
+  return null; // or some other success message or component
 };
 
 export default ConfirmPage;
