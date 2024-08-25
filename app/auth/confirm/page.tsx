@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 
@@ -24,26 +24,29 @@ const ConfirmPage = () =>
       return;
     }
 
-    // When the component mounts, we handle the confirmation via the URL
-    const handleConfirmation = async () =>
+    const confirmUser = async () =>
     {
-      const { error } = await supabase.auth.updateUser( {
-          // This is handled by the redirect URL after confirmation
-      } );
-
-      if ( error )
+      try
       {
-        setErrorMessage( 'Error confirming email: ' + error.message );
-        setLoading( false );
-        return;
-      }
+        // Assuming PKCE flow, directly use the tokenHash string
+        const {  error } = await supabase.auth.exchangeCodeForSession( tokenHash );
 
-      // If confirmation is successful, redirect to the account type selection page
-      router.push( '/choose-account-type' );
+        if ( error )
+        {
+          throw error;
+        }
+
+        // If confirmation is successful, redirect to the account type selection page
+        router.push( '/choose-account-type' );
+      } catch ( error )
+      {
+        setErrorMessage( 'Error confirming email: ' + errorMessage );
+        setLoading( false );
+      }
     };
 
-    // Call handleConfirmation when the component mounts
-    handleConfirmation();
+    // Call confirmUser when the component mounts
+    confirmUser();
   }, [ router, searchParams, supabase ] );
 
   if ( loading )
@@ -59,4 +62,10 @@ const ConfirmPage = () =>
   return null; // or some other success message or component
 };
 
-export default ConfirmPage;
+const ConfirmPageWrapper = () => (
+  <Suspense fallback={ <div>Loading...</div> }>
+    <ConfirmPage />
+  </Suspense>
+);
+
+export default ConfirmPageWrapper;
