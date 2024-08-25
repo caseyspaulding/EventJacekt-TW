@@ -231,7 +231,7 @@ export default function NavBar1 ()
                         src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
                         alt=""
                         />
-                        <div>
+                        <div className='flex justify-start'>
                           <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
                           <p className="text-xs text-gray-500">{ user?.email }</p>
                         </div>
