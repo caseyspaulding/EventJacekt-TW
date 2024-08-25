@@ -7,6 +7,7 @@ export async function GET ( request: NextRequest )
 {
   try
   {
+    
     const userProfile = await fetchUserProfile( request );
 
     if ( !userProfile )
