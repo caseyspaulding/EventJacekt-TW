@@ -27,6 +27,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
     const [ isValid, setIsValid ] = useState( false );
     const router = useRouter();
     const supabase = createClient(); // Initialize Supabase client
+    const [ errorMessage, setErrorMessage ] = useState( "" );
 
     const toggleVisibility = () => setIsVisible( !isVisible );
 
@@ -64,6 +65,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                 router.push( result.redirectTo as string );
             } else
             {
+                setErrorMessage( result.message || "Google sign-in failed" );
                 console.error( result.message );
             }
         };
@@ -94,6 +96,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
             router.push( result.redirectTo as string );
         } else
         {
+            setErrorMessage( result.message || "Email/Password sign-in failed" );
             console.error( result.message );
         }
     };
@@ -178,6 +181,11 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                             { searchParams?.message && (
                                 <p className="mt-4 rounded border border-red-500 bg-red-100 p-4 text-center text-red-700">
                                     { searchParams.message }
+                                </p>
+                            ) }
+                            { errorMessage && (
+                                <p className="mt-4 rounded border border-red-500 bg-red-100 p-4 text-center text-red-700">
+                                    { errorMessage }
                                 </p>
                             ) }
                         </form>
