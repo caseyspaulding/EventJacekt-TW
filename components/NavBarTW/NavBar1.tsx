@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Bars3CenterLeftIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import { createClient } from "@/utils/supabase/client";
-import OneTapComponent from "../GoogleOneTap";
+
 import React from "react";
 import type { Json } from "@/database.types";
 
@@ -401,8 +401,7 @@ export default function NavBar1 ()
         </Popover>
       </header>
 
-      {/* Include OneTapComponent for Google One Tap Sign-In */ }
-      <OneTapComponent />
+     
     </div>
   );
 }

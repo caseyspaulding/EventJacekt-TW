@@ -10,5 +10,6 @@ export const config = {
         '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$|$|^/auth/sign-in$|^/pricing$|^/faqs$).*)',
         '/createpost',
         '/dashboard' // Ensure this route is protected
+        
     ]
 };

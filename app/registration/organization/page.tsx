@@ -1,18 +1,13 @@
-
 'use client';
-
 
 import { useState } from 'react';
 import { registerOrganization } from './registerOrganization'; // Update with correct path
 import toast from 'react-hot-toast';
-import router from 'next/router';
-
-
-
-
+import { useRouter } from 'next/navigation';
 
 const RegisterOrganizationPage = () =>
 {
+  const router = useRouter();
   const [ orgName, setOrgName ] = useState( '' );
   const [ website, setWebsite ] = useState( '' );
   const [ logoFile, setLogoFile ] = useState<File | null>( null );
@@ -38,8 +33,11 @@ const RegisterOrganizationPage = () =>
     if ( response.success )
     {
       toast.success( 'Organization registered successfully!' );
-      // Navigate to the organization's dashboard after successful registration
-      router.push( `/dashboard/${ response.orgName }` );
+      // Small delay before navigating
+      setTimeout( () =>
+      {
+        router.push( `/dashboard/${ response.orgName }` );
+      }, 200 );
     } else
     {
       toast.error( 'Error creating organization' );
@@ -50,10 +48,11 @@ const RegisterOrganizationPage = () =>
     <div className="pt-8 flex min-h-screen items-center justify-center bg-gray-100">
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
         <div className="px-4 sm:px-0">
-          <img src='/images/logo.svg' alt='EventJacket' className="h-12 w-auto" />
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Organization Registration</h2>
+          <img src="/images/logo.svg" alt="EventJacket" className="h-12 w-auto" />
+          <h2 className="text-base font-semibold leading-7 text-gray-900">
+            Organization Registration
+          </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
-          
             Please provide the details of your organization to complete the registration.
           </p>
         </div>
