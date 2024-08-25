@@ -224,19 +224,21 @@ export default function NavBar1 ()
               ) : (
                 <Menu as="div" className="ml-3 relative">
                   <div>
-                    <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                      <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <span className="sr-only">Open user menu</span>
-                        <div className='flex items-center space-x-4 mt-6'>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
-                        alt=""
-                        />
-                        
-                          <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
-                          <p className="text-xs text-gray-500">{ user?.email }</p>
-                    </div>
-                    </Menu.Button>
+                        <div className="flex items-center space-x-4">
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
+                            alt=""
+                          />
+                          {/* Container to stack the orgName and email vertically */ }
+                          <div className="flex flex-col items-start">
+                            <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
+                            <p className="text-xs text-gray-500">{ user?.email }</p>
+                          </div>
+                        </div>
+                      </Menu.Button>
                   </div>
                   <Transition
                     as={ React.Fragment }
@@ -280,7 +282,7 @@ export default function NavBar1 ()
             </div>
           </div>
 
-          {/* Mobile menu */ }
+        
           {/* Mobile menu */ }
           <PopoverPanel className="absolute inset-x-0 top-0 z-30 origin-top-right p-2 transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-100 data-[enter]:ease-out data-[leave]:ease-in md:hidden">
             <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
@@ -310,7 +312,10 @@ export default function NavBar1 ()
                             src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
                             alt=""
                           />
-                          <span className="ml-2">{ user?.orgName || 'User' }</span>
+                          <div className="ml-2 flex flex-col items-start">
+                            <span className="font-medium text-gray-900">{ user?.orgName || 'User' }</span>
+                            <span className="text-sm text-gray-500">{ user?.email || 'user@example.com' }</span>
+                          </div>
                         </Menu.Button>
                       </div>
                       <Transition
