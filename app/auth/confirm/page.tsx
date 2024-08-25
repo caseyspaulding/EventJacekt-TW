@@ -23,7 +23,6 @@ const ConfirmPage = () =>
       setLoading( false );
       return;
     }
-
     const confirmUser = async () =>
     {
       try
@@ -33,6 +32,8 @@ const ConfirmPage = () =>
 
         if ( error )
         {
+          
+          console.error( 'Error confirming email:', error );
           throw error;
         }
 
@@ -40,11 +41,11 @@ const ConfirmPage = () =>
         router.push( '/choose-account-type' );
       } catch ( error )
       {
-        setErrorMessage( 'Error confirming email: ' + errorMessage );
+        console.error( 'Error confirming email:', error );
+        setErrorMessage( 'Error confirming email: ' + error  );
         setLoading( false );
       }
     };
-
     // Call confirmUser when the component mounts
     confirmUser();
   }, [ router, searchParams, supabase ] );
