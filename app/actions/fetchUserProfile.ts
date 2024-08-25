@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createClient } from '@/utils/supabase/server';
 import { db } from '@/db';
 import { userProfiles, organizations } from '@/db/schema';
@@ -5,7 +6,7 @@ import { eq } from 'drizzle-orm/expressions';
 import type { UserType } from '@/types/UserType';
 import type { NextRequest } from 'next/server';
 
-export async function fetchUserProfile ( request: NextRequest ): Promise<UserType | null>
+export async function fetchUserProfile ( _request: NextRequest ): Promise<UserType | null>
 {
     try
     {
