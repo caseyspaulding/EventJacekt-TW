@@ -41,7 +41,7 @@ const ConfirmPage = () =>
         router.push( '/choose-account-type' );
       } catch ( error )
       {
-        setErrorMessage( 'Error confirming email: ' + error.message );
+        setErrorMessage( 'Error confirming email: ' + error );
         setLoading( false );
       }
     };
