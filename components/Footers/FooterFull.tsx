@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import type { JSX, SVGProps } from "react"
 
 const navigation = {
