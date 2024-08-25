@@ -4,7 +4,7 @@ export default function ThankYouPage ()
 {
   return (
     <>
-      <div className="flex h-screen min-h-screen flex-col items-center justify-center bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-600 px-4">
+      <div className="flex h-screen min-h-screen flex-col items-center justify-center bg-gray-100 px-4">
         <main className="flex w-full max-w-7xl flex-grow flex-col justify-center px-4 lg:px-8">
           <div className="flex flex-shrink-0 justify-center mb-8">
             <a href="#" className="inline-flex">

@@ -15,22 +15,22 @@ const ConfirmPage = () =>
 
   useEffect( () =>
   {
+    const tokenHash = searchParams.get( 'token_hash' );
+    const type = searchParams.get( 'type' );
+
+    if ( !tokenHash || type !== 'signup' )
+    {
+      setErrorMessage( 'Invalid or missing confirmation link.' );
+      setLoading( false );
+      return;
+    }
+
     const confirmUser = async () =>
     {
       try
       {
-        const tokenHash = searchParams.get( 'token_hash' );
-        const type = searchParams.get( 'type' );
-
-        if ( !tokenHash || type !== 'signup' )
-        {
-          setErrorMessage( 'Invalid or missing confirmation link.' );
-          setLoading( false );
-          return;
-        }
-
-        // Use the correct method to exchange the token hash for a session
-        const { error } = await supabase.auth.exchangeCodeForSession( tokenHash );
+        // For email confirmation, you might need to directly call confirmSignup or similar
+        const { error } = await supabase.auth.exchangeCodeForSession( tokenHash ); // Use the method appropriate to your flow
 
         if ( error )
         {
@@ -41,11 +41,12 @@ const ConfirmPage = () =>
         router.push( '/choose-account-type' );
       } catch ( error )
       {
-        setErrorMessage( 'Error confirming email: ' + error );
+        setErrorMessage( 'Error confirming email: ' + error.message );
         setLoading( false );
       }
     };
 
+    // Call confirmUser when the component mounts
     confirmUser();
   }, [ router, searchParams, supabase ] );
 
