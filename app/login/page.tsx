@@ -165,7 +165,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                                 <Checkbox name="remember" size="sm">
                                     Remember me
                                 </Checkbox>
-                                <Link className="text-default-500" href="#" size="sm">
+                                <Link className="text-default-500" href="/auth/reset-password" size="sm">
                                     Forgot password?
                                 </Link>
                             </div>
