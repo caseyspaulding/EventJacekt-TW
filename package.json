@@ -28,6 +28,7 @@
         "@stripe/connect-js": "^3.3.12",
         "@stripe/react-connect-js": "^3.3.13",
         "@stripe/stripe-js": "^4.3.0",
+        "@supabase/auth-js": "^2.64.4",
         "@supabase/ssr": "^0.4.0",
         "@supabase/supabase-js": "^2.45.1",
         "@tinymce/tinymce-react": "^5.1.1",
