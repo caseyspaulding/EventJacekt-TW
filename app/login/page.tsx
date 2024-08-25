@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Head from "next/head";
 import { SubmitButton } from "./submit-button";
 import { verifyAndRedirect } from "./signin";
+import OneTapComponent from "@/components/GoogleOneTap";
 
 declare global
 {
@@ -37,9 +38,12 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
     {
         window.handleSignInWithGoogle = async ( response ) =>
         {
+            console.log( "Google Sign-In Response:", response );
+
             const token = response.credential;
-            // Call the server action to verify the token and check user status
             const result = await verifyAndRedirect( token );
+
+            console.log( "Verification result:", result );
 
             if ( result.success )
             {
@@ -49,7 +53,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                 console.error( result.message );
             }
         };
-
+        
         // Load Google Sign-In script
         const script = document.createElement( "script" );
         script.src = "https://accounts.google.com/gsi/client";
@@ -210,6 +214,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                     />
                 </div>
             </div>
+            <OneTapComponent />
         </>
     );
 }

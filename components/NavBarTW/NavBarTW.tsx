@@ -1,9 +1,4 @@
 
-
-
-
-
-
 import { Button } from "flowbite-react";
 import VideoFacade from "../VideoFacade";
 
@@ -60,13 +55,12 @@ export default function NavBarTW ()
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
                 <p className="text-base font-medium mb-3  text-gray-400">Sign up to get notified when it’s ready.</p>
                 <div className="relative group cursor-pointer">
-                  <div
-                    className="absolute -inset-1 bg-gradient-to-r from-blue-700 to-blue-600 rounded-lg blur opacity-35 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
-                  ></div>
+                  
                   <Button
-                    size="lg"
+                    size="md"
+                    
                     href="/signup"
-                    className=" relative px-6 py-1 bg-blue-700 text-white font-bold text-2xl rounded-lg leading-none ring-1 ring-gray-900/5"
+                    className=" relative px-6 py-1 bg-orange-500 hover:bg-orange-400 text-white font-medium text-2xl rounded-xl leading-none  ring-gray-900/5"
                   >
                     Get Started
                   </Button>
