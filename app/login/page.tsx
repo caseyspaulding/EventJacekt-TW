@@ -53,7 +53,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                 console.error( result.message );
             }
         };
-        
+
         // Load Google Sign-In script
         const script = document.createElement( "script" );
         script.src = "https://accounts.google.com/gsi/client";
@@ -154,7 +154,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                             </div>
                             <SubmitButton
                                 color="blue"
-                                className="w-full bg-blue-700"
+                                className="w-full bg-blue-700 rounded-3xl"
                                 pendingText="Signing In..."
                                 disabled={ !isValid }
                             >
@@ -176,7 +176,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                                 <span className="bg-white px-4 text-gray-900">Or continue with</span>
                             </div>
                         </div>
-                        <div className='flex justify-center'>
+                        <div className='flex justify-center  mx-2'>
                             <div
                                 id="g_id_onload"
                                 data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
