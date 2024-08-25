@@ -8,6 +8,7 @@ import Head from "next/head";
 import { SubmitButton } from "./submit-button";
 import { verifyAndRedirect } from "./signin";
 import OneTapComponent from "@/components/GoogleOneTap";
+import { createClient } from "@/utils/supabase/client";
 
 declare global
 {
@@ -25,7 +26,8 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
     const [ password, setPassword ] = useState( "" );
     const [ isValid, setIsValid ] = useState( false );
     const router = useRouter();
-
+    const supabase = createClient(); // Initialize Supabase client
+    
     const toggleVisibility = () => setIsVisible( !isVisible );
 
     useEffect( () =>
@@ -35,7 +37,19 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
     }, [ email, password ] );
 
     useEffect( () =>
-    {
+    {// Check if user is already authenticated
+        const checkAuthStatus = async () =>
+        {
+            const { data: { session } } = await supabase.auth.getSession();
+            if ( session )
+            {
+                // User is already authenticated, redirect them
+                router.push( '/dashboard' );
+            }
+        };
+
+        checkAuthStatus();
+        
         window.handleSignInWithGoogle = async ( response ) =>
         {
             console.log( "Google Sign-In Response:", response );

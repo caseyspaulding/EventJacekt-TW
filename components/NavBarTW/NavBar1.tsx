@@ -7,9 +7,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Bars3CenterLeftIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import { createClient } from "@/utils/supabase/client";
-
 import React from "react";
 import type { Json } from "@/database.types";
+
 
 // Define your UserType
 export interface User
@@ -74,11 +74,6 @@ const navigation = [
   { name: "About", href: "/about" },
 ];
 
-const userNavigation = [
-  { name: 'Dashboard', href: '' },
-  { name: 'Sign out', href: '#' },
-
-];
 
 export default function NavBar1 ()
 {
@@ -87,13 +82,11 @@ export default function NavBar1 ()
   const [ user, setUser ] = useState<User | null>( null );
   const supabase = createClient();
 
-  // Unified fetch user profile function
   const fetchUserProfile = async () =>
   {
     try
     {
       const response = await fetch( '/api/userProfile', { method: 'GET' } );
-
       if ( response.ok )
       {
         const userProfile = await response.json();
@@ -115,68 +108,19 @@ export default function NavBar1 ()
 
   useEffect( () =>
   {
-    // Initial user profile fetch
     fetchUserProfile();
-
     const handleScroll = () => setIsSticky( window.scrollY > 0 );
     window.addEventListener( 'scroll', handleScroll );
-
     return () => window.removeEventListener( 'scroll', handleScroll );
-  }, [] );
-
-  useEffect( () =>
-  {
-    // Initialize Google One Tap Sign-In
-    window.handleSignInWithGoogle = async ( response: { credential: string } ) =>
-    {
-      const token = response.credential;
-      try
-      {
-        const { error } = await supabase.auth.signInWithIdToken( {
-          provider: 'google',
-          token,
-        } );
-
-        if ( error ) throw error;
-
-        const userProfile = await fetchUserProfile();
-        if ( userProfile )
-        {
-          setIsAuthenticated( true );
-          setUser( userProfile );
-        }
-      } catch ( error )
-      {
-        console.error( 'Google Sign-In Error:', error );
-      }
-    };
-
-    const initializeGoogleOneTap = () =>
-    {
-      if ( !window.google ) return;
-
-      window.google.accounts.id.initialize( {
-        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
-        callback: window.handleSignInWithGoogle,
-      } );
-
-      window.google.accounts.id.prompt();
-    };
-
-    // Ensure Google One Tap is initialized once the script is loaded
-    initializeGoogleOneTap();
   }, [] );
 
   const handleSignOut = async ( event: React.FormEvent<HTMLFormElement> ) =>
   {
     event.preventDefault();
-
     try
     {
       const { error } = await supabase.auth.signOut();
-
       if ( error ) throw error;
-
       setIsAuthenticated( false );
       setUser( null );
     } catch ( error )
@@ -184,6 +128,11 @@ export default function NavBar1 ()
       console.error( 'Sign out error:', error );
     }
   };
+
+  const userNavigation = [
+    { name: 'Dashboard', href: user ? `/dashboard/${ user.orgName }` : '' }, // Dynamic link
+    { name: 'Sign out', href: '#' },
+  ];
 
   return (
     <div
