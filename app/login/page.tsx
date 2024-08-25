@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import Head from "next/head";
 import { SubmitButton } from "./submit-button";
 import { verifyAndRedirect } from "./signin";
-
 import { createClient } from "@/utils/supabase/client";
 
 declare global
@@ -38,14 +37,40 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
     }, [ email, password ] );
 
     useEffect( () =>
-    {// Check if user is already authenticated
+    {
         const checkAuthStatus = async () =>
         {
             const { data: { session } } = await supabase.auth.getSession();
             if ( session )
             {
-                // User is already authenticated, redirect them
-                router.push( '/dashboard' );
+                // Check if user has an organization before redirecting
+                const { data: { user } } = await supabase.auth.getUser();
+
+                if ( user )
+                {
+                    const userId = user.id; // Safe to access 'id' since 'user' is not null
+
+                    // Query the user's associated organization
+                    const { data: org} = await supabase
+                        .from( 'organizations' ) // Replace 'organizations' with your actual table name
+                        .select( 'id' )
+                        .eq( 'user_id', userId )
+                        .single();
+
+                    if ( org )
+                    {
+                        // Redirect to the dashboard if the organization exists
+                        router.push( '/dashboard' );
+                    } else
+                    {
+                        // Do not redirect; allow them to log in again or show a message
+                        setErrorMessage( 'You do not have an associated organization. Please contact support or create an organization.' );
+                    }
+                } else
+                {
+                    // Handle the case where 'user' is null
+                    setErrorMessage( 'Unable to retrieve user information. Please try logging in again.' );
+                }
             }
         };
 
@@ -236,7 +261,6 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                     />
                 </div>
             </div>
-
         </>
     );
 }
