@@ -230,7 +230,11 @@ export default function NavBar1 ()
                         className="h-8 w-8 rounded-full"
                         src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
                         alt=""
-                      />
+                        />
+                        <div>
+                          <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
+                          <p className="text-xs text-gray-500">{ user?.email }</p>
+                        </div>
                     </Menu.Button>
                   </div>
                   <Transition
