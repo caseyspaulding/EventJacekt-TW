@@ -1,17 +1,16 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useState, Suspense } from 'react';
+import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 
 export const dynamic = 'force-dynamic';
 
-const ConfirmPage = () =>
+const ConfirmPageContent = () =>
 {
   const [ loading, setLoading ] = useState( true );
   const [ errorMessage, setErrorMessage ] = useState( '' );
   const router = useRouter();
-  const searchParams = useSearchParams();
   const supabase = createClient();
 
   useEffect( () =>
@@ -20,6 +19,7 @@ const ConfirmPage = () =>
     {
       try
       {
+        const searchParams = new URLSearchParams( window.location.search );
         const tokenHash = searchParams.get( 'token_hash' );
         const type = searchParams.get( 'type' );
 
@@ -28,7 +28,6 @@ const ConfirmPage = () =>
           throw new Error( 'Invalid or missing confirmation link.' );
         }
 
-        // Exchange the token hash for a session
         const { data, error } = await supabase.auth.verifyOtp( {
           token_hash: tokenHash,
           type: 'signup',
@@ -39,10 +38,8 @@ const ConfirmPage = () =>
           throw error;
         }
 
-        // Check if the session was created successfully
         if ( data?.session )
         {
-          // If confirmation is successful, redirect to the account type selection page
           router.push( '/choose-account-type' );
         } else
         {
@@ -51,13 +48,13 @@ const ConfirmPage = () =>
       } catch ( error )
       {
         console.error( 'Error confirming email:', error );
-        setErrorMessage( error.message || 'An error occurred during email confirmation.' );
+        setErrorMessage( 'An error occurred during email confirmation.' );
         setLoading( false );
       }
     };
 
     confirmUser();
-  }, [ router, searchParams, supabase ] );
+  }, [ router, supabase ] );
 
   if ( loading )
   {
@@ -70,6 +67,15 @@ const ConfirmPage = () =>
   }
 
   return null;
+};
+
+const ConfirmPage = () =>
+{
+  return (
+    <Suspense fallback={ <div>Loading...</div> }>
+      <ConfirmPageContent />
+    </Suspense>
+  );
 };
 
 export default ConfirmPage;
