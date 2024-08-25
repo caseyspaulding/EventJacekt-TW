@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { registerOrganization } from './registerOrganization'; // Update with correct path
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { Input } from '@nextui-org/react';
 
 const RegisterOrganizationPage = () =>
 {
@@ -13,6 +14,13 @@ const RegisterOrganizationPage = () =>
   const [ logoFile, setLogoFile ] = useState<File | null>( null );
   const [ loading, setLoading ] = useState( false );
 
+  const handleFileSelect = ( e: React.ChangeEvent<HTMLInputElement> ) =>
+  {
+    if ( e.target.files && e.target.files[ 0 ] )
+    {
+      setLogoFile( e.target.files[ 0 ] );
+    }
+  };
   const handleSubmit = async ( e: React.FormEvent ) =>
   {
     e.preventDefault();
@@ -25,6 +33,7 @@ const RegisterOrganizationPage = () =>
     {
       formData.append( 'logo', logoFile );
     }
+
 
     const response = await registerOrganization( formData );
 
@@ -45,14 +54,14 @@ const RegisterOrganizationPage = () =>
   };
 
   return (
-    <div className="pt-8 flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
-        <div className="px-4 sm:px-0">
-          <img src="/images/logo.svg" alt="EventJacket" className="h-12 w-auto" />
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-3xl shadow-lg w-full max-w-md">
+        <div className="mb-4 text-center">
+          <img src="/images/logo.svg" alt="EventJacket" className="h-12 w-auto mx-auto" />
+          <h2 className="mt-4 text-2xl font-semibold leading-7 text-gray-900">
             Organization Registration
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
+          <p className="mt-2 text-sm leading-6 text-gray-600">
             Please provide the details of your organization to complete the registration.
           </p>
         </div>
@@ -62,7 +71,7 @@ const RegisterOrganizationPage = () =>
             <label className="block text-sm font-medium text-gray-700">
               Organization Name
             </label>
-            <input
+            <Input
               type="text"
               name="orgName"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -76,8 +85,8 @@ const RegisterOrganizationPage = () =>
             <label className="block text-sm font-medium text-gray-700">
               Website
             </label>
-            <input
-              type="url"
+            <Input
+              type="text"
               name="website"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               value={ website }
@@ -87,25 +96,55 @@ const RegisterOrganizationPage = () =>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Upload Logo
-            </label>
-            <input
-              type="file"
-              name="logo"
-              accept="image/*"
-              onChange={ ( e ) => setLogoFile( e.target.files ? e.target.files[ 0 ] : null ) }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
+            <div className="col-span-full">
+              <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-700">
+                Upload Logo
+              </label>
+              <div className="mt-2 flex items-center gap-x-3">
+                <svg
+                  className="h-12 w-12 text-gray-300"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <button
+                  type="button"
+                  onClick={ () => document.getElementById( 'logoFileInput' )?.click() }
+                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                >
+                  Change
+                </button>
+              </div>
+              <input
+                type="file"
+                name="logo"
+                accept="image/*"
+                onChange={ handleFileSelect }
+                className="hidden"
+                id="logoFileInput"
+              />
+              { logoFile && (
+                <p className="mt-2 text-sm text-gray-500">
+                  Selected file: { logoFile.name }
+                </p>
+              ) }
+            </div>
           </div>
-
+<div className="flex items-center justify-center">
           <button
             type="submit"
             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
             disabled={ loading }
           >
             { loading ? 'Registering...' : 'Register Organization' }
-          </button>
+            </button>
+            </div>
         </form>
       </div>
     </div>
