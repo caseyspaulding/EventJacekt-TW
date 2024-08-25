@@ -1,8 +1,9 @@
 'use client';
 
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
+
 export const dynamic = 'force-dynamic';
 
 const ConfirmPage = () =>
@@ -15,56 +16,52 @@ const ConfirmPage = () =>
 
   useEffect( () =>
   {
-    const tokenHash = searchParams.get( 'token_hash' );
-    const type = searchParams.get( 'type' );
-    const email = searchParams.get( 'email' ); // Extract the email from searchParams
-
-    if ( !tokenHash || type !== 'signup' || !email )
-    {
-      setErrorMessage( 'Invalid or missing confirmation link.' );
-      setLoading( false );
-      return;
-    }
-
     const confirmUser = async () =>
     {
       try
       {
-        // Step 1: Confirm the user's email using the tokenHash
-        const { error: confirmError } = await supabase.auth.exchangeCodeForSession( tokenHash );
+        const tokenHash = searchParams.get( 'token_hash' );
+        const type = searchParams.get( 'type' );
 
-        if ( confirmError )
+        if ( !tokenHash || type !== 'signup' )
         {
-          throw confirmError;
+          throw new Error( 'Invalid or missing confirmation link.' );
         }
 
-        // Step 2: Sign in the user to create a session
-        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword( {
-          email: email, // Use the extracted email
-          password: 'your_password_here', // Use the user's password; if not available, you may need to handle it differently
+        // Exchange the token hash for a session
+        const { data, error } = await supabase.auth.verifyOtp( {
+          token_hash: tokenHash,
+          type: 'signup',
         } );
 
-        if ( signInError )
+        if ( error )
         {
-          throw signInError;
+          throw error;
         }
 
-        // If sign-in and session creation is successful, redirect to the account type selection page
-        router.push( '/choose-account-type' );
+        // Check if the session was created successfully
+        if ( data?.session )
+        {
+          // If confirmation is successful, redirect to the account type selection page
+          router.push( '/choose-account-type' );
+        } else
+        {
+          throw new Error( 'Failed to create session after email confirmation.' );
+        }
       } catch ( error )
       {
-        setErrorMessage( 'Error confirming email: ' + error.message );
+        console.error( 'Error confirming email:', error );
+        setErrorMessage( error.message || 'An error occurred during email confirmation.' );
         setLoading( false );
       }
     };
 
-    // Call confirmUser when the component mounts
     confirmUser();
   }, [ router, searchParams, supabase ] );
 
   if ( loading )
   {
-    return <div>Loading...</div>;
+    return <div>Confirming your email...</div>;
   }
 
   if ( errorMessage )
@@ -72,13 +69,7 @@ const ConfirmPage = () =>
     return <div>Error: { errorMessage }</div>;
   }
 
-  return null; // or some other success message or component
+  return null;
 };
 
-const ConfirmPageWrapper = () => (
-  <Suspense fallback={ <div>Loading...</div> }>
-    <ConfirmPage />
-  </Suspense>
-);
-
-export default ConfirmPageWrapper;
+export default ConfirmPage;
