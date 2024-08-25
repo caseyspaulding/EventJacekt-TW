@@ -11,18 +11,23 @@ const navigation = {
   support: [
     { name: 'Pricing', href: '/pricing' },
     { name: 'Documentation', href: '/docs' },
-    { name: 'Guides', href: '/guides' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Help Center', href: '/help' },
+    { name: 'Blog', href: '/blog' },
 
   ],
   company: [
     { name: 'About', href: '/about' },
-    { name: 'Blog', href: '/blog' },
+  
     { name: 'Affiliate', href: '/affiliate' },
-  ],
-  legal: [
-
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },
+
+  ],
+  free: [
+
+    { name: 'QR Code Generator', href: '/qrcode' },
+   
   ],
   social: [
     {
@@ -150,11 +155,11 @@ export default function FooterFull ()
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-md font-semibold leading-6 text-zinc-50">Legal</h3>
+                <h3 className="text-md font-semibold leading-6 text-zinc-50">Free Tools</h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  { navigation.legal.map( ( item ) => (
+                  { navigation.free.map( ( item ) => (
                     <li key={ item.name }>
-                      <a href={ item.href } className="text-sm leading-6 text-zinc-50 hover:text-gray-900">
+                      <a href={ item.href } className="text-sm leading-6 text-zinc-50 hover:text-blue-200">
                         { item.name }
                       </a>
                     </li>

@@ -12,6 +12,9 @@ import { getEvents } from './actions/getEvents';
 import EventsListComponent from '@/components/EventListComponent';
 import HowItWorks from '@/components/Features/HowItWorks';
 
+import FAQ_TW from '@/components/FAQ/FAQ_TW';
+
+
 export const metadata: Metadata = {
     title: 'EventJacket - Event Management Platform for Non-Profits',
     description:
@@ -32,6 +35,10 @@ export default async function Index ()
 
             <SlantedDividerSolid color="#f1f5f9" height="50px" flip invert zIndex={ 3 } />
             <HowItWorks />
+            
+           <FAQ_TW />     
+           
+           
             <h2 className='text-center'>
                 <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
                     Coming soon
@@ -52,7 +59,6 @@ export default async function Index ()
                 zIndex={ 1 } // Control stacking order
                 overlap="-50px" // Control overlap between sections
             />
-
             <FooterFull />
         </>
     );

@@ -9,7 +9,7 @@ const faqs = [
     id: 2,
     question: 'How does EventJacket handle ticket sales and payments?',
     answer:
-      "EventJacket integrates with popular payment gateways to process ticket sales securely. You can set up various ticket types, pricing tiers, and even offer promotional codes. Funds are typically transferred to your linked bank account within 2-5 business days after the event.",
+      "EventJacket integrates with Stripe to process ticket sales securely. You can set up various ticket types, pricing tiers, and even offer promotional codes. Funds are typically transferred to your linked bank account daily or weekly, depending on your preferences.",
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ export default function FAQ_TW ()
     <div className="bg-white">
       <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-
+          <h2 className="text-2xl font-bold leading-10 tracking-tight text-gray-900">Frequently asked questions</h2>
           <p className="mt-6 text-base leading-7 text-gray-600">
             Have a different question and can't find the answer you're looking for? Reach out to our support team by{ ' ' }
             <a href="mailto:team@eventjacket.com" className="font-semibold text-blue-700 hover:text-blue-400">

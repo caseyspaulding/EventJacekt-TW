@@ -69,9 +69,9 @@ const solutions = [
 ];
 const navigation = [
   { name: "Pricing", href: "/pricing" },
-  { name: "FAQs", href: "/faqs" },
+  
   { name: "Guides", href: "/blog" },
-  { name: "About", href: "/about" },
+ 
 ];
 
 

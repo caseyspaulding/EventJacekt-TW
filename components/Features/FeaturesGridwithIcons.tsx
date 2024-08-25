@@ -15,9 +15,9 @@ import 'animate.css';
 
 const features = [
   {
-    name: "Volunteer Management",
+    name: "Relationship Management",
     description:
-      "Easily manage and organize your volunteers, assign tasks, and track their contributions.",
+      "Easily manage and organize volunteers, vendors, and performers. Signups, payouts, schedules, and more.",
     icon: UserGroupIcon,
   },
   {
