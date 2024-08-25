@@ -171,7 +171,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                             </div>
                             <SubmitButton
                                 color="blue"
-                                className="w-full bg-blue-700 rounded-3xl"
+                                className="w-full bg-orange-500 rounded-3xl"
                                 pendingText="Signing In..."
                                 disabled={ !isValid }
                             >

@@ -153,7 +153,7 @@ export default function Component ()
                             />
                             <SubmitButton
                                 type="submit"
-                                className="w-full bg-blue-500 rounded-3xl"
+                                className="w-full bg-orange-500 text-white hover:bg-orange-400 rounded-3xl"
                                 pendingText="Signing Up..."
                                 disabled={ !isFormValid }
                             >
