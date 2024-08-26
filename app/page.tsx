@@ -50,9 +50,9 @@ export default async function Index ()
             </h2>
             <EventsListComponent eventList={ eventList } />
             <SlantedDivider
-                topColor="#2563eb"
-                bottomColor="#2563eb" // Tailwind's blue-700 color
-                gradient="linear-gradient(135deg, #2563eb, #2563eb)"
+                topColor="#1d4ed8"
+                bottomColor="#1d4ed8" // Tailwind's blue-700 color
+                gradient="linear-gradient(135deg, #1d4ed8, #1d4ed8)"
                 height="52px"
                 flip={ false } // Flip the slant if needed
                 invert={ true } // Invert the angle if needed
