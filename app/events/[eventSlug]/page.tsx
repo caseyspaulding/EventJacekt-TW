@@ -5,6 +5,9 @@ import { events, orgTicketTypes } from "@/db/schema";
 import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
 import { eq } from "drizzle-orm/expressions";
 import MainBanner from "@/components/EventHomeOne/Hero/MainBanner";
+import NavBarTW from "@/components/NavBarTW/NavBarTW";
+import NavBar1 from "@/components/NavBarTW/NavBar1";
+import FooterFull from "@/components/Footers/FooterFull";
 
 interface Params
 {
@@ -59,6 +62,7 @@ export default async function EventPage ( { params }: { params: Params } )
 
     return (
         <div>
+            <NavBar1 />
             <MainBanner
                 eventName={ eventData.name }
                 eventSubtitle={ eventData.description || "" }
@@ -75,6 +79,7 @@ export default async function EventPage ( { params }: { params: Params } )
                 tickets={ tickets as [] }  // Ensure tickets are correctly typed
                 eventSlug={ eventSlug }
             />
+            <FooterFull />  
         </div>
     );
 }
