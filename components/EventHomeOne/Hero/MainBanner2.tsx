@@ -1,9 +1,23 @@
 'use client';
 
-import React from "react";
-import Countdown from "./Countdown";
-import { Card, CardHeader, CardBody, CardFooter, Divider } from "@nextui-org/react";
-import TicketPurchaseClient from "@/app/events/[eventSlug]/TicketPurchaseClient";
+
+import Countdown from './Countdown';
+import
+  {
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    Divider,
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Button,
+    useDisclosure
+  } from '@nextui-org/react';
+import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
 
 interface Ticket
 {
@@ -43,7 +57,7 @@ interface MainBannerProps
   eventSlug: string;
 }
 
-const MainBanner: React.FC<MainBannerProps> = ( {
+const MainBanner2: React.FC<MainBannerProps> = ( {
   eventName,
   eventSubtitle,
   eventDate,
@@ -53,6 +67,14 @@ const MainBanner: React.FC<MainBannerProps> = ( {
   eventSlug,
 } ) =>
 {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+ 
+
+  const handleBuyTicketsClick = () =>
+  {
+    onOpen(); // Open the modal
+  };
+
   return (
     <div className="p-4">
       {/* Two-column Layout */ }
@@ -60,11 +82,11 @@ const MainBanner: React.FC<MainBannerProps> = ( {
         {/* Left Column: Event Information */ }
         <div className="flex flex-col justify-top rounded-md px-8 mb-8 lg:mb-0">
           <div className="">
-            <h1 className="text-3xl md:text-5xl pt-4 font-bold text-grey-900 mb-4  lg:text-left">
+            <h1 className="text-3xl md:text-5xl pt-4 font-bold text-grey-900 mb-4 text-center lg:text-left">
               { eventName } <br />
               <span className="text-xl sm:text-2xl md:text-3xl">{ eventSubtitle }</span>
             </h1>
-            <ul className="mb-6  lg:text-left">
+            <ul className="mb-6 text-center lg:text-left">
               <li className="text-grey-900 text-lg">
                 <i className="icofont-compass"></i> { location }
               </li>
@@ -72,56 +94,92 @@ const MainBanner: React.FC<MainBannerProps> = ( {
                 <i className="icofont-calendar"></i> { eventDate }
               </li>
             </ul>
-            <div className="flex  lg:justify-start">
+            <div className="flex justify-center lg:justify-start">
               <Countdown startDate={ startDate } />
             </div>
           </div>
         </div>
 
         {/* Right Column: Tickets Card */ }
-        <div className="flex flex-col justify-center lg:pr-8">
-          <h2 className="mb-4 mt-4 text-2xl text-center font-semibold text-grey-900 ">
-            Available Tickets
+        <div className="flex flex-col items-center lg:items-start">
+          <h2 className="mb-4 mt-4 text-2xl text-center justify-center font-semibold text-grey-900 ">
+            
           </h2>
-          { tickets.length > 0 ? (
-            <div className="grid grid-cols-1 gap-4">
-              { tickets.map( ( ticket ) => (
-                <Card
-                  shadow="sm"
-                  isBlurred
-                  key={ ticket.id }
-                  className="border-none text-grey-900 bg-background/20 dark:bg-default-100/50 max-w-[400px] mx-auto"
-                >
-                  <CardHeader className="flex flex-col items-center">
-                    <h3 className="text-xl text-grey-900 font-medium">{ ticket.name }</h3>
-                    <p className="text-small text-grey-900 ">
-                      Event Date:{ " " }
-                      { ticket.eventDate
-                        ? new Date( ticket.eventDate ).toLocaleDateString()
-                        : "No date available" }
-                    </p>
-                  </CardHeader>
-                  <Divider />
-                  <CardBody className="flex flex-col items-center">
-                    <p className="text-grey-900 text-center">{ ticket.description }</p>
-                    <p className="text-lg text-grey-900 font-semibold">
-                      Price: ${ parseFloat( ticket.price ).toFixed( 2 ) }
-                    </p>
-                  </CardBody>
-                  <Divider />
-                  <CardFooter>
-                    <TicketPurchaseClient ticket={ ticket } eventSlug={ eventSlug } />
-                  </CardFooter>
-                </Card>
-              ) ) }
-            </div>
-          ) : (
-            <p className="text-red-500">No tickets available for this event.</p>
-          ) }
+          <Button
+            className="w-full max-w-[300px] rounded-md bg-orange-600 text-white font-semibold py-2"
+            onClick={ handleBuyTicketsClick }
+          >
+            View and Buy Tickets
+          </Button>
         </div>
       </div>
+
+      {/* Sticky Bottom Div */ }
+      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 flex justify-center items-center">
+        <Button
+          className="w-full max-w-[300px] rounded-md bg-orange-600 text-white font-semibold py-2"
+          onClick={ handleBuyTicketsClick }
+        >
+          Get Tickets
+        </Button>
+      </div>
+
+      {/* Modal for Ticket Purchase */ }
+      <Modal size='full' isOpen={ isOpen } onClose={ onClose }>
+        <ModalContent>
+          { ( onClose ) => (
+            <>
+              <ModalHeader className="flex flex-col text-center gap-1">Available Tickets</ModalHeader>
+              <ModalBody>
+                { tickets.length > 0 ? (
+                  <div className="grid grid-cols-1 gap-4">
+<div className="flex justify-center">
+                    <Countdown startDate={ startDate }  />
+</div>
+                    { tickets.map( ( ticket ) => (
+                      <Card
+                        shadow="sm"
+                        key={ ticket.id }
+                        className="border-none text-grey-900 bg-background/20 dark:bg-default-100/50 max-w-[400px] mx-auto"
+                      >
+                        <CardHeader className="flex flex-col items-center">
+                          <h3 className="text-xl text-grey-900 font-medium">{ ticket.name }</h3>
+                          <p className="text-small text-grey-900 ">
+                            Event Date:{ ' ' }
+                            { ticket.eventDate
+                              ? new Date( ticket.eventDate ).toLocaleDateString()
+                              : 'No date available' }
+                          </p>
+                        </CardHeader>
+                        <Divider />
+                        <CardBody className="flex flex-col items-center">
+                          <p className="text-grey-900 text-center">{ ticket.description }</p>
+                          <p className="text-lg text-grey-900 font-semibold">
+                            Price: ${ parseFloat( ticket.price ).toFixed( 2 ) }
+                          </p>
+                        </CardBody>
+                        <Divider />
+                        <CardFooter>
+                          <TicketPurchaseClient ticket={ ticket } eventSlug={ eventSlug } />
+                        </CardFooter>
+                      </Card>
+                    ) ) }
+                  </div>
+                ) : (
+                  <p className="text-red-500">No tickets available for this event.</p>
+                ) }
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={ onClose }>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          ) }
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
 
-export default MainBanner;
+export default MainBanner2;
