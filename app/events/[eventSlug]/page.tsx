@@ -41,6 +41,7 @@ export async function generateMetadata (
 
     const title = `${ eventData.name } | EventJacket`;
     const description = eventData.description || `Join us for ${ eventData.name }`;
+    const imageUrl = absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' );
 
     return {
         title,
@@ -52,7 +53,7 @@ export async function generateMetadata (
             url: absoluteUrl( `/events/${ eventSlug }` ),
             images: [
                 {
-                    url: absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' ),
+                    url: imageUrl,
                     width: 1200,
                     height: 630,
                     alt: eventData.name,
@@ -63,7 +64,7 @@ export async function generateMetadata (
             card: 'summary_large_image',
             title,
             description,
-            images: [ absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' ) ],
+            images: [ imageUrl ],
         },
     };
 }
