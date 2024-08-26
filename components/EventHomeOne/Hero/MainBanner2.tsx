@@ -1,21 +1,22 @@
 'use client';
 
+import React, { useRef, useEffect } from 'react';
 import Countdown from './Countdown';
 import
-{
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  useDisclosure
-} from '@nextui-org/react';
+  {
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    Divider,
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Button,
+    useDisclosure
+  } from '@nextui-org/react';
 import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
 
 interface Ticket
@@ -67,16 +68,25 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
 } ) =>
 {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const firstInputRef = useRef<HTMLInputElement | null>( null );
 
   const handleBuyTicketsClick = () =>
   {
     onOpen(); // Open the modal
   };
 
+  useEffect( () =>
+  {
+    if ( isOpen && firstInputRef.current )
+    {
+      firstInputRef.current.focus();
+    }
+  }, [ isOpen ] );
+
   return (
     <div className="p-4">
       {/* Two-column Layout */ }
-      <div className="relative  max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-[3fr_1fr] lg:gap-8">
+      <div className="relative max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-[3fr_1fr] lg:gap-8">
         {/* Left Column: Event Information */ }
         <div className="flex flex-col justify-top rounded-md px-8 mb-8 lg:mb-0">
           <div className="">
@@ -111,16 +121,6 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
           </Button>
         </div>
       </div>
-
-      {/* Sticky Button for Large Screens */ }
-      {/*<div className="hidden lg:block fixed right-48 bottom-60">
-        <Button
-          className="w-full max-w-[300px] rounded-md bg-orange-600 text-white font-semibold py-2"
-          onClick={handleBuyTicketsClick}
-        >
-          View and Buy Tickets
-        </Button>
-      </div>*/}
 
       {/* Sticky Footer for Small Screens */ }
       <div className="fixed bottom-0 left-0 z-49 right-0 bg-white shadow-2xl p-4 flex justify-center items-center lg:hidden">
@@ -168,7 +168,11 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
                         </CardBody>
                         <Divider />
                         <CardFooter>
-                          <TicketPurchaseClient ticket={ ticket } eventSlug={ eventSlug } />
+                          <TicketPurchaseClient
+                            ticket={ ticket }
+                            eventSlug={ eventSlug }
+                            inputRef={ firstInputRef }  // Pass ref to input field
+                          />
                         </CardFooter>
                       </Card>
                     ) ) }
