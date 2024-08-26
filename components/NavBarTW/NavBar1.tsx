@@ -137,7 +137,7 @@ export default function NavBar1 ()
 
   return (
     <div
-      className={ `sticky top-0 z-50 transition-all duration-300 ${ isSticky ? 'bg-white/70 backdrop-blur-lg' : 'bg-white/30 backdrop-blur-none' }` }
+      className={ `sticky top-0 z-50 transition-all shadow-sm duration-300 ${ isSticky ? 'bg-white/90 backdrop-blur-lg' : 'bg-white/60 backdrop-blur-none' }` }
     >
       <header>
         <Popover className="relative bg-transparent">
@@ -223,9 +223,9 @@ export default function NavBar1 ()
                   </a>
                 </>
               ) : (
-                <Menu as="div" className="ml-3 relative">
+                  <Menu as="div" className="ml-3 relative bg-white/90 backdrop-blur-lg">
                   <div>
-                    <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       <span className="sr-only">Open user menu</span>
                       <div className="flex items-center space-x-4">
                         <img
