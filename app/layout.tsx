@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import './globals.css';
 import ClientProviders from './ClientProviders';
 
+
 export const metadata = {
     title: 'EventJacket - Event Management Platform for Non-Profits',
     openGraph: {
@@ -44,9 +45,10 @@ export default function RootLayout ( { children }: PropsWithChildren )
 
             <body className={ twMerge( 'bg-white dark:bg-gray-900', inter.className ) }>
                 
-
+                
                 <ClientProviders>
                     { children }
+                   
                 </ClientProviders>
             </body>
         </html>
