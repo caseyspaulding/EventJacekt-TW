@@ -50,7 +50,7 @@ export default function Component ()
             if ( result.user && !result.user.confirmed_at )
             {
                 // Notify the user to check their email
-                router.push(  '/signup-success' );
+                router.push( '/signup-success' );
             } else
             {
                 // Redirect to the next step
@@ -172,7 +172,7 @@ export default function Component ()
                             <div
                                 id="g_id_onload"
                                 data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
-                                data-context="signin"
+                                data-context="signup"
                                 data-ux_mode="popup"
                                 data-callback="handleSignInWithGoogle"
                                 data-auto_select="true"
@@ -189,15 +189,16 @@ export default function Component ()
                                 data-text="signin_with"
                                 data-size="large"
                                 data-logo_alignment="left"
+                                data-width="300"
                             ></div>
                         </div>
-                            <p className="text-center text-sm mt-4">
-                                Already have an account?&nbsp;
-                                <Link href="/login" size="sm">
-                                    Log In
-                                </Link>
-                            </p>
-                       
+                        <p className="text-center text-sm mt-4">
+                            Already have an account?&nbsp;
+                            <Link href="/login" size="sm">
+                                Log In
+                            </Link>
+                        </p>
+
                     </div>
                 </div>
                 <div className="relative hidden w-0 flex-1 lg:block">

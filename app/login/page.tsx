@@ -51,7 +51,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                     const userId = user.id; // Safe to access 'id' since 'user' is not null
 
                     // Query the user's associated organization
-                    const { data: org} = await supabase
+                    const { data: org } = await supabase
                         .from( 'organizations' ) // Replace 'organizations' with your actual table name
                         .select( 'id' )
                         .eq( 'user_id', userId )
@@ -243,6 +243,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                                 data-text="signin_with"
                                 data-size="large"
                                 data-logo_alignment="left"
+                                data-width="300"
                             />
                         </div>
                         <p className="text-center mt-4 text-small">
