@@ -23,7 +23,7 @@ interface EventsListComponentProps
 const EventsListComponent: React.FC<EventsListComponentProps> = ( { eventList } ) =>
 {
   return (
-    <div className="mb-28 bg-white">
+    <div className="mb-28 ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           {/* You can add some introductory text or a subtitle here */ }
@@ -41,19 +41,19 @@ const EventsListComponent: React.FC<EventsListComponentProps> = ( { eventList } 
                   <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
                 </div>
               </Link>
-              <div className="max-w-xl">
-                <div className="mt-8 flex items-center gap-x-4 text-xs text-gray-500">
+              <div className="max-w-xl ">
+                <div className="mt-2 flex items-center gap-x-4 text-xs text-gray-500">
                   By { event.organizationName } on{ ' ' }
                   { event.createdAt ? new Date( event.createdAt ).toLocaleDateString() : 'N/A' }
                 </div>
                 <div className="group relative">
-                  <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                  <h3 className="mt-1 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                     <Link href={ `/events/${ event.slug }` }>
                       <span className="absolute inset-0" />
                       { event.name }
                     </Link>
                   </h3>
-                  <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
+                  <p className="line-clamp-3 text-sm leading-6 text-gray-600">
                     { event.description }
                   </p>
                 </div>

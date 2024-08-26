@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { SubmitButton } from "./submit-button";
 import { signUp } from "./signup";
 import toast from "react-hot-toast";
+import FooterFull from "@/components/Footers/FooterFull";
 
 
 declare global
@@ -204,7 +205,7 @@ export default function Component ()
                 </div >
                 </div>
           </div>
-
+<FooterFull />
         </>
     );
 }
