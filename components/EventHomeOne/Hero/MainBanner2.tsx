@@ -1,6 +1,5 @@
 'use client';
 
-
 import Countdown from './Countdown';
 import
   {
@@ -68,7 +67,6 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
 } ) =>
 {
   const { isOpen, onOpen, onClose } = useDisclosure();
- 
 
   const handleBuyTicketsClick = () =>
   {
@@ -101,12 +99,12 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
         </div>
 
         {/* Right Column: Tickets Card */ }
-        <div className="flex flex-col items-center lg:items-start">
+        <div className="flex flex-col items-center lg:items-start p-9">
           <h2 className="mb-4 mt-4 text-2xl text-center justify-center font-semibold text-grey-900 ">
-            
+            {/* Available Tickets */ }
           </h2>
           <Button
-            className="w-full max-w-[300px] rounded-md bg-orange-600 text-white font-semibold py-2"
+            className="hidden lg:block w-full max-w-[300px] rounded-md bg-orange-600 text-white font-semibold py-2"
             onClick={ handleBuyTicketsClick }
           >
             View and Buy Tickets
@@ -114,18 +112,28 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
         </div>
       </div>
 
-      {/* Sticky Bottom Div */ }
-      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 flex justify-center items-center">
+      {/* Sticky Button for Large Screens */ }
+      {/*<div className="hidden lg:block fixed right-48 bottom-60">
         <Button
           className="w-full max-w-[300px] rounded-md bg-orange-600 text-white font-semibold py-2"
+          onClick={handleBuyTicketsClick}
+        >
+          View and Buy Tickets
+        </Button>
+      </div>*/}
+
+      {/* Sticky Footer for Small Screens */ }
+      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 flex justify-center items-center lg:hidden">
+        <Button
+          className="w-full max-w-[300px] rounded-md bg-orange-600 text-white font-semibold py-2 "
           onClick={ handleBuyTicketsClick }
         >
-          Get Tickets
+          View and Buy Tickets
         </Button>
       </div>
 
       {/* Modal for Ticket Purchase */ }
-      <Modal size='full' isOpen={ isOpen } onClose={ onClose }>
+      <Modal size="full" isOpen={ isOpen } onClose={ onClose }>
         <ModalContent>
           { ( onClose ) => (
             <>
@@ -133,9 +141,9 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
               <ModalBody>
                 { tickets.length > 0 ? (
                   <div className="grid grid-cols-1 gap-4">
-<div className="flex justify-center">
-                    <Countdown startDate={ startDate }  />
-</div>
+                    <div className="flex justify-center">
+                      <Countdown startDate={ startDate } />
+                    </div>
                     { tickets.map( ( ticket ) => (
                       <Card
                         shadow="sm"
