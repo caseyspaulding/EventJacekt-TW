@@ -73,7 +73,7 @@ const MainBanner: React.FC<MainBannerProps> = ( {
           <div className="main-banner-content ">
             <Countdown startDate={ startDate } />
 
-            <h1 className="text-5xl font-bold text-white mb-4">
+            <h1 className="text-5xl pt-4 font-bold text-white mb-4">
               { eventName } <br /> <span className="text-xl sm:text-2xl md:text-3xl">{ eventSubtitle }</span>
 
             </h1>
