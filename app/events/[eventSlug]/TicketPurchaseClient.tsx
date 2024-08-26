@@ -63,7 +63,7 @@ export default function TicketPurchaseClient({ ticket, eventSlug }) {
     };
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
             {errorMessage && <div className="mb-4 text-red-600 font-bold">{errorMessage}</div>}
             <Input
                 type="text"

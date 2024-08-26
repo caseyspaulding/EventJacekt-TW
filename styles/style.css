@@ -777,6 +777,10 @@ Main Banner CSS
   text-align: center;
 }
 
+.sticky {
+  position: sticky;
+  top: 20px; /* Adjust this value as needed */
+}
 .countdown-area {
   padding: 50px 0;
   background: #8dc63f;
@@ -804,7 +808,7 @@ Main Banner CSS
   display: inline-block;
   font-size: 55px;
   font-weight: 700;
-  color: #ffffff;
+  color: #155ce9;
   margin: 0 35px;
   position: relative;
 }
@@ -819,7 +823,7 @@ Main Banner CSS
   margin-top: -12px;
 }
 .event-countdown #timer div#minutes {
-  color: #ffffff;
+  color: #155ce9;
 }
 .event-countdown #timer div#minutes span {
   right: -55px;
@@ -834,7 +838,7 @@ Main Banner CSS
 }
 .event-countdown #timer span {
   display: block;
-  color: #ffffff;
+  color: #155ce9;
   margin-top: 0;
   font-size: 14px;
   font-weight: 500;
@@ -3117,7 +3121,7 @@ Coming Soon CSS
   display: inline-block;
   font-size: 45px;
   font-weight: 700;
-  color: #ffffff;
+  color: #155ce9;
   width: 135px;
   height: 135px;
   border: 1px solid #eeeeee;

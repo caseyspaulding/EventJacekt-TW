@@ -4,10 +4,12 @@ import { db } from "@/db";
 import { events, orgTicketTypes } from "@/db/schema";
 import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
 import { eq } from "drizzle-orm/expressions";
-import MainBanner from "@/components/EventHomeOne/Hero/MainBanner";
-import NavBarTW from "@/components/NavBarTW/NavBarTW";
+
+
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import FooterFull from "@/components/Footers/FooterFull";
+import EventImage from "@/components/EventHomeOne/Hero/EventImage";
+import MainBanner2 from "@/components/EventHomeOne/Hero/MainBanner2";
 
 interface Params
 {
@@ -63,7 +65,14 @@ export default async function EventPage ( { params }: { params: Params } )
     return (
         <div>
             <NavBar1 />
-            <MainBanner
+           
+            <EventImage
+                imageUrl={ eventData.featuredImage || "/images/event-default.jpg" }
+                alt="My amazing event"
+                overlayColor="bg-blue-600"
+            />
+
+            <MainBanner2
                 eventName={ eventData.name }
                 eventSubtitle={ eventData.description || "" }
                 eventDate={ eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : "" }
@@ -75,7 +84,7 @@ export default async function EventPage ( { params }: { params: Params } )
                     "/images/slideshow-bg4.jpg",
                 ] }
                 startDate={ eventData.startDate ? new Date( eventData.startDate ).toISOString() : "" }
-                buyTicketsLink={ `/events/${ eventSlug }/buy-tickets` }
+                //buyTicketsLink={ `/events/${ eventSlug }/buy-tickets` }
                 tickets={ tickets as [] }  // Ensure tickets are correctly typed
                 eventSlug={ eventSlug }
             />

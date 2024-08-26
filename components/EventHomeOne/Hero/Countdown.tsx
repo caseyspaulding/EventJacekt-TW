@@ -46,19 +46,23 @@ const Countdown: React.FC<CountdownProps> = ( { startDate } ) =>
   }, [ startDate ] );
 
   return (
-    <div className="event-countdown">
-      <div id="timer">
-        <div id="days">
-          { countdown.days } <span>Days</span>
+    <div className=" text-left">
+      <div className="flex flex-wrap gap-4">
+        <div  className="flex flex-col">
+          <span className="text-3xl font-bold">{ countdown.days }</span>
+          <span className="text-sm">Days</span>
         </div>
-        <div id="hours">
-          { countdown.hours } <span>Hours</span>
+        <div  className="flex flex-col">
+          <span className="text-3xl font-bold">{ countdown.hours }</span>
+          <span className="text-sm">Hours</span>
         </div>
-        <div id="minutes">
-          { countdown.minutes } <span>Minutes</span>
+        <div  className="flex flex-col">
+          <span className="text-3xl font-bold">{ countdown.minutes }</span>
+          <span className="text-sm">Minutes</span>
         </div>
-        <div id="seconds">
-          { countdown.seconds } <span>Seconds</span>
+        <div  className="flex flex-col">
+          <span className="text-3xl font-bold">{ countdown.seconds }</span>
+          <span className="text-sm">Seconds</span>
         </div>
       </div>
     </div>
