@@ -3,20 +3,20 @@
 import React, { useRef, useEffect } from 'react';
 import Countdown from './Countdown';
 import
-  {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Divider,
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Button,
-    useDisclosure
-  } from '@nextui-org/react';
+{
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Divider,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure
+} from '@nextui-org/react';
 import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
 
 interface Ticket
@@ -171,7 +171,7 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
                           <TicketPurchaseClient
                             ticket={ ticket }
                             eventSlug={ eventSlug }
-                            inputRef={ firstInputRef }  // Pass ref to input field
+                            ref={ firstInputRef }  // Pass ref to input field
                           />
                         </CardFooter>
                       </Card>
