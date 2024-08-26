@@ -200,6 +200,9 @@ importers:
       react-quill:
         specifier: ^2.0.0
         version: 2.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-schemaorg:
+        specifier: ^2.0.0
+        version: 2.0.0(react@18.3.1)(schema-dts@1.1.2(typescript@5.5.4))(typescript@5.5.4)
       react-simplemde-editor:
         specifier: ^5.2.0
         version: 5.2.0(easymde@2.18.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -209,6 +212,9 @@ importers:
       react-use:
         specifier: ^17.5.1
         version: 17.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      schema-dts:
+        specifier: ^1.1.2
+        version: 1.1.2(typescript@5.5.4)
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
@@ -7168,6 +7174,14 @@ packages:
       '@types/react':
         optional: true
 
+  react-schemaorg@2.0.0:
+    resolution: {integrity: sha512-UqciFKA203ewNjn0zC09uYKuJSvMD8L75L1s/cW4rc7cS64w8l7vaI3SYkuoI/nwCBkJRmOkSJedWDUZBlYZwg==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      react: '>=16.3.0'
+      schema-dts: '>=0.7.4'
+      typescript: '>=3.1.6'
+
   react-simplemde-editor@5.2.0:
     resolution: {integrity: sha512-GkTg1MlQHVK2Rks++7sjuQr/GVS/xm6y+HchZ4GPBWrhcgLieh4CjK04GTKbsfYorSRYKa0n37rtNSJmOzEDkQ==}
     peerDependencies:
@@ -7446,6 +7460,11 @@ packages:
 
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
+
+  schema-dts@1.1.2:
+    resolution: {integrity: sha512-MpNwH0dZJHinVxk9bT8XUdjKTxMYrA5bLtrrGmFA6PTLwlOKnhi67XoRd6/ty+Djt6ZC0slR57qFhZDNMI6DhQ==}
+    peerDependencies:
+      typescript: '>=4.1.0'
 
   screenfull@5.2.0:
     resolution: {integrity: sha512-9BakfsO2aUQN2K9Fdbj87RJIEZ82Q9IGim7FqM5OsebfoFC6ZHXgDq/KvniuLTPdeM8wY2o6Dj3WQ7KeQCj3cA==}
@@ -18240,6 +18259,12 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.4
 
+  react-schemaorg@2.0.0(react@18.3.1)(schema-dts@1.1.2(typescript@5.5.4))(typescript@5.5.4):
+    dependencies:
+      react: 18.3.1
+      schema-dts: 1.1.2(typescript@5.5.4)
+      typescript: 5.5.4
+
   react-simplemde-editor@5.2.0(easymde@2.18.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@types/codemirror': 5.60.15
@@ -18629,6 +18654,10 @@ snapshots:
   scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
+
+  schema-dts@1.1.2(typescript@5.5.4):
+    dependencies:
+      typescript: 5.5.4
 
   screenfull@5.2.0: {}
 
