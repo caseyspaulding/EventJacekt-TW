@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import getStripe from '@/utils/stripeClient';
+import { Button, Input } from '@nextui-org/react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -63,38 +64,39 @@ export default function TicketPurchaseClient({ ticket, eventSlug }) {
 
     return (
         <div className="space-y-4">
-            {errorMessage && <div className="mb-4 text-red-600">{errorMessage}</div>}
-            <input
+            {errorMessage && <div className="mb-4 text-red-600 font-bold">{errorMessage}</div>}
+            <Input
                 type="text"
                 placeholder="First Name"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="w-full rounded-md border px-4 py-2"
+                className="w-full "
                 required
             />
-            <input
+            <Input
                 type="text"
                 placeholder="Last Name"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="w-full rounded-md border px-4 py-2"
+                className="w-full"
                 required
             />
-            <input
+            <Input
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-md border px-4 py-2"
+                className="w-full "
                 required
             />
-            <button
+            <Button
                 onClick={handleBuyTicket}
-                disabled={loading}
-                className="w-full rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
+                disabled={ loading }
+               
+                className="w-full rounded-md bg-orange-600 px-4 py-2 font-semibold text-white hover:bg-orange-500"
             >
                 {loading ? 'Processing...' : 'Buy Ticket'}
-            </button>
+            </Button>
         </div>
     );
 }
