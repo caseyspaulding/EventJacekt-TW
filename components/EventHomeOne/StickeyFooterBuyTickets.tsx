@@ -14,7 +14,7 @@ const StickyFooterBuyTickets: React.FC<StickyFooterBuyTicketsProps> = ( { eventS
   return (
     <>
       {/* Sticky footer button for small screens */ }
-      <div className="lg:hidden z-50 fixed bottom-0 left-0 right-0 bg-white shadow-md p-4 border-t border-gray-200">
+      <div className="lg:hidden z-50 fixed bottom-0 left-0 right-0 bg-white/70 backdrop-blur-md shadow-md p-4 border-t border-gray-200">
         <div className="flex flex-col justify-center items-center">
           <Button
             as="a"
