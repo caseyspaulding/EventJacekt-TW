@@ -57,7 +57,7 @@
     "isomorphic-dompurify": "^2.14.0",
     "js-cookie": "^3.0.5",
     "net": "^1.0.2",
-    "next": "^14.2.6",
+    "next": "^14.2.7",
     "next-nprogress-bar": "^2.3.13",
     "nextra": "^2.13.4",
     "nextra-theme-blog": "^2.13.4",

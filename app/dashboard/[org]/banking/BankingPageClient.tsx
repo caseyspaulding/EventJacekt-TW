@@ -5,6 +5,7 @@ import { useStripeConnect } from '@/hooks/useStripeConnect';
 import { ConnectAccountOnboarding, ConnectComponentsProvider } from '@stripe/react-connect-js';
 import { updateOrganizationStripeData } from '@/app/actions/updateOrg';
 import BreadcrumbsPageHeader from '../components/BreadcrumbsPageHeading';
+import { Link } from '@nextui-org/react';
 
 interface BankingPageProps
 {
@@ -88,6 +89,7 @@ export default function BankingPageClient ( {
     ];
     return (
         <div className="bg-white ">
+
             <BreadcrumbsPageHeader title="Banking" breadcrumbs={ breadcrumbs } />
 
             { ( connectedAccountId || accountCreatePending || onboardingExited ) && (
@@ -102,14 +104,15 @@ export default function BankingPageClient ( {
                 </div>
             ) }
 
-            <div className="mt-8 space-y-6 text-center">
+            <div className="mt-8 space-y-6 ">
+               
                 { !connectedAccountId && (
                     <>
                         <h2 className="text-2xl font-semibold text-gray-700">Get ready for take off</h2>
                         <p className="text-gray-600">EventJacket helps you receive payments securely.</p>
                         <button
                             onClick={ handleCreateAccount }
-                            className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                            className="mt-4 rounded-lg bg-orange-500 px-4 py-2 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                         >
                             Connect your account!
                         </button>
@@ -128,6 +131,20 @@ export default function BankingPageClient ( {
 
                 { error && <p className="text-red-500">Something went wrong!</p> }
             </div>
+            <div className="flex justify-center items-center text-center">
+                <div>
+                    <Link href="https://stripe.com/connect" target="_blank" rel="noopener noreferrer">
+                        <img
+                            src="/images/powered-by-stripe.png"
+                            className="mt-10"
+                            alt="powered by Stripe"
+                            width={ 200 }
+                            height={ 500 }
+                        />
+                    </Link>
+                </div>
+            </div>
         </div>
+       
     );
 }

@@ -5,6 +5,17 @@ import Link from 'next/link';
 import { useUser } from '@/contexts/UserContext';
 import { getEventsForOrg } from '@/app/actions/getEventsForOrg';
 import { deleteEvent } from '@/app/actions/eventActions'; // Ensure this action is correctly implemented
+import BreadcrumbsPageHeader from '../components/BreadcrumbsPageHeading';
+import
+  {
+    Table,
+    TableHeader,
+    TableBody,
+    TableColumn,
+    TableRow,
+    TableCell,
+    Button,
+  } from '@nextui-org/react';
 
 interface Event
 {
@@ -66,9 +77,7 @@ export default function EventsPage ()
 
         if ( response.success )
         {
-          // Revalidate path for the current org events page
-          setEvents( events.filter( event => event.id !== eventId ) );
-          // Optionally, force a refresh or re-fetch to ensure UI consistency
+          setEvents( events.filter( ( event ) => event.id !== eventId ) );
         } else
         {
           setError( response.error || 'Failed to delete event' );
@@ -91,11 +100,16 @@ export default function EventsPage ()
     return <p className="text-red-600">{ error }</p>;
   }
 
+  const breadcrumbs = [
+    { name: 'Dashboard', href: '/' },
+    { name: 'All Events', href: '/events', current: true },
+  ];
+
   return (
     <div className="sm:px-6">
+      <BreadcrumbsPageHeader title="All Events" breadcrumbs={ breadcrumbs } />
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-bold leading-6 text-gray-900">Your Events</h1>
           <p className="mt-2 text-sm text-gray-700">
             A list of all the events in your organization including their name, description, start date, end date, and status.
           </p>
@@ -108,78 +122,70 @@ export default function EventsPage ()
           </Link>
         </div>
       </div>
+
+      {/* Responsive Table */ }
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                      Event
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Start Date
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      End Date
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Status
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
+              <Table
+                aria-label="Events Table"
+                className=" divide-y divide-gray-300"
+                removeWrapper
+                isCompact
+              >
+                {/* Show table header only on medium and larger screens */ }
+                <TableHeader className="hidden md:table-header-group">
+                  <TableColumn>Name</TableColumn>
+                  <TableColumn>Start Date</TableColumn>
+                  <TableColumn>End Date</TableColumn>
+    
+                  <TableColumn>Actions</TableColumn>
+                </TableHeader>
+                <TableBody>
                   { events.length > 0 ? (
                     events.map( ( event ) => (
-                      <tr key={ event.id }>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                          <div>{ event.name }</div>
-                          <div className="text-gray-500">{ event.description || 'No description' }</div>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'No start date' }
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          { event.endDate ? new Date( event.endDate ).toLocaleDateString() : 'No end date' }
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <span
-                            className={ `inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${ event.status === 'active'
-                              ? 'bg-green-50 text-green-700 ring-green-600/20'
-                              : 'bg-gray-50 text-gray-700 ring-gray-600/20'
-                              }` }
-                          >
-                            { event.status }
-                          </span>
-                        </td>
-                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <Link href={ `/dashboard/events/${ event.id }/edit` }>
-                            <div className="text-indigo-600 hover:text-indigo-900">
+                      <TableRow
+                        key={ event.id }
+                        className="block md:table-row md:border-none md:shadow-none mb-4 md:mb-0"
+                      >
+                        {/* Conditionally render the table cells as block on small screens */ }
+                        <TableCell className="block md:table-cell py-2
+                         md:py-2">
+                          <strong className="md:hidden">Name: </strong> { event.name }
+                        </TableCell>
+                        <TableCell className="block md:table-cell py-2 md:py-2">
+                          <strong className="md:hidden">Start Date: </strong> { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'No start date' }
+                        </TableCell>
+                        <TableCell className="block md:table-cell py-2 md:py-2">
+                       
+                          <strong className="md:hidden">End Date: </strong> { event.endDate ? new Date( event.endDate ).toLocaleDateString() : 'No end date' }
+                        </TableCell>
+                        
+                        <TableCell className="block md:table-cell py-4 md:py-2">
+                          <Button href={ `/dashboard/events/${ event.id }/edit` }>
+                            <div className="">
                               Edit<span className="sr-only">, { event.name }</span>
                             </div>
-                          </Link>
-                          <button
+                          </Button>
+                          <Button
                             onClick={ () => handleDelete( event.id ) }
-                            className="ml-4 text-red-600 hover:text-red-900"
+                            className="lg:ml-2 mt-2 lg:mt-0 "
                           >
                             Delete<span className="sr-only">, { event.name }</span>
-                          </button>
-                        </td>
-                      </tr>
+                          </Button>
+                        </TableCell>
+                      </TableRow>
                     ) )
                   ) : (
-                    <tr>
-                      <td colSpan={ 5 } className="py-4 text-center text-gray-500">
+                    <TableRow>
+                      <TableCell colSpan={ 5 } className="text-center">
                         No events found.
-                      </td>
-                    </tr>
+                      </TableCell>
+                    </TableRow>
                   ) }
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { fetchTicketInfo, checkInTicket } from './actions';
 import QrCodeScanner from '@/components/QRCodeScanner/QRScanner';
+import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
 
 interface ScannedTicket
 {
@@ -120,14 +121,18 @@ export default function ScanTicketsPage ()
       setFeedbackType( null );
     }, 2000 );
   };
+  const breadcrumbs = [
+    { name: 'Events', href: '/events' },
+    { name: 'Scan Tickets', href: '/scan-tickets', current: true },
 
+  ];
   return (
-    <div className="max-w-md mx-auto  bg-white  overflow-hidden">
-      <div className="p-6">
-        <h1 className="text-4xl font-extrabold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">
-          Scan Tickets
-        </h1>
-
+    <div className="bg-white  ">
+      <BreadcrumbsPageHeader title="Scan Tickets" breadcrumbs={ breadcrumbs } />
+    <div className="   bg-white ">
+      <div className="">
+       
+        
         <QrCodeScanner
           qrCodeSuccessCallback={ handleScan }
           onError={ ( err ) =>
@@ -163,6 +168,7 @@ export default function ScanTicketsPage ()
             ) ) }
           </ul>
         </div>
+      </div>
       </div>
     </div>
   );
