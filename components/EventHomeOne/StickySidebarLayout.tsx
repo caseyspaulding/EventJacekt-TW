@@ -44,7 +44,7 @@ const StickySidebar: React.FC<StickySidebarProps> = ( { tickets, eventSlug } ) =
 {
   return (
     <aside className="sticky top-6 p-6 bg-opacity-70 backdrop-filter backdrop-blur-sm rounded-md max-w-[400px]">
-      <h2 className="mb-4 text-2xl text-center font-semibold text-white">
+      <h2 className="mb-4 text-2xl text-center font-semibold text-gray-800">
         Available Tickets
       </h2>
       { tickets.length > 0 ? (
@@ -54,11 +54,11 @@ const StickySidebar: React.FC<StickySidebarProps> = ( { tickets, eventSlug } ) =
               shadow="sm"
               isBlurred
               key={ ticket.id }
-              className="border-none text-white bg-background/20 dark:bg-default-100/50"
+              className="border-none text-gray-800 bg-background/20 dark:bg-default-100/50"
             >
               <CardHeader className="flex flex-col items-center">
-                <h3 className="text-xl text-white font-medium">{ ticket.name }</h3>
-                <p className="text-small text-white">
+                <h3 className="text-xl text-gray-800 font-medium">{ ticket.name }</h3>
+                <p className="text-small text-gray-800">
                   Event Date:{ ' ' }
                   { ticket.eventDate
                     ? new Date( ticket.eventDate ).toLocaleDateString()
@@ -67,8 +67,8 @@ const StickySidebar: React.FC<StickySidebarProps> = ( { tickets, eventSlug } ) =
               </CardHeader>
               <Divider />
               <CardBody className="flex flex-col items-center">
-                <p className="text-white text-center">{ ticket.description }</p>
-                <p className="text-lg text-white font-semibold">
+                <p className="text-gray-800 text-center">{ ticket.description }</p>
+                <p className="text-lg text-gray-800 font-semibold">
                   Price: ${ parseFloat( ticket.price ).toFixed( 2 ) }
                 </p>
               </CardBody>

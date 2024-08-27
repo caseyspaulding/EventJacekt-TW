@@ -20,7 +20,10 @@ export const metadata: Metadata = {
     description:
         'EventJacket is your all-in-one event management solution, offering tools to create, manage, and sell tickets for events with ease. Perfect for organizers of conferences, festivals, and more.'
 };
+
+// Get the list of events from the server
 const eventList = await getEvents();
+
 export default async function Index ()
 {
     return (

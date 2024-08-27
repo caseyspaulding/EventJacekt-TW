@@ -6,7 +6,7 @@ import HeaderCentered from '@/components/HeaderCentered';
 import EventsListComponent from '@/components/EventListComponent';
 import { getEvents } from '@/app/actions/getEvents'; // Import the server action
 import type { Metadata } from 'next/types';
-import StickySidebar from '@/components/EventHomeOne/StickySidebarLayout';
+
 
 export const revalidate = 10; // Revalidate the page every 10 seconds
 

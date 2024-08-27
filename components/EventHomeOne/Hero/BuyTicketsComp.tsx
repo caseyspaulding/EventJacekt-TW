@@ -51,10 +51,7 @@ interface MainBannerProps
 }
 
 export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
-  eventName,
-  eventSubtitle,
-  eventDate,
-  location,
+
   startDate,
   tickets,
   eventSlug,
@@ -72,28 +69,9 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
 
   return (
     <div className="p-4">
-      {/* Two-column Layout */ }
-      <div className="relative max-w-screen-xl mx-auto flex flex-col lg:grid lg:grid-cols-[3fr_1fr] lg:gap-8">
-        {/* Left Column: Event Information */ }
-        <div className="flex flex-col justify-top rounded-md px-8 mb-8 lg:mb-0">
-          <div className="">
-            <h1 className="text-3xl md:text-5xl pt-4 font-bold text-grey-900 mb-4 text-center lg:text-left">
-              { eventName } <br />
-              <span className="text-xl sm:text-2xl md:text-3xl">{ eventSubtitle }</span>
-            </h1>
-            <ul className="mb-6 text-center lg:text-left">
-              <li className="text-grey-900 text-lg">
-                <i className="icofont-compass"></i> { location }
-              </li>
-              <li className="text-grey-900 text-lg">
-                <i className="icofont-calendar"></i> { eventDate }
-              </li>
-            </ul>
-            <div className="flex justify-center lg:justify-start">
-             
-            </div>
-          </div>
-        </div>
+     
+     
+        
 
         {/* Right Column: Tickets Card */ }
         <div className="flex flex-col items-center lg:items-start p-9">
@@ -143,7 +121,7 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
           ) }
         </div>
       </div>
-    </div>
+   
   );
 };
 
