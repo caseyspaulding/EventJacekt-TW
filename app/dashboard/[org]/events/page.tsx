@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUser } from '@/contexts/UserContext';
-import { getEventsForOrg} from '@/app/actions/getEventsForOrg';
+import { getEventsForOrg } from '@/app/actions/getEventsForOrg';
+import { deleteEvent } from '@/app/actions/eventActions'; // Ensure this action is correctly implemented
 
 interface Event
 {
@@ -55,6 +56,31 @@ export default function EventsPage ()
     fetchEvents();
   }, [ user?.orgName ] );
 
+  const handleDelete = async ( eventId: string ) =>
+  {
+    if ( confirm( 'Are you sure you want to delete this event?' ) )
+    {
+      try
+      {
+        const response = await deleteEvent( eventId );
+
+        if ( response.success )
+        {
+          // Revalidate path for the current org events page
+          setEvents( events.filter( event => event.id !== eventId ) );
+          // Optionally, force a refresh or re-fetch to ensure UI consistency
+        } else
+        {
+          setError( response.error || 'Failed to delete event' );
+        }
+      } catch ( error )
+      {
+        console.error( 'Failed to delete event:', error );
+        setError( 'Failed to delete event' );
+      }
+    }
+  };
+
   if ( loading )
   {
     return <p>Loading events...</p>;
@@ -66,7 +92,7 @@ export default function EventsPage ()
   }
 
   return (
-    <div className="sm:px-6 ">
+    <div className="sm:px-6">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-2xl font-bold leading-6 text-gray-900">Your Events</h1>
@@ -75,7 +101,7 @@ export default function EventsPage ()
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <Link href={`/dashboard/{orgName}/events/new`}>
+          <Link href={ `/dashboard/${ user?.orgName }/events/new` }>
             <div className="block rounded-md bg-orange-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
               Add New Event
             </div>
@@ -101,8 +127,8 @@ export default function EventsPage ()
                     <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                       Status
                     </th>
-                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                      <span className="sr-only">Edit</span>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Actions
                     </th>
                   </tr>
                 </thead>
@@ -136,6 +162,12 @@ export default function EventsPage ()
                               Edit<span className="sr-only">, { event.name }</span>
                             </div>
                           </Link>
+                          <button
+                            onClick={ () => handleDelete( event.id ) }
+                            className="ml-4 text-red-600 hover:text-red-900"
+                          >
+                            Delete<span className="sr-only">, { event.name }</span>
+                          </button>
                         </td>
                       </tr>
                     ) )

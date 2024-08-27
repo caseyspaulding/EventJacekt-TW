@@ -1,49 +1,52 @@
 'use server';
 
 import { db } from '@/db';
-import { events } from '@/db/schema';
+import { events, orgTicketTypes } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
 import { and, eq } from 'drizzle-orm/expressions';
 import { revalidatePath } from 'next/cache';
 
 // Get an event by its slug
-export async function getEventBySlug(eventSlug: string) {
-    const [event] = await db
-        .select({
+export async function getEventBySlug ( eventSlug: string )
+{
+    const [ event ] = await db
+        .select( {
             id: events.id,
             name: events.name,
             slug: events.slug
             // Add other fields you need from the `events` table
-        })
-        .from(events)
-        .where(eq(events.slug, eventSlug));
+        } )
+        .from( events )
+        .where( eq( events.slug, eventSlug ) );
 
-    if (!event) {
-        throw new Error('Event not found');
+    if ( !event )
+    {
+        throw new Error( 'Event not found' );
     }
 
     return event;
 }
 
 // Create a new event
-export const createEvent = async (formData: FormData) => {
+export const createEvent = async ( formData: FormData ) =>
+{
     const { orgId } = await getUserAndOrgId();
 
-    const name = formData.get('name') as string;
-    const slug = formData.get('slug') as string;
-    const description = formData.get('description') as string;
-    const startDate = new Date(formData.get('startDate') as string);
-    const endDate = new Date(formData.get('endDate') as string);
-    const venue = formData.get('venue') as string;
-    const address = formData.get('address') as string;
-    const city = formData.get('city') as string;
-    const state = formData.get('state') as string;
-    const country = formData.get('country') as string;
-    const zipCode = formData.get('zipCode') as string;
-    const maxAttendees = parseInt(formData.get('maxAttendees') as string, 10);
+    const name = formData.get( 'name' ) as string;
+    const slug = formData.get( 'slug' ) as string;
+    const description = formData.get( 'description' ) as string;
+    const startDate = new Date( formData.get( 'startDate' ) as string );
+    const endDate = new Date( formData.get( 'endDate' ) as string );
+    const venue = formData.get( 'venue' ) as string;
+    const address = formData.get( 'address' ) as string;
+    const city = formData.get( 'city' ) as string;
+    const state = formData.get( 'state' ) as string;
+    const country = formData.get( 'country' ) as string;
+    const zipCode = formData.get( 'zipCode' ) as string;
+    const maxAttendees = parseInt( formData.get( 'maxAttendees' ) as string, 10 );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const status = formData.get('status') as string;
-    const featuredImage = formData.get('featuredImage') as string;
+    const status = formData.get( 'status' ) as string;
+    const featuredImage = formData.get( 'featuredImage' ) as string;
 
     // const slug = name.toLowerCase().replace( /\s+/g, '-' ); // Example slug generation
 
@@ -66,31 +69,34 @@ export const createEvent = async (formData: FormData) => {
         createdAt: new Date(),
         updatedAt: new Date()
     };
-    try {
-        await db.insert(events).values(newEvent);
+    try
+    {
+        await db.insert( events ).values( newEvent );
         return { success: true, message: 'Event created successfully' };
-    } catch (error) {
-        console.error('Error inserting event:', error);
+    } catch ( error )
+    {
+        console.error( 'Error inserting event:', error );
         return { success: false, message: 'Error inserting event into database' };
     }
 };
 
 // Update an existing event
-export const updateEvent = async (eventId: string, formData: FormData) => {
+export const updateEvent = async ( eventId: string, formData: FormData ) =>
+{
     const { orgId } = await getUserAndOrgId();
 
-    const name = formData.get('name') as string;
-    const description = formData.get('description') as string;
-    const startDate = new Date(formData.get('startDate') as string);
-    const endDate = new Date(formData.get('endDate') as string);
-    const venue = formData.get('venue') as string;
-    const address = formData.get('address') as string;
-    const city = formData.get('city') as string;
-    const state = formData.get('state') as string;
-    const country = formData.get('country') as string;
-    const zipCode = formData.get('zipCode') as string;
-    const maxAttendees = Number(formData.get('maxAttendees'));
-    const featuredImage = formData.get('featuredImage') as string;
+    const name = formData.get( 'name' ) as string;
+    const description = formData.get( 'description' ) as string;
+    const startDate = new Date( formData.get( 'startDate' ) as string );
+    const endDate = new Date( formData.get( 'endDate' ) as string );
+    const venue = formData.get( 'venue' ) as string;
+    const address = formData.get( 'address' ) as string;
+    const city = formData.get( 'city' ) as string;
+    const state = formData.get( 'state' ) as string;
+    const country = formData.get( 'country' ) as string;
+    const zipCode = formData.get( 'zipCode' ) as string;
+    const maxAttendees = Number( formData.get( 'maxAttendees' ) );
+    const featuredImage = formData.get( 'featuredImage' ) as string;
 
     const updatedEvent = {
         name,
@@ -111,57 +117,76 @@ export const updateEvent = async (eventId: string, formData: FormData) => {
     };
 
     await db
-        .update(events)
-        .set(updatedEvent)
-        .where(and(eq(events.id, eventId), eq(events.orgId, orgId)));
+        .update( events )
+        .set( updatedEvent )
+        .where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
 
     // Revalidate the path to refresh the page
-    revalidatePath(`/dashboard/${orgId}`);
+    revalidatePath( `/dashboard/${ orgId }` );
 
     return updatedEvent;
 };
 // Delete an event
-export const deleteEvent = async (eventId: string) => {
-    const { orgId } = await getUserAndOrgId();
+export const deleteEvent = async ( eventId: string ) =>
+{
+    try
+    {
+        const { orgId } = await getUserAndOrgId();
 
-    await db.delete(events).where(and(eq(events.id, eventId), eq(events.orgId, orgId)));
+        // Delete all related ticket types before deleting the event
+        await db.delete( orgTicketTypes ).where( eq( orgTicketTypes.eventId, eventId ) );
 
-    // Revalidate the path to refresh the page
-    revalidatePath(`/dashboard/${orgId}`);
+        // Delete the event itself
+        await db.delete( events ).where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
 
-    return { success: true };
+        // Revalidate the path to refresh the page
+        await revalidatePath( `/dashboard/${ orgId }/events` );
+        await revalidatePath( '/' ); // Revalidate the homepage path
+        await revalidatePath( '/events' ); // Revalidate the homepage path
+
+        return { success: true };
+    } catch ( error )
+    {
+        console.error( 'Error deleting event:', error );
+        return { success: false, error: 'Failed to delete event' };
+    }
 };
 
+
 // Utility function to get user and organization ID
-export const getUserAndOrgId = async () => {
+export const getUserAndOrgId = async () =>
+{
     const supabase = createClient();
     const {
         data: { user },
         error: userError
     } = await supabase.auth.getUser();
 
-    if (userError || !user) {
-        throw new Error('Not authenticated');
+    if ( userError || !user )
+    {
+        throw new Error( 'Not authenticated' );
     }
 
     const { data: profile, error: profileError } = await supabase
-        .from('user_profiles')
-        .select('org_id')
-        .eq('user_id', user.id)
+        .from( 'user_profiles' )
+        .select( 'org_id' )
+        .eq( 'user_id', user.id )
         .single();
 
-    if (profileError || !profile) {
-        throw new Error('No organization found');
+    if ( profileError || !profile )
+    {
+        throw new Error( 'No organization found' );
     }
 
     return { user, orgId: profile.org_id };
 };
 
 // Fetch events for the current organization
-export const fetchEventsForOrg = async () => {
+export const fetchEventsForOrg = async () =>
+{
     const { orgId } = await getUserAndOrgId();
 
-    const eventsData = await db.select().from(events).where(eq(events.orgId, orgId));
+    const eventsData = await db.select().from( events ).where( eq( events.orgId, orgId ) );
 
     return eventsData;
 };
