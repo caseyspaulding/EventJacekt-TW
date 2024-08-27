@@ -16,7 +16,7 @@ export default function EventImage ( {
 }: EventImageProps )
 {
   return (
-    <div className="mx-auto max-w-7xl sm:px-2 lg:px-2">
+    <div className="mx-auto max-w-7xl">
       <div className={ `relative shadow-xl overflow-hidden ${ height } rounded-lg sm:rounded-2xl` }>
         <div className="absolute inset-0">
           <img

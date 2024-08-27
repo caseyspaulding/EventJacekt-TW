@@ -1,13 +1,21 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from "react";
 
 interface CountdownProps
 {
   startDate: string; // Format: "Month Day, Year HH:mm:ss"
+  color?: string; // Prop for text color
+  labelColor?: string; // Prop for label text color
+  endMessage?: string; // Message to display when the countdown ends
 }
 
-const Countdown: React.FC<CountdownProps> = ( { startDate } ) =>
+const Countdown: React.FC<CountdownProps> = ( {
+  startDate,
+  color = "text-black", // Default text color
+  labelColor = "text-gray-600", // Default label color
+  endMessage = "Event has started or ended.", // Default end message
+} ) =>
 {
   const calculateTimeLeft = () =>
   {
@@ -29,7 +37,7 @@ const Countdown: React.FC<CountdownProps> = ( { startDate } ) =>
       return { days, hours, minutes, seconds };
     } else
     {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      return null; // Return null when the countdown ends
     }
   };
 
@@ -45,24 +53,29 @@ const Countdown: React.FC<CountdownProps> = ( { startDate } ) =>
     return () => clearInterval( interval );
   }, [ startDate ] );
 
+  if ( !countdown )
+  {
+    return <div>{ endMessage }</div>; // Display end message when countdown ends
+  }
+
   return (
-    <div className=" text-left">
+    <div className="text-left">
       <div className="flex flex-wrap gap-4">
-        <div  className="flex flex-col">
-          <span className="text-3xl font-bold">{ countdown.days }</span>
-          <span className="text-sm">Days</span>
+        <div className="flex flex-col">
+          <span className={ `text-3xl font-bold ${ color }` }>{ countdown.days }</span>
+          <span className={ `text-sm ${ labelColor }` }>Days</span>
         </div>
-        <div  className="flex flex-col">
-          <span className="text-3xl font-bold">{ countdown.hours }</span>
-          <span className="text-sm">Hours</span>
+        <div className="flex flex-col">
+          <span className={ `text-3xl font-bold ${ color }` }>{ countdown.hours }</span>
+          <span className={ `text-sm ${ labelColor }` }>Hours</span>
         </div>
-        <div  className="flex flex-col">
-          <span className="text-3xl font-bold">{ countdown.minutes }</span>
-          <span className="text-sm">Minutes</span>
+        <div className="flex flex-col">
+          <span className={ `text-3xl font-bold ${ color }` }>{ countdown.minutes }</span>
+          <span className={ `text-sm ${ labelColor }` }>Minutes</span>
         </div>
-        <div  className="flex flex-col">
-          <span className="text-3xl font-bold">{ countdown.seconds }</span>
-          <span className="text-sm">Seconds</span>
+        <div className="flex flex-col">
+          <span className={ `text-3xl font-bold ${ color }` }>{ countdown.seconds }</span>
+          <span className={ `text-sm ${ labelColor }` }>Seconds</span>
         </div>
       </div>
     </div>

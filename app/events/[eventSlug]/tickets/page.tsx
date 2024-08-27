@@ -1,0 +1,189 @@
+import React from "react";
+import { notFound } from "next/navigation";
+import { db } from "@/db";
+import { events, orgTicketTypes, organizations } from "@/db/schema";
+import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
+import { eq } from "drizzle-orm/expressions";
+
+import FooterFull from "@/components/Footers/FooterFull";
+
+import { absoluteUrl } from "@/lib/utils";
+import type { Metadata } from "next/types";
+
+import BuyTicketsComp from "@/components/EventHomeOne/Hero/BuyTicketsComp";
+
+export async function generateMetadata (
+  { params }: { params: Params }
+): Promise<Metadata>
+{
+  const eventSlug = params.eventSlug;
+  const eventId = await getEventIdBySlug( eventSlug );
+
+  if ( !eventId )
+  {
+    return {
+      title: "Event Not Found",
+      description: "The requested event could not be found.",
+    };
+  }
+
+  const eventWithOrg = await db
+    .select( {
+      eventId: events.id,
+      eventName: events.name,
+      description: events.description,
+      startDate: events.startDate,
+      endDate: events.endDate,
+      featuredImage: events.featuredImage,
+      venue: events.venue,
+      city: events.city,
+      state: events.state,
+      zipCode: events.zipCode,
+      country: events.country,
+      orgId: events.orgId,
+      orgName: organizations.name, // Fetch org name
+    } )
+    .from( events )
+    .innerJoin( organizations, eq( events.orgId, organizations.id ) ) // Perform a join on orgId
+    .where( eq( events.id, eventId ) )
+    .limit( 1 );
+
+  const eventData = eventWithOrg[ 0 ];
+
+  if ( !eventData )
+  {
+    return {
+      title: "Event Not Found",
+      description: "The requested event could not be found.",
+    };
+  }
+
+  const title = `${ eventData.eventName } | EventJacket`;
+  const description =
+    eventData.description || `Join us for ${ eventData.eventName }`;
+  const imageUrl = absoluteUrl(
+    eventData.featuredImage || "/images/event-default.jpg"
+  );
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: absoluteUrl( `/events/${ eventSlug }` ),
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: eventData.eventName,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ imageUrl ],
+    },
+  };
+}
+interface Params
+{
+    eventSlug: string;
+}
+
+export default async function BuyTickets ( { params }: { params: Params } )
+{
+  const eventSlug = params.eventSlug;
+  const eventId = await getEventIdBySlug( eventSlug );
+
+  if ( !eventId )
+  {
+    notFound();
+  }
+
+  const eventWithOrg = await db
+    .select( {
+      eventId: events.id,
+      eventName: events.name,
+      description: events.description,
+      startDate: events.startDate,
+      endDate: events.endDate,
+      featuredImage: events.featuredImage,
+      venue: events.venue,
+      city: events.city,
+      state: events.state,
+      zipCode: events.zipCode,
+      country: events.country,
+      orgId: events.orgId,
+      orgName: organizations.name, // Fetch org name
+    } )
+    .from( events )
+    .innerJoin( organizations, eq( events.orgId, organizations.id ) ) // Perform a join on orgId
+    .where( eq( events.id, eventId ) )
+    .limit( 1 );
+
+  const eventData = eventWithOrg[ 0 ];
+
+  if ( !eventData )
+  {
+    notFound();
+  }
+
+  const tickets = await db
+    .select( {
+      id: orgTicketTypes.id,
+      eventId: orgTicketTypes.eventId,
+      orgId: orgTicketTypes.orgId,
+      name: orgTicketTypes.name,
+      description: orgTicketTypes.description,
+      price: orgTicketTypes.price,
+      quantity: orgTicketTypes.quantity,
+      eventDate: orgTicketTypes.eventDate,
+      saleStartDate: orgTicketTypes.saleStartDate,
+      saleEndDate: orgTicketTypes.saleEndDate,
+      isEarlyBird: orgTicketTypes.isEarlyBird,
+      maxPerCustomer: orgTicketTypes.maxPerCustomer,
+      isFree: orgTicketTypes.isFree,
+      category: orgTicketTypes.category,
+      promoCodeRequired: orgTicketTypes.promoCodeRequired,
+      availableOnline: orgTicketTypes.availableOnline,
+      groupDiscountAvailable: orgTicketTypes.groupDiscountAvailable,
+      refundable: orgTicketTypes.refundable,
+      currency: orgTicketTypes.currency,
+      salesLimitPerDay: orgTicketTypes.salesLimitPerDay,
+      createdAt: orgTicketTypes.createdAt,
+      updatedAt: orgTicketTypes.updatedAt,
+    } )
+    .from( orgTicketTypes )
+    .where( eq( orgTicketTypes.eventId, eventId ) );
+
+  return (
+    <>
+      <div className="bg-gray-100 flex justify-center items-center min-h-screen">
+        <BuyTicketsComp
+          eventName={ eventData.eventName }
+          eventSubtitle={ eventData.description || "" }
+          eventDate={
+            eventData.startDate
+              ? new Date( eventData.startDate ).toLocaleDateString()
+              : ""
+          }
+          location={ eventData.venue || "No venue available" }
+          startDate={
+            eventData.startDate
+              ? new Date( eventData.startDate ).toISOString()
+              : ""
+          }
+          tickets={ tickets as [] } // Properly type the tickets array
+          eventSlug={ eventSlug }
+        />
+      </div>
+
+      <FooterFull />
+    </>
+  );
+}

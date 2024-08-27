@@ -8,6 +8,7 @@ import { createClient } from '@/utils/supabase/server';
 import { and, eq } from 'drizzle-orm/expressions';
 import { revalidatePath } from 'next/cache';
 
+
 // Create a new ticket type
 export async function createTicketType(formData: FormData) {
     const { orgId } = await getUserAndOrgId();

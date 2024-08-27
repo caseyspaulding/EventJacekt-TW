@@ -1,17 +1,20 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
-
 import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
 import { eq } from "drizzle-orm/expressions";
 import { JsonLd } from 'react-schemaorg';
 import type { Event as SchemaEvent } from 'schema-dts'
 import { events, orgTicketTypes, organizations } from "@/db/schema";
-import BuyTicketsComp from "@/components/EventHomeOne/Hero/BuyTicketsComp";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import { absoluteUrl } from "@/lib/utils";
 import type { Metadata } from "next";
 import EventImage from "@/components/EventHomeOne/Hero/EventImage";
+import Countdown from "@/components/EventHomeOne/Hero/Countdown";
+import BuyTicketsButton from "@/components/EventHomeOne/BuyTicketsButton";
+import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTickets";
+
+
 
 export async function generateMetadata (
     { params }: { params: Params }
@@ -161,6 +164,43 @@ export default async function EventPage ( { params }: { params: Params } )
         } )
         .from( orgTicketTypes )
         .where( eq( orgTicketTypes.eventId, eventId ) );
+    
+    const ticketType = await db
+        .select( {
+            id: orgTicketTypes.id,
+            eventId: orgTicketTypes.eventId,
+            orgId: orgTicketTypes.orgId,
+            name: orgTicketTypes.name,
+            description: orgTicketTypes.description,
+            price: orgTicketTypes.price,
+            quantity: orgTicketTypes.quantity,
+            eventDate: orgTicketTypes.eventDate,
+            saleStartDate: orgTicketTypes.saleStartDate,
+            saleEndDate: orgTicketTypes.saleEndDate,
+            isEarlyBird: orgTicketTypes.isEarlyBird,
+            maxPerCustomer: orgTicketTypes.maxPerCustomer,
+            isFree: orgTicketTypes.isFree,
+            category: orgTicketTypes.category,
+            promoCodeRequired: orgTicketTypes.promoCodeRequired,
+            availableOnline: orgTicketTypes.availableOnline,
+            groupDiscountAvailable: orgTicketTypes.groupDiscountAvailable,
+            refundable: orgTicketTypes.refundable,
+            currency: orgTicketTypes.currency,
+            salesLimitPerDay: orgTicketTypes.salesLimitPerDay,
+            createdAt: orgTicketTypes.createdAt,
+            updatedAt: orgTicketTypes.updatedAt,
+        } )
+        .from( orgTicketTypes )
+        .where( eq( orgTicketTypes.eventId, eventId ) )
+        .limit( 1 ); // Assuming you want the first ticket type found
+
+    if ( !ticketType.length )
+    {
+        notFound();
+    }
+
+    const ticket = ticketType[ 0 ]; // Use the first ticket type found
+ 
 
     return (
         <>
@@ -208,39 +248,28 @@ export default async function EventPage ( { params }: { params: Params } )
                     <div className="absolute top-20 left-1/2 px-4 mx-auto w-full max-w-screen-xl -translate-x-1/2 xl:top-1/2 xl:-translate-y-1/2 xl:px-0">
                         <span className="block mb-4 text-gray-300">
                             
-                            <h1 className="font-extrabold  text-5xl  text-white hover:underline">
+                            <h1 className="font-extrabold  text-5xl  text-white ">
                                 { eventData.eventName}
                             </h1>
                         </span>
                         <h2 className="mb-4 max-w-4xl text-xl font-semiboldleading-none text-white sm:text-3xl lg:text-4xl">
                             { eventData.description }
                         </h2>
-                        <p className="text-lg font-normal text-gray-300">
-                            Location: { eventData.venue || "No venue available" }
-                        </p>
-                        <p className="text-lg font-normal text-gray-300">
-                            Date: { eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : ""  }
-                        </p>
+                        <Countdown startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
+                            color="text-blue-200" // Text color for numbers
+                            labelColor="text-blue-100" // Text color for labels
+                          />
+                        
                     </div>
                 </header>
 
                 {/* Main Content */ }
-                <div className="flex relative z-20 justify-between p-6 -m-36 mx-4 max-w-screen-xl bg-white dark:bg-gray-800 rounded xl:-m-32 xl:p-9 xl:mx-auto">
+                <div className="flex relative z-20 justify-between shadow-2xl p-6 -m-36 mx-4 max-w-screen-xl bg-white dark:bg-gray-800 rounded-2xl xl:-m-32 xl:p-9 xl:mx-auto">
                     <article className="xl:w-[828px] w-full max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-                        <div className="flex flex-col lg:flex-row justify-between lg:items-center">
-                            <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400 text-base mb-2 lg:mb-0">
-                                <span>
-                                    Event By{ " " }
-                                    <a href="#" className="text-gray-900 dark:text-white hover:underline no-underline font-semibold">
-                                        { eventData.orgName }
-                                    </a>
-                                </span>
-                                <span className="bg-gray-300 dark:bg-gray-400 w-2 h-2 rounded-full"></span>
-                                <span>
-                                    <time className="font-normal text-gray-500 dark:text-gray-400" dateTime={ eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : "" }>
-                                        { eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : "" }
-                                    </time>
-                                </span>
+                        <div className="flex flex-col lg:flex-row justify-between lg:items-center mb-2">
+                            <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400 text-base lg:mb-0">
+                               
+                               
                             </div>
                             {/* Social Media Share */ }
                             <aside aria-label="Share social media">
@@ -250,18 +279,47 @@ export default async function EventPage ( { params }: { params: Params } )
                             </aside>
                         </div>
                         {/* Article Content */ }
-                        <p className="lead">Event description: { eventData.description }</p>
-                        <p>Tickets available: { tickets.length }</p>
+                       
                         
-                        <h4 className='mt-6'>Table example</h4>
+                        
+                       
                         <EventImage
                             imageUrl={ eventData.featuredImage || '' }
                             alt={ `${ eventData.eventName } image` }
                             overlayColor=""
                             height="h-[260px] xl:h-[437px]"
-                        >
-                            
+                        >   
                         </EventImage>
+                        <div className="mt-8">
+                        <span className="">
+                            Event By{ " " }
+                            <a href="#" className="text-gray-900 mt-3 dark:text-white hover:underline no-underline font-semibold">
+                                { eventData.orgName }
+                            </a>
+                            </span>
+                        </div>
+                        <h2 className="text-2xl mt-4 mb-2 font-bold text-gray-900">
+                            Location
+                        </h2>
+                        <p className="text-lg font-normal mb-2 text-gray-900">
+                             { eventData.venue }   
+                        </p>
+                        <h2 className="text-2xl mb-2 font-bold text-gray-900">
+                            Dates
+                        </h2>
+                        <p className="text-lg font-normal text-gray-900">
+                            { eventData.startDate && eventData.endDate ? (
+                                <>
+                                    { new Date( eventData.startDate ).toLocaleDateString() } - { new Date( eventData.endDate ).toLocaleDateString() }
+                                </>
+                            ) : eventData.startDate ? (
+                                new Date( eventData.startDate ).toLocaleDateString()
+                            ) : eventData.endDate ? (
+                                new Date( eventData.endDate ).toLocaleDateString()
+                            ) : (
+                                "No dates available"
+                            ) }
+                        </p>
                     </article>
                     
 
@@ -270,21 +328,15 @@ export default async function EventPage ( { params }: { params: Params } )
                         <div className="xl:w-[336px] sticky top-6">
                             <h3 id="sidebar-label" className="sr-only">Sidebar</h3>
                             {/* Buy Tickets Card */ }
-                            <BuyTicketsComp
-                                eventName={ eventData.eventName }
-                                eventSubtitle={ eventData.description || "" }
-                                eventDate={ eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : "" }
-                                location={ eventData.venue || "" }
-                              
-                                startDate={ eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : "" }
-                                tickets={ tickets as [] }
-                                eventSlug={ eventSlug } />
+                            
+                            <BuyTicketsButton eventSlug={ eventSlug } />
                            
                             {/* Sidebar content */ }
                         </div>
                     </aside>
                 </div>
             </main>
+            <StickyFooterBuyTickets eventSlug={ eventSlug } priceRange={ticket.price} />
         </>
     );
 }
