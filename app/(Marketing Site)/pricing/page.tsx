@@ -1,9 +1,10 @@
-import {
- 
-    CheckIcon,
- 
-    
-} from '@heroicons/react/24/outline';
+import
+    {
+
+        CheckIcon,
+
+
+    } from '@heroicons/react/24/outline';
 
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import Link from 'next/link';
@@ -63,23 +64,25 @@ const faqs = [
     }
 ];
 
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ');
+function classNames ( ...classes: string[] )
+{
+    return classes.filter( Boolean ).join( ' ' );
 }
 
-export default function Example() {
+export default function Example ()
+{
     return (
         <div className="bg-white">
             <NavBar1 />
             <HeaderCentered title="Pricing" description="" />
             <div className="bg-gradient-to-b from-blue-50 via-white to-white">
-                {/* Pricing section with single price and feature list */}
+                {/* Pricing section with single price and feature list */ }
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
                     <div className="pb-16 xl:flex xl:items-center xl:justify-between">
                         <div>
                             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
                                 <span className="text-gray-900">Everything you need for</span>
-                                <span className="ml-2 text-blue-600">$ ?? a month</span>
+                                <span className="ml-2 text-blue-600">$ FREE -- limited time</span>
                             </h1>
                             <p className="mt-5 text-xl text-gray-500">
                                 Includes every feature we offer plus unlimited projects and
@@ -105,52 +108,52 @@ export default function Example() {
                         </div>
                         <div className="mt-4 sm:mt-8 md:mt-10 md:grid md:grid-cols-2 md:gap-x-8 xl:col-span-2 xl:mt-0">
                             <ul role="list" className="divide-y divide-gray-200">
-                                {features.slice(0, 5).map((feature, featureIdx) => (
+                                { features.slice( 0, 5 ).map( ( feature, featureIdx ) => (
                                     <li
-                                        key={feature}
-                                        className={classNames(
+                                        key={ feature }
+                                        className={ classNames(
                                             featureIdx === 0 ? 'md:py-0 md:pb-4' : '',
                                             'flex py-4'
-                                        )}
+                                        ) }
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
                                             className="h-6 w-6 flex-shrink-0 text-green-500"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
-                                            {feature}
+                                            { feature }
                                         </span>
                                     </li>
-                                ))}
+                                ) ) }
                             </ul>
                             <ul
                                 role="list"
                                 className="divide-y divide-gray-200 border-t border-gray-200 md:border-t-0"
                             >
-                                {features.slice(5).map((feature, featureIdx) => (
+                                { features.slice( 5 ).map( ( feature, featureIdx ) => (
                                     <li
-                                        key={feature}
-                                        className={classNames(
+                                        key={ feature }
+                                        className={ classNames(
                                             featureIdx === 0 ? 'md:border-t-0 md:py-0 md:pb-4' : '',
                                             'flex py-4'
-                                        )}
+                                        ) }
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
                                             className="h-6 w-6 flex-shrink-0 text-green-500"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
-                                            {feature}
+                                            { feature }
                                         </span>
                                     </li>
-                                ))}
+                                ) ) }
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Branded FAQ */}
+            {/* Branded FAQ */ }
             <div className="bg-blue-900">
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
                     <h2 className="text-3xl font-bold tracking-tight text-white">
@@ -158,20 +161,20 @@ export default function Example() {
                     </h2>
                     <div className="mt-6 border-t border-blue-400 border-opacity-25 pt-10">
                         <dl className="space-y-10 md:grid md:grid-cols-2 md:grid-rows-2 md:gap-x-8 md:gap-y-12 md:space-y-0">
-                            {faqs.map((item) => (
-                                <div key={item.id}>
+                            { faqs.map( ( item ) => (
+                                <div key={ item.id }>
                                     <dt className="text-lg font-medium leading-6 text-white">
-                                        {item.question}
+                                        { item.question }
                                     </dt>
-                                    <dd className="mt-2 text-base text-blue-200">{item.answer}</dd>
+                                    <dd className="mt-2 text-base text-blue-200">{ item.answer }</dd>
                                 </div>
-                            ))}
+                            ) ) }
                         </dl>
                     </div>
                 </div>
             </div>
 
-            {/* CTA section */}
+            {/* CTA section */ }
             <div className="bg-blue-50">
                 <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
                     <h2 className="text-3xl font-bold tracking-tight text-blue-900 sm:text-4xl">
