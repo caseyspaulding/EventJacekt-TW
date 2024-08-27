@@ -571,7 +571,7 @@ Main Banner CSS
   z-index: -1;
   width: 100%;
   height: 100%;
-  background: #0d1028;
+  background: #ffffff;
   opacity: 0.77;
 }
 
@@ -695,7 +695,7 @@ Main Banner CSS
   color: #Fe8522;
 }
 .main-banner-content h1 b:nth-of-type(3) {
-  color: #ffffff;
+  color: #1f2937;
   animation: colorchange 20s;
 }
 .main-banner-content h1 b:nth-of-type(4) {
@@ -707,7 +707,7 @@ Main Banner CSS
   list-style-type: none;
 }
 .main-banner-content ul li {
-  color: #fff;
+  color: #1f2937;
   margin-right: 20px;
   font-size: 17px;
   display: inline-block;
@@ -733,7 +733,7 @@ Main Banner CSS
 }
 .main-banner-content .button-box .video-btn {
   margin-left: 30px;
-  color: #fff;
+  color: #1f2937;
   font-weight: 500;
   cursor: pointer;
 }

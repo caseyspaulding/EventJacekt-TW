@@ -10,6 +10,7 @@ import FooterFull from "@/components/Footers/FooterFull";
 import { absoluteUrl } from "@/lib/utils";
 import type { Metadata } from "next/types";
 import SlideShow from "@/components/EventHomeOne/SlideShow";
+import StickySidebar from "@/components/EventHomeOne/StickySidebarLayout";
 
 export async function generateMetadata (
     { params }: { params: Params }
@@ -152,7 +153,8 @@ export default async function EventPage ( { params }: { params: Params } )
             />
             <div>
                
-
+                <StickySidebar tickets={ tickets as [] } eventSlug={ eventSlug } />   
+                
                 <SlideShow
                     eventName={ eventData.name }
                     eventSubtitle={ eventData.description || "" }

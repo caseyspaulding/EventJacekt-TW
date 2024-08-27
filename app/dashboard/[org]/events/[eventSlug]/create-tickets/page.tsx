@@ -130,11 +130,12 @@ const CreateTicketsPage = () =>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Price</label>
                     <Input
+                        type="number"
                         value={ price.toString() } // Convert number to string
                         onChange={ ( e ) => setPrice( Number( e.target.value ) ) } // Convert string back to number
                         placeholder="Price"
                         required
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                        className="mt-1 block w-full  focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                     />
                 </div>
 
@@ -142,7 +143,7 @@ const CreateTicketsPage = () =>
                     <label className="block text-sm font-medium text-gray-700">Quantity</label>
                     <Input
                         type="number"
-                     value={quantity.toString()} // Convert number to string
+                        value={ quantity.toString() } // Convert number to string
                         onChange={ ( e ) => setQuantity( Number( e.target.value ) ) }
                         placeholder="Quantity"
                         required
@@ -184,7 +185,7 @@ const CreateTicketsPage = () =>
                 </div>
 
                 <div className="flex items-center">
-                    <Input
+                    <input
                         type="checkbox"
                         checked={ isEarlyBird }
                         onChange={ ( e ) => setIsEarlyBird( e.target.checked ) }
@@ -206,7 +207,7 @@ const CreateTicketsPage = () =>
 
                 <Button
                     type="submit"
-                    color="warning" 
+                    color="warning"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                     Create Ticket
@@ -223,8 +224,8 @@ const CreateTicketsPage = () =>
                         <Button
                             as="a"
                             href={ `/events/${ eventSlug }` }
-                            color="warning" 
-                          
+                            color="warning"
+
                         >
                             View Event Page
                         </Button>

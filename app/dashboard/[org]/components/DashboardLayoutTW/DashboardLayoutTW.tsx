@@ -24,6 +24,7 @@ const navigation = [
     icon: FolderIcon,
     current: false,
     children: [
+      { name: 'All Events', href: '/events' },
       { name: 'Create Event', href: '/events/new' },
       { name: 'Scan Tickets', href: '/events/scan-tickets' },
     ],

@@ -75,7 +75,7 @@ export default function EventsPage ()
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <Link href="/dashboard/events/new">
+          <Link href={`/dashboard/{orgName}/events/new`}>
             <div className="block rounded-md bg-orange-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
               Add New Event
             </div>
