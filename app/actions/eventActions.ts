@@ -1,11 +1,11 @@
 'use server';
 
 import { db } from '@/db';
-import { events, orgTicketTypes } from '@/db/schema';
+import { events, orgEventTickets, orgTicketTypes } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
-import { and, eq } from 'drizzle-orm/expressions';
-import { revalidatePath } from 'next/cache';
 
+import { revalidatePath } from 'next/cache';
+import { eq, inArray, and } from 'drizzle-orm/expressions'; 
 // Get an event by its slug
 export async function getEventBySlug ( eventSlug: string )
 {
@@ -126,6 +126,8 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
 
     return updatedEvent;
 };
+
+
 // Delete an event
 export const deleteEvent = async ( eventId: string ) =>
 {
@@ -133,16 +135,31 @@ export const deleteEvent = async ( eventId: string ) =>
     {
         const { orgId } = await getUserAndOrgId();
 
-        // Delete all related ticket types before deleting the event
-        await db.delete( orgTicketTypes ).where( eq( orgTicketTypes.eventId, eventId ) );
+        // Step 1: Find all ticket types associated with the event
+        const ticketTypeIds = await db.select( {
+            id: orgTicketTypes.id,
+        } )
+            .from( orgTicketTypes )
+            .where( eq( orgTicketTypes.eventId, eventId ) );
 
-        // Delete the event itself
-        await db.delete( events ).where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
+        // Step 2: Extract ticket type IDs from the result
+        const ticketTypeIdsArray = ticketTypeIds.map( ticketType => ticketType.id );
 
-        // Revalidate the path to refresh the page
+        // Step 3: Delete all related records in orgEventTickets
+        await db.delete( orgEventTickets )
+            .where( inArray( orgEventTickets.ticketTypeId, ticketTypeIdsArray ) );
+
+        // Step 4: Delete all related ticket types before deleting the event
+        await db.delete( orgTicketTypes )
+            .where( eq( orgTicketTypes.eventId, eventId ) );
+
+        // Step 5: Delete the event itself
+        await db.delete( events )
+            .where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
+
+        // Step 6: Revalidate the paths to refresh the pages
         await revalidatePath( `/dashboard/${ orgId }/events` );
         await revalidatePath( '/' ); // Revalidate the homepage path
-        await revalidatePath( '/events' ); // Revalidate the homepage path
 
         return { success: true };
     } catch ( error )
@@ -151,7 +168,6 @@ export const deleteEvent = async ( eventId: string ) =>
         return { success: false, error: 'Failed to delete event' };
     }
 };
-
 
 // Utility function to get user and organization ID
 export const getUserAndOrgId = async () =>
