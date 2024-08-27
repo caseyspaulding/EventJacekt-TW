@@ -2,8 +2,16 @@
 
 import React, { useRef, useEffect } from 'react';
 import Countdown from './Countdown';
-import { Button } from '@nextui-org/button';
-
+import
+  {
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    Divider,
+    
+  } from '@nextui-org/react';
+import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
 
 interface Ticket
 {
@@ -42,23 +50,17 @@ interface MainBannerProps
   eventSlug: string;
 }
 
-const MainBanner2: React.FC<MainBannerProps> = ( {
+export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
   eventName,
   eventSubtitle,
   eventDate,
   location,
   startDate,
-  
+  tickets,
   eventSlug,
 } ) =>
 {
   const firstInputRef = useRef<HTMLInputElement | null>( null );
-
-  const handleBuyTicketsClick = () =>
-  {
-    // Open a new window with the ticket purchase page
-    window.open( `/events/${ eventSlug }/buy-tickets`, '_blank', 'noopener,noreferrer' );
-  };
 
   useEffect( () =>
   {
@@ -88,7 +90,7 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
               </li>
             </ul>
             <div className="flex justify-center lg:justify-start">
-              <Countdown startDate={ startDate } />
+             
             </div>
           </div>
         </div>
@@ -98,29 +100,51 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
           <h2 className="mb-4 mt-4 text-2xl text-center justify-center font-semibold text-grey-900 ">
             Available Tickets
           </h2>
-          <Button
-            className="hidden lg:block w-full max-w-[300px] rounded-md bg-orange-600 text-white font-semibold py-2"
-            onClick={ handleBuyTicketsClick }
-          >
-            View and Buy Tickets
-          </Button>
+          { tickets.length > 0 ? (
+            <div className="grid grid-cols-1 gap-4">
+              <div className="flex justify-center">
+                <Countdown startDate={ startDate } />
+              </div>
+              { tickets.map( ( ticket ) => (
+                <Card
+                  shadow="sm"
+                  key={ ticket.id }
+                  className="border-none text-grey-900 bg-background/20 dark:bg-default-100/50 max-w-[400px] mx-auto"
+                >
+                  <CardHeader className="flex flex-col items-center">
+                    <h3 className="text-xl text-grey-900 font-medium">{ ticket.name }</h3>
+                    <p className="text-small text-grey-900">
+                      Event Date: { ' ' }
+                      { ticket.eventDate
+                        ? new Date( ticket.eventDate ).toLocaleDateString()
+                        : 'No date available' }
+                    </p>
+                  </CardHeader>
+                  <Divider />
+                  <CardBody className="flex flex-col items-center">
+                    <p className="text-grey-900 text-center">{ ticket.description }</p>
+                    <p className="text-lg text-grey-900 font-semibold">
+                      Price: ${ parseFloat( ticket.price ).toFixed( 2 ) }
+                    </p>
+                  </CardBody>
+                  <Divider />
+                  <CardFooter>
+                    <TicketPurchaseClient
+                      ticket={ ticket }
+                      eventSlug={ eventSlug }
+                      ref={ firstInputRef } // Pass ref to input field
+                    />
+                  </CardFooter>
+                </Card>
+              ) ) }
+            </div>
+          ) : (
+            <p className="text-red-500">No tickets available for this event.</p>
+          ) }
         </div>
       </div>
-
-      {/* Sticky Footer for Small Screens */ }
-      <div className="fixed bottom-0 left-0 z-49 right-0 bg-white shadow-2xl p-4 flex justify-center items-center lg:hidden">
-        <Button
-          className="w-full max-w-[300px] rounded-md bg-orange-600 text-white font-semibold py-2"
-          onClick={ handleBuyTicketsClick }
-        >
-          View and Buy Tickets
-        </Button>
-      </div>
-
-      {/* Ticket Purchase Content */ }
-     
     </div>
   );
 };
 
-export default MainBanner2;
+export default BuyTicketsComp;

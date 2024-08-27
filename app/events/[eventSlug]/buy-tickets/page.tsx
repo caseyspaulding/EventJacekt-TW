@@ -4,12 +4,13 @@ import { db } from "@/db";
 import { events, orgTicketTypes } from "@/db/schema";
 import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
 import { eq } from "drizzle-orm/expressions";
-import { JsonLd } from 'react-schemaorg';
-import type { Event as SchemaEvent } from 'schema-dts'
+
 import FooterFull from "@/components/Footers/FooterFull";
+import EventImage from "@/components/EventHomeOne/Hero/EventImage";
 import { absoluteUrl } from "@/lib/utils";
 import type { Metadata } from "next/types";
-import SlideShow from "@/components/EventHomeOne/SlideShow";
+
+import BuyTicketsComp from "@/components/EventHomeOne/Hero/BuyTicketsComp";
 
 export async function generateMetadata (
     { params }: { params: Params }
@@ -71,7 +72,7 @@ interface Params
     eventSlug: string;
 }
 
-export default async function EventPage ( { params }: { params: Params } )
+export default async function BuyTickets( { params }: { params: Params } )
 {
     const eventSlug = params.eventSlug;
     const eventId = await getEventIdBySlug( eventSlug );
@@ -119,59 +120,27 @@ export default async function EventPage ( { params }: { params: Params } )
 
     return (
         <>
-            <JsonLd<SchemaEvent>
-                item={ {
-                    "@context": "https://schema.org",
-                    "@type": "Event",
-                    name: eventData.name,
-                    description: eventData.description || "No description available", 
-                    startDate: eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : "",
-                    endDate: eventData.endDate ? new Date( eventData.endDate ).toLocaleDateString() : "",
-                    location: {
-                        "@type": "Place",
-                        name: eventData.venue || "No venue available",
-                        address: {
-                            "@type": "PostalAddress",
-                            addressLocality: eventData.city || "No city available",
-                            addressRegion: eventData.state || "No state available",
-                            postalCode: eventData.zipCode   || "No zip code available",
-                            addressCountry: eventData.country || "No country available",
-                        },
-                    },
-                    image: [
-                        absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' ),
-                    ],
-                    offers: tickets.map( ticket => ( {
-                        "@type": "Offer",
-                        price: ticket.price || "0.00",
-                        priceCurrency: ticket.currency || "USD",
-                        availability: ticket.quantity > 0 ? "https://schema.org/InStock" : "https://schema.org/SoldOut",
-                        url: absoluteUrl( `/events/${ eventSlug }` ),
-                    } ) ),
-                } }
-            />
-            <div>
-               
-
-                <SlideShow
-                    eventName={ eventData.name }
-                    eventSubtitle={ eventData.description || "" }
-                    eventDate={ eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : "" }
-                    location={ eventData.venue || "No venue available" }
-                    bannerImages={ [
-                        "/images/slideshow-bg1.jpg",
-                        "/images/slideshow-bg2.jpg",
-                        "/images/slideshow-bg3.jpg",
-                        "/images/slideshow-bg4.jpg",
-                    ] }
-                    startDate={ eventData.startDate ? new Date( eventData.startDate ).toISOString() : "" }
-                    //buyTicketsLink={ `/events/${ eventSlug }/buy-tickets` }
-                    tickets={ tickets as [] }  // Ensure tickets are correctly typed
-                    eventSlug={ eventSlug }
-                />
-
            
+            <div>
+              
+          <EventImage
+            imageUrl={ eventData.featuredImage || "/images/event-default.jpg" }
+            alt="My amazing event"
+            overlayColor="bg-blue-600"
+          />
+                
+          <BuyTicketsComp eventName={ eventData.name }
+            eventSubtitle={ eventData.description || "" }
+            eventDate={ eventData.startDate ? new Date( eventData.startDate ).toLocaleDateString() : "" }
+            location={ eventData.venue || "No venue available" }
 
+            startDate={ eventData.startDate ? new Date( eventData.startDate ).toISOString() : "" }
+            //buyTicketsLink={ `/events/${ eventSlug }/buy-tickets` }
+            tickets={ tickets as [] }  // Ensure tickets are correctly typed
+            eventSlug={ eventSlug }
+          />
+          
+               
                 <FooterFull />
             </div>
         </>

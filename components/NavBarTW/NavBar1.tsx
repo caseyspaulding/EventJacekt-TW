@@ -137,7 +137,7 @@ export default function NavBar1 ()
 
   return (
     <div
-      className={ `sticky top-0 z-50 transition-all shadow-sm duration-300 ${ isSticky ? 'bg-white/90 backdrop-blur-lg' : 'bg-white/60 backdrop-blur-none' }` }
+      className={ `sticky top-0 z-50 transition-all shadow-sm duration-300 ${ isSticky ? 'bg-white ' : 'bg-white/60 backdrop-blur-none' }` }
     >
       <header>
         <Popover className="relative bg-transparent">
