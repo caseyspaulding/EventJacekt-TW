@@ -1,43 +1,33 @@
-
+'use client';
 
 import React from 'react';
-
 import { Button } from '@nextui-org/button';
 
 interface BuyTicketsButtonProps
 {
   eventSlug: string;
+  priceRange: string;
 }
 
-const BuyTicketsButton: React.FC<BuyTicketsButtonProps> = ( { eventSlug } ) =>
+const BuyTicketsButton: React.FC<BuyTicketsButtonProps> = ( { eventSlug, priceRange } ) =>
 {
- 
-
-
   return (
     <>
       {/* Button for large screens */ }
-      <div className="hidden lg:flex justify-center mt-8">
-        <Button
-          as='a'
-          href = { `/events/${ eventSlug }/tickets` }
-          className=""
-          color='warning'
-        >
-          Get Tickets
-        </Button>
-      </div>
-
-      {/* Sticky footer button for small screens */ }
-      <div className="lg:hidden z-50 fixed bottom-0 left-0 right-0 bg-white shadow-md p-4 border-t border-gray-200">
-        <div className="flex justify-between items-center">
-          <span className="text-lg font-semibold">$30 - $550</span> {/* Price range or any relevant info */ }
+      <div className="hidden lg:flex justify-center mt-8 ">
+        {/* Container with border and padding for styling */ }
+        <div className="border rounded-lg px-16 py-4 bg-white shadow-md max-w-xs text-center">
+          {/* Price range display */ }
+          <div className="mb-4 text-xl font-semibold text-gray-700">
+            ${ priceRange }
+          </div>
+          {/* Get Tickets button */ }
           <Button
-            as="a"
-            href = { `/events/${ eventSlug }/tickets` }
-            className=""
+            as='a'
+            href={ `/events/${ eventSlug }/tickets` }
+            className="w-full py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors"
           >
-            Get Tickets
+            Get Your Tickets
           </Button>
         </div>
       </div>
