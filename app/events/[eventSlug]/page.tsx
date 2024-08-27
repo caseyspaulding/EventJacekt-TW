@@ -13,6 +13,7 @@ import EventImage from "@/components/EventHomeOne/Hero/EventImage";
 import Countdown from "@/components/EventHomeOne/Hero/Countdown";
 import BuyTicketsButton from "@/components/EventHomeOne/BuyTicketsButton";
 import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTickets";
+import EventDetails from "@/components/EventHomeOne/EventDetails";
 
 
 
@@ -320,6 +321,16 @@ export default async function EventPage ( { params }: { params: Params } )
                                 "No dates available"
                             ) }
                         </p>
+                        <EventDetails
+                            date={ "" }
+                            time={ "" }
+                            timezone={ "" }
+                            locationName={ "" }
+                            locationAddress={ "" }
+                            refundPolicy={ "" }
+                            about={ "" }
+                            eventDuration={ "" } />
+                        
                         <p className="lead">Flowbite is an open-source library of UI components built with the utility-first
                             classes from Tailwind CSS. It also includes interactive elements such as dropdowns, modals,
                             datepickers.</p>
