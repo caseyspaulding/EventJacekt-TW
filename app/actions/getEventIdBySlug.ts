@@ -1,22 +1,36 @@
-// app/actions/getEventIdBySlug.ts
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
 
-export async function getEventIdBySlug(slug: string) {
-    console.log('Fetching event ID for slug:', slug); // Debug log
+export async function getEventIdBySlug ( eventSlug: string ): Promise<string | null>
+{
+    console.log( 'Fetching event ID for slug:', eventSlug ); // Debug log
     const supabase = createClient();
 
-    const { data: event, error } = await supabase
-        .from('events')
-        .select('id')
-        .eq('slug', slug)
-        .single();
+    try
+    {
+        const { data: event, error } = await supabase
+            .from( 'events' )
+            .select( 'id' )
+            .eq( 'slug', eventSlug )
+            .single();
 
-    if (error) {
-        console.error('Error fetching event:', error);
+        if ( error )
+        {
+            console.error( 'Error fetching event:', error.message ); // More detailed error log
+            return null;
+        }
+
+        if ( !event )
+        {
+            console.warn( 'No event found with the provided slug:', eventSlug ); // Additional warning for clarity
+            return null;
+        }
+
+        return event.id;
+    } catch ( err )
+    {
+        console.error( 'Unexpected error fetching event:', err );
         return null;
     }
-
-    return event?.id || null;
 }

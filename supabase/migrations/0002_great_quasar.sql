@@ -1,1 +1,0 @@
-ALTER TABLE "organizations" ALTER COLUMN "status" DROP NOT NULL;

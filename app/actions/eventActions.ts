@@ -6,6 +6,8 @@ import { createClient } from '@/utils/supabase/server';
 
 import { revalidatePath } from 'next/cache';
 import { eq, inArray, and } from 'drizzle-orm/expressions'; 
+
+
 // Get an event by its slug
 export async function getEventBySlug ( eventSlug: string )
 {
@@ -13,8 +15,19 @@ export async function getEventBySlug ( eventSlug: string )
         .select( {
             id: events.id,
             name: events.name,
-            slug: events.slug
-            // Add other fields you need from the `events` table
+            slug: events.slug,
+            description: events.description,
+            startDate: events.startDate,
+            endDate: events.endDate,
+            venue: events.venue,
+            address: events.address,
+            city: events.city,
+            state: events.state,
+            country: events.country,
+            zipCode: events.zipCode,
+            maxAttendees: events.maxAttendees,
+            featuredImage: events.featuredImage,
+            // Include other fields if necessary
         } )
         .from( events )
         .where( eq( events.slug, eventSlug ) );

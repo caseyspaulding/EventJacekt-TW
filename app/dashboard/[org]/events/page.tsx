@@ -14,7 +14,7 @@ import
     TableColumn,
     TableRow,
     TableCell,
-    Button,
+
   } from '@nextui-org/react';
 
 interface Event
@@ -136,7 +136,7 @@ export default function EventsPage ()
               >
                 {/* Show table header only on medium and larger screens */ }
                 <TableHeader className="hidden md:table-header-group">
-                  <TableColumn>Name</TableColumn>
+                  <TableColumn>Event Title</TableColumn>
                   <TableColumn>Start Date</TableColumn>
                   <TableColumn>End Date</TableColumn>
     
@@ -152,7 +152,7 @@ export default function EventsPage ()
                         {/* Conditionally render the table cells as block on small screens */ }
                         <TableCell className="block md:table-cell py-2
                          md:py-2">
-                          <strong className="md:hidden">Name: </strong> { event.name }
+                          <strong className="md:hidden">Event Title: </strong> { event.name }
                         </TableCell>
                         <TableCell className="block md:table-cell py-2 md:py-2">
                           <strong className="md:hidden">Start Date: </strong> { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'No start date' }
@@ -163,17 +163,17 @@ export default function EventsPage ()
                         </TableCell>
                         
                         <TableCell className="block md:table-cell py-4 md:py-2">
-                          <Button href={ `/dashboard/events/${ event.id }/edit` }>
-                            <div className="">
+                          <Link href={ `/dashboard/${ user?.orgName }/events/${ event.slug }/edit` }>
+                            <div className="text-blue-600 hover:text-blue-900 cursor-pointer">
                               Edit<span className="sr-only">, { event.name }</span>
                             </div>
-                          </Button>
-                          <Button
+                          </Link>
+                          <button
                             onClick={ () => handleDelete( event.id ) }
-                            className="lg:ml-2 mt-2 lg:mt-0 "
+                            className="text-blue-600 hover:text-blue-900 cursor-pointer  "
                           >
                             Delete<span className="sr-only">, { event.name }</span>
-                          </Button>
+                          </button>
                         </TableCell>
                       </TableRow>
                     ) )

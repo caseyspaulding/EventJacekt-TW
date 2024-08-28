@@ -154,8 +154,8 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
     fileInputRef.current?.click();
   };
   return (
-    <div className="">
-      <div className="relative rounded-2xl overflow-hidden" style={ { paddingBottom: '100%' } }>
+    <div className="flex flex-col p-1">
+      <div className="mt-2 w-full max-w-md relative rounded-2xl overflow-hidden" style={ { paddingBottom: '100%' } }>
         { !isScanning && (
           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white z-10">
             <div className="bg-green-400 text-center mb-4">
