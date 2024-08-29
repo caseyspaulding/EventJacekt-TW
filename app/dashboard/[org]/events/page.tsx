@@ -148,7 +148,7 @@ export default function EventsPage ()
                           </Link>
                           <button
                             onClick={ () => handleDelete( event.id ) }
-                            className="text-blue-600 hover:text-blue-900 cursor-pointer ml-2"
+                            className="text-blue-600 hover:text-blue-900 cursor-pointer "
                           >
                             Delete<span className="sr-only">, { event.name }</span>
                           </button>

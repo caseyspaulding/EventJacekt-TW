@@ -251,9 +251,9 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                             ></div>
                         </div>
                         <p className="text-center text-sm mt-4">
-                            Already have an account?&nbsp;
-                            <Link href="/login" size="sm">
-                                Log In
+                            Don't have an account?&nbsp;
+                            <Link href="/signup" size="sm">
+                                Create Account
                             </Link>
                         </p>
 
