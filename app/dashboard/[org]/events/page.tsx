@@ -6,16 +6,6 @@ import { useUser } from '@/contexts/UserContext';
 import { getEventsForOrg } from '@/app/actions/getEventsForOrg';
 import { deleteEvent } from '@/app/actions/eventActions'; // Ensure this action is correctly implemented
 import BreadcrumbsPageHeader from '../components/BreadcrumbsPageHeading';
-import
-  {
-    Table,
-    TableHeader,
-    TableBody,
-    TableColumn,
-    TableRow,
-    TableCell,
-
-  } from '@nextui-org/react';
 
 interface Event
 {
@@ -128,41 +118,29 @@ export default function EventsPage ()
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-              <Table
-                aria-label="Events Table"
-                className=" divide-y divide-gray-300"
-                removeWrapper
-                isCompact
-              >
-                {/* Show table header only on medium and larger screens */ }
-                <TableHeader className="hidden md:table-header-group">
-                  <TableColumn>Event Title</TableColumn>
-                  <TableColumn>Start Date</TableColumn>
-                  <TableColumn>End Date</TableColumn>
-    
-                  <TableColumn>Actions</TableColumn>
-                </TableHeader>
-                <TableBody>
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50 hidden md:table-header-group">
+                  <tr>
+                    <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">Event Title</th>
+                    <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">Start Date</th>
+                    <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">End Date</th>
+                    <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
                   { events.length > 0 ? (
                     events.map( ( event ) => (
-                      <TableRow
-                        key={ event.id }
-                        className="block md:table-row md:border-none md:shadow-none mb-4 md:mb-0"
-                      >
-                        {/* Conditionally render the table cells as block on small screens */ }
-                        <TableCell className="block md:table-cell py-2
-                         md:py-2">
+                      <tr key={ event.id } className="block md:table-row md:border-none md:shadow-none mb-4 md:mb-0">
+                        <td className="block md:table-cell px-3 py-2">
                           <strong className="md:hidden">Event Title: </strong> { event.name }
-                        </TableCell>
-                        <TableCell className="block md:table-cell py-2 md:py-2">
+                        </td>
+                        <td className="block md:table-cell px-3 py-2">
                           <strong className="md:hidden">Start Date: </strong> { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'No start date' }
-                        </TableCell>
-                        <TableCell className="block md:table-cell py-2 md:py-2">
-                       
+                        </td>
+                        <td className="block md:table-cell px-3 py-2">
                           <strong className="md:hidden">End Date: </strong> { event.endDate ? new Date( event.endDate ).toLocaleDateString() : 'No end date' }
-                        </TableCell>
-                        
-                        <TableCell className="block md:table-cell py-4 md:py-2">
+                        </td>
+                        <td className="block md:table-cell px-3 py-2">
                           <Link href={ `/dashboard/${ user?.orgName }/events/${ event.slug }/edit` }>
                             <div className="text-blue-600 hover:text-blue-900 cursor-pointer">
                               Edit<span className="sr-only">, { event.name }</span>
@@ -170,22 +148,22 @@ export default function EventsPage ()
                           </Link>
                           <button
                             onClick={ () => handleDelete( event.id ) }
-                            className="text-blue-600 hover:text-blue-900 cursor-pointer  "
+                            className="text-blue-600 hover:text-blue-900 cursor-pointer ml-2"
                           >
                             Delete<span className="sr-only">, { event.name }</span>
                           </button>
-                        </TableCell>
-                      </TableRow>
+                        </td>
+                      </tr>
                     ) )
                   ) : (
-                    <TableRow>
-                      <TableCell colSpan={ 5 } className="text-center">
+                    <tr>
+                      <td colSpan={ 4 } className="px-3 py-2 text-center text-sm text-gray-500">
                         No events found.
-                      </TableCell>
-                    </TableRow>
+                      </td>
+                    </tr>
                   ) }
-                </TableBody>
-              </Table>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
