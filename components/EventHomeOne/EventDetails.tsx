@@ -66,8 +66,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
       <section className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">About this event</h2>
         <div className="flex items-center text-gray-700">
-          <span className="mr-2">🕒</span>
-          <p>{ `Event lasts ${ eventDuration }` }</p>
+          
         </div>
         <p className="mt-4 text-gray-700">{ about }</p>
       </section>
