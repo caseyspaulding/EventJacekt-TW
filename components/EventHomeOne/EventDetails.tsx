@@ -22,6 +22,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
   locationAddress,
   refundPolicy,
   about,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   eventDuration,
 } ) =>
 {

@@ -1,7 +1,7 @@
 // app/layout.tsx
 'use client';
 
-import React, { ReactNode } from 'react'; // Import ReactNode for typing
+import type { ReactNode } from 'react';
 import Header from './Header'; // Import the Header component
 import Sidebar from './Sidebar'; // Import the Sidebar component
 
