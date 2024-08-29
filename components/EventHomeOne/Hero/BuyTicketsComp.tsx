@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
-import Countdown from './Countdown';
+import Countdown from '../../Countdown/Countdown';
 import
-  {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Divider,
-  } from '@nextui-org/react';
+{
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Divider,
+} from '@nextui-org/react';
 import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
 
 interface Ticket
@@ -51,7 +51,7 @@ interface MainBannerProps
 
 export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
   eventName,
-  
+
   tickets,
   eventSlug,
 } ) =>

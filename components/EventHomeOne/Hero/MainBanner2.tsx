@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
-import Countdown from './Countdown';
+import Countdown from '../../Countdown/Countdown';
 import { Button } from '@nextui-org/button';
 
 
@@ -48,7 +48,7 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
   eventDate,
   location,
   startDate,
-  
+
   eventSlug,
 } ) =>
 {
@@ -118,7 +118,7 @@ const MainBanner2: React.FC<MainBannerProps> = ( {
       </div>
 
       {/* Ticket Purchase Content */ }
-     
+
     </div>
   );
 };

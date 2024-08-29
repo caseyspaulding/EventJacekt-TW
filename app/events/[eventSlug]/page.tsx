@@ -10,7 +10,7 @@ import NavBar1 from "@/components/NavBarTW/NavBar1";
 import { absoluteUrl } from "@/lib/utils";
 import type { Metadata } from "next";
 import EventImage from "@/components/EventHomeOne/Hero/EventImage";
-import Countdown from "@/components/EventHomeOne/Hero/Countdown";
+import Countdown from "@/components/Countdown/Countdown";
 import BuyTicketsButton from "@/components/EventHomeOne/BuyTicketsButton";
 import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTickets";
 import EventDetails from "@/components/EventHomeOne/EventDetails";
@@ -166,7 +166,7 @@ export default async function EventPage ( { params }: { params: Params } )
         } )
         .from( orgTicketTypes )
         .where( eq( orgTicketTypes.eventId, eventId ) );
-    
+
     const ticketType = await db
         .select( {
             id: orgTicketTypes.id,
@@ -202,7 +202,7 @@ export default async function EventPage ( { params }: { params: Params } )
     }
 
     const ticket = ticketType[ 0 ]; // Use the first ticket type found
- 
+
 
     return (
         <>
@@ -238,7 +238,7 @@ export default async function EventPage ( { params }: { params: Params } )
                 } }
             />
             <NavBar1 />
-            
+
             <main className="  bg-white dark:bg-gray-900 antialiased">
                 {/* Header */ }
                 <header
@@ -274,8 +274,8 @@ export default async function EventPage ( { params }: { params: Params } )
                     <article className="xl:w-[828px] w-full max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
                         <div className="flex flex-col lg:flex-row justify-between lg:items-center mb-2">
                             <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400 text-base lg:mb-0">
-                               
-                               
+
+
                             </div>
                             {/* Social Media Share */ }
                             <aside aria-label="Share social media">
@@ -285,29 +285,29 @@ export default async function EventPage ( { params }: { params: Params } )
                             </aside>
                         </div>
                         {/* Article Content */ }
-                       
-                        
-                        
-                       
+
+
+
+
                         <EventImage
                             imageUrl={ eventData.featuredImage || '' }
                             alt={ `${ eventData.eventName } image` }
                             overlayColor=""
                             height="h-[260px] xl:h-[437px]"
-                        >   
+                        >
                         </EventImage>
                         <div className="mt-8">
-                        <span className="">
-                            Event By{ " " }
-                            <a href="#" className="text-gray-900 mt-3 dark:text-white hover:underline no-underline font-semibold">
-                                { eventData.orgName }
-                            </a>
+                            <span className="">
+                                Event By{ " " }
+                                <a href="#" className="text-gray-900 mt-3 dark:text-white hover:underline no-underline font-semibold">
+                                    { eventData.orgName }
+                                </a>
                             </span>
                         </div>
-                       
-                        
+
+
                         <EventDetails
-                            date={ 
+                            date={
                                 eventData.startDate && eventData.endDate ? (
                                     <>
                                         { new Date( eventData.startDate ).toLocaleDateString() } - { new Date( eventData.endDate ).toLocaleDateString() }
@@ -319,7 +319,7 @@ export default async function EventPage ( { params }: { params: Params } )
                                 ) : (
                                     "No dates available"
                                 )
-                            } 
+                            }
                             time={ "" }
                             timezone={ "" }
                             locationName={ eventData.venue }
@@ -327,29 +327,29 @@ export default async function EventPage ( { params }: { params: Params } )
                             refundPolicy={ '' }
                             about={ eventData.description }
                             eventDuration={ "" } />
-                        
-                        
+
+
                     </article>
-                    
+
 
                     {/* Sidebar */ }
                     <aside className="hidden xl:block" aria-labelledby="sidebar-label">
                         <div className="xl:w-[336px] sticky top-20">
                             <h3 id="sidebar-label" className="sr-only">Sidebar</h3>
                             {/* Buy Tickets Card */ }
-                            
+
                             <BuyTicketsButton eventSlug={ eventSlug } priceRange={ ticket.price } />
-                           
+
                             {/* Sidebar content */ }
                         </div>
                     </aside>
                 </div>
-                <div className='mt-8 pt-5'>
+                <div className='lg:mt-8 pt-5 mt-20 '>
                     <FooterFull />
                 </div>
-                
+
             </main>
-            <StickyFooterBuyTickets eventSlug={ eventSlug } priceRange={ticket.price} />
+            <StickyFooterBuyTickets eventSlug={ eventSlug } priceRange={ ticket.price } />
         </>
     );
 }

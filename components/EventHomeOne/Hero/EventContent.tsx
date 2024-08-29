@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Countdown from "./Countdown";
+import Countdown from "../../Countdown/Countdown";
 
 import "@/styles/style.css";
 import "@/styles/responsive.css";
@@ -51,9 +51,9 @@ const EventContent: React.FC<MainBannerProps> = ( {
   eventSubtitle,
   eventDate,
   location,
- 
+
   startDate,
-  
+
 } ) =>
 {
   return (

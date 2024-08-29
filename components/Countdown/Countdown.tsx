@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
+import styles from './Countdown.module.css'; // Import the CSS module
 
 interface CountdownProps
 {
@@ -59,22 +60,22 @@ const Countdown: React.FC<CountdownProps> = ( {
   }
 
   return (
-    <div className="text-center">
+    <div className='text-center ' > {/* Apply the custom font here */ }
       <div className="flex flex-wrap gap-3">
         <div className="flex flex-col">
-          <span className={ `text-4xl font-bold ${ color }` }>{ countdown.days }</span>
+          <span className={ `text-5xl  text-center ${ styles.customFont } font-bold ${ color }` }>{ countdown.days }</span>
           <span className={ `text-lg ${ labelColor }` }>Days</span>
         </div>
         <div className="flex flex-col">
-          <span className={ `text-4xl font-bold ${ color }` }>{ countdown.hours }</span>
+          <span className={ `text-5xl text-center ${ styles.customFont } font-bold ${ color }` }>{ countdown.hours }</span>
           <span className={ `text-lg ${ labelColor }` }>Hours</span>
         </div>
         <div className="flex flex-col">
-          <span className={ `text-4xl font-bold ${ color }` }>{ countdown.minutes }</span>
+          <span className={ `text-5xl text-center ${ styles.customFont } font-bold ${ color }` }>{ countdown.minutes }</span>
           <span className={ `text-lg ${ labelColor }` }>Minutes</span>
         </div>
         <div className="flex flex-col">
-          <span className={ `text-4xl font-bold ${ color }` }>{ countdown.seconds }</span>
+          <span className={ `text-5xl text-center ${ styles.customFont } font-bold ${ color }` }>{ countdown.seconds }</span>
           <span className={ `text-lg ${ labelColor }` }>Seconds</span>
         </div>
       </div>
