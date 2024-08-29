@@ -96,6 +96,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.7",
+    "@iconify/react": "^5.0.2",
     "@next/eslint-plugin-next": "^14.2.6",
     "@types/google-one-tap": "^1.2.6",
     "@types/node": "^20.16.1",
