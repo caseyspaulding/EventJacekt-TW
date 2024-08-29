@@ -62,20 +62,20 @@ const Countdown: React.FC<CountdownProps> = ( {
     <div className="text-left">
       <div className="flex flex-wrap gap-4">
         <div className="flex flex-col">
-          <span className={ `text-3xl font-bold ${ color }` }>{ countdown.days }</span>
-          <span className={ `text-sm ${ labelColor }` }>Days</span>
+          <span className={ `text-4xl font-bold ${ color }` }>{ countdown.days }</span>
+          <span className={ `text-lg ${ labelColor }` }>Days</span>
         </div>
         <div className="flex flex-col">
-          <span className={ `text-3xl font-bold ${ color }` }>{ countdown.hours }</span>
-          <span className={ `text-sm ${ labelColor }` }>Hours</span>
+          <span className={ `text-4xl font-bold ${ color }` }>{ countdown.hours }</span>
+          <span className={ `text-lg ${ labelColor }` }>Hours</span>
         </div>
         <div className="flex flex-col">
-          <span className={ `text-3xl font-bold ${ color }` }>{ countdown.minutes }</span>
-          <span className={ `text-sm ${ labelColor }` }>Minutes</span>
+          <span className={ `text-4xl font-bold ${ color }` }>{ countdown.minutes }</span>
+          <span className={ `text-lg ${ labelColor }` }>Minutes</span>
         </div>
         <div className="flex flex-col">
-          <span className={ `text-3xl font-bold ${ color }` }>{ countdown.seconds }</span>
-          <span className={ `text-sm ${ labelColor }` }>Seconds</span>
+          <span className={ `text-4xl font-bold ${ color }` }>{ countdown.seconds }</span>
+          <span className={ `text-lg ${ labelColor }` }>Seconds</span>
         </div>
       </div>
     </div>
