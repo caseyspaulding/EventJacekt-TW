@@ -248,7 +248,7 @@ export default async function EventPage ( { params }: { params: Params } )
                     <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60"></div>
 
                     {/* Adjusted Content Position */ }
-                    <div className="relative w-full h-full flex flex-col items-center justify-start pt-32 px-2 mx-auto max-w-screen-xl text-center xl:px-0">
+                    <div className="relative w-full h-full flex flex-col items-center justify-start pt-11 lg:pt-24 px-2 mx-auto max-w-screen-xl text-center xl:px-0">
                         <span className="block mb-2 text-gray-300">
                             <h1 className="font-extrabold text-5xl lg:text-6xl text-white">
                                 { eventData.eventName }
