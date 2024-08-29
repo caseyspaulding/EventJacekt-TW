@@ -23,7 +23,7 @@ export default function ClientProviders ( { children }: { children: React.ReactN
 
         { children }
         <ProgressBar
-          height="4px"
+          height="3px"
           color="#0053df"
           options={ { showSpinner: false } }
           shallowRouting
