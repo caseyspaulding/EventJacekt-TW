@@ -1,6 +1,7 @@
+// app/layout.tsx
 
 import type { PropsWithChildren } from 'react';
-import { Montserrat, Lora } from 'next/font/google'; // Correct font import path for Next.js 13 and 14
+import {Poppins } from 'next/font/google'; // Correct font import path for Next.js 13 and 14
 import { twMerge } from 'tailwind-merge';
 import './globals.css';
 import ClientProviders from './ClientProviders';
@@ -15,22 +16,18 @@ export const metadata = {
 };
 
 // Load the fonts with specific weights
-const montserrat = Montserrat( {
+const montserrat = Poppins( {
     weight: [ '400', '700' ], // Regular and Bold for headings
     subsets: [ 'latin' ],
     display: 'swap',
 } );
 
-const lora = Lora( {
-    weight: [ '400', '700' ], // Regular and Bold for body text
-    subsets: [ 'latin' ],
-    display: 'swap',
-} );
+
 
 export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (
-        <html lang="en" className={ `${ montserrat.className } ${ lora.className }` }>
+        <html lang="en" className={ `${ montserrat.className }` }>
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 /* Tailwind Reset */
 .nextui-reset input {
   @apply border-none outline-none;
