@@ -1,9 +1,9 @@
-import { Inter } from 'next/font/google';
+
 import type { PropsWithChildren } from 'react';
+import { Montserrat, Lora } from 'next/font/google'; // Correct font import path for Next.js 13 and 14
 import { twMerge } from 'tailwind-merge';
 import './globals.css';
 import ClientProviders from './ClientProviders';
-
 
 export const metadata = {
     title: 'EventJacket - Event Management Platform for Non-Profits',
@@ -14,41 +14,43 @@ export const metadata = {
     }
 };
 
-const inter = Inter( { subsets: [ 'latin' ], display: 'swap' } );
+// Load the fonts with specific weights
+const montserrat = Montserrat( {
+    weight: [ '400', '700' ], // Regular and Bold for headings
+    subsets: [ 'latin' ],
+    display: 'swap',
+} );
+
+const lora = Lora( {
+    weight: [ '400', '700' ], // Regular and Bold for body text
+    subsets: [ 'latin' ],
+    display: 'swap',
+} );
 
 export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (
-        <html lang="en">
+        <html lang="en" className={ `${ montserrat.className } ${ lora.className }` }>
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-                    rel="stylesheet"
-                    type="text/css"
-                />
                 {/* Inline script to set theme */ }
                 <script
                     dangerouslySetInnerHTML={ {
                         __html: `
-                            (function() {
-                                const theme = localStorage.getItem('theme') || 'light';
-                                document.documentElement.classList.add(theme);
-                            })();
-                        `
+              (function() {
+                const theme = localStorage.getItem('theme') || 'light';
+                document.documentElement.classList.add(theme);
+              })();
+            `
                     } }
                 />
                 <script src="https://accounts.google.com/gsi/client" async></script>
             </head>
 
-            <body className={ twMerge( 'bg-white dark:bg-gray-900', inter.className ) }>
-                
-                
+            <body className={ twMerge( 'bg-white dark:bg-gray-900' ) }>
                 <ClientProviders>
                     { children }
-                   
                 </ClientProviders>
             </body>
         </html>
