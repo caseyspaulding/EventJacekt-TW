@@ -59,8 +59,8 @@ const Countdown: React.FC<CountdownProps> = ( {
   }
 
   return (
-    <div className="text-left">
-      <div className="flex flex-wrap gap-4">
+    <div className="text-center">
+      <div className="flex flex-wrap gap-3">
         <div className="flex flex-col">
           <span className={ `text-4xl font-bold ${ color }` }>{ countdown.days }</span>
           <span className={ `text-lg ${ labelColor }` }>Days</span>

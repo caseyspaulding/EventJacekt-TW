@@ -14,6 +14,7 @@ import Countdown from "@/components/EventHomeOne/Hero/Countdown";
 import BuyTicketsButton from "@/components/EventHomeOne/BuyTicketsButton";
 import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTickets";
 import EventDetails from "@/components/EventHomeOne/EventDetails";
+import FooterFull from "@/components/Footers/FooterFull";
 
 
 
@@ -343,6 +344,10 @@ export default async function EventPage ( { params }: { params: Params } )
                         </div>
                     </aside>
                 </div>
+                <div className='mt-8 pt-5'>
+                    <FooterFull />
+                </div>
+                
             </main>
             <StickyFooterBuyTickets eventSlug={ eventSlug } priceRange={ticket.price} />
         </>

@@ -27,7 +27,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
 } ) =>
 {
   return (
-    <div className="max-w-6xl mt-4 mx-auto  bg-white ">
+    <div className="max-w-6xl mt-4 pb-16 mx-auto  bg-white ">
       {/* Date and Time */ }
       <section className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Date and time</h2>
@@ -70,6 +70,14 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
           
         </div>
         <p className="mt-4 text-gray-700">{ about }</p>
+      </section>
+      <section className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Event Duration</h2>
+        <p className="text-gray-700">{ eventDuration }</p>
+      </section>
+
+      <section className="mb-6">
+        
       </section>
     </div>
   );
