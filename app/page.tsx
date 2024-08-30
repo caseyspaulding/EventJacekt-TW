@@ -27,12 +27,13 @@ export default async function Index ()
             <SvgBackgroundReversed />
             <NavBar1 />
             <NavBarTW />
+            <HowItWorks />
             <SlantedDividerSolid color="#f1f5f9" height="81px" zIndex={ 2 } />
 
             <FeaturesGridWithIcons />
 
             <SlantedDividerSolid color="#f1f5f9" height="50px" flip invert zIndex={ 3 } />
-            <HowItWorks />
+           
 
             <FAQ_TW />
 
