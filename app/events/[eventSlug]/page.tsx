@@ -203,12 +203,11 @@ export default async function EventPage ( { params }: { params: Params } )
                         <h2 className="mb-4 max-w-4xl text-xl font-extrabold leading-none  sm:text-3xl lg:text-4xl">
                             { eventData.description }
                         </h2>
-                        <div className="my-2">
-                           
+                        <div className="my-2 ">
                             <Countdown
                                 startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
-                                color="" // Text color for numbers
-                                labelColor="" // Text color for labels
+                                color="text-gray-400" // Text color for numbers
+                                labelColor="text-gray-300" // Text color for labels
                             />
                         </div>
 

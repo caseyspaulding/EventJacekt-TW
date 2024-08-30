@@ -11,7 +11,7 @@ interface EventDetailsProps
   locationAddress: string;
   refundPolicy: string;
   about: string | null;
-  eventDuration: string;
+
 }
 
 const EventDetails: React.FC<EventDetailsProps> = ( {
@@ -23,7 +23,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
   refundPolicy,
   about,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  eventDuration,
+
 } ) =>
 {
   return (
@@ -48,11 +48,11 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
         <div className="flex items-center text-gray-700">
           <span className="mr-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" id="Location-Pin-3--Streamline-Flex" height="14" width="14"><desc>Location Pin 3 Streamline Icon: https://streamlinehq.com</desc><g id="location-pin-3--navigation-map-maps-pin-gps-location"><path id="Union" fill="#2859c5" d="M2.825 9.25a1.5 1.5 0 0 0 -1.335 0.816L0.35 12.294a1 1 0 0 0 0.89 1.456h11.52a1 1 0 0 0 0.887 -1.462l-1.163 -2.232a1.5 1.5 0 0 0 -1.33 -0.806H2.825Z" stroke-width="1"></path><path id="Union_2" fill="#8fbffa" fill-rule="evenodd" d="M6.945 0a4.791 4.791 0 0 0 -4.78 4.45c-0.085 1.193 0.183 2.432 0.934 3.419 0.894 1.174 1.805 1.98 3.228 2.928 0.407 0.27 0.938 0.27 1.346 0 1.423 -0.948 2.334 -1.754 3.227 -2.928 0.752 -0.987 1.02 -2.226 0.934 -3.42A4.791 4.791 0 0 0 7.055 0h-0.11Z" clip-rule="evenodd" stroke-width="1"></path><path id="Vector" fill="#2859c5" d="M7 6.094c0.96 0 1.5 -0.54 1.5 -1.5s-0.54 -1.5 -1.5 -1.5 -1.5 0.54 -1.5 1.5 0.54 1.5 1.5 1.5Z" stroke-width="1"></path></g></svg>
-</span>
+          </span>
           <div>
             <p className="font-semibold">{ locationName }</p>
             <p>{ locationAddress }</p>
-           
+
           </div>
         </div>
       </section>
@@ -67,17 +67,17 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
       <section className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">About this event</h2>
         <div className="flex items-center text-gray-700">
-          
+
         </div>
         <p className="mt-4 text-gray-700">{ about }</p>
       </section>
       <section className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Event Duration</h2>
-        <p className="text-gray-700">{ eventDuration }</p>
+
+
       </section>
 
       <section className="mb-6">
-        
+
       </section>
     </div>
   );
