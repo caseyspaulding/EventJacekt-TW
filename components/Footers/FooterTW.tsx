@@ -73,7 +73,7 @@ export default function FooterTW() {
             </a>
           ))}
         </div>
-        <p className="mt-10 text-center text-xs leading-5 text-gray-500">
+        <p className="mt-10 pb-12 text-center text-xs leading-5 text-gray-500">
           &copy; {currentYear} EventJacket, LLC. All rights reserved.
         </p>
       </div>
