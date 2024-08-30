@@ -8,91 +8,19 @@ import type { Event as SchemaEvent } from 'schema-dts'
 import { events, orgTicketTypes, organizations } from "@/db/schema";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import { absoluteUrl } from "@/lib/utils";
-import type { Metadata } from "next";
+
 import EventImage from "@/components/EventHomeOne/Hero/EventImage";
 import Countdown from "@/components/Countdown/Countdown";
 import BuyTicketsButton from "@/components/EventHomeOne/BuyTicketsButton";
 import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTickets";
 import EventDetails from "@/components/EventHomeOne/EventDetails";
 import FooterFull from "@/components/Footers/FooterFull";
+import '@/styles/gradientHeader.css'
 
 
 
-export async function generateMetadata (
-    { params }: { params: Params }
-): Promise<Metadata>
-{
-    const eventSlug = params.eventSlug;
-    const eventId = await getEventIdBySlug( eventSlug );
 
-    if ( !eventId )
-    {
-        return {
-            title: 'Event Not Found',
-            description: 'The requested event could not be found.',
-        };
-    }
 
-    const eventWithOrg = await db
-        .select( {
-            eventId: events.id,
-            eventName: events.name,
-            description: events.description,
-            startDate: events.startDate,
-            endDate: events.endDate,
-            featuredImage: events.featuredImage,
-            venue: events.venue,
-            city: events.city,
-            state: events.state,
-            zipCode: events.zipCode,
-            country: events.country,
-            orgId: events.orgId,
-            orgName: organizations.name, // Fetch org name
-        } )
-        .from( events )
-        .innerJoin( organizations, eq( events.orgId, organizations.id ) ) // Perform a join on orgId
-        .where( eq( events.id, eventId ) )
-        .limit( 1 );
-
-    const eventData = eventWithOrg[ 0 ];
-
-    if ( !eventData )
-    {
-        return {
-            title: 'Event Not Found',
-            description: 'The requested event could not be found.',
-        };
-    }
-
-    const title = `${ eventData.eventName } | EventJacket`;
-    const description = eventData.description || `Join us for ${ eventData.eventName }`;
-    const imageUrl = absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' );
-
-    return {
-        title,
-        description,
-        openGraph: {
-            title,
-            description,
-            type: 'website',
-            url: absoluteUrl( `/events/${ eventSlug }` ),
-            images: [
-                {
-                    url: imageUrl,
-                    width: 1200,
-                    height: 630,
-                    alt: eventData.eventName,
-                },
-            ],
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title,
-            description,
-            images: [ imageUrl ],
-        },
-    };
-}
 interface Params
 {
     eventSlug: string;
@@ -240,35 +168,12 @@ export default async function EventPage ( { params }: { params: Params } )
             <NavBar1 />
 
             <main className="  bg-white dark:bg-gray-900 antialiased">
-                {/* Header */ }
-                <header
-                    className="w-full h-[460px] xl:h-[537px] bg-no-repeat bg-cover bg-center bg-blend-darken relative"
-                    style={ { backgroundImage: `url('${ eventData.featuredImage }')` } }
-                >
-                    {/* Overlay */ }
-                    <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60"></div>
-
-                    {/* Adjusted Content Position */ }
-                    <div className="relative w-full h-full flex flex-col items-center justify-start pt-11 lg:pt-24 px-2 mx-auto max-w-screen-xl text-center xl:px-0">
-                        <span className="block mb-2 text-gray-300">
-                            <h1 className="font-extrabold text-5xl lg:text-6xl text-white">
-                                { eventData.eventName }
-                            </h1>
-                        </span>
-                        <h2 className="mb-4 max-w-4xl text-xl font-extrabold leading-none text-gray-100 sm:text-3xl lg:text-4xl">
-                            { eventData.description }
-                        </h2>
-                        <div className="my-2">
-                            <Countdown
-                                startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
-                                color="text-gray-100" // Text color for numbers
-                                labelColor="text-gray-200" // Text color for labels
-                            />
-                        </div>
-                    </div>
+               
+              
+                <header className="w-full h-[200px] xl:h-[200px] relative overflow-hidden gradient-bg">
+                    {/* Your header content goes here */ }
                 </header>
-
-
+         
                 {/* Main Content */ }
                 <div className="flex relative z-20 justify-between shadow-2xl p-6 -m-36 mx-4 max-w-screen-xl bg-white dark:bg-gray-800 rounded-2xl xl:-m-32 xl:p-9 xl:mx-auto">
                     <article className="xl:w-[828px] w-full max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
@@ -285,7 +190,24 @@ export default async function EventPage ( { params }: { params: Params } )
                             </aside>
                         </div>
                         {/* Article Content */ }
-
+                        <span className="block mb-2 text-gray-900">
+                            <h1 className="font-extrabold text-5xl lg:text-6xl ">
+                                { eventData.eventName }
+                            </h1>
+                        </span>
+                        <h2 className="mb-4 max-w-4xl text-xl font-extrabold leading-none  sm:text-3xl lg:text-4xl">
+                            { eventData.description }
+                        </h2>
+                        <div className="my-2">
+                            <p className="mb-4 text-xl font-extrabold leading-none">
+                                Event by: { eventData.orgName }
+                            </p>
+                            <Countdown
+                                startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
+                                color="" // Text color for numbers
+                                labelColor="" // Text color for labels
+                            />
+                        </div>
 
 
 

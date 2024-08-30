@@ -1,11 +1,12 @@
 'use server';
 
 import { db } from '@/db';
-import { events, orgEventTickets, orgTicketTypes } from '@/db/schema';
+import { events, organizations, orgEventTickets, orgTicketTypes } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
 
 import { revalidatePath } from 'next/cache';
 import { eq, inArray, and } from 'drizzle-orm/expressions'; 
+import { getEventIdBySlug } from './getEventIdBySlug';
 
 
 // Get an event by its slug
@@ -219,3 +220,37 @@ export const fetchEventsForOrg = async () =>
 
     return eventsData;
 };
+
+
+export async function fetchEventData ( eventSlug: string )
+{
+    const eventId = await getEventIdBySlug( eventSlug );
+
+    if ( !eventId )
+    {
+        return null;
+    }
+
+    const eventWithOrg = await db
+        .select( {
+            eventId: events.id,
+            eventName: events.name,
+            description: events.description,
+            startDate: events.startDate,
+            endDate: events.endDate,
+            featuredImage: events.featuredImage,
+            venue: events.venue,
+            city: events.city,
+            state: events.state,
+            zipCode: events.zipCode,
+            country: events.country,
+            orgId: events.orgId,
+            orgName: organizations.name,
+        } )
+        .from( events )
+        .innerJoin( organizations, eq( events.orgId, organizations.id ) )
+        .where( eq( events.id, eventId ) )
+        .limit( 1 );
+
+    return eventWithOrg[ 0 ]; // Assuming you always have one event per ID
+}
