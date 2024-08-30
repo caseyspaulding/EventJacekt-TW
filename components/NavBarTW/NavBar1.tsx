@@ -71,7 +71,7 @@ const solutions = [
 const navigation = [
   { name: "Pricing", href: "/pricing" },
 
-  { name: "Guides", href: "/blog" },
+  { name: "Academy", href: "/blog" },
 
 ];
 
