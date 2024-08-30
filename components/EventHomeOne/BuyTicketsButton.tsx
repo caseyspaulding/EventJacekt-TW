@@ -14,7 +14,7 @@ const BuyTicketsButton: React.FC<BuyTicketsButtonProps> = ( { eventSlug, priceRa
   return (
     <>
       {/* Button for large screens */ }
-      <div className="hidden lg:flex justify-center mt-8 ">
+      <div className="hidden lg:flex mt-1 justify-center  ">
         {/* Container with border and padding for styling */ }
         <div className="border rounded-lg px-16 py-4 bg-white shadow-md max-w-xs text-center">
           {/* Price range display */ }
@@ -25,9 +25,9 @@ const BuyTicketsButton: React.FC<BuyTicketsButtonProps> = ( { eventSlug, priceRa
           <Button
             as='a'
             href={ `/events/${ eventSlug }/tickets` }
-            className="w-full py-3 bg-orange-500 text-white font-semibold rounded-3xl hover:bg-orange-600 transition-colors"
+            className="w-full py-3  rounded-3xl bg-gradient-orange-to-r hover:bg-gradient-orange-hover-to-r px-4 text-base font-medium text-white shadow-sm "
           >
-            Get Your Tickets
+            Buy Your Tickets
           </Button>
         </div>
       </div>

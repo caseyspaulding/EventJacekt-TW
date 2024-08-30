@@ -19,10 +19,10 @@ const StickyFooterBuyTickets: React.FC<StickyFooterBuyTicketsProps> = ( { eventS
           <Button
             as="a"
             href={ `/events/${ eventSlug }/tickets` }
-            className="px-2 py-1 bg-orange-500 text-white font-semibold rounded-2xl hover:bg-orange-700 transition-colors w-full"
+            className="px-2 py-1 bg-orange-500 text-white text-xl  rounded-3xl hover:bg-orange-700 transition-colors w-full"
             
           >
-            Get Your Tickets
+            Buy Your Tickets
           </Button>
           <span className="mt-2 text-lg font-semibold">${ priceRange }</span> {/* Price range below the button */ }
         </div>

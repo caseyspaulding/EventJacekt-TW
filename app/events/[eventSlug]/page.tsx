@@ -270,9 +270,9 @@ export default async function EventPage ( { params }: { params: Params } )
 
 
                     {/* Sidebar */ }
-                    <aside className="hidden xl:block" aria-labelledby="sidebar-label">
-                        <div className="xl:w-[336px] sticky top-20">
-                            <h3 id="sidebar-label" className="sr-only">Sidebar</h3>
+                    <aside className="hidden xl:block pt-0 mt-0" aria-labelledby="sidebar-label">
+                        <div className="mt-0 pt-0 xl:w-[330px] sticky top-20">
+                            <h3 id="sidebar-label" className=" sr-only">Sidebar</h3>
                             {/* Buy Tickets Card */ }
 
                             <BuyTicketsButton eventSlug={ eventSlug } priceRange={ ticket.price } />
