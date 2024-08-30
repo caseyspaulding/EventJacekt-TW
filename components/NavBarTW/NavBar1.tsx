@@ -186,7 +186,7 @@ export default function NavBar1 ()
                           href={ item.href }
                           className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                         >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-gradient-to-r hover:bg-gradient-hover-to-r text-white sm:h-12 sm:w-12">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-gradient-to-r hover:bg-green-500 text-white sm:h-12 sm:w-12">
                             <item.icon aria-hidden="true" className="h-6 w-6" />
                           </div>
                           <div className="ml-4">
@@ -389,7 +389,7 @@ export default function NavBar1 ()
                         href={ item.href }
                         className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-gradient-to-r hover:bg-gradient-hover-to-r text-white">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-gradient-to-r hover:bg-green-500 text-white">
                           <item.icon aria-hidden="true" className="h-6 w-6" />
                         </div>
                         <div className="ml-4 text-base font-medium text-gray-900">{ item.name }</div>
