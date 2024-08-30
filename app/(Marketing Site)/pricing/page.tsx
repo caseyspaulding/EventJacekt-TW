@@ -12,6 +12,7 @@ import HeaderCentered from '@/components/HeaderCentered';
 import FooterFull from '@/components/Footers/FooterFull';
 import type { Metadata } from 'next';
 import { Button } from '@nextui-org/button';
+import ComparisonTable from '@/components/ComparisonTable/ComparisonTable';
 
 
 export const metadata: Metadata = {
@@ -76,7 +77,7 @@ export default function Example ()
         <div className="bg-white">
             <NavBar1 />
             <HeaderCentered title="Pricing" description="" />
-            <div className="bg-gradient-to-b from-blue-50 via-white to-white">
+            <div className="bg-white">
                 {/* Pricing section with single price and feature list */ }
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
                     <div className="pb-16 xl:flex xl:items-center xl:justify-between">
@@ -156,7 +157,7 @@ export default function Example ()
                     </div>
                 </div>
             </div>
-
+<ComparisonTable /> 
             {/* Branded FAQ */ }
             <div className="bg-blue-700">
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
@@ -179,7 +180,7 @@ export default function Example ()
             </div>
 
             {/* CTA section */ }
-            <div className="bg-blue-50">
+            <div className="bg-white">
                 <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
                     <h2 className="text-3xl font-bold tracking-tight text-orange-600 sm:text-4xl">
                         <span className="block">Ready to dive in?</span>
