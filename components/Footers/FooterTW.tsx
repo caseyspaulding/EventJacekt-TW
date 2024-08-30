@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { JSX, SVGProps } from "react";
 
 const navigation = {
@@ -50,22 +51,17 @@ export default function FooterTW() {
   return (
     <footer className="bg-white">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-        <nav
-          aria-label="Footer"
-          className="mt-10 flex justify-center space-x-10"
-        >
-          {navigation.main.map((item) => (
-            <div key={item.name} className="pb-6">
-              <a
-                href={item.href}
-                className="text-sm leading-6 text-gray-600 hover:text-gray-900"
-              >
-                {item.name}
-              </a>
-            </div>
-          ))}
-        </nav>
+        <div className=" mt-4 flex justify-center items-center">
+          <Link href="https://www.eventjacket.com">
+            <img src="/images/logo-full.png" alt="EventJacket" className="h-8" />
+          </Link>
+        </div>
+       
+          
+       
+        
         <div className="mt-10 flex justify-center space-x-10">
+          
           {navigation.social.map((item) => (
             <a
               key={item.name}
@@ -78,7 +74,7 @@ export default function FooterTW() {
           ))}
         </div>
         <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-          &copy; {currentYear} EventJacket, Inc. All rights reserved.
+          &copy; {currentYear} EventJacket, LLC. All rights reserved.
         </p>
       </div>
     </footer>

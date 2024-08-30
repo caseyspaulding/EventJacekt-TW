@@ -16,6 +16,7 @@ import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTi
 import EventDetails from "@/components/EventHomeOne/EventDetails";
 import FooterFull from "@/components/Footers/FooterFull";
 import '@/styles/gradientHeader.css'
+import FooterTW from "@/components/Footers/FooterTW";
 
 interface Params
 {
@@ -247,7 +248,7 @@ export default async function EventPage ( { params }: { params: Params } )
                     </aside>
                 </div>
                 <div className='lg:mt-8 pt-5 mt-20 '>
-                    <FooterFull />
+                    <FooterTW />
                 </div>
 
             </main>
