@@ -169,9 +169,14 @@ export default async function EventPage ( { params }: { params: Params } )
 
             <main className="  bg-white dark:bg-gray-900 antialiased">
                
-              
                 <header className="w-full h-[200px] xl:h-[200px] relative overflow-hidden gradient-bg">
-                    {/* Your header content goes here */ }
+                    {/* Gradient Overlay */ }
+                    {/*<div className="absolute inset-0 bg-blue-600 bg-opacity-30"></div>*/}
+
+                
+                    <div className="relative z-10 text-center p-4">
+                        {/* Your header content goes here */ }
+                    </div>
                 </header>
          
                 {/* Main Content */ }
@@ -199,9 +204,7 @@ export default async function EventPage ( { params }: { params: Params } )
                             { eventData.description }
                         </h2>
                         <div className="my-2">
-                            <p className="mb-4 text-xl font-extrabold leading-none">
-                                Event by: { eventData.orgName }
-                            </p>
+                           
                             <Countdown
                                 startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
                                 color="" // Text color for numbers
