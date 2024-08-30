@@ -248,7 +248,7 @@ export default async function EventPage ( { params }: { params: Params } )
                     </aside>
                 </div>
                 <div className='lg:mt-8 pt-5 mt-20 '>
-                    <FooterTW />
+                   <FooterTW />
                 </div>
 
             </main>
