@@ -14,7 +14,7 @@ const ComparisonTable = () =>
     },
     {
       name: 'TicketLeap',
-      logo: '/images/TL.jpg',
+      logo: '/images/tl.jpg',
     },
   ];
 
