@@ -5,7 +5,7 @@ import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
 import { eq } from "drizzle-orm/expressions";
 import { JsonLd } from 'react-schemaorg';
 import type { Event as SchemaEvent } from 'schema-dts'
-import { events, orgTicketTypes, organizations } from "@/db/schema";
+import { events, organizations, orgTicketTypes } from "@/db/schema";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import { absoluteUrl } from "@/lib/utils";
 
@@ -16,10 +16,6 @@ import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTi
 import EventDetails from "@/components/EventHomeOne/EventDetails";
 import FooterFull from "@/components/Footers/FooterFull";
 import '@/styles/gradientHeader.css'
-
-
-
-
 
 interface Params
 {
@@ -36,6 +32,7 @@ export default async function EventPage ( { params }: { params: Params } )
         notFound();
     }
 
+    // Fetch event with organization details
     const eventWithOrg = await db
         .select( {
             eventId: events.id,
@@ -50,10 +47,10 @@ export default async function EventPage ( { params }: { params: Params } )
             zipCode: events.zipCode,
             country: events.country,
             orgId: events.orgId,
-            orgName: organizations.name, // Fetch org name
+            orgName: organizations.name,
         } )
         .from( events )
-        .innerJoin( organizations, eq( events.orgId, organizations.id ) ) // Perform a join on orgId
+        .innerJoin( organizations, eq( events.orgId, organizations.id ) )
         .where( eq( events.id, eventId ) )
         .limit( 1 );
 
@@ -61,12 +58,10 @@ export default async function EventPage ( { params }: { params: Params } )
 
     if ( !eventData )
     {
-        return {
-            title: 'Event Not Found',
-            description: 'The requested event could not be found.',
-        };
+        notFound();
     }
 
+    // Fetch tickets separately
     const tickets = await db
         .select( {
             id: orgTicketTypes.id,
@@ -95,42 +90,12 @@ export default async function EventPage ( { params }: { params: Params } )
         .from( orgTicketTypes )
         .where( eq( orgTicketTypes.eventId, eventId ) );
 
-    const ticketType = await db
-        .select( {
-            id: orgTicketTypes.id,
-            eventId: orgTicketTypes.eventId,
-            orgId: orgTicketTypes.orgId,
-            name: orgTicketTypes.name,
-            description: orgTicketTypes.description,
-            price: orgTicketTypes.price,
-            quantity: orgTicketTypes.quantity,
-            eventDate: orgTicketTypes.eventDate,
-            saleStartDate: orgTicketTypes.saleStartDate,
-            saleEndDate: orgTicketTypes.saleEndDate,
-            isEarlyBird: orgTicketTypes.isEarlyBird,
-            maxPerCustomer: orgTicketTypes.maxPerCustomer,
-            isFree: orgTicketTypes.isFree,
-            category: orgTicketTypes.category,
-            promoCodeRequired: orgTicketTypes.promoCodeRequired,
-            availableOnline: orgTicketTypes.availableOnline,
-            groupDiscountAvailable: orgTicketTypes.groupDiscountAvailable,
-            refundable: orgTicketTypes.refundable,
-            currency: orgTicketTypes.currency,
-            salesLimitPerDay: orgTicketTypes.salesLimitPerDay,
-            createdAt: orgTicketTypes.createdAt,
-            updatedAt: orgTicketTypes.updatedAt,
-        } )
-        .from( orgTicketTypes )
-        .where( eq( orgTicketTypes.eventId, eventId ) )
-        .limit( 1 ); // Assuming you want the first ticket type found
-
-    if ( !ticketType.length )
+    if ( !tickets.length )
     {
         notFound();
     }
 
-    const ticket = ticketType[ 0 ]; // Use the first ticket type found
-
+    const ticket = tickets[ 0 ]; // Use the first ticket type found
 
     return (
         <>
