@@ -16,8 +16,6 @@ export default function HowItWorks ()
         <div className="relative mt-12 lg:mt-20">
           {/* Dotted line positioned above the cards */ }
           <div className="absolute inset-x-0 -top-8 flex justify-center">
-            
-           
            
           </div>
 
