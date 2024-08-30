@@ -1,6 +1,6 @@
 import SvgBackgroundReversed from '@/components/Backgrounds/SquareSvgBackgroundReverse';
 import SlantedDividerSolid from '@/components/Divider/SlantedDividerSolidProps';
-import { SlantedDivider } from '@/components/Divider/SlantedOverLap';
+
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FeaturesGridWithIcons from '@components/Features/FeaturesGridwithIcons';
 import FooterFull from '@components/Footers/FooterFull';
