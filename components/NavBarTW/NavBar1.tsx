@@ -141,7 +141,7 @@ export default function NavBar1 ()
     >
       <header>
         <Popover className="relative ">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-2 py-4 md:justify-start md:space-x-10 lg:px-2">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:justify-start md:space-x-10 lg:px-4">
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <Link href="/">
                 <span className="sr-only">EventJacket</span>
@@ -169,11 +169,11 @@ export default function NavBar1 ()
             <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
               {/* Solutions Popover */ }
               <Popover className="relative">
-                <PopoverButton className="group inline-flex items-center rounded-md text-base font-medium text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[open]:text-gray-900">
+                <PopoverButton className="group inline-flex items-center rounded-md text-base font-medium text-gray-700 hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-white  data-[open]:text-gray-900">
                   <span>Solutions</span>
                   <ChevronDownIcon
                     aria-hidden="true"
-                    className="ml-2 h-5 w-5 text-gray-700 group-hover:text-gray-500 group-data-[open]:text-gray-600 group-data-[open]:group-hover:text-gray-500"
+                    className="ml-2 h-5 w-5 text-gray-700  group-hover:text-gray-500 group-data-[open]:text-gray-600 group-data-[open]:group-hover:text-gray-500"
                   />
                 </PopoverButton>
 
@@ -186,7 +186,7 @@ export default function NavBar1 ()
                           href={ item.href }
                           className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                         >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-blue-600 text-white sm:h-12 sm:w-12">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-gradient-to-r hover:bg-gradient-hover-to-r text-white sm:h-12 sm:w-12">
                             <item.icon aria-hidden="true" className="h-6 w-6" />
                           </div>
                           <div className="ml-4">
@@ -202,7 +202,7 @@ export default function NavBar1 ()
 
               {/* Navigation Links */ }
               { navigation.map( ( item ) => (
-                <a key={ item.name } href={ item.href } className="text-base font-medium text-gray-500 hover:text-gray-900">
+                <a key={ item.name } href={ item.href } className="text-base font-medium text-gray-800 hover:text-blue-700">
                   { item.name }
                 </a>
               ) ) }
@@ -217,7 +217,7 @@ export default function NavBar1 ()
                   </a>
                   <a
                     href="/signup"
-                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-base font-medium text-white shadow-sm bg-gradient-to-r hover:bg-gradient-hover-to-r"
                   >
                     Sign up
                   </a>
@@ -286,14 +286,14 @@ export default function NavBar1 ()
 
           {/* Mobile menu */ }
           <PopoverPanel className="absolute inset-x-0 top-0 z-30 origin-top-right p-2 transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-100 data-[enter]:ease-out data-[leave]:ease-in md:hidden">
-            <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+            <div className="divide-y-2 divide-gray-50 rounded-lg h-screen bg-white shadow-lg ring-1 ring-black ring-opacity-5">
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div>
                     <Image alt="EventJacket" height={ 40 } width={ 40 } src="/images/logo.svg" className="h-8 w-auto" />
                   </div>
                   <div className="-mr-2">
-                    <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                    <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-500 focus:outline-none  ">
                       <span className="absolute -inset-0.5" />
                       <span className="sr-only">Close menu</span>
                       <XMarkIcon aria-hidden="true" className="h-6 w-6" />
@@ -385,7 +385,7 @@ export default function NavBar1 ()
                         href={ item.href }
                         className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-blue-600 text-white">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-gradient-to-r hover:bg-gradient-hover-to-r text-white">
                           <item.icon aria-hidden="true" className="h-6 w-6" />
                         </div>
                         <div className="ml-4 text-base font-medium text-gray-900">{ item.name }</div>

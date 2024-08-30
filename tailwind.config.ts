@@ -12,8 +12,9 @@ export default {
     ],
     theme: {
         extend: {
-            colors: {
-                // Customize colors if necessary
+            backgroundImage: {
+                'gradient-to-r': 'linear-gradient(to right, #007bff, #0041c4)',  // From light blue to darker blue
+                'gradient-hover-to-r': 'linear-gradient(to right, #0062cc, #002090)'  // Even darker for hover
             }
         }
     },

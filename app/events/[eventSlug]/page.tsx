@@ -167,9 +167,10 @@ export default async function EventPage ( { params }: { params: Params } )
             />
             <NavBar1 />
 
-            <main className="  bg-white dark:bg-gray-900 antialiased">
-               
-                <header className="w-full h-[200px] xl:h-[200px] relative overflow-hidden gradient-bg">
+            <main className="">
+               <div className="mt-52 absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+           
+                <header className="w-full h-[170px] xl:h-[150px] relative overflow-hidden gradient-bg">
                     {/* Gradient Overlay */ }
                     {/*<div className="absolute inset-0 bg-blue-600 bg-opacity-30"></div>*/}
 
@@ -195,19 +196,19 @@ export default async function EventPage ( { params }: { params: Params } )
                             </aside>
                         </div>
                         {/* Article Content */ }
-                        <span className="block mb-2 text-gray-900">
+                        <span className="block mb-2 text-gray-800">
                             <h1 className="font-extrabold text-5xl lg:text-6xl ">
                                 { eventData.eventName }
                             </h1>
                         </span>
-                        <h2 className="mb-4 max-w-4xl text-xl font-extrabold leading-none  sm:text-3xl lg:text-4xl">
+                        <h2 className="mb-4 max-w-4xl text-xl  leading-none text-gray-900  sm:text-3xl lg:text-4xl">
                             { eventData.description }
                         </h2>
                         <div className="my-2 ">
                             <Countdown
                                 startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
-                                color="text-gray-400" // Text color for numbers
-                                labelColor="text-gray-300" // Text color for labels
+                                color="text-gray-700" // Text color for numbers
+                                labelColor="text-gray-500" // Text color for labels
                             />
                         </div>
 
@@ -250,7 +251,7 @@ export default async function EventPage ( { params }: { params: Params } )
                             locationAddress={ "" }
                             refundPolicy={ '' }
                             about={ eventData.description }
-                            eventDuration={ "" } />
+                            />
 
 
                     </article>

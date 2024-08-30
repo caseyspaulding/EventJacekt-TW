@@ -86,8 +86,8 @@ export default function FeaturesGridWithIcons ()
                 <div className="flow-root rounded-lg bg-slate-50  hover:bg-blue-100 px-6 pb-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <div className="-mt-6">
                     <span
-                      className=" inline-flex items-center justify-center rounded-xl p-3 shadow-lg"
-                      style={ { background: 'linear-gradient(185deg, #1D4ED8, #93c5fd)' } }
+                      className=" inline-flex items-center justify-center rounded-xl p-3 shadow-lg bg-gradient-to-r hover:bg-gradient-hover-to-r"
+                      
                     >
                       <feature.icon aria-hidden="true" className="h-8 w-8 text-white" />
                     </span>
