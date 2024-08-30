@@ -8,16 +8,17 @@ const navigation = {
     { name: 'Analytics', href: '/analytics' },
   ],
   support: [
-    { name: 'Pricing', href: '/pricing' },
+    { name: 'Help Center', href: '/help' },
     { name: 'Documentation', href: '/docs' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Help Center', href: '/help' },
-    { name: 'Blog', href: '/blog' },
+ 
+    { name: 'Academy', href: '/blog' },
 
   ],
   company: [
+    
     { name: 'About', href: '/about' },
-
+    { name: 'Contact', href: '/contact' },
     { name: 'Affiliate', href: '/affiliate' },
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },

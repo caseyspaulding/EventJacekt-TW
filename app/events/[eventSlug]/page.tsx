@@ -181,9 +181,9 @@ export default async function EventPage ( { params }: { params: Params } )
                 </header>
          
                 {/* Main Content */ }
-                <div className="flex relative z-20 justify-between shadow-2xl p-6 -m-36 mx-4 max-w-screen-xl bg-white dark:bg-gray-800 rounded-2xl xl:-m-32 xl:p-9 xl:mx-auto">
+                <div className="flex relative z-20 justify-between shadow-2xl p-3 -m-36 mx-4 max-w-screen-xl bg-white dark:bg-gray-800 rounded-xl xl:-m-32 xl:p-9 xl:mx-auto">
                     <article className="xl:w-[828px] w-full max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-                        <div className="flex flex-col lg:flex-row justify-between lg:items-center mb-2">
+                        <div className="flex flex-col lg:flex-row justify-between lg:items-center ">
                             <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400 text-base lg:mb-0">
 
 
@@ -191,26 +191,12 @@ export default async function EventPage ( { params }: { params: Params } )
                             {/* Social Media Share */ }
                             <aside aria-label="Share social media">
                                 <div className="not-format">
-                                    {/* Add social media share buttons here */ }
+                                  {/* Add social media share buttons here */ }
                                 </div>
                             </aside>
                         </div>
                         {/* Article Content */ }
-                        <span className="block mb-2 text-gray-800">
-                            <h1 className="font-extrabold text-5xl lg:text-6xl ">
-                                { eventData.eventName }
-                            </h1>
-                        </span>
-                        <h2 className="mb-4 max-w-4xl text-xl  leading-none text-gray-900  sm:text-3xl lg:text-4xl">
-                            { eventData.description }
-                        </h2>
-                        <div className="my-2 ">
-                            <Countdown
-                                startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
-                                color="text-gray-700" // Text color for numbers
-                                labelColor="text-gray-500" // Text color for labels
-                            />
-                        </div>
+                       
 
 
 
@@ -223,11 +209,37 @@ export default async function EventPage ( { params }: { params: Params } )
                         </EventImage>
                         <div className="mt-8">
                             <span className="">
-                                Event By{ " " }
-                                <a href="#" className="text-gray-900 mt-3 dark:text-white hover:underline no-underline font-semibold">
-                                    { eventData.orgName }
-                                </a>
+                               
+                                { eventData.startDate && eventData.endDate ? (
+                                    <>
+                                        { new Date( eventData.startDate ).toDateString() } - { new Date( eventData.endDate ).toDateString() }
+                                    </>
+                                ) : eventData.startDate ? (
+                                        new Date( eventData.startDate ).toDateString()
+                                ) : eventData.endDate ? (
+                                            new Date( eventData.endDate ).toDateString()
+                                ) : (
+                                    "No dates available"
+                                ) }
+                               
+                                 
+                              
                             </span>
+                        </div>
+                        <span className="block mb-2 text-gray-800">
+                            <h1 className="font-extrabold text-5xl lg:text-6xl ">
+                                { eventData.eventName }
+                            </h1>
+                        </span>
+                        <h2 className="mb-4 max-w-4xl text-xl leading-none text-gray-900  sm:text-xl lg:text-xl">
+                            { eventData.description }
+                        </h2>
+                        <div className="my-2 ">
+                            <Countdown
+                                startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
+                                color="text-gray-700" // Text color for numbers
+                                labelColor="text-gray-500" // Text color for labels
+                            />
                         </div>
 
 
