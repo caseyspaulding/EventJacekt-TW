@@ -35,7 +35,7 @@ const faqs = [
   {
     id: 7,
     question: 'What\'s the maximum fee my ticket buyers will incur?',
-    answer: 'At EventJacket, our standard ticketing fee is $1 plus 2% of the ticket price. However, we cap this fee at $20 per ticket, ensuring that even your higher-priced tickets remain affordable for your attendees. Please note, the 3% credit card processing fee does not have a cap.'
+    answer: 'At EventJacket, our standard ticketing fee is 50 cents per ticket. Ensuring that even your higher-priced tickets remain affordable for your attendees. Please note, the 3% credit card processing fee is from Stripe'
   }
 ];
 
