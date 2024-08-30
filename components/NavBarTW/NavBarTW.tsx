@@ -57,12 +57,12 @@ export default function NavBarTW ()
 
                 <div className="relative group cursor-pointer">
                   <div
-                    className="absolute -inset-1 bg-gradient-to-l from-orange-500 via-sky-500 to-orange-500 rounded-lg blur-lg opacity-50 transition duration-1000 "
+                    className="absolute -inset-1 bg-gradient-to-l from-orange-500 via-green-500 to-blue-500 rounded-lg blur-lg opacity-50 transition duration-1000 "
                   ></div>
                   <Button
                     href="/signup"
                     as="a"
-                    className="relative z-10 py-2 bg-gradient-to-r hover:bg-green-500 text-white text-xl rounded-3xl 
+                    className="relative z-10 py-2 bg-blue-600  hover:bg-green-500 text-white text-xl rounded-3xl 
                  w-full sm:w-auto px-4 sm:px-52" 
                   >
                     Get Started
