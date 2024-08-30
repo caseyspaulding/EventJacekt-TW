@@ -36,13 +36,13 @@ const features = [
 const faqs = [
     {
         id: 1,
-        question: 'What types of events can I manage with EventJacket?',
-        answer: 'EventJacket is versatile and can handle a wide range of events, including conferences, workshops, concerts, weddings, and corporate gatherings. Our platform is designed to accommodate both small intimate events and large-scale productions.'
+        question: 'How will I get paid?',
+        answer: 'We pay you directly to your bank account!  United States, Canada, and Australia.'
     },
     {
         id: 2,
-        question: 'How does EventJacket handle ticket sales and payments?',
-        answer: 'EventJacket integrates with popular payment gateways to process ticket sales securely. You can set up various ticket types, pricing tiers, and even offer promotional codes. Funds are typically transferred to your linked bank account within 2-5 business days after the event.'
+        question: 'Who processes my payments?',
+        answer: "Yes, we do! We securely handle and process your ticket sales payments using Stripe, a leading and trusted payment processor. With Stripe, your transactions are protected by advanced security measures, ensuring your money is safe and your customers' data is secure. Plus, you can enjoy a seamless payment experience without the added fees of other processors. Rest assured, you're in good hands!"
     },
     {
         id: 3,
@@ -56,13 +56,18 @@ const faqs = [
     },
     {
         id: 5,
-        question: 'What kind of reports and analytics does EventJacket offer?',
-        answer: 'EventJacket provides comprehensive reporting features, including real-time ticket sales data, attendance tracking, revenue summaries, and attendee demographics. You can also generate custom reports to gain insights specific to your event needs.'
+        question: 'How secure are my payments?',
+        answer: "EventJacket is powered by Stripe with Stripe Connect, an enterprise-level payment platform that has achieved PCI-DSS 3.2.1 Level 1 certification — the highest standard of data security recognized in the payment industry! This means your financial information and your attendees' payment details are kept exceptionally secure. Rest assured, you can trust us to protect your data."
     },
     {
         id: 6,
         question: 'Is it possible to manage multiple events simultaneously on EventJacket?',
         answer: 'Yes, EventJacket is designed to handle multiple events concurrently. You can create, manage, and track numerous events from a single dashboard, making it ideal for event planners, organizations, or venues that host various events.'
+    },
+    {
+        id: 7,
+        question: 'What\'s the maximum fee my ticket buyers will incur?',
+        answer: 'At EventJacket, our standard ticketing fee is $1 plus 2% of the ticket price. However, we cap this fee at $20 per ticket, ensuring that even your higher-priced tickets remain affordable for your attendees. Please note, the 3% credit card processing fee does not have a cap.'
     }
 ];
 
