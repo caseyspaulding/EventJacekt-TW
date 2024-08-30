@@ -157,7 +157,12 @@ export default function Example ()
                     </div>
                 </div>
             </div>
-<ComparisonTable /> 
+            {/* Comparison table */ }
+
+            <div className=''>
+                <ComparisonTable /> 
+            </div>
+
             {/* Branded FAQ */ }
             <div className="bg-blue-700">
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
