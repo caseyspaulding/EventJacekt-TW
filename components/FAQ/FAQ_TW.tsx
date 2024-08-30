@@ -10,7 +10,7 @@ const faqs = [
   {
     id: 2,
     question: 'Who processes my payments?',
-    answer: "Yes, we do! We securely handle and process your ticket sales payments using Stripe, a leading and trusted payment processor. With Stripe, your transactions are protected by advanced security measures, ensuring your money is safe and your customers' data is secure. Plus, you can enjoy a seamless payment experience without the added fees of other processors. Rest assured, you're in good hands!"
+    answer: "We securely handle and process your ticket sales payments using Stripe, a leading and trusted payment processor. With Stripe, your transactions are protected by advanced security measures, ensuring your money is safe and your customers' data is secure. Plus, you can enjoy a seamless payment experience without the added fees of other processors. Rest assured, you're in good hands!"
   },
   {
     id: 3,
