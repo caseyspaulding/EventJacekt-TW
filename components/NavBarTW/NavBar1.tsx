@@ -218,7 +218,7 @@ export default function NavBar1 ()
                   <Button
                     as='a'
                     href="/signup"
-                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-base font-medium text-white shadow-sm bg-gradient-orange-to-r hover:bg-green-500 "
+                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-base font-medium text-white shadow-sm bg-orange-500 hover:bg-green-500 "
                   >
                     Sign up
                   </Button>
@@ -364,7 +364,7 @@ export default function NavBar1 ()
                     <Button
                       as='a'
                       href="/signup"
-                      className="flex w-full items-center rounded-3xl justify-center  border border-transparent bg-orange-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-600"
+                      className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-orange-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-600"
                     >
                       Create Account
                     </Button>
