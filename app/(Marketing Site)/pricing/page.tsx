@@ -7,10 +7,11 @@ import
 } from '@heroicons/react/24/outline';
 
 import NavBar1 from '@/components/NavBarTW/NavBar1';
-import Link from 'next/link';
+
 import HeaderCentered from '@/components/HeaderCentered';
 import FooterFull from '@/components/Footers/FooterFull';
 import type { Metadata } from 'next';
+import { Button } from '@nextui-org/button';
 
 
 export const metadata: Metadata = {
@@ -82,19 +83,22 @@ export default function Example ()
                         <div>
                             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
                                 <span className="text-gray-900">Everything you need for</span>
-                                <span className="ml-2 text-blue-600">$ FREE - limited time</span>
+                                <span className="ml-2 text-blue-600">$0.00 a month*</span>
                             </h1>
                             <p className="mt-5 text-xl text-gray-500">
-                                Includes every feature we offer plus unlimited projects and
-                                unlimited users.
+                                50 cents per event ticket sold.
+                            </p>
+                            <p className="mt-5 text-xl text-gray-500">
+                                *First five customers only. Includes every feature we offer.
                             </p>
                         </div>
-                        <Link
+                        <Button
+                            as='a'
                             href="/signup"
-                            className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-5 py-3 text-base font-medium text-white hover:bg-blue-700 sm:mt-10 sm:w-auto xl:mt-0"
+                            className="mt-8 shadow-2xl inline-flex rounded-3xl w-full items-center justify-center bg-orange-500 hover:bg-green-500  px-5 py-3 text-base font-medium text-white  sm:mt-10 sm:w-auto xl:mt-0"
                         >
                             Get Started
-                        </Link>
+                        </Button>
                     </div>
                     <div className="border-t border-gray-200 pt-16 xl:grid xl:grid-cols-3 xl:gap-x-8">
                         <div>
@@ -118,7 +122,7 @@ export default function Example ()
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
-                                            className="h-6 w-6 flex-shrink-0 text-green-500"
+                                            className="h-8 w-8 font-bold flex-shrink-0 text-green-500"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
                                             { feature }
@@ -154,10 +158,10 @@ export default function Example ()
             </div>
 
             {/* Branded FAQ */ }
-            <div className="bg-blue-900">
+            <div className="bg-blue-700">
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
                     <h2 className="text-3xl font-bold tracking-tight text-white">
-                        Frequently asked questions
+                        Frequently Asked Questions
                     </h2>
                     <div className="mt-6 border-t border-blue-400 border-opacity-25 pt-10">
                         <dl className="space-y-10 md:grid md:grid-cols-2 md:grid-rows-2 md:gap-x-8 md:gap-y-12 md:space-y-0">
@@ -166,7 +170,7 @@ export default function Example ()
                                     <dt className="text-lg font-medium leading-6 text-white">
                                         { item.question }
                                     </dt>
-                                    <dd className="mt-2 text-base text-blue-200">{ item.answer }</dd>
+                                    <dd className="mt-2 text-base text-blue-100">{ item.answer }</dd>
                                 </div>
                             ) ) }
                         </dl>
@@ -177,18 +181,19 @@ export default function Example ()
             {/* CTA section */ }
             <div className="bg-blue-50">
                 <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
-                    <h2 className="text-3xl font-bold tracking-tight text-blue-900 sm:text-4xl">
+                    <h2 className="text-3xl font-bold tracking-tight text-orange-600 sm:text-4xl">
                         <span className="block">Ready to dive in?</span>
                         <span className="block text-blue-600">Start your free trial today.</span>
                     </h2>
                     <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-                        <div className="inline-flex rounded-md shadow">
-                            <a
+                        <div className="inline-flex rounded-3xl shadow-2xl">
+                            <Button
+                                as='a'
                                 href="/signup"
-                                className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-5 py-3 text-base font-medium text-white hover:bg-blue-700"
+                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-orange-500 px-5 py-3 text-base font-medium text-white hover:bg-green-600"
                             >
                                 Get started
-                            </a>
+                            </Button>
                         </div>
                     </div>
                 </div>
