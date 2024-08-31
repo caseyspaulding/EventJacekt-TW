@@ -14,7 +14,7 @@ import Countdown from "@/components/Countdown/Countdown";
 import BuyTicketsButton from "@/components/EventHomeOne/BuyTicketsButton";
 import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTickets";
 import EventDetails from "@/components/EventHomeOne/EventDetails";
-import FooterFull from "@/components/Footers/FooterFull";
+
 import '@/styles/gradientHeader.css'
 import FooterTW from "@/components/Footers/FooterTW";
 
