@@ -8,7 +8,7 @@ import { events, organizations, orgTicketTypes } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { db } from '@/db';
 import { notFound } from 'next/navigation';
-import Confetti from 'react-confetti/dist/types/Confetti';
+
 import ConfettiComponent from '@/components/Confetti/Confetti';
 
 
