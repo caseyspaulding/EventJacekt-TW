@@ -78,6 +78,13 @@ export async function generateMetadata ( { params }: { params: Params } )
                 },
             ],
         },
+        // Add the `fb:app_id` directly here
+        additionalMetaTags: [
+            {
+                property: 'fb:app_id',
+                content: '453279560972900',
+            },
+        ],
     };
 }
 
