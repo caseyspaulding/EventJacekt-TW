@@ -122,9 +122,9 @@ export default function ScanTicketsPage ()
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="max-w-md mx-auto mt-10 bg-white   overflow-hidden">
       <div className="p-6">
-        <h1 className="mt-8 text-3xl font-extrabold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">
+        <h1 className="mt-8 text-3xl font-extrabold mb-4 text-center  ">
           Scan Tickets
         </h1>
 

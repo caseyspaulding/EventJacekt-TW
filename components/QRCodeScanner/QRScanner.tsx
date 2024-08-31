@@ -156,8 +156,8 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
     <div className="flex flex-col items-center p-1">
       <div className="mt-4 w-full max-w-md relative rounded-2xl overflow-hidden" style={ { paddingBottom: '100%' } }>
         { !isScanning && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white z-10">
-            <div className="text-center mb-4">
+          <div className="absolute inset-0 flex items-center justify-center bg-green-500  text-white z-10">
+            <div className="text-center mb-4 ">
               <img src="/images/QRCODE.jpg" alt="Scanning Placeholder" className="" />
               <p>Ready to Scan</p>
             </div>
