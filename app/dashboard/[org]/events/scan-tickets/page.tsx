@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { fetchTicketInfo, checkInTicket } from './actions';
 import QrCodeScanner from '@/components/QRCodeScanner/QRScanner';
+import FeedbackModal from './FeedbackModal'; // Import the updated FeedbackModal component
 
 interface ScannedTicket
 {
@@ -20,13 +21,14 @@ export default function ScanTicketsPage ()
   const [ isPending, setIsPending ] = useState( false );
   const [ errorMessage, setErrorMessage ] = useState<string | null>( null );
   const [ feedbackType, setFeedbackType ] = useState<'success' | 'error' | null>( null );
+  const [ feedbackMessage, setFeedbackMessage ] = useState<string>( '' );  // Add feedback message state
 
   const handleScan = async ( ticketUrl: string ) =>
   {
     const ticketId = extractTicketIdFromUrl( ticketUrl );
     if ( !ticketId )
     {
-      setErrorMessage( 'Invalid QR code scanned.' );
+      setFeedbackMessage( 'Invalid QR code scanned.' ); // Set the custom message
       showVisualFeedback( 'error' );
       return;
     }
@@ -56,6 +58,7 @@ export default function ScanTicketsPage ()
           ...prev.slice( 0, 4 ),
         ] );
 
+        setFeedbackMessage( 'This ticket has already been used.' ); // Set the custom message
         showVisualFeedback( 'error' );
         return;
       }
@@ -78,6 +81,7 @@ export default function ScanTicketsPage ()
         ...prev.slice( 0, 4 ),
       ] );
 
+      setFeedbackMessage( 'Ticket successfully checked in.' ); // Set the custom message
       showVisualFeedback( 'success' );
     } catch ( error )
     {
@@ -95,6 +99,7 @@ export default function ScanTicketsPage ()
         ...prev.slice( 0, 4 ),
       ] );
 
+      setFeedbackMessage( 'Failed to check in the ticket. Please try again.' ); // Set the custom message
       showVisualFeedback( 'error' );
     } finally
     {
@@ -122,11 +127,9 @@ export default function ScanTicketsPage ()
   };
 
   return (
-    <div className="max-w-md mx-auto  bg-white   overflow-hidden">
+    <div className="max-w-md mx-auto bg-white overflow-hidden">
       <div className="">
-        <h1 className=" text-3xl font-extrabold text-center  ">
-          Scan Tickets
-        </h1>
+        <h1 className="text-3xl font-extrabold text-center">Scan Tickets</h1>
 
         <QrCodeScanner
           qrCodeSuccessCallback={ handleScan }
@@ -137,15 +140,13 @@ export default function ScanTicketsPage ()
           } }
         />
 
-        { feedbackType && (
-          <div className="mt-2 flex justify-center">
-            { feedbackType === 'success' ? (
-              <img src="/images/success-checkmark.png" alt="Success" width={ 500 } height={ 500 } />
-            ) : (
-              <img src="/images/error-cross.png" alt="Error" width={ 500 } height={ 500 } />
-            ) }
-          </div>
-        ) }
+        {/* Use FeedbackModal to show success or error */ }
+        <FeedbackModal
+          type={ feedbackType || 'success' }
+          isOpen={ !!feedbackType }
+          message={ feedbackMessage } // Pass the custom message
+          onClose={ () => setFeedbackType( null ) }
+        />
 
         { errorMessage && <p className="text-center text-red-600 font-semibold mt-4">{ errorMessage }</p> }
 
