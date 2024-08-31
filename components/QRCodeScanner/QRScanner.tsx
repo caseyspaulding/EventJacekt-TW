@@ -183,6 +183,12 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
             ) ) }
           </select>
           <button
+            onClick={ handleToggleScan }
+            className={ `px-4 py-2 w-full sm:w-auto rounded-md ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white` }
+          >
+            { isScanning ? 'Stop Scanning' : 'Start Scanning' }
+          </button>
+          <button
             onClick={ toggleFlash }
             className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
@@ -203,12 +209,7 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
             accept="image/*"
             className="hidden"
           />
-          <button
-            onClick={ handleToggleScan }
-            className={ `px-4 py-2 w-full sm:w-auto rounded-md ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white` }
-          >
-            { isScanning ? 'Stop Scanning' : 'Start Scanning' }
-          </button>
+          
         </div>
       </div>
     </div>
