@@ -39,7 +39,7 @@ export default async function Index ()
 
             <h2 className='text-center'>
                 <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
-                    Coming soon
+                    Just Launched
                 </span>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
                     <span className="block text-gray-900">Events on </span>
