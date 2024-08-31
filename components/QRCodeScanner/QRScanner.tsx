@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import QrScanner from 'qr-scanner';
+import { Button } from '@nextui-org/button';
+
 
 
 interface QrCodeScannerProps
@@ -182,26 +184,26 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
               </option>
             ) ) }
           </select>
-          <button
+          <Button
             onClick={ handleToggleScan }
-            className={ `px-4 py-2 w-full sm:w-auto rounded-md ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white` }
+            className={ `px-4 py-2 w-full sm:w-auto rounded-3xl ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white text-xl` }
           >
             { isScanning ? 'Stop Scanning' : 'Start Scanning' }
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={ toggleFlash }
-            className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-3xl text-lg hover:bg-blue-600"
           >
             Flash: { isFlashOn ? 'On' : 'Off' }
-          </button>
+          </Button>
         </div>
         <div className="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <button
+          <Button
             onClick={ handleButtonClick }
-            className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-3xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
             Upload QR Code Image
-          </button>
+          </Button>
           <input
             type="file"
             ref={ fileInputRef }
