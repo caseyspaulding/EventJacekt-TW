@@ -261,6 +261,9 @@ importers:
       '@types/google-one-tap':
         specifier: ^1.2.6
         version: 1.2.6
+      '@types/lodash':
+        specifier: ^4.17.7
+        version: 4.17.7
       '@types/node':
         specifier: ^20.16.1
         version: 20.16.1
@@ -318,6 +321,9 @@ importers:
       eslint-plugin-tailwindcss:
         specifier: ^3.17.4
         version: 3.17.4(tailwindcss@3.4.10(ts-node@10.9.1(@types/node@20.16.1)(typescript@5.5.4)))
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       postcss:
         specifier: ^8.4.41
         version: 8.4.41
