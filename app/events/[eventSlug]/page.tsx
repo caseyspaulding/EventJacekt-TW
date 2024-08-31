@@ -54,8 +54,12 @@ export async function generateMetadata ( { params }: { params: Params } )
         return notFound();
     }
 
+    // Use a valid absolute URL for the image
+    const imageUrl = eventData.featuredImage?.startsWith( 'http' ) 
+        ? eventData.featuredImage // If the featuredImage already contains a valid URL
+        : absoluteUrl( eventData.featuredImage || '/images/og-eventjacket.jpg' );
+
     const fullUrl = absoluteUrl( `/events/${ eventSlug }` );
-    const imageUrl = absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' );
 
     return {
         title: `${ eventData.eventName } - EventJacket`,
@@ -76,7 +80,6 @@ export async function generateMetadata ( { params }: { params: Params } )
         },
     };
 }
-
 
 export default async function EventPage ( { params }: { params: Params } )
 {
