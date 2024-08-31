@@ -19,11 +19,16 @@ export const metadata: Metadata = {
 
 export default async function Index ()
 {
+    
     // Fetch data directly in the server component
     const eventList = await getEvents(); // Ensure this fetches the latest data
 
     return (
         <>
+            <meta property="og:image" content="/opengraph-image.png" />
+            <meta property="og:image:type" content="image/png" />
+            <meta property="og:image:width" content="<generated>" />
+            <meta property="og:image:height" content="<generated>" />
             <SvgBackgroundReversed />
             <NavBar1 />
             <NavBarTW />
