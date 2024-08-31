@@ -12,7 +12,7 @@ import HowItWorks from '@/components/Features/HowItWorks';
 import FAQ_TW from '@/components/FAQ/FAQ_TW';
 
 export const metadata: Metadata = {
-    title: 'EventJacket - Event Management Platform for Non-Profits',
+    title: 'EventJacket - Event Management Software',
     description:
         'EventJacket is your all-in-one event management solution, offering tools to create, manage, and sell tickets for events with ease. Perfect for organizers of conferences, festivals, and more.',
 };
