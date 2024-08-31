@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import QrScanner from 'qr-scanner';
 import { Button } from '@nextui-org/button';
 
-
-
 interface QrCodeScannerProps
 {
   qrCodeSuccessCallback: ( decodedText: string ) => void;
@@ -24,32 +22,28 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
   const [ isScanning, setIsScanning ] = useState<boolean>( false );
   const fileInputRef = useRef<HTMLInputElement>( null );
 
-
   useEffect( () =>
   {
     if ( !videoRef.current ) return;
 
     const qrScanner = new QrScanner(
-
       videoRef.current,
       ( result ) =>
       {
         setScanResult( result.data );
-
         qrCodeSuccessCallback( result.data );
         qrScanner.pause();
         setTimeout( () =>
         {
           qrScanner.start();
-        }
-          , 1000 );
+        }, 1000 );
         console.log( 'QR Code detected:', result );
       },
       {
         onDecodeError: ( error ) =>
         {
           if ( error !== 'No QR code found' )
-          { // Suppress this specific error
+          {
             console.error( 'QR Code scanning error:', error );
             if ( onError ) onError( error );
           }
@@ -59,7 +53,7 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
       }
     );
 
-    qrScannerRef.current = qrScanner; // Store the qrScanner instance in a ref
+    qrScannerRef.current = qrScanner;
 
     QrScanner.listCameras( true ).then( ( cameras ) =>
     {
@@ -67,10 +61,10 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
       if ( cameras.length > 0 )
       {
         setSelectedCamera( cameras[ 0 ].id );
-        qrScanner.setCamera( cameras[ 0 ].id );  // Set the first camera as default
+        qrScanner.setCamera( cameras[ 0 ].id );
       }
     } );
-    // Add an event listener for page unload to clean up
+
     const handleBeforeUnload = () =>
     {
       if ( qrScannerRef.current )
@@ -83,7 +77,6 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
 
     return () =>
     {
-      // Remove the event listener when the component is unmounted
       window.removeEventListener( 'beforeunload', handleBeforeUnload );
     };
   }, [ qrCodeSuccessCallback, onError ] );
@@ -108,9 +101,9 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
 
     if ( qrScannerRef.current )
     {
-      await qrScannerRef.current.stop(); // Stop the current scanner
-      await qrScannerRef.current.setCamera( cameraId ); // Set the new camera
-      await qrScannerRef.current.start(); // Restart the scanner with the new camera
+      await qrScannerRef.current.stop();
+      await qrScannerRef.current.setCamera( cameraId );
+      await qrScannerRef.current.start();
       setIsScanning( true );
     }
   };
@@ -154,53 +147,67 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
   {
     fileInputRef.current?.click();
   };
+
   return (
     <div className="flex flex-col items-center p-1">
-      <div className="mt-4 w-full max-w-md relative rounded-2xl overflow-hidden" style={ { paddingBottom: '100%' } }>
+      <div
+        className="mt-4 w-full max-w-md rounded-2xl relative z-10 overflow-hidden"
+        style={ { paddingBottom: '100%' } }
+      >
         { !isScanning && (
-          <div className="absolute inset-0 flex items-center justify-center bg-green-500  text-white z-10">
-            <div className="text-center mb-4 ">
+          <div className="absolute inset-0 flex items-center justify-center bg-green-500 text-white z-0">
+            {/* Lowered z-index */ }
+            <div className="text-center mb-4">
               <img src="/images/QRCODE.jpg" alt="Scanning Placeholder" className="" />
               <p>Ready to Scan</p>
             </div>
           </div>
         ) }
-        <video ref={ videoRef } className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"></video>
+        <video
+          ref={ videoRef }
+          className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl z-0"
+        ></video>
+        {/* Lowered z-index */ }
         <div className="qr-scanner-overlay">
           <div className="qr-scan-region"></div>
         </div>
       </div>
 
       <div className="flex flex-col items-center space-y-4 mt-6 w-full">
-        <div className="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+        {/* Stacking the buttons for both small and large screens */ }
+        <div className="w-full flex flex-col items-center space-y-4">
           <select
             onChange={ handleCameraChange }
             value={ selectedCamera }
-            className="p-2 border rounded-md w-full sm:w-auto"
+            className="p-2 border rounded-md w-full"
           >
-            { cameraList && cameraList.map( ( camera ) => (
-              <option key={ camera.id } value={ camera.id }>
-                { camera.label }
-              </option>
-            ) ) }
+            { cameraList &&
+              cameraList.map( ( camera ) => (
+                <option key={ camera.id } value={ camera.id }>
+                  { camera.label }
+                </option>
+              ) ) }
           </select>
           <Button
             onClick={ handleToggleScan }
-            className={ `px-4 py-2 w-full sm:w-auto rounded-3xl ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white text-xl` }
+            className={ `px-4 py-2 w-full rounded-3xl ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'
+              } text-white text-xl` }
           >
             { isScanning ? 'Stop Scanning' : 'Start Scanning' }
           </Button>
           <Button
             onClick={ toggleFlash }
-            className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-3xl text-lg hover:bg-blue-600"
+            className="px-4 py-2 w-full bg-blue-500 text-white rounded-3xl text-lg hover:bg-blue-600"
           >
             Flash: { isFlashOn ? 'On' : 'Off' }
           </Button>
         </div>
-        <div className="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+
+        {/* Another stack of buttons for Upload */ }
+        <div className="w-full flex flex-col items-center space-y-4">
           <Button
             onClick={ handleButtonClick }
-            className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-3xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="px-4 py-2 w-full bg-blue-500 text-white rounded-3xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
             Upload QR Code Image
           </Button>
@@ -211,7 +218,6 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
             accept="image/*"
             className="hidden"
           />
-          
         </div>
       </div>
     </div>

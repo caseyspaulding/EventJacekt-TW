@@ -94,7 +94,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                   </button>
                 </div>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                  <div className="flex-shrink-0 flex items-center px-4">
+                  <div className="flex-shrink-0 flex items-center  px-4">
                     <Link href="/">
                       <img
                         className="h-8 w-auto"
@@ -104,7 +104,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                     </Link>
                     <Link href="/">
                       <span className="pl-2 font-extrabold text-white">
-                        EventJacket
+                       { orgName }
                       </span>
                     </Link>
                   </div>

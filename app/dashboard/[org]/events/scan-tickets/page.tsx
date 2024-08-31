@@ -132,6 +132,7 @@ export default function ScanTicketsPage ()
         <h1 className="text-3xl font-extrabold text-center">Scan Tickets</h1>
 
         <QrCodeScanner
+          
           qrCodeSuccessCallback={ handleScan }
           onError={ ( err ) =>
           {
