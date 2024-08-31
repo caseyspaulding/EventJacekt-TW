@@ -17,12 +17,66 @@ import EventDetails from "@/components/EventHomeOne/EventDetails";
 
 import '@/styles/gradientHeader.css'
 import FooterTW from "@/components/Footers/FooterTW";
-import Head from "next/head";
+
 
 interface Params
 {
     eventSlug: string;
 }
+
+export async function generateMetadata ( { params }: { params: Params } )
+{
+    const eventSlug = params.eventSlug;
+    const eventId = await getEventIdBySlug( eventSlug );
+
+    if ( !eventId )
+    {
+        return notFound();
+    }
+
+    const eventWithOrg = await db
+        .select( {
+            eventId: events.id,
+            eventName: events.name,
+            description: events.description,
+            startDate: events.startDate,
+            endDate: events.endDate,
+            featuredImage: events.featuredImage,
+        } )
+        .from( events )
+        .where( eq( events.id, eventId ) )
+        .limit( 1 );
+
+    const eventData = eventWithOrg[ 0 ];
+
+    if ( !eventData )
+    {
+        return notFound();
+    }
+
+    const fullUrl = absoluteUrl( `/events/${ eventSlug }` );
+    const imageUrl = absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' );
+
+    return {
+        title: `${ eventData.eventName } - EventJacket`,
+        description: eventData.description || 'Join us for this amazing event!',
+        openGraph: {
+            title: eventData.eventName,
+            description: eventData.description || 'Join us for this amazing event!',
+            url: fullUrl,
+            type: 'website',
+            images: [
+                {
+                    url: imageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: eventData.eventName,
+                },
+            ],
+        },
+    };
+}
+
 
 export default async function EventPage ( { params }: { params: Params } )
 {
@@ -99,7 +153,7 @@ export default async function EventPage ( { params }: { params: Params } )
 
     const ticket = tickets[ 0 ]; // Use the first ticket type found
     // Construct full URL for OG tags
-    const fullUrl = absoluteUrl( `/events/${ eventSlug }` );
+ 
     const imageUrl = absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' );
 
     return (
@@ -135,17 +189,7 @@ export default async function EventPage ( { params }: { params: Params } )
                     } ) ),
                 } }
             />
-            <Head>
-                <title>{ eventData.eventName } - EventJacket</title>
-                <meta property="og:title" content={ eventData.eventName } />
-                <meta property="og:description" content={ eventData.description || 'Join us for this event!' } />
-                <meta property="og:url" content={ fullUrl } />
-                <meta property="og:image" content={ imageUrl } />
-                <meta property="og:type" content="website" />
-                <meta property="og:image:alt" content={ eventData.eventName } />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-            </Head>
+           
             <NavBar1 />
 
             <main className="">
