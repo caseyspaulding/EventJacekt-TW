@@ -98,6 +98,9 @@ export default async function EventPage ( { params }: { params: Params } )
     }
 
     const ticket = tickets[ 0 ]; // Use the first ticket type found
+    // Construct full URL for OG tags
+    const fullUrl = absoluteUrl( `/events/${ eventSlug }` );
+    const imageUrl = absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' );
 
     return (
         <>
@@ -121,7 +124,7 @@ export default async function EventPage ( { params }: { params: Params } )
                         },
                     },
                     image: [
-                        absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' ),
+                        imageUrl,
                     ],
                     offers: tickets.map( ticket => ( {
                         "@type": "Offer",
@@ -135,9 +138,9 @@ export default async function EventPage ( { params }: { params: Params } )
             <Head>
                 <title>{ eventData.eventName } - EventJacket</title>
                 <meta property="og:title" content={ eventData.eventName } />
-                <meta property="og:description" content={ eventData.description || '' } />
-                <meta property="og:url" content={ `/events/` } />
-                <meta property="og:image" content={ eventData.featuredImage || '' } />
+                <meta property="og:description" content={ eventData.description || 'Join us for this event!' } />
+                <meta property="og:url" content={ fullUrl } />
+                <meta property="og:image" content={ imageUrl } />
                 <meta property="og:type" content="website" />
                 <meta property="og:image:alt" content={ eventData.eventName } />
                 <meta property="og:image:width" content="1200" />
