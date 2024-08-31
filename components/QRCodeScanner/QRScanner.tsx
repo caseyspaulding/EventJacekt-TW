@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import QrScanner from 'qr-scanner';
-import { Button } from '@nextui-org/react';
 
 
 interface QrCodeScannerProps
@@ -154,49 +153,23 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
     fileInputRef.current?.click();
   };
   return (
-    <div className="flex flex-col p-1">
-      <div className="mt-2 w-full max-w-md relative rounded-2xl overflow-hidden" style={ { paddingBottom: '100%' } }>
+    <div className="flex flex-col items-center p-1">
+      <div className="mt-4 w-full max-w-md relative rounded-2xl overflow-hidden" style={ { paddingBottom: '100%' } }>
         { !isScanning && (
           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white z-10">
-            <div className="bg-green-400 text-center mb-4">
+            <div className="text-center mb-4">
               <img src="/images/QRCODE.jpg" alt="Scanning Placeholder" className="" />
               <p>Ready to Scan</p>
             </div>
           </div>
         ) }
-
-        {/* Video Element for QR Code Scanner */ }
         <video ref={ videoRef } className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"></video>
-
-        {/* Overlay for QR Code Scanner */ }
-        <div className="absolute inset-0 flex items-center justify-center">
-          {/* Transparent Background Overlay */ }
-          <div className="absolute inset-0"></div>
-
-          {/* QR Code Scanning Area */ }
-          <div className="relative z-10 w-60 h-60 rounded-lg flex items-center justify-center">
-            {/* Crosshair for QR Code Alignment */ }
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-full h-px bg-white opacity-75"></div> {/* Horizontal Line */ }
-            </div>
-          </div>
-
-          {/* Full-Width Horizontal Line */ }
-          
-
-          {/* Small Vertical Line for Crosshair */ }
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-12 w-px bg-white opacity-75"></div>
+        <div className="qr-scanner-overlay">
+          <div className="qr-scan-region"></div>
         </div>
       </div>
 
-      {/* Controls and Buttons */ }
       <div className="flex flex-col items-center space-y-4 mt-6 w-full">
-        <Button
-          onClick={ handleToggleScan }
-          className={ `px-4 py-2 w-full sm:w-auto rounded-md ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white` }
-        >
-          { isScanning ? 'Stop Scanning' : 'Start Scanning' }
-        </Button>
         <div className="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
           <select
             onChange={ handleCameraChange }
@@ -209,20 +182,20 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
               </option>
             ) ) }
           </select>
-          <Button
+          <button
             onClick={ toggleFlash }
             className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             Flash: { isFlashOn ? 'On' : 'Off' }
-          </Button>
+          </button>
         </div>
         <div className="w-full flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <Button
+          <button
             onClick={ handleButtonClick }
             className="px-4 py-2 w-full sm:w-auto bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
             Upload QR Code Image
-          </Button>
+          </button>
           <input
             type="file"
             ref={ fileInputRef }
@@ -230,11 +203,14 @@ export default function QrCodeScanner ( { qrCodeSuccessCallback, onError }: QrCo
             accept="image/*"
             className="hidden"
           />
+          <button
+            onClick={ handleToggleScan }
+            className={ `px-4 py-2 w-full sm:w-auto rounded-md ${ isScanning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' } text-white` }
+          >
+            { isScanning ? 'Stop Scanning' : 'Start Scanning' }
+          </button>
         </div>
       </div>
     </div>
-
-
-
   );
 }
