@@ -122,9 +122,9 @@ export default function ScanTicketsPage ()
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white   overflow-hidden">
-      <div className="p-6">
-        <h1 className="mt-8 text-3xl font-extrabold mb-4 text-center  ">
+    <div className="max-w-md mx-auto  bg-white   overflow-hidden">
+      <div className="">
+        <h1 className=" text-3xl font-extrabold text-center  ">
           Scan Tickets
         </h1>
 
@@ -138,7 +138,7 @@ export default function ScanTicketsPage ()
         />
 
         { feedbackType && (
-          <div className="mt-4 flex justify-center">
+          <div className="mt-2 flex justify-center">
             { feedbackType === 'success' ? (
               <img src="/images/success-checkmark.png" alt="Success" width={ 500 } height={ 500 } />
             ) : (
@@ -150,8 +150,8 @@ export default function ScanTicketsPage ()
         { errorMessage && <p className="text-center text-red-600 font-semibold mt-4">{ errorMessage }</p> }
 
         <div className="mt-6">
-          <h2 className="text-lg font-bold mb-2">Scanned Tickets</h2>
-          <ul>
+          <h2 className="text-lg text-center rounded-2xl font-bold mb-1">Scanned Tickets Log</h2>
+          <ul className='bg-gray-100 rounded-2xl'>
             { scannedTickets.map( ( ticket, index ) => (
               <li
                 key={ index }
