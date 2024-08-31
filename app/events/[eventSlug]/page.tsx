@@ -17,6 +17,7 @@ import EventDetails from "@/components/EventHomeOne/EventDetails";
 
 import '@/styles/gradientHeader.css'
 import FooterTW from "@/components/Footers/FooterTW";
+import Head from "next/head";
 
 interface Params
 {
@@ -131,21 +132,32 @@ export default async function EventPage ( { params }: { params: Params } )
                     } ) ),
                 } }
             />
+            <Head>
+                <title>{ eventData.eventName } - EventJacket</title>
+                <meta property="og:title" content={ eventData.eventName } />
+                <meta property="og:description" content={ eventData.description || '' } />
+                <meta property="og:url" content={ `/events/` } />
+                <meta property="og:image" content={ eventData.featuredImage || '' } />
+                <meta property="og:type" content="website" />
+                <meta property="og:image:alt" content={ eventData.eventName } />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+            </Head>
             <NavBar1 />
 
             <main className="">
-               <div className="mt-52 absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
-           
+                <div className="mt-52 absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+
                 <header className="w-full h-[170px] xl:h-[150px] relative overflow-hidden gradient-bg">
                     {/* Gradient Overlay */ }
-                    {/*<div className="absolute inset-0 bg-blue-600 bg-opacity-30"></div>*/}
+                    {/*<div className="absolute inset-0 bg-blue-600 bg-opacity-30"></div>*/ }
 
-                
+
                     <div className="relative z-10 text-center p-4">
                         {/* Your header content goes here */ }
                     </div>
                 </header>
-         
+
                 {/* Main Content */ }
                 <div className="flex relative z-20 justify-between shadow-2xl p-3 -m-36 mx-4 max-w-screen-xl bg-white dark:bg-gray-800 rounded-xl xl:-m-32 xl:p-9 xl:mx-auto">
                     <article className="xl:w-[828px] w-full max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
@@ -157,12 +169,12 @@ export default async function EventPage ( { params }: { params: Params } )
                             {/* Social Media Share */ }
                             <aside aria-label="Share social media">
                                 <div className="not-format">
-                                  {/* Add social media share buttons here */ }
+                                    {/* Add social media share buttons here */ }
                                 </div>
                             </aside>
                         </div>
                         {/* Article Content */ }
-                       
+
 
 
 
@@ -175,21 +187,21 @@ export default async function EventPage ( { params }: { params: Params } )
                         </EventImage>
                         <div className="mt-8">
                             <span className="">
-                               
+
                                 { eventData.startDate && eventData.endDate ? (
                                     <>
                                         { new Date( eventData.startDate ).toDateString() } - { new Date( eventData.endDate ).toDateString() }
                                     </>
                                 ) : eventData.startDate ? (
-                                        new Date( eventData.startDate ).toDateString()
+                                    new Date( eventData.startDate ).toDateString()
                                 ) : eventData.endDate ? (
-                                            new Date( eventData.endDate ).toDateString()
+                                    new Date( eventData.endDate ).toDateString()
                                 ) : (
                                     "No dates available"
                                 ) }
-                               
-                                 
-                              
+
+
+
                             </span>
                         </div>
                         <span className="block mb-2 text-gray-800">
@@ -229,7 +241,7 @@ export default async function EventPage ( { params }: { params: Params } )
                             locationAddress={ "" }
                             refundPolicy={ '' }
                             about={ eventData.description }
-                            />
+                        />
 
 
                     </article>
@@ -248,7 +260,7 @@ export default async function EventPage ( { params }: { params: Params } )
                     </aside>
                 </div>
                 <div className='lg:mt-8 pt-5 mt-20 '>
-                   <FooterTW />
+                    <FooterTW />
                 </div>
 
             </main>

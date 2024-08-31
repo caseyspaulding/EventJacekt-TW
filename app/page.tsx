@@ -39,7 +39,7 @@ export default async function Index ()
                 <meta property="og:image:alt" content="EventJacket - Your Event Management Solution" />
 
                 {/* Optional - Facebook App ID */ }
-                {/* <meta property="fb:app_id" content="YOUR_FACEBOOK_APP_ID" /> */ }
+                <meta property="fb:app_id" content="453279560972900" /> 
             </Head>
             <SvgBackgroundReversed />
             <NavBar1 />
