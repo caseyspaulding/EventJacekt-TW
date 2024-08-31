@@ -86,7 +86,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                 <div className="absolute top-0 right-0 -mr-12 pt-2">
                   <button
                     type="button"
-                    className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:bg-gray-600"
+                    className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:bg-blue-600"
                     onClick={ () => setSidebarOpen( false ) }
                   >
                     <span className="sr-only">Close sidebar</span>
@@ -103,8 +103,8 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                       />
                     </Link>
                     <Link href="/">
-                      <span className="pl-2 font-extrabold text-white">
-                       { orgName }
+                      <span className="pl-2 font-semibold text-white">
+                        { orgName }
                       </span>
                     </Link>
                   </div>
@@ -120,7 +120,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                           ) }
                         >
                           <item.icon
-                            className="mr-4 flex-shrink-0 h-6 w-6 text-blue-200"
+                            className="mr-3 flex-shrink-0 h-6 w-6 text-blue-200"
                             aria-hidden="true"
                           />
                           { item.name }
@@ -132,13 +132,13 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                               <Disclosure.Button
                                 className={ classNames(
                                   item.current ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white',
-                                  'group flex items-center w-full rounded-md p-2 text-left text-sm font-semibold leading-6'
+                                  'group flex items-center w-full rounded-md p-1 mx-1 text-left text-base font-medium leading-6'
                                 ) }
                               >
                                 <div className="flex items-center gap-x-3">
                                   <item.icon
                                     aria-hidden="true"
-                                    className="h-6 w-6 text-blue-200"
+                                    className="h-6 w-6 text-blue-100"
                                   />
                                   { item.name }
                                 </div>
@@ -146,7 +146,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                                   aria-hidden="true"
                                   className={ classNames(
                                     open ? 'rotate-90 transform' : '',
-                                    'ml-auto h-5 w-5 text-blue-200 group-hover:text-white'
+                                    'ml-auto h-5 w-5 text-blue-100 group-hover:text-white'
                                   ) }
                                 />
                               </Disclosure.Button>
@@ -156,7 +156,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                                     key={ subItem.name }
                                     as="a"
                                     href={ generateHref( subItem.href ) }
-                                    className="group flex items-center pl-10 pr-2 py-2 text-sm font-medium text-blue-200 hover:bg-blue-700 hover:text-white rounded-md"
+                                    className="group flex items-center pl-10 pr-3 py-2 text-sm font-medium text-blue-100 hover:bg-blue-700 hover:text-white rounded-md"
                                   >
                                     { subItem.name }
                                   </Disclosure.Button>
@@ -188,7 +188,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
             </Link>
             <Link href="/">
               <span className="pl-2 font-extrabold text-white">
-                EventJacket
+                { orgName }
               </span>
             </Link>
           </div>
@@ -199,12 +199,12 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                   key={ item.name }
                   href={ generateHref( item.href ) }
                   className={ classNames(
-                    item.current ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white',
+                    item.current ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700 hover:text-white',
                     'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                   ) }
                 >
                   <item.icon
-                    className="mr-3 flex-shrink-0 h-6 w-6 text-blue-200"
+                    className="mr-3 flex-shrink-0 h-6 w-6 text-blue-100"
                     aria-hidden="true"
                   />
                   { item.name }
@@ -215,14 +215,14 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                     <>
                       <Disclosure.Button
                         className={ classNames(
-                          item.current ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white',
+                          item.current ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700 hover:text-white',
                           'group flex items-center w-full rounded-md p-2 text-left text-sm font-semibold leading-6'
                         ) }
                       >
                         <div className="flex items-center gap-x-3">
                           <item.icon
                             aria-hidden="true"
-                            className="h-6 w-6 text-blue-200"
+                            className="h-6 w-6 text-blue-100"
                           />
                           { item.name }
                         </div>
@@ -230,7 +230,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                           aria-hidden="true"
                           className={ classNames(
                             open ? 'rotate-90 transform' : '',
-                            'ml-auto h-5 w-5 text-blue-200 group-hover:text-white'
+                            'ml-auto h-5 w-5 text-blue-100 group-hover:text-white'
                           ) }
                         />
                       </Disclosure.Button>
@@ -240,7 +240,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                             key={ subItem.name }
                             as="a"
                             href={ generateHref( subItem.href ) }
-                            className="group flex items-center pl-10 pr-2 py-2 text-sm font-medium text-blue-200 hover:bg-blue-700 hover:text-white rounded-md"
+                            className="group flex items-center pl-10 pr-2 py-2 text-sm font-medium text-blue-100 hover:bg-blue-700 hover:text-white rounded-md"
                           >
                             { subItem.name }
                           </Disclosure.Button>
@@ -256,10 +256,10 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       </div>
 
       <div className="flex flex-col flex-1 lg:pl-64">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-blue-600 ">
           <button
             type="button"
-            className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 lg:hidden"
+            className="px-4   text-gray-100 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 lg:hidden"
             onClick={ () => setSidebarOpen( true ) }
           >
             <span className="sr-only">Open sidebar</span>
@@ -268,7 +268,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
           <div className="flex-1 px-4 flex justify-between">
             <div className="flex-1 flex">
               <div className="w-full flex md:ml-0">
-                <div className="relative w-full text-gray-400 focus-within:text-gray-600">
+                <div className="relative w-full text-blue-400 focus-within:text-blue-600">
                   <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none"></div>
                 </div>
               </div>
@@ -277,7 +277,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
               {/* Profile dropdown */ }
               <Menu as="div" className="ml-3 relative">
                 <div>
-                  <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <Menu.Button className="max-w-xs z-50 bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
