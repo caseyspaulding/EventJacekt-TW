@@ -150,7 +150,7 @@ export default function Example ()
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
-                                            className="h-6 w-6 flex-shrink-0 text-green-500"
+                                            className="h-8 w-8 flex-shrink-0 text-green-500"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
                                             { feature }
