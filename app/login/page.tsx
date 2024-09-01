@@ -5,10 +5,11 @@ import { Input, Checkbox, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
-import { SubmitButton } from "./submit-button";
+
 import { verifyAndRedirect } from "./signin";
 import { createClient } from "@/utils/supabase/client";
 import FooterFull from "@/components/Footers/FooterFull";
+import MyButton from "./submit-button";
 
 declare global
 {
@@ -21,10 +22,14 @@ declare global
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function LoginComponent ( { searchParams }: { searchParams: any } )
 {
-    const [ isVisible, setIsVisible ] = useState( false );
+ 
     const [ email, setEmail ] = useState( "" );
     const [ password, setPassword ] = useState( "" );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ isValid, setIsValid ] = useState( false );
+    const [ isVisible, setIsVisible ] = useState( false );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [ isLoading, setIsLoading ] = useState( false ); // Loading state
     const router = useRouter();
     const supabase = createClient(); // Initialize Supabase client
     const [ errorMessage, setErrorMessage ] = useState( "" );
@@ -122,19 +127,30 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
 
     const handleLogin = async ( e: React.FormEvent<HTMLFormElement> ) =>
     {
+        setIsLoading( true ); // Start loading
         e.preventDefault();
         const formData = new FormData( e.currentTarget );
 
-        // Call the server action to handle email/password login
-        const result = await verifyAndRedirect( { formData } );
+        try
+        {
+            // Call the server action to handle email/password login
+            const result = await verifyAndRedirect( { formData } );
 
-        if ( result.success )
+            if ( result.success )
+            {
+                router.push( result.redirectTo as string );
+            } else
+            {
+                setErrorMessage( result.message || 'Email/Password sign-in failed' );
+                console.error( result.message );
+            }
+        } catch ( error )
         {
-            router.push( result.redirectTo as string );
-        } else
+            setErrorMessage( 'An unexpected error occurred during login.' );
+            console.error( error );
+        } finally
         {
-            setErrorMessage( result.message || "Email/Password sign-in failed" );
-            console.error( result.message );
+            setIsLoading( false ); // Stop loading
         }
     };
 
@@ -160,7 +176,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                             <h2 className="mt-2 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">
                                 Welcome Back
                             </h2>
-                            <p className="mt-2 text-sm leading-6 text-gray-500 text-center">
+                            <p className="mt-2 text-lg leading-6 text-gray-500 text-center">
                                 Log in to your account to continue
                             </p>
                         </div>
@@ -243,15 +259,16 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                                     Forgot password?
                                 </Link>
                             </div>
-                            <SubmitButton
-                                color="blue"
-                                className="w-full bg-orange-600 rounded-3xl text-white  font-medium text-medium"
-                                pendingText="Signing In..."
-                                disabled={ !isValid }
+                            <MyButton
+                                type="submit"
+                                className="w-full bg-orange-500 font-medium py-2 text-medium text-white hover:bg-orange-400 rounded-3xl"
+                                isLoading={ isLoading }
+                                spinnerDelay={ 1000 } // 1 second delay before hiding spinner
+                                loadingMessage="Signing In..."
+                               
                             >
                                 Log In
-                            </SubmitButton>
-
+                            </MyButton>
                             { searchParams?.message && (
                                 <p className="mt-4 rounded border border-red-500 bg-red-100 p-4 text-center text-red-700">
                                     { searchParams.message }

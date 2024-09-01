@@ -5,10 +5,11 @@ import { Input, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { useRouter } from 'next/navigation';
 import Head from 'next/head';
-import { SubmitButton } from "./submit-button";
+
 import { signUp } from "./signup";
 import toast from "react-hot-toast";
 import FooterFull from "@/components/Footers/FooterFull";
+import MyButton from "../login/submit-button";
 
 
 declare global
@@ -21,10 +22,16 @@ declare global
 
 export default function Component ()
 {
-    const [ isVisible, setIsVisible ] = useState( false );
+    
     const [ email, setEmail ] = useState( '' );
     const [ password, setPassword ] = useState( '' );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ isFormValid, setIsFormValid ] = useState( false );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [ isLoading, setIsLoading ] = useState( false ); // Loading state
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [ isValid, setIsValid ] = useState( false );
+    const [ isVisible, setIsVisible ] = useState( false );
     const router = useRouter();
 
     useEffect( () =>
@@ -188,14 +195,16 @@ export default function Component ()
                                 onChange={ ( e ) => setPassword( e.target.value ) }
                                 required
                             />
-                            <SubmitButton
+                            <MyButton
                                 type="submit"
-                                className="w-full bg-orange-500 font-medium text-medium text-white hover:bg-orange-400 rounded-3xl"
-                                pendingText="Signing Up..."
-                                disabled={ !isFormValid }
+                                className="w-full bg-orange-500 font-medium py-2 text-medium text-white hover:bg-orange-400 rounded-3xl"
+                                isLoading={ isLoading }
+                                spinnerDelay={ 1000 } // 1 second delay before hiding spinner
+                                loadingMessage="Signing In..."
+                                
                             >
                                 Create Account
-                            </SubmitButton>
+                            </MyButton>
                         </form>
                         <p className="text-center text-sm mt-4">
                             Already have an account?&nbsp;
