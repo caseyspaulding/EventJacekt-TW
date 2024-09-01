@@ -79,25 +79,32 @@ export default function Component ()
             formData.append( 'googleToken', response.credential );
 
             // Send the token to the server action
-            const result = await signUp( formData );
+            try
+            {
+                const result = await signUp( formData );
 
-            if ( result.success )
+                if ( result.success )
+                {
+                    // Optionally store the token or user info in a global state or context here
+                    router.push( result.redirectTo || '/choose-account-type' );
+                } else
+                {
+                    console.error( 'Sign up failed:', result.message );
+                    toast.error( 'Google sign-in failed.' );
+                }
+            } catch ( error )
             {
-                router.push( result.redirectTo || '/choose-account-type' );
-            } else
-            {
-                console.error( result.message );
+                console.error( 'Error during Google sign-in:', error );
+                toast.error( 'Unexpected error during Google sign-in.' );
             }
         };
 
-        // Load Google Sign-In script only after the component mounts
         const script = document.createElement( 'script' );
         script.src = "https://accounts.google.com/gsi/client";
         script.async = true;
         script.defer = true;
         document.body.appendChild( script );
 
-        // Cleanup to avoid memory leaks
         return () =>
         {
             document.body.removeChild( script );

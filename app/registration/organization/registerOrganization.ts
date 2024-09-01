@@ -24,8 +24,6 @@ export const registerOrganization = async ( formData: FormData ) =>
     return { success: false, message: 'User not authenticated' };
   }
 
-  
-
   const userId = user.id;
 
   try
@@ -71,6 +69,7 @@ export const registerOrganization = async ( formData: FormData ) =>
 
       logoUrl = publicUrlData.publicUrl;
     }
+
     // Use a transaction for organization and user profile creation
     try
     {
@@ -84,7 +83,6 @@ export const registerOrganization = async ( formData: FormData ) =>
         if ( !org )
         {
           console.log( 'Organization is not set' );
-
           throw new Error( 'Could not create organization' );
         }
 
@@ -96,6 +94,10 @@ export const registerOrganization = async ( formData: FormData ) =>
       } );
 
       console.log( 'Organization registered successfully.' );
+
+      // Introduce a delay before returning success
+      await new Promise( ( resolve ) => setTimeout( resolve, 6000 ) ); // Delay for 1 second
+
       return { success: true, orgName: orgName };
     } catch ( error )
     {
@@ -107,4 +109,4 @@ export const registerOrganization = async ( formData: FormData ) =>
     console.log( 'Error during registration:', error );
     return { success: false, message: 'Could not complete registration' };
   }
-}
+};

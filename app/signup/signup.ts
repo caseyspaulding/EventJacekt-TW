@@ -17,9 +17,9 @@ export const signUp = async ( formData: FormData ) =>
 
   if ( googleToken )
   {
-    // Handle Google Sign-In
     try
     {
+      console.log( 'Attempting Google sign-in with token:', googleToken ); // Log the token for debugging
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, error } = await supabase.auth.signInWithIdToken( {
         provider: 'google',
@@ -32,12 +32,14 @@ export const signUp = async ( formData: FormData ) =>
         return { success: false, message: 'Google sign-in failed' };
       }
 
-      const { data: sessionData } = await supabase.auth.getSession();
-      if ( !sessionData?.session )
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if ( sessionError || !sessionData?.session )
       {
+        console.error( 'Session not created after Google sign-in:', sessionError );
         return { success: false, message: 'Session not created after Google sign-in' };
       }
 
+      console.log( 'User session established successfully:', sessionData.session );
       return { success: true, redirectTo: '/choose-account-type' };
     } catch ( error )
     {
