@@ -64,7 +64,8 @@ const RegisterOrganizationPage = () =>
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100"
+      style={ { backgroundImage: 'url(/images/illustrations/background-3.jpg)' } }>
       <div className="bg-white p-8 rounded-3xl shadow-lg w-full max-w-md">
         <div className="mb-4 text-center">
           <img src="/images/logo.svg" alt="EventJacket" className="h-12 w-auto mx-auto" />
@@ -149,7 +150,7 @@ const RegisterOrganizationPage = () =>
           <div className="flex items-center justify-center">
             <button
               type="submit"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-green-600"
               disabled={ loading }
             >
               { loading ? 'Registering...' : 'Register Organization' }
