@@ -5,6 +5,7 @@ import { registerOrganization } from './registerOrganization'; // Update with co
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Input } from '@nextui-org/react';
+import { createClient } from '@/utils/supabase/client';
 
 const RegisterOrganizationPage = () =>
 {
@@ -21,19 +22,19 @@ const RegisterOrganizationPage = () =>
       setLogoFile( e.target.files[ 0 ] );
     }
   };
+  const supabase = createClient();
 
-  
   const handleSubmit = async ( e: React.FormEvent ) =>
   {
     e.preventDefault();
     setLoading( true );
 
     const formData = new FormData();
-    formData.append( "orgName", orgName );
-    formData.append( "website", website );
+    formData.append( 'orgName', orgName );
+    formData.append( 'website', website );
     if ( logoFile )
     {
-      formData.append( "logo", logoFile );
+      formData.append( 'logo', logoFile );
     }
 
     try
@@ -42,50 +43,32 @@ const RegisterOrganizationPage = () =>
 
       if ( response.success )
       {
-        toast.success( "Organization registered successfully!" );
+        toast.success( 'Organization registered successfully!' );
 
-        // Ensure async task is fully completed
+        // Refresh session immediately after successful registration
+        const { error } = await supabase.auth.refreshSession();
+        if ( error )
+        {
+          console.error( 'Error refreshing session:', error );
+          toast.error( 'Session error. Please try again.' );
+          setLoading( false );
+          return;
+        }
+
         setLoading( false );
 
-        // Polling mechanism to ensure data is ready
-        const pollForOrg = async () =>
-        {
-          const maxRetries = 5;
-          let retries = 0;
-
-          while ( retries < maxRetries )
-          {
-            try
-            {
-              const orgCheckResponse = await fetch( `/api/check-org?orgName=${ response.orgName }` );
-              if ( orgCheckResponse.ok )
-              {
-                router.push( `/dashboard/${ response.orgName }` );
-                return;
-              }
-            } catch ( error )
-            {
-              console.error( "Error checking organization:", error );
-            }
-
-            retries++;
-            await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) ); // Wait 1 second before retrying
-          }
-
-          toast.error( "Organization not found. Please try again later." );
-        };
-
-        await pollForOrg();
+        // Navigate to dashboard after ensuring session is refreshed
+        router.push( `/dashboard/${ response.orgName }` );
       } else
       {
-        console.log( "Error during registration:", response.message );
-        toast.error( "Error creating organization" );
+        console.log( 'Error during registration:', response.message );
+        toast.error( 'Error creating organization' );
         setLoading( false );
       }
     } catch ( error )
     {
-      console.log( "Error during registration:", error );
-      toast.error( "Error creating organization" );
+      console.log( 'Error during registration:', error );
+      toast.error( 'Error creating organization' );
       setLoading( false );
     }
   };
