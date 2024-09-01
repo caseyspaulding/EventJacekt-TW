@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
 import { Input, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
