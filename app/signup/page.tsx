@@ -108,104 +108,105 @@ export default function Component ()
                 <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
                 {/* Login Card */ }
                 <div className="relative z-10 flex flex-1 flex-col justify-center items-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-                    <div className="w-full max-w-md lg:w-96 bg-white p-6 rounded-3xl shadow-2xl">
-                        <div className="mb-4">
-                            <img
-                                alt="EventJacket Logo"
-                                src="/images/logo.svg"
-                                className="h-12 w-auto mx-auto"
-                            />
-                            <h2 className="mt-2 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">
-                                Create an account
-                            </h2>
-                            <p className="mt-2 text-sm leading-6 text-gray-500 text-center">
-                                Sign up to get started with EventJacket
-                            </p>
-                        </div>
-
-                        <form className="space-y-6" onSubmit={ handleSubmit }>
-                            <Input
-                                label="Email Address"
-                                name="email"
-                                placeholder="Enter your email"
-                                type="email"
-                                variant="bordered"
-                                value={ email }
-                                onChange={ ( e ) => setEmail( e.target.value ) }
-                                required
-                            />
-                            <Input
-                                className="text-gray-500"
-                                endContent={
-                                    <button type="button" onClick={ toggleVisibility }>
-                                        { isVisible ? (
-                                            <Icon className="pointer-events-none text-2xl text-default-400" icon="solar:eye-closed-linear" />
-                                        ) : (
-                                            <Icon className="pointer-events-none text-2xl text-default-400" icon="solar:eye-bold" />
-                                        ) }
-                                    </button>
-                                }
-                                label="Password"
-                                name="password"
-                                placeholder="Enter your password"
-                                type={ isVisible ? "text" : "password" }
-                                variant="bordered"
-                                value={ password }
-                                onChange={ ( e ) => setPassword( e.target.value ) }
-                                required
-                            />
-                            <SubmitButton
-                                type="submit"
-                                className="w-full bg-orange-500 font-medium text-medium text-white hover:bg-orange-400 rounded-3xl"
-                                pendingText="Signing Up..."
-                                disabled={ !isFormValid }
-                            >
-                                Create Account
-                            </SubmitButton>
-                        </form>
-                        <div className="relative mt-6">
-                            <div aria-hidden="true" className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-200" />
-                            </div>
-                            <div className="relative flex justify-center text-sm font-medium leading-6">
-                                <span className="bg-white px-4 text-gray-900">Or continue with</span>
-                            </div>
-                        </div>
-                        <div className='flex justify-center w-full'>
-                            <div
-                                id="g_id_onload"
-                                data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
-                                data-context="signup"
-                                data-ux_mode="popup"
-                                data-callback="handleSignInWithGoogle"
-                                data-auto_select="true"
-                                data-itp_support="true"
-                                data-use_fedcm_for_prompt="true"
-                                className="flex justify-center"
-                            >
-                            </div>
-                            <div
-                                className="g_id_signup mt-4"
-                                data-type="standard"
-                                data-shape="pill"
-                                data-theme="outline"
-                                data-text="signin_with"
-                                data-size="large"
-                                data-logo_alignment="left"
-                                data-width="300"
-                            ></div>
-                        </div>
-                        <p className="text-center text-sm mt-4">
-                            Already have an account?&nbsp;
-                            <Link href="/login" size="sm">
-                                Log In
-                            </Link>
+                <div className="w-full max-w-md lg:w-96 bg-white p-6 rounded-3xl shadow-2xl">
+                    <div className="mb-4">
+                        <img
+                            alt="EventJacket Logo"
+                            src="/images/logo.svg"
+                            className="h-12 w-auto mx-auto"
+                        />
+                        <h2 className="mt-2 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">
+                            Create an account
+                        </h2>
+                        <p className="mt-2 text-sm leading-6 text-gray-500 text-center">
+                            Sign up to get started with EventJacket
                         </p>
+                    </div>
 
-                    </div >
+                    <form className="space-y-6" onSubmit={ handleSubmit }>
+                        <Input
+                            label="Email Address"
+                            name="email"
+                            placeholder="Enter your email"
+                            type="email"
+                            variant="bordered"
+                            value={ email }
+                            onChange={ ( e ) => setEmail( e.target.value ) }
+                            required
+                        />
+                        <Input
+                            className="text-gray-500"
+                            endContent={
+                                <button type="button" onClick={ toggleVisibility }>
+                                    { isVisible ? (
+                                        <Icon className="pointer-events-none text-2xl text-default-400" icon="solar:eye-closed-linear" />
+                                    ) : (
+                                        <Icon className="pointer-events-none text-2xl text-default-400" icon="solar:eye-bold" />
+                                    ) }
+                                </button>
+                            }
+                            label="Password"
+                            name="password"
+                            placeholder="Enter your password"
+                            type={ isVisible ? "text" : "password" }
+                            variant="bordered"
+                            value={ password }
+                            onChange={ ( e ) => setPassword( e.target.value ) }
+                            required
+                        />
+                        <SubmitButton
+                            type="submit"
+                            className="w-full bg-orange-500 font-medium text-medium text-white hover:bg-orange-400 rounded-3xl"
+                            pendingText="Signing Up..."
+                            disabled={ !isFormValid }
+                        >
+                            Create Account
+                        </SubmitButton>
+                    </form>
+                    <div className="relative mt-6">
+                        <div aria-hidden="true" className="absolute inset-0 flex items-center">
+                            <div className="w-full border-t border-gray-200" />
+                        </div>
+                        <div className="relative flex justify-center text-sm font-medium leading-6">
+                            <span className="bg-white px-4 text-gray-900">Or continue with</span>
+                        </div>
+                    </div>
+                    <div className='flex justify-center w-full'>
+                        <div
+                            id="g_id_onload"
+                            data-client_id="820727006892-1j07b2899mm4c8esa9ciiug6gu34ticn.apps.googleusercontent.com"
+                            data-context="signup"
+                            data-ux_mode="popup"
+                            data-callback="handleSignInWithGoogle"
+                            data-auto_select="true"
+                            data-itp_support="true"
+                            data-use_fedcm_for_prompt="true"
+                            className="flex justify-center"
+                        >
+                        </div>
+                        <div
+                            className="g_id_signin mt-4"
+                            data-type="standard"
+                            data-shape="pill"
+                            data-theme="outline"
+                            data-text="signin_with"
+                            data-size="large"
+                            data-logo_alignment="left"
+                            data-width="300"
+                        ></div>
+                    </div>
+                    <p className="text-center text-sm mt-4">
+                        Already have an account?&nbsp;
+                        <Link href="/login" size="sm">
+                            Log In
+                        </Link>
+                    </p>
+
+                </div >
                 </div>
-            </div>
-            <FooterFull />
+          </div>
+<FooterFull />
         </>
     );
 }
+          
