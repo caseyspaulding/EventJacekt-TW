@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchTicketInfo } from './action';
-import { SubmitButton } from '@/app/login/submit-button';
+
 import Html5QrcodePlugin from '@/components/QRCodeScanner/Html5QrCodePlugin';
+import SubmitButton from '@/app/login/submit-button';
 
 type Ticket = {
   id: string;
