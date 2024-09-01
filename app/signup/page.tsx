@@ -26,6 +26,8 @@ export default function Component ()
     const [ password, setPassword ] = useState( '' );
     const [ isFormValid, setIsFormValid ] = useState( false );
     const router = useRouter();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [ isLoading, setIsLoading ] = useState( false );
 
     useEffect( () =>
     {
@@ -40,46 +42,72 @@ export default function Component ()
     const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ) =>
     {
         event.preventDefault();
-        const formData = new FormData( event.currentTarget );
-
-        // Calling server action here
-        const result = await signUp( formData );
-
-        if ( result.success )
+        setIsLoading( true );
+        try
         {
-            // Check if email confirmation is required
-            if ( result.user && !result.user.confirmed_at )
+            const formData = new FormData( event.currentTarget );
+            // Calling server action here
+            const result = await signUp( formData );
+            if ( result.success )
             {
-                // Notify the user to check their email
-                router.push( '/signup-success' );
+                // Check if email confirmation is required
+                if ( result.user && !result.user.confirmed_at )
+                {
+                    // Notify the user to check their email
+                    router.push( '/signup-success' );
+                } else
+                {
+                    // Redirect to the next step
+                    router.push( result.redirectTo || '/choose-account-type' );
+                }
             } else
             {
-                // Redirect to the next step
-                router.push( result.redirectTo || '/choose-account-type' );
+                console.error( result.message );
+                toast.error( 'Error creating account. ' );
             }
-        } else
+    
+        } catch ( error )
         {
-            console.error( result.message );
-            toast.error( 'Error creating account. ' );
+            console.error( 'Error during sign-up:', error );
+            toast.error( 'An unexpected error occurred. Please try again.' );
+        } finally {
+            setIsLoading( false );
         }
+      
     };
+       
+
+       
 
     useEffect( () =>
     {
         window.handleSignInWithGoogle = async ( response ) =>
         {
-            const formData = new FormData();
-            formData.append( 'googleToken', response.credential );
-
-            // Send the token to the server action
-            const result = await signUp( formData );
-
-            if ( result.success )
+            try
             {
-                router.push( result.redirectTo || '/choose-account-type' );
-            } else
+                if ( !response.credential )
+                {
+                    console.error( 'No credential received from Google' );
+                    toast.error( 'Google sign-in failed. Please try again.' );
+                    return;
+                }
+                const formData = new FormData();
+                formData.append( 'googleToken', response.credential );
+
+                const result = await signUp( formData );
+
+                if ( result.success )
+                {
+                    router.push( result.redirectTo || '/choose-account-type' );
+                } else
+                {
+                    console.error( result.message );
+                    toast.error( result.message || 'Google sign-in failed. Please try again.' );
+                }
+            } catch ( error )
             {
-                console.error( result.message );
+                console.error( 'Error during Google sign-in:', error );
+                toast.error( 'An unexpected error occurred. Please try again.' );
             }
         };
 
@@ -95,7 +123,7 @@ export default function Component ()
         {
             document.body.removeChild( script );
         };
-    }, [] );
+    }, [router] );
 
     return (
         <>
