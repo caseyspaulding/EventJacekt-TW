@@ -41,37 +41,42 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
     {
         const checkAuthStatus = async () =>
         {
-            const { data: { session } } = await supabase.auth.getSession();
-            if ( session )
+            try
             {
-                // Check if user has an organization before redirecting
-                const { data: { user } } = await supabase.auth.getUser();
-
-                if ( user )
+                const { data: { session } } = await supabase.auth.getSession();
+                if ( session )
                 {
-                    const userId = user.id; // Safe to access 'id' since 'user' is not null
-
-                    // Query the user's associated organization
-                    const { data: org } = await supabase
-                        .from( 'organizations' ) // Replace 'organizations' with your actual table name
-                        .select( 'id' )
-                        .eq( 'user_id', userId )
-                        .single();
-
-                    if ( org )
+                    const { data: { user } } = await supabase.auth.getUser();
+                    if ( user )
                     {
-                        // Redirect to the dashboard if the organization exists
-                        router.push( '/dashboard' );
+                        const userId = user.id;
+                        const { data: org, error } = await supabase
+                            .from( 'organizations' )
+                            .select( 'id' )
+                            .eq( 'user_id', userId )
+                            .single();
+
+                        if ( error )
+                        {
+                            console.error( 'Error fetching organization:', error );
+                            setErrorMessage( 'Error fetching organization. Please try again.' );
+                        } else if ( org )
+                        {
+                            console.log( 'Organization found, redirecting to /dashboard' );
+                            router.push( '/dashboard' ); // Only redirect after all checks are successful
+                        } else
+                        {
+                            setErrorMessage( 'You do not have an associated organization. Please contact support or create an organization.' );
+                        }
                     } else
                     {
-                        // Do not redirect; allow them to log in again or show a message
-                        setErrorMessage( 'You do not have an associated organization. Please contact support or create an organization.' );
+                        setErrorMessage( 'Unable to retrieve user information. Please try logging in again.' );
                     }
-                } else
-                {
-                    // Handle the case where 'user' is null
-                    setErrorMessage( 'Unable to retrieve user information. Please try logging in again.' );
                 }
+            } catch ( error )
+            {
+                console.error( 'Error during authentication check:', error );
+                setErrorMessage( 'An unexpected error occurred. Please try again.' );
             }
         };
 
@@ -79,20 +84,26 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
 
         window.handleSignInWithGoogle = async ( response ) =>
         {
-            console.log( "Google Sign-In Response:", response );
-
-            const token = response.credential;
-            const result = await verifyAndRedirect( token );
-
-            console.log( "Verification result:", result );
-
-            if ( result.success )
+            try
             {
-                router.push( result.redirectTo as string );
-            } else
+                console.log( "Google Sign-In Response:", response );
+                const token = response.credential;
+                const result = await verifyAndRedirect( token );
+                console.log( "Verification result:", result );
+
+                if ( result.success )
+                {
+                    console.log( 'Google Sign-In successful, redirecting to', result.redirectTo );
+                    router.push( result.redirectTo as string );
+                } else
+                {
+                    setErrorMessage( result.message || "Google sign-in failed" );
+                    console.error( result.message );
+                }
+            } catch ( error )
             {
-                setErrorMessage( result.message || "Google sign-in failed" );
-                console.error( result.message );
+                console.error( 'Error during Google Sign-In:', error );
+                setErrorMessage( 'Google sign-in failed. Please try again.' );
             }
         };
 
@@ -107,7 +118,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
         {
             document.body.removeChild( script );
         };
-    }, [] );
+    }, [ supabase, router ] );
 
     const handleLogin = async ( e: React.FormEvent<HTMLFormElement> ) =>
     {
