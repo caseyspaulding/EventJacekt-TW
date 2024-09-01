@@ -28,13 +28,14 @@ export const signUp = async ( formData: FormData ) =>
 
       if ( error )
       {
-        console.error( 'Google sign-in error:', error );
-        return { success: false, message: 'Google sign-in failed' };
+        console.error( 'Google sign-in error:',  error.message, error.stack );
+        return { success: false, message: 'Google sign-in failed', error: error.message };
       }
 
       const { data: sessionData } = await supabase.auth.getSession();
       if ( !sessionData?.session )
       {
+        console.error( 'Session not created after Google sign-in' );
         return { success: false, message: 'Session not created after Google sign-in' };
       }
 
@@ -53,7 +54,7 @@ export const signUp = async ( formData: FormData ) =>
 
   try
   {
-    const { data: userResponse, error: userError } = await supabase.auth.signUp( {
+    const { data: userResponse } = await supabase.auth.signUp( {
       email,
       password,
       options: {
@@ -61,18 +62,24 @@ export const signUp = async ( formData: FormData ) =>
       },
     } );
 
-    if ( userError || !userResponse?.user )
+    // Check if the user needs to confirm their email
+    if ( userResponse.user && userResponse.user.identities && userResponse.user.identities.length === 0 )
     {
-      console.error( 'User creation error:', userError );
-      return { success: false, message: 'Could not create user' };
+      // User needs to confirm their email
+      return {
+        success: true,
+        message: 'Please check your email to confirm your account',
+        redirectTo: '/signup-success', // Redirect to a success page
+      };
+    } else
+    {
+      // User is already confirmed (unlikely in this flow, but handling it just in case)
+      return {
+        success: true,
+        user: userResponse.user,
+        redirectTo: '/choose-account-type',
+      };
     }
-
-    // Return user data to check confirmation status
-    return {
-      success: true,
-      user: userResponse.user,
-      redirectTo: '/choose-account-type',
-    };
   } catch ( error )
   {
     console.error( 'Error during signup:', error );
