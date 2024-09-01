@@ -32,13 +32,13 @@ export default function ChooseAccountType ()
 
   return (
     <div
-      className="flex h-screen flex-col items-center justify-center px-4 bg-cover bg-center"
-      style={ { backgroundImage: 'url(/images/illustrations/whitebackground2.jpg)' } }
+      className="flex h-screen flex-col bg-gray-100 items-center justify-center px-4 bg-cover bg-center"
+      
     >
       <div className="flex h-screen flex-col items-center justify-center px-4">
         
         <img src="/images/logo.svg" alt="Logo" className="w-12 h-12" />
-      <div className="mt-2 flex w-full max-w-sm flex-col gap-4 rounded-large  px-8 py-6  text-center">
+      <div className="mt-2 flex w-full max-w-sm flex-col gap-4 rounded-3xl shadow-2xl px-8 py-6  text-center">
         <h1 className="text-2xl font-bold text-blue-600">Choose Account Type</h1>
         <p className="text-sm text-gray-800">Are you attending events or creating events?</p>
         <div className="flex flex-row justify-center gap-6 mt-6">
