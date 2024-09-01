@@ -5,6 +5,7 @@ import { organizations, userProfiles } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
 import { eq } from 'drizzle-orm';
 
+
 export const registerOrganization = async ( formData: FormData ) =>
 {
   const orgName = formData.get( 'orgName' ) as string;
@@ -96,7 +97,7 @@ export const registerOrganization = async ( formData: FormData ) =>
       console.log( 'Organization registered successfully.' );
 
       // Introduce a delay before returning success
-      await new Promise( ( resolve ) => setTimeout( resolve, 6000 ) ); // Delay for 1 second
+      await new Promise( ( resolve ) => setTimeout( resolve, 2000 ) ); // Delay for 1 second
 
       return { success: true, orgName: orgName };
     } catch ( error )
