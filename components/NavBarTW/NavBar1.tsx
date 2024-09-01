@@ -87,7 +87,7 @@ export default function NavBar1 ()
   {
     try
     {
-      const response = await fetch( '/api/userProfile', { method: 'GET' } );
+      const response = await fetch( '/api/fetchUserProfile', { method: 'GET' } );
       if ( response.ok )
       {
         const userProfile = await response.json();

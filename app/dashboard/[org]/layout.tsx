@@ -4,10 +4,17 @@ import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import DashboardLayoutClient from './DashboardLayoutClient'; // Import the client component wrapper
 
-export default async function DashboardLayout ( { children }: React.PropsWithChildren<{any: unknown}> )
+export default async function DashboardLayout ( { children }: React.PropsWithChildren< unknown> )
 {
     const supabase = createClient();
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+        data: { session }
+    } = await supabase.auth.getSession();
+
+    if ( !session )
+    {
+        redirect( '/login' );
+    }
 
     console.log( 'Supabase session:', session );
 
