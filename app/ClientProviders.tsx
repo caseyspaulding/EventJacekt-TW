@@ -1,4 +1,3 @@
-// app/ClientProviders.tsx
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -7,23 +6,14 @@ import { NextUIProvider } from '@nextui-org/react';
 import { Toaster } from 'react-hot-toast';
 import { customTheme } from './theme';
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
-import { UserProvider } from '@/contexts/UserContext'; // Import UserProvider
-import { createClient } from '@/utils/supabase/client'; // Supabase client
-
-// Define the UserType based on your application's needs
-type UserType = {
-  id: string;
-  email: string;
-  orgName: string;
-  organizationId: string;
-  role: string;
-  avatar: string;
-};
+import type { UserType } from '@/contexts/UserContext';
+import { UserProvider } from '@/contexts/UserContext';
+import { createClient } from '@/utils/supabase/client';
 
 export default function ClientProviders ( { children }: { children: React.ReactNode } )
 {
   const [ user, setUser ] = useState<UserType | null>( null );
-  
+  const [, setLoading ] = useState( true ); // Initial loading state set to true
   const supabase = createClient();
 
   // Fetch user data on component mount
@@ -31,13 +21,11 @@ export default function ClientProviders ( { children }: { children: React.ReactN
   {
     const fetchUser = async () =>
     {
-     
       try
       {
-        const {
-          data: { user: supabaseUser },
-          error,
-        } = await supabase.auth.getUser();
+        setLoading( true );  // Start loading
+
+        const { data: { user: supabaseUser }, error } = await supabase.auth.getUser();
 
         if ( error )
         {
@@ -45,7 +33,7 @@ export default function ClientProviders ( { children }: { children: React.ReactN
           setUser( null );
         } else if ( supabaseUser )
         {
-          // Assuming you have a function to fetch user profile from Supabase or your database
+          // Fetch user profile from Supabase or your database
           const { data: userProfile, error: profileError } = await supabase
             .from( 'user_profiles' )
             .select( '*' )
@@ -66,6 +54,9 @@ export default function ClientProviders ( { children }: { children: React.ReactN
               organizationId: userProfile.orgId || '',
               role: userProfile.role || 'user',
               avatar: userProfile.profileImageUrl || '/images/avatars/user_avatar_default.png',
+              isActive: userProfile.isActive,
+              createdAt: new Date( userProfile.createdAt ),
+              updatedAt: new Date( userProfile.updatedAt ),
             } );
           }
         }
@@ -75,19 +66,19 @@ export default function ClientProviders ( { children }: { children: React.ReactN
         setUser( null );
       } finally
       {
-       console.log('User:', user);
+        setLoading( false );  // Stop loading
       }
     };
 
     fetchUser();
-  }, [ supabase, user ] );
+  }, [ supabase ] );  // Remove `user` dependency to prevent infinite loop
 
   return (
     <NextUIProvider>
       <Flowbite theme={ { theme: customTheme } }>
         <Toaster />
         {/* Initialize UserProvider with the fetched user data */ }
-        <UserProvider user={ user }>
+        <UserProvider user={ user }  > 
           { children }
         </UserProvider>
         <ProgressBar

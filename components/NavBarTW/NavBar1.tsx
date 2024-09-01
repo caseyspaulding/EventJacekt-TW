@@ -229,10 +229,12 @@ export default function NavBar1 ()
                     <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       <span className="sr-only">Open user menu</span>
                       <div className="flex items-center space-x-4">
-                        <img
+                        <Image
                           className="h-8 w-8 rounded-full"
                           src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
-                          alt=""
+                            alt="Profile image"
+                            height={ 32 }
+                            width={ 32 }
                         />
                         {/* Container to stack the orgName and email vertically */ }
                         <div className="flex flex-col items-start">
@@ -309,10 +311,12 @@ export default function NavBar1 ()
                     <Menu as="div" className="relative">
                       <div>
                         <Menu.Button className="flex items-center rounded-md text-base font-medium text-gray-700 hover:text-gray-900">
-                          <img
+                          <Image
                             className="h-8 w-8 rounded-full"
                             src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
-                            alt=""
+                            alt="Profile image"
+                            height={ 32 }
+                            width={ 32 }
                           />
                           <div className="ml-2 flex flex-col items-start">
                             <span className="font-medium text-gray-900">{ user?.orgName || 'User' }</span>

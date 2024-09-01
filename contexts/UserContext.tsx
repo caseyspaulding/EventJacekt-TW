@@ -4,15 +4,25 @@ import type { ReactNode } from 'react';
 import React, { createContext, useContext, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
-type UserType = {
+export interface UserType
+{
     id: string;
     email: string;
     orgName: string;
     organizationId: string;
     role: string;
     avatar: string;
-};
-
+    contactNumber?: string;
+    bio?: string;
+    socialLinks?: Record<string, string>;
+    isActive: boolean;
+    lastLogin?: Date;
+    permissions?: Record<string, boolean>;
+    preferences?: Record<string, unknown>;
+    department?: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
 type UserContextType = {
     user: UserType | null;
     setUser: ( user: UserType | null ) => void;
@@ -33,7 +43,7 @@ export function UserProvider ( {
 {
     const [ user, setUser ] = useState<UserType | null>( initialUser );
     const [ loading, setLoading ] = useState( false );
-    
+
     const supabase = createClient();
 
     const signInWithGoogle = async ( token: string ) =>
