@@ -1,22 +1,27 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createClient } from '@/utils/supabase/server';
 import { db } from '@/db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq } from 'drizzle-orm/expressions';
-import type { UserType } from '@/types/UserType';``
-import type { NextRequest } from 'next/server';
+import type { UserType } from '@/types/UserType';
 
-export async function fetchUserProfile (  ): Promise<UserType | null>
+export async function fetchUserProfile (): Promise<UserType | null>
 {
     try
     {
         const supabase = createClient();
 
         // Get user data from Supabase auth
-        const { data: { user: supabaseUser } } = await supabase.auth.getUser();
+        const { data: { user: supabaseUser }, error: authError } = await supabase.auth.getUser();
+
+        if ( authError )
+        {
+            console.error( 'Error fetching Supabase user:', authError.message );
+            return null;
+        }
 
         if ( !supabaseUser )
         {
+            console.warn( 'Supabase user is not authenticated.' );
             return null;
         }
 
@@ -44,33 +49,34 @@ export async function fetchUserProfile (  ): Promise<UserType | null>
             .where( eq( userProfiles.userId, supabaseUser.id ) )
             .limit( 1 );
 
-        if ( userProfileData.length > 0 )
+        if ( userProfileData.length === 0 )
         {
-            const userProfile = userProfileData[ 0 ];
-
-            // Combine data from Supabase auth and your custom tables into UserType
-            const user: UserType = {
-                id: userProfile.id,
-                email: supabaseUser.email!,
-                orgName: userProfile.organizationName,
-                organizationId: userProfile.organizationId,
-                role: userProfile.role || supabaseUser.user_metadata?.role || 'User',
-                avatar: userProfile.profileImageUrl || supabaseUser.user_metadata?.avatar_url || '/images/avatars/user_avatar_default.png',
-                contactNumber: userProfile.contactNumber || undefined,
-                bio: userProfile.bio || undefined,
-                socialLinks: userProfile.socialLinks as Record<string, string>,
-                isActive: Boolean( userProfile.isActive ),
-                lastLogin: userProfile.lastLogin ? new Date( userProfile.lastLogin ) : undefined,
-                preferences: userProfile.preferences as Record<string, unknown>,
-                department: userProfile.department || undefined,
-                createdAt: userProfile.createdAt ? new Date( userProfile.createdAt ) : new Date(),
-                updatedAt: userProfile.updatedAt ? new Date( userProfile.updatedAt ) : new Date(),
-            };
-
-            return user;
+            console.warn( 'No user profile found for user ID:', supabaseUser.id );
+            return null;
         }
 
-        return null;
+        const userProfile = userProfileData[ 0 ];
+
+        // Combine data from Supabase auth and your custom tables into UserType
+        const user: UserType = {
+            id: userProfile.id,
+            email: supabaseUser.email!,
+            orgName: userProfile.organizationName,
+            organizationId: userProfile.organizationId,
+            role: userProfile.role || supabaseUser.user_metadata?.role || 'User',
+            avatar: userProfile.profileImageUrl || supabaseUser.user_metadata?.avatar_url || '/images/avatars/user_avatar_default.png',
+            contactNumber: userProfile.contactNumber || undefined,
+            bio: userProfile.bio || undefined,
+            socialLinks: ( userProfile.socialLinks as Record<string, string> ) || {},
+            isActive: Boolean( userProfile.isActive ),
+            lastLogin: userProfile.lastLogin ? new Date( userProfile.lastLogin ) : undefined,
+            preferences: ( userProfile.preferences as Record<string, unknown> ) || {},
+            department: userProfile.department || undefined,
+            createdAt: userProfile.createdAt ? new Date( userProfile.createdAt ) : new Date(),
+            updatedAt: userProfile.updatedAt ? new Date( userProfile.updatedAt ) : new Date(),
+        };
+
+        return user;
     } catch ( error )
     {
         console.error( 'Error fetching user profile:', error );
