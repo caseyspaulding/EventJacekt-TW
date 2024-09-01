@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@nextui-org/react';
 import { createClient } from '@/utils/supabase/client';
 import LoadingButton from '@/components/LoadingButton/LoadingButton';
+import { LoadingScreen } from '@/components/Loaders/Loading';  
 
 const RegisterOrganizationPage = () =>
 {
@@ -15,6 +16,7 @@ const RegisterOrganizationPage = () =>
   const [ website, setWebsite ] = useState( '' );
   const [ logoFile, setLogoFile ] = useState<File | null>( null );
   const [ loading, setLoading ] = useState( false );
+
 
   const handleFileSelect = ( e: React.ChangeEvent<HTMLInputElement> ) =>
   {
@@ -72,9 +74,11 @@ const RegisterOrganizationPage = () =>
       toast.error( 'Error creating organization' );
       setLoading( false );
     }
-  };
+  }; return loading ? ( // If loading is true, show loading screen
+    <LoadingScreen />
+  ) : (
 
-  return (
+ 
     <div className="flex min-h-screen items-center justify-center bg-gray-100"
       style={ { backgroundImage: 'url(/images/illustrations/background-3.jpg)' } }>
       <div className="bg-white p-8 rounded-3xl shadow-lg w-full max-w-md">
