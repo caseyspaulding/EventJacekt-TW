@@ -1,11 +1,26 @@
-// pages/api/fetchUserProfile.ts
-
 import { fetchUserProfile } from '@/app/actions/fetchUserProfile';
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET ()
+// Define a TypeScript type for the expected response structure
+interface ErrorResponse
+{
+  error: string;
+}
+
+interface SuccessResponse
+{
+  id: string;
+  email: string;
+  orgName: string;
+  organizationId: string;
+  role: string;
+  avatar: string;
+  // Add other fields as per your UserType
+}
+
+export async function GET (): Promise<NextResponse<ErrorResponse | SuccessResponse>>
 {
   try
   {
