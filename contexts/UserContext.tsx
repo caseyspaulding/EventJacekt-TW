@@ -2,8 +2,7 @@
 'use client';
 import type { ReactNode } from 'react';
 import React, { createContext, useContext, useState } from 'react';
-import { createClient } from '@/utils/supabase/client'; // Assuming you have a client for client-side use
-import { fetchUserProfile } from '@/app/actions/fetchUserProfile';
+import { createClient } from '@/utils/supabase/client';
 
 type UserType = {
     id: string;
@@ -36,7 +35,6 @@ export function UserProvider ( {
     const [ loading, setLoading ] = useState( false );
     const supabase = createClient();
 
-    // Function to handle Google sign-in
     const signInWithGoogle = async ( token: string ) =>
     {
         setLoading( true );
@@ -62,10 +60,17 @@ export function UserProvider ( {
                 return;
             }
 
-            // Fetch user profile from your backend or Supabase
-            const userProfile = await fetchUserProfile( );
-            setUser( userProfile );
-
+            // Fetch user profile from the server-side endpoint
+            const response = await fetch( '/api/fetchUserProfile' );
+            if ( response.ok )
+            {
+                const userProfile = await response.json();
+                setUser( userProfile );
+            } else
+            {
+                console.error( 'Error fetching user profile from server:', response.statusText );
+                setUser( null );
+            }
         } catch ( error )
         {
             console.error( 'Unexpected error during Google sign-in:', error );
@@ -76,7 +81,6 @@ export function UserProvider ( {
         }
     };
 
-    // Function to handle sign-out
     const signOut = async () =>
     {
         setLoading( true );

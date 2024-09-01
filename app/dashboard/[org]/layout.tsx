@@ -1,14 +1,10 @@
+// app/dashboard/layout.tsx (or wherever your layout is located)
 import { fetchUserProfile } from '../../actions/fetchUserProfile';
-
-import type { PropsWithChildren } from 'react';
-
-import { UserProvider } from '@/contexts/UserContext';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
-import DashboardLayoutTW from './components/DashboardLayoutTW/DashboardLayoutTW';
+import DashboardLayoutClient from './DashboardLayoutClient'; // Import the client component wrapper
 
-
-export default async function DashboardLayout ( { children }: PropsWithChildren<unknown> )
+export default async function DashboardLayout ( { children }: React.PropsWithChildren<{any: unknown}> )
 {
     const supabase = createClient();
     const { data: { session } } = await supabase.auth.getSession();
@@ -36,11 +32,6 @@ export default async function DashboardLayout ( { children }: PropsWithChildren<
         );
     }
 
-    return (
-        <UserProvider user={ user }>
-            <DashboardLayoutTW>
-                { children }
-            </DashboardLayoutTW>
-        </UserProvider>
-    );
+    // Pass the user data down to the client component
+    return <DashboardLayoutClient user={ user }>{ children }</DashboardLayoutClient>;
 }

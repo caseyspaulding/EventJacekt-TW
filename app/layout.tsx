@@ -1,11 +1,12 @@
 // app/layout.tsx
 
 import type { PropsWithChildren } from 'react';
-import {Poppins } from 'next/font/google'; // Correct font import path for Next.js 13 and 14
+import { Poppins } from 'next/font/google';
 import { twMerge } from 'tailwind-merge';
 import './globals.css';
 import ClientProviders from './ClientProviders';
 import Head from 'next/head';
+
 
 export const metadata = {
     title: 'EventJacket - Event Management Software',
@@ -23,8 +24,6 @@ const montserrat = Poppins( {
     display: 'swap',
 } );
 
-
-
 export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (
@@ -32,11 +31,8 @@ export default function RootLayout ( { children }: PropsWithChildren )
             <Head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                {/* Default metadata for all pages */ }
                 <title>EventJacket - Event Management Software</title>
                 <meta name="description" content="Simplify planning, boost ticket sales, and manage everything in one place. For every event, big or small." />
-
-                {/* Open Graph Metadata */ }
                 <meta property="og:title" content="EventJacket - Event Management Software" />
                 <meta property="og:description" content="Simplify planning, boost ticket sales, and manage everything in one place. For every event, big or small." />
                 <meta property="og:url" content="https://www.eventjacket.com" />
@@ -45,13 +41,8 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
                 <meta property="og:image:alt" content="EventJacket - Your Event Management Solution" />
-
-                {/* Optional Facebook App ID */ }
                 <meta property="fb:app_id" content="453279560972900" />
-
-                {/* Other metadata */ }
                 <link rel="canonical" href="https://www.eventjacket.com" />
-                {/* Inline script to set theme */ }
                 <script
                     dangerouslySetInnerHTML={ {
                         __html: `
@@ -66,9 +57,11 @@ export default function RootLayout ( { children }: PropsWithChildren )
             </Head>
 
             <body className={ twMerge( 'bg-white dark:bg-gray-900' ) }>
-                <ClientProviders>
-                    { children }
-                </ClientProviders>
+              
+                    <ClientProviders>
+                        { children }
+                    </ClientProviders>
+             
             </body>
         </html>
     );

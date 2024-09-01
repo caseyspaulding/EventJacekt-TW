@@ -10,7 +10,7 @@ import { signUp } from "./signup";
 import toast from "react-hot-toast";
 import FooterFull from "@/components/Footers/FooterFull";
 import { useUser } from "@/contexts/UserContext";
-
+export const dynamic = 'force-dynamic'; // Add this to force dynamic rendering
 
 declare global
 {
@@ -95,21 +95,27 @@ export default function Component ()
                     return;
                 }
 
+                setIsLoading( true );  // Set loading state here
                 await signInWithGoogle( response.credential );
                 router.push( '/choose-account-type' );
             } catch ( error )
             {
                 console.error( 'Error during Google sign-in:', error );
                 toast.error( 'An unexpected error occurred. Please try again.' );
+            } finally
+            {
+                setIsLoading( false );  // Reset loading state
             }
         };
 
+        // Load Google Sign-In script
         const script = document.createElement( 'script' );
         script.src = "https://accounts.google.com/gsi/client";
         script.async = true;
         script.defer = true;
         document.body.appendChild( script );
 
+        // Cleanup script to avoid memory leaks
         return () =>
         {
             document.body.removeChild( script );

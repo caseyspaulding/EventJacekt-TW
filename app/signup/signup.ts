@@ -20,25 +20,26 @@ export const signUp = async ( formData: FormData ) =>
     // Handle Google Sign-In
     try
     {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { data, error } = await supabase.auth.signInWithIdToken( {
+      const {  error } = await supabase.auth.signInWithIdToken( {
         provider: 'google',
         token: googleToken,
       } );
 
       if ( error )
       {
-        console.error( 'Google sign-in error:',  error.message, error.stack );
+        console.error( 'Google sign-in error:', error.message, error.stack );
         return { success: false, message: 'Google sign-in failed', error: error.message };
       }
 
-      const { data: sessionData } = await supabase.auth.getSession();
-      if ( !sessionData?.session )
+      // Re-fetch session to ensure it's created
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if ( sessionError || !sessionData?.session )
       {
-        console.error( 'Session not created after Google sign-in' );
+        console.error( 'Session not created after Google sign-in', sessionError?.message );
         return { success: false, message: 'Session not created after Google sign-in' };
       }
 
+      // Redirect to choose account type page
       return { success: true, redirectTo: '/choose-account-type' };
     } catch ( error )
     {
@@ -54,7 +55,7 @@ export const signUp = async ( formData: FormData ) =>
 
   try
   {
-    const { data: userResponse } = await supabase.auth.signUp( {
+    const { data: userResponse, error: signUpError } = await supabase.auth.signUp( {
       email,
       password,
       options: {
@@ -62,18 +63,22 @@ export const signUp = async ( formData: FormData ) =>
       },
     } );
 
-    // Check if the user needs to confirm their email
+    if ( signUpError )
+    {
+      console.error( 'Error during standard sign-up:', signUpError.message );
+      return { success: false, message: 'Error during sign-up', error: signUpError.message };
+    }
+
+    // If email confirmation is required
     if ( userResponse.user && userResponse.user.identities && userResponse.user.identities.length === 0 )
     {
-      // User needs to confirm their email
       return {
         success: true,
         message: 'Please check your email to confirm your account',
-        redirectTo: '/signup-success', // Redirect to a success page
+        redirectTo: '/signup-success',
       };
     } else
     {
-      // User is already confirmed (unlikely in this flow, but handling it just in case)
       return {
         success: true,
         user: userResponse.user,
