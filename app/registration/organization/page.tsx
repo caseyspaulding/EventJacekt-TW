@@ -48,16 +48,18 @@ const RegisterOrganizationPage = () =>
         // Small delay before navigating to allow state to settle
         setTimeout( () =>
         {
+          console.log( 'Navigating to:', `/dashboard/${ response.orgName }` );  
           router.push( `/dashboard/${ response.orgName }` );
         }, 200 );
       } else
       {
+        console.log( 'Error during registration:', response.message );
         toast.error( 'Error creating organization' );
         setLoading( false );
       }
     } catch ( error )
     {
-      console.error( 'Error during registration:', error );
+      console.log( 'Error during registration:', error );
       toast.error( 'Error creating organization' );
       setLoading( false );
     }

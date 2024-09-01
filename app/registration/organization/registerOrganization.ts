@@ -9,7 +9,7 @@ export const registerOrganization = async ( formData: FormData ) =>
 {
   const orgName = formData.get( 'orgName' ) as string;
   const website = formData.get( 'website' ) as string;
-  const logoFile = formData.get( 'logo' ) as File; 
+  const logoFile = formData.get( 'logo' ) as File;
   const supabase = createClient();
 
   // Get the authenticated user
@@ -18,13 +18,13 @@ export const registerOrganization = async ( formData: FormData ) =>
     error: authError,
   } = await supabase.auth.getUser();
 
-  
-
   if ( authError || !user )
   {
     console.error( 'Authentication error:', authError );
     return { success: false, message: 'User not authenticated' };
   }
+
+  
 
   const userId = user.id;
 
@@ -38,6 +38,7 @@ export const registerOrganization = async ( formData: FormData ) =>
 
     if ( existingOrgs.length > 0 )
     {
+      console.log( 'Organization already exists' );
       return { success: false, message: 'Organization already exists' };
     }
 
@@ -82,6 +83,8 @@ export const registerOrganization = async ( formData: FormData ) =>
 
         if ( !org )
         {
+          console.log( 'Organization is not set' );
+
           throw new Error( 'Could not create organization' );
         }
 
@@ -96,12 +99,12 @@ export const registerOrganization = async ( formData: FormData ) =>
       return { success: true, orgName: orgName };
     } catch ( error )
     {
-      console.error( 'Error during registration transaction:', error );
+      console.log( 'Error during registration transaction:', error );
       return { success: false, message: 'Could not complete registration' };
     }
   } catch ( error )
   {
-    console.error( 'Error during registration:', error );
+    console.log( 'Error during registration:', error );
     return { success: false, message: 'Could not complete registration' };
   }
 }
