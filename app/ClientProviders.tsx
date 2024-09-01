@@ -13,7 +13,7 @@ import { createClient } from '@/utils/supabase/client';
 export default function ClientProviders ( { children }: { children: React.ReactNode } )
 {
   const [ user, setUser ] = useState<UserType | null>( null );
-  const [, setLoading ] = useState( true ); // Initial loading state set to true
+  const [ , setLoading ] = useState( true ); // Initial loading state set to true
   const supabase = createClient();
 
   // Fetch user data on component mount
@@ -78,7 +78,7 @@ export default function ClientProviders ( { children }: { children: React.ReactN
       <Flowbite theme={ { theme: customTheme } }>
         <Toaster />
         {/* Initialize UserProvider with the fetched user data */ }
-        <UserProvider user={ user }  > 
+        <UserProvider user={ user }  >
           { children }
         </UserProvider>
         <ProgressBar

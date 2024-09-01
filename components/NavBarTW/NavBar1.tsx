@@ -232,9 +232,9 @@ export default function NavBar1 ()
                         <Image
                           className="h-8 w-8 rounded-full"
                           src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
-                            alt="Profile image"
-                            height={ 32 }
-                            width={ 32 }
+                          alt="Profile image"
+                          height={ 32 }
+                          width={ 32 }
                         />
                         {/* Container to stack the orgName and email vertically */ }
                         <div className="flex flex-col items-start">

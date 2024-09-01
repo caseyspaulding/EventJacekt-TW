@@ -108,7 +108,7 @@ export default function Component ()
                 <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
                 {/* Login Card */ }
                 <div className="relative z-10 flex flex-1 flex-col justify-center items-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-                    <div className="w-full max-w-md lg:w-96 bg-white p-4 rounded-3xl shadow-2xl">
+                    <div className="w-full max-w-md lg:w-96 bg-white p-6 rounded-3xl shadow-2xl">
                         <div className="mb-1">
                             <img
                                 alt="EventJacket Logo"

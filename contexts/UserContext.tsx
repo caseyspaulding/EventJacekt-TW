@@ -1,9 +1,9 @@
-// contexts/UserContext.tsx
 'use client';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createClient } from '@/utils/supabase/client'; // Ensure this points to your Supabase client setup
 import type { ReactNode } from 'react';
-import React, { createContext, useContext, useState } from 'react';
-import { createClient } from '@/utils/supabase/client';
 
+// Define UserType with the expected user fields
 export interface UserType
 {
     id: string;
@@ -23,6 +23,7 @@ export interface UserType
     createdAt: Date;
     updatedAt: Date;
 }
+
 type UserContextType = {
     user: UserType | null;
     setUser: ( user: UserType | null ) => void;
@@ -31,21 +32,18 @@ type UserContextType = {
     signOut: () => Promise<void>;
 };
 
+// Create the UserContext with default undefined value
 const UserContext = createContext<UserContextType | undefined>( undefined );
 
-export function UserProvider ( {
-    children,
-    user: initialUser
-}: {
-    children: ReactNode;
-    user: UserType | null;
-} )
+export function UserProvider ( { children, user: initialUser }: { children: ReactNode; user: UserType | null; } )
 {
     const [ user, setUser ] = useState<UserType | null>( initialUser );
     const [ loading, setLoading ] = useState( false );
 
+    // Initialize Supabase client
     const supabase = createClient();
 
+    // Function to handle Google Sign-In
     const signInWithGoogle = async ( token: string ) =>
     {
         setLoading( true );
@@ -92,12 +90,14 @@ export function UserProvider ( {
         }
     };
 
+    // Function to handle Sign-Out
     const signOut = async () =>
     {
         setLoading( true );
         try
         {
-            await supabase.auth.signOut();
+            const { error } = await supabase.auth.signOut();
+            if ( error ) throw error;
             setUser( null );
         } catch ( error )
         {
@@ -107,6 +107,36 @@ export function UserProvider ( {
             setLoading( false );
         }
     };
+
+    // Automatically fetch user profile on mount if initial user is provided
+    useEffect( () =>
+    {
+        const fetchInitialUserProfile = async () =>
+        {
+            if ( !user && initialUser )
+            {
+                setUser( initialUser );
+            } else if ( !user && !initialUser )
+            {
+                // If no user is provided, fetch user profile from Supabase
+                const { data: { user: supabaseUser } } = await supabase.auth.getUser();
+                if ( supabaseUser )
+                {
+                    const response = await fetch( '/api/fetchUserProfile' );
+                    if ( response.ok )
+                    {
+                        const userProfile = await response.json();
+                        setUser( userProfile );
+                    } else
+                    {
+                        setUser( null );
+                    }
+                }
+            }
+        };
+
+        fetchInitialUserProfile();
+    }, [ user, initialUser, supabase ] );
 
     return (
         <UserContext.Provider value={ { user, setUser, loading, signInWithGoogle, signOut } }>

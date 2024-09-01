@@ -8,6 +8,7 @@ import ClientProviders from './ClientProviders';
 import Head from 'next/head';
 
 
+
 export const metadata = {
     title: 'EventJacket - Event Management Software',
     openGraph: {
@@ -57,7 +58,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
             </Head>
 
             <body className={ twMerge( 'bg-white dark:bg-gray-900' ) }>
-              
+               
                     <ClientProviders>
                         { children }
                     </ClientProviders>
