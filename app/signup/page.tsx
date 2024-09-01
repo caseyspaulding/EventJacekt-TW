@@ -108,8 +108,8 @@ export default function Component ()
                 <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
                 {/* Login Card */ }
                 <div className="relative z-10 flex flex-1 flex-col justify-center items-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-                    <div className="w-full max-w-md lg:w-96 bg-white p-6 rounded-3xl shadow-2xl">
-                        <div className="mb-4">
+                    <div className="w-full max-w-md lg:w-96 bg-white p-4 rounded-3xl shadow-2xl">
+                        <div className="mb-1">
                             <img
                                 alt="EventJacket Logo"
                                 src="/images/logo.svg"
@@ -118,7 +118,7 @@ export default function Component ()
                             <h2 className="mt-2 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">
                                 Create an account
                             </h2>
-                            <p className="mt-2 text-sm leading-6 text-gray-500 text-center">
+                            <p className="mt-2 text-lg leading-6 text-gray-700 text-center">
                                 Sign up to get started with EventJacket
                             </p>
                         </div>
@@ -149,7 +149,7 @@ export default function Component ()
                                 data-width="300"
                             ></div>
                         </div>
-                        <div className="relative my-6">
+                        <div className="relative my-4">
                             <div aria-hidden="true" className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-gray-200" />
                             </div>
