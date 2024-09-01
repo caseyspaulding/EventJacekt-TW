@@ -12,8 +12,9 @@ export interface UserType
   isActive: boolean; // From userProfiles
   lastLogin?: Date; // Optional field from userProfiles
   permissions?: Record<string, boolean>; // Optional field from userProfiles
-  preferences?: Record<string, any>; // Optional field from userProfiles
+  preferences?: Record<string, unknown>; // Optional field from userProfiles
   department?: string; // Optional field from userProfiles
   createdAt: Date; // From userProfiles
   updatedAt: Date; // From userProfiles
+
 }

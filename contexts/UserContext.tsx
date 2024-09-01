@@ -33,6 +33,7 @@ export function UserProvider ( {
 {
     const [ user, setUser ] = useState<UserType | null>( initialUser );
     const [ loading, setLoading ] = useState( false );
+    
     const supabase = createClient();
 
     const signInWithGoogle = async ( token: string ) =>
