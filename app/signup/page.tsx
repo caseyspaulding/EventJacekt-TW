@@ -9,6 +9,7 @@ import { SubmitButton } from "./submit-button";
 import { signUp } from "./signup";
 import toast from "react-hot-toast";
 import FooterFull from "@/components/Footers/FooterFull";
+import { useUser } from "@/contexts/UserContext";
 
 
 declare global
@@ -28,6 +29,8 @@ export default function Component ()
     const router = useRouter();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ isLoading, setIsLoading ] = useState( false );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { signInWithGoogle, loading } = useUser(); // Use the UserContext here
 
     useEffect( () =>
     {
@@ -91,19 +94,9 @@ export default function Component ()
                     toast.error( 'Google sign-in failed. Please try again.' );
                     return;
                 }
-                const formData = new FormData();
-                formData.append( 'googleToken', response.credential );
 
-                const result = await signUp( formData );
-
-                if ( result.success )
-                {
-                    router.push( result.redirectTo || '/choose-account-type' );
-                } else
-                {
-                    console.error( result.message );
-                    toast.error( result.message || 'Google sign-in failed. Please try again.' );
-                }
+                await signInWithGoogle( response.credential );
+                router.push( '/choose-account-type' );
             } catch ( error )
             {
                 console.error( 'Error during Google sign-in:', error );
@@ -111,19 +104,17 @@ export default function Component ()
             }
         };
 
-        // Load Google Sign-In script only after the component mounts
         const script = document.createElement( 'script' );
         script.src = "https://accounts.google.com/gsi/client";
         script.async = true;
         script.defer = true;
         document.body.appendChild( script );
 
-        // Cleanup to avoid memory leaks
         return () =>
         {
             document.body.removeChild( script );
         };
-    }, [router] );
+    }, [ signInWithGoogle, router ] );
 
     return (
         <>
