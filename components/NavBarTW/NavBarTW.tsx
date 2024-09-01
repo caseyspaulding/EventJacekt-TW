@@ -51,8 +51,8 @@ export default function NavBarTW ()
                 </span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                EventJacket is your all-in-one event management platform, designed to streamline planning, automate ticket sales, and provide real-time insights.
-               
+                Simplify planning, boost ticket sales, and manage everything in one place. For every event, big or small.
+
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
 
@@ -64,7 +64,7 @@ export default function NavBarTW ()
                     href="/signup"
                     as="a"
                     className="relative z-10 py-2 bg-blue-600  hover:bg-green-500 text-white text-xl rounded-3xl 
-                 w-full sm:w-auto px-4 sm:px-52" 
+                 w-full sm:w-auto px-4 sm:px-52"
                   >
                     Get Started
                   </Button>

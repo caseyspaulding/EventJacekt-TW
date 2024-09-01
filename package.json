@@ -94,6 +94,7 @@
     "vercel": "^37.2.1"
   },
   "devDependencies": {
+    "@capacitor/cli": "^6.1.2",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.7",
     "@iconify/react": "^5.0.2",
