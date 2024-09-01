@@ -20,26 +20,24 @@ export const signUp = async ( formData: FormData ) =>
     // Handle Google Sign-In
     try
     {
-      const {  error } = await supabase.auth.signInWithIdToken( {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { data, error } = await supabase.auth.signInWithIdToken( {
         provider: 'google',
         token: googleToken,
       } );
 
       if ( error )
       {
-        console.error( 'Google sign-in error:', error.message, error.stack );
-        return { success: false, message: 'Google sign-in failed', error: error.message };
+        console.error( 'Google sign-in error:', error );
+        return { success: false, message: 'Google sign-in failed' };
       }
 
-      // Re-fetch session to ensure it's created
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-      if ( sessionError || !sessionData?.session )
+      const { data: sessionData } = await supabase.auth.getSession();
+      if ( !sessionData?.session )
       {
-        console.error( 'Session not created after Google sign-in', sessionError?.message );
         return { success: false, message: 'Session not created after Google sign-in' };
       }
 
-      // Redirect to choose account type page
       return { success: true, redirectTo: '/choose-account-type' };
     } catch ( error )
     {
@@ -55,7 +53,7 @@ export const signUp = async ( formData: FormData ) =>
 
   try
   {
-    const { data: userResponse, error: signUpError } = await supabase.auth.signUp( {
+    const { data: userResponse, error: userError } = await supabase.auth.signUp( {
       email,
       password,
       options: {
@@ -63,28 +61,18 @@ export const signUp = async ( formData: FormData ) =>
       },
     } );
 
-    if ( signUpError )
+    if ( userError || !userResponse?.user )
     {
-      console.error( 'Error during standard sign-up:', signUpError.message );
-      return { success: false, message: 'Error during sign-up', error: signUpError.message };
+      console.error( 'User creation error:', userError );
+      return { success: false, message: 'Could not create user' };
     }
 
-    // If email confirmation is required
-    if ( userResponse.user && userResponse.user.identities && userResponse.user.identities.length === 0 )
-    {
-      return {
-        success: true,
-        message: 'Please check your email to confirm your account',
-        redirectTo: '/signup-success',
-      };
-    } else
-    {
-      return {
-        success: true,
-        user: userResponse.user,
-        redirectTo: '/choose-account-type',
-      };
-    }
+    // Return user data to check confirmation status
+    return {
+      success: true,
+      user: userResponse.user,
+      redirectTo: '/choose-account-type',
+    };
   } catch ( error )
   {
     console.error( 'Error during signup:', error );
