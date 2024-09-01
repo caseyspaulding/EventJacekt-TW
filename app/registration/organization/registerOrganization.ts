@@ -9,7 +9,7 @@ export const registerOrganization = async ( formData: FormData ) =>
 {
   const orgName = formData.get( 'orgName' ) as string;
   const website = formData.get( 'website' ) as string;
-  const logoFile = formData.get( 'logo' ) as File; // Assuming 'logo' is the name of the file input in your form
+  const logoFile = formData.get( 'logo' ) as File; 
   const supabase = createClient();
 
   // Get the authenticated user
@@ -62,36 +62,46 @@ export const registerOrganization = async ( formData: FormData ) =>
         .from( 'blogimages' )
         .getPublicUrl( `public/${ logoFile.name }` );
 
-      logoUrl = publicUrlData?.publicUrl || '';
-    }
-
-    // Use a transaction for organization and user profile creation
-    await db.transaction( async ( trx ) =>
-    {
-      // Step 1: Create organization
-      const [ org ] = await trx
-        .insert( organizations )
-        .values( { name: orgName, website, logoUrl } ) // Update the organization with the logoUrl
-        .returning( { id: organizations.id } );
-
-      if ( !org )
+      if ( !publicUrlData )
       {
-        throw new Error( 'Could not create organization' );
+        console.error( 'Error retrieving public URL for logo' );
+        return { success: false, message: 'Error retrieving logo URL' };
       }
 
-      // Step 2: Create user profile
-      await trx.insert( userProfiles ).values( {
-        userId,
-        orgId: org.id,
-        organizationName: orgName,
-      } );
-    } );
+      logoUrl = publicUrlData.publicUrl;
+    }
+    // Use a transaction for organization and user profile creation
+    try
+    {
+      await db.transaction( async ( trx ) =>
+      {
+        const [ org ] = await trx
+          .insert( organizations )
+          .values( { name: orgName, website, logoUrl } )
+          .returning( { id: organizations.id } );
 
-    console.log( 'Organization registered successfully.' );
-    return { success: true, orgName: orgName };
+        if ( !org )
+        {
+          throw new Error( 'Could not create organization' );
+        }
+
+        await trx.insert( userProfiles ).values( {
+          userId,
+          orgId: org.id,
+          organizationName: orgName,
+        } );
+      } );
+
+      console.log( 'Organization registered successfully.' );
+      return { success: true, orgName: orgName };
+    } catch ( error )
+    {
+      console.error( 'Error during registration transaction:', error );
+      return { success: false, message: 'Could not complete registration' };
+    }
   } catch ( error )
   {
     console.error( 'Error during registration:', error );
     return { success: false, message: 'Could not complete registration' };
   }
-};
+}

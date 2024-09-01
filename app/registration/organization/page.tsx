@@ -34,22 +34,32 @@ const RegisterOrganizationPage = () =>
       formData.append( 'logo', logoFile );
     }
 
-
-    const response = await registerOrganization( formData );
-
-    setLoading( false );
-
-    if ( response.success )
+    try
     {
-      toast.success( 'Organization registered successfully!' );
-      // Small delay before navigating
-      setTimeout( () =>
+      const response = await registerOrganization( formData );
+
+      if ( response.success )
       {
-        router.push( `/dashboard/${ response.orgName }` );
-      }, 200 );
-    } else
+        toast.success( 'Organization registered successfully!' );
+
+        // Ensure async task is fully completed
+        setLoading( false );
+
+        // Small delay before navigating to allow state to settle
+        setTimeout( () =>
+        {
+          router.push( `/dashboard/${ response.orgName }` );
+        }, 200 );
+      } else
+      {
+        toast.error( 'Error creating organization' );
+        setLoading( false );
+      }
+    } catch ( error )
     {
+      console.error( 'Error during registration:', error );
       toast.error( 'Error creating organization' );
+      setLoading( false );
     }
   };
 
@@ -136,15 +146,15 @@ const RegisterOrganizationPage = () =>
               ) }
             </div>
           </div>
-<div className="flex items-center justify-center">
-          <button
-            type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-            disabled={ loading }
-          >
-            { loading ? 'Registering...' : 'Register Organization' }
+          <div className="flex items-center justify-center">
+            <button
+              type="submit"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+              disabled={ loading }
+            >
+              { loading ? 'Registering...' : 'Register Organization' }
             </button>
-            </div>
+          </div>
         </form>
       </div>
     </div>
