@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Input } from '@nextui-org/react';
 import { createClient } from '@/utils/supabase/client';
+import LoadingButton from '@/components/LoadingButton/LoadingButton';
 
 const RegisterOrganizationPage = () =>
 {
@@ -158,13 +159,13 @@ const RegisterOrganizationPage = () =>
             </div>
           </div>
           <div className="flex items-center justify-center">
-            <button
+            <LoadingButton  
               type="submit"
               className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-green-600"
               disabled={ loading }
             >
               { loading ? 'Registering...' : 'Register Organization' }
-            </button>
+            </LoadingButton>
           </div>
         </form>
       </div>

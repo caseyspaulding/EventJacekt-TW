@@ -16,7 +16,13 @@ export default function Loading ()
 
       {/* Overlay Content */ }
       <div className="absolute inset-0 flex items-center justify-center">
-        <img src="/images/logo.svg" alt="Logo" className="h-16 w-auto" />
+        <img
+          src="/images/logo.svg"
+          alt="Logo"
+          className="h-16 w-auto"
+
+
+        />
         {/* Optionally add loading text */ }
       </div>
     </div>
