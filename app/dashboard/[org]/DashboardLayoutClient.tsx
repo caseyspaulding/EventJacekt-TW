@@ -12,9 +12,15 @@ interface DashboardLayoutClientProps
 
 export default function DashboardLayoutClient ( { children, user }: DashboardLayoutClientProps )
 {
+  // Check if user is properly initialized
+  if ( user === undefined )
+  {
+    console.error( 'User is undefined, ensure UserProvider is initialized correctly' );
+    return <div>Error: User context is not properly initialized.</div>;
+  }
+
   return (
     <UserProvider initialUser={ user }>
-      {/* Pass the user prop to UserProvider */ }
       <DashboardLayoutTW>{ children }</DashboardLayoutTW>
     </UserProvider>
   );

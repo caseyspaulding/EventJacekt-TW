@@ -20,19 +20,27 @@ export default async function DashboardLayout ( { children }: React.PropsWithChi
 
     console.log( 'Supabase session:', session );
 
-    const user = await fetchUserProfile();
-    console.log( 'Fetched user profile:', user );
+    // Fetch user profile safely
+    let user = null;
+    try
+    {
+        user = await fetchUserProfile();
+        console.log( 'Fetched user profile:', user );
+    } catch ( error )
+    {
+        console.error( 'Error fetching user profile:', error );
+        redirect( '/login' ); // Redirect in case of error fetching user
+        return null;
+    }
 
-    const org = user?.orgName;
-    if ( !org )
+    if ( !user?.orgName )
     {
         console.error( 'Organization not found for user:', user );
         return (
             <div>
                 <h1>Error: Organization not found</h1>
                 <p>
-                    It looks like your account is not associated with an organization. Please contact support or try logging in
-                    again.
+                    It looks like your account is not associated with an organization. Please contact support or try logging in again.
                 </p>
             </div>
         );
