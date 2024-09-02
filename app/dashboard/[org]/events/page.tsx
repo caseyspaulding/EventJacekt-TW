@@ -152,6 +152,12 @@ export default function EventsPage ()
                           >
                             Delete<span className="sr-only">, { event.name }</span>
                           </button>
+                          {/* Add a button/link to create tickets for the event */ }
+                          <Link href={ `/dashboard/${ user?.orgName }/events/${ event.slug }/create-tickets` }>
+                            <div className="text-blue-600 hover:text-blue-900 cursor-pointer">
+                              Create Tickets<span className="sr-only">, { event.name }</span>
+                            </div>
+                          </Link>
                         </td>
                       </tr>
                     ) )

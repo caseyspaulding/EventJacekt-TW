@@ -1,6 +1,7 @@
-import { Button } from 'flowbite-react';
+
+import { Button } from '@nextui-org/button';
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+
 
 const ModalBasic = ( { isOpen, onClose, user, slug }:
   { isOpen: boolean; onClose: () => void; user: unknown; slug: string } ) =>
@@ -33,11 +34,17 @@ const ModalBasic = ( { isOpen, onClose, user, slug }:
           <button onClick={ handleClose } className="px-4 py-2 bg-gray-500 text-white rounded-lg">
             No, Thanks
           </button>
-          <Link href={ `/dashboard/${ encodeURIComponent( slug ) }/events/${ slug }/create-tickets` } passHref>
-            <Button className="px-4 py-2 bg-blue-600 text-white rounded-lg">
+          <Button
+            href={ `/dashboard/${ encodeURIComponent( slug ) }/events/${ slug }/create-tickets` }
+            as='a'
+            className='px-4 py-2 bg-primary text-white rounded-lg'
+
+          
+          >
+            
               Yes, Create Tickets
-            </Button>
-          </Link>
+          
+          </Button>
         </div>
       </div>
     </div>

@@ -317,8 +317,8 @@ const CreateEventPage = () => {
                     <Button
                         type="submit"
                         radius="sm"
+                        className='px-4 py-2 bg-orange-500 text-white rounded-lg w-full'
                         
-                        color="warning"
                     >
                         Create Event
                     </Button>

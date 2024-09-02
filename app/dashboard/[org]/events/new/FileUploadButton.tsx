@@ -11,13 +11,13 @@ export function FileUploadButton ( { setFeaturedImage }: FileUploadButtonProps )
     <div>
       <Button
         as="label"
-        color="warning"
+        className='w-full bg-orange-500 text-white'
         radius="sm"
       >
         Upload Image
         <input
           type="file"
-         
+
           accept="image/*"
           onChange={ ( e ) => setFeaturedImage( e.target.files?.[ 0 ] || null ) }
           style={ { display: 'none' } } // Hide the actual file input
