@@ -5,16 +5,12 @@ import { events, orgTicketTypes, organizations } from "@/db/schema";
 import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
 import { eq } from "drizzle-orm/expressions";
 
-import FooterFull from "@/components/Footers/FooterFull";
-
 import { absoluteUrl } from "@/lib/utils";
 import type { Metadata } from "next/types";
-
 import BuyTicketsComp from "@/components/EventHomeOne/Hero/BuyTicketsComp";
+import FooterTW from "@/components/Footers/FooterTW";
 
-export async function generateMetadata (
-  { params }: { params: Params }
-): Promise<Metadata>
+export async function generateMetadata ( { params }: { params: Params } ): Promise<Metadata>
 {
   const eventSlug = params.eventSlug;
   const eventId = await getEventIdBySlug( eventSlug );
@@ -41,10 +37,10 @@ export async function generateMetadata (
       zipCode: events.zipCode,
       country: events.country,
       orgId: events.orgId,
-      orgName: organizations.name, // Fetch org name
+      orgName: organizations.name,
     } )
     .from( events )
-    .innerJoin( organizations, eq( events.orgId, organizations.id ) ) // Perform a join on orgId
+    .innerJoin( organizations, eq( events.orgId, organizations.id ) )
     .where( eq( events.id, eventId ) )
     .limit( 1 );
 
@@ -59,11 +55,8 @@ export async function generateMetadata (
   }
 
   const title = `${ eventData.eventName } | EventJacket`;
-  const description =
-    eventData.description || `Join us for ${ eventData.eventName }`;
-  const imageUrl = absoluteUrl(
-    eventData.featuredImage || "/images/event-default.jpg"
-  );
+  const description = eventData.description || `Join us for ${ eventData.eventName }`;
+  const imageUrl = absoluteUrl( eventData.featuredImage || "/images/event-default.jpg" );
 
   return {
     title,
@@ -90,9 +83,10 @@ export async function generateMetadata (
     },
   };
 }
+
 interface Params
 {
-    eventSlug: string;
+  eventSlug: string;
 }
 
 export default async function BuyTickets ( { params }: { params: Params } )
@@ -119,10 +113,10 @@ export default async function BuyTickets ( { params }: { params: Params } )
       zipCode: events.zipCode,
       country: events.country,
       orgId: events.orgId,
-      orgName: organizations.name, // Fetch org name
+      orgName: organizations.name,
     } )
     .from( events )
-    .innerJoin( organizations, eq( events.orgId, organizations.id ) ) // Perform a join on orgId
+    .innerJoin( organizations, eq( events.orgId, organizations.id ) )
     .where( eq( events.id, eventId ) )
     .limit( 1 );
 
@@ -178,12 +172,12 @@ export default async function BuyTickets ( { params }: { params: Params } )
               ? new Date( eventData.startDate ).toISOString()
               : ""
           }
-          tickets={ tickets as [] } // Properly type the tickets array
+          tickets={ tickets as [] } // Pass the array of tickets
           eventSlug={ eventSlug }
         />
       </div>
-
-      <FooterFull />
+<FooterTW />  
+      
     </>
   );
 }

@@ -71,12 +71,15 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
       <h2 className="mb-4 mt-4 text-2xl flex justify-center font-semibold text-grey-900">
         Available Tickets
       </h2>
+      <div className="flex justify-center mb-3">
+        {/* Use the first ticket's eventDate for the countdown */ }
+          <Countdown startDate={ tickets[ 0 ].eventDate } />
+        </div>
+     
       { tickets.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4">
-          <div className="flex justify-center">
-            {/* Use the first ticket's eventDate for the countdown */ }
-            <Countdown startDate={ tickets[ 0 ].eventDate } />
-          </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {/* The grid will have 1 column on small screens, 2 on medium, and 3 on large screens */ }
+         
           { tickets.map( ( ticket ) => (
             <Card
               shadow="lg"
@@ -87,10 +90,7 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
                 <h3 className="text-xl text-grey-900 font-medium">{ eventName }</h3>
                 <h3 className="text-xl text-grey-900 font-medium">{ ticket.name }</h3>
                 <p className="text-small text-grey-900">
-                  Event Date: { ' ' }
-                  { ticket.eventDate
-                    ? new Date( ticket.eventDate ).toDateString()
-                    : 'No date available' }
+                  Event Date: { ticket.eventDate ? new Date( ticket.eventDate ).toDateString() : 'No date available' }
                 </p>
               </CardHeader>
               <Divider />
