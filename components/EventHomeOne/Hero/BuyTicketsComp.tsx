@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
-import Countdown from '../../Countdown/Countdown';
+const Countdown = dynamic( () => import( '../../Countdown/Countdown' ), {
+  ssr: false, // Disable SSR for this component
+} );
 import
 {
   Card,
@@ -11,6 +13,7 @@ import
   Divider,
 } from '@nextui-org/react';
 import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
+import dynamic from 'next/dynamic';
 
 interface Ticket
 {
@@ -67,37 +70,40 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
   }, [] );
 
   return (
-    <div
-      className="my-5 pb-10"
-    >
+    <div className="my-5 pb-10 ">
       <h2 className="mb-4 mt-4 text-2xl flex justify-center font-semibold text-grey-900">
         Available Tickets
       </h2>
       <div className="flex justify-center mb-4">
         {/* Use the first ticket's eventDate for the countdown */ }
-          <Countdown startDate={ tickets[ 0 ].eventDate } />
-        </div>
-     
+        <Countdown startDate={ tickets[ 0 ].eventDate } />
+      </div>
+
       { tickets.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {/* The grid will have 1 column on small screens, 2 on medium, and 3 on large screens */ }
-         
+
           { tickets.map( ( ticket ) => (
             <Card
               shadow="lg"
               key={ ticket.id }
-              className="border-none p-8 mb-8 text-grey-900 bg-background/20 dark:bg-default-100/50 max-w-[500px] mx-auto"
+              className="border-none p-12 mb-8 text-grey-900 bg-background/20 dark:bg-default-100/50 w-full max-w-full mx-auto"
             >
               <CardHeader className="flex flex-col items-center">
                 <h3 className="text-xl text-grey-900 font-bold">{ eventName }</h3>
-                
+
                 <p className="text-small mt-2 text-grey-900">
-                  Event Date: { ticket.eventDate ? new Date( ticket.eventDate ).toDateString() : 'No date available' }
+                  Event Date:{ " " }
+                  { ticket.eventDate
+                    ? new Date( ticket.eventDate ).toDateString()
+                    : "No date available" }
                 </p>
               </CardHeader>
               <Divider />
               <CardBody className="flex flex-col items-center">
-                <p className="text-grey-900 text-2xl text-center">{ ticket.description }</p>
+                <p className="text-grey-900 text-2xl text-center">
+                  { ticket.description }
+                </p>
                 <p className="text-lg text-grey-900 font-semibold">
                   Price: ${ parseFloat( ticket.price ).toFixed( 2 ) }
                 </p>
