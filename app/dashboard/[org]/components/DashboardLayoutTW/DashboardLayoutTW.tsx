@@ -17,6 +17,9 @@ import
 import Link from 'next/link';
 import { signOut } from '@/app/actions/SignOut';
 
+
+
+
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: false },
   {
@@ -335,6 +338,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
         
         <main>
           <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8"> {/* Render children here */ }
+          
             { children }
             {/* /End replace */ }</div>
         </main>

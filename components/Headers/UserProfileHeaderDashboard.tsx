@@ -1,3 +1,6 @@
+'use client'; 
+
+import { useEffect, useState } from "react";
 import { BuildingOfficeIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Button } from "@nextui-org/button";
 
@@ -18,8 +21,26 @@ const UserProfileHeaderDashboard: React.FC<UserProfileHeaderProps> = ( {
   orgId, // Receive orgId as a prop
 } ) =>
 {
+  const [ greeting, setGreeting ] = useState( "Good Morning" );
+
+  useEffect( () =>
+  {
+    const currentHour = new Date().getHours();
+
+    if ( currentHour < 12 )
+    {
+      setGreeting( "Good Morning" );
+    } else if ( currentHour < 18 )
+    {
+      setGreeting( "Good Afternoon" );
+    } else
+    {
+      setGreeting( "Good Evening" );
+    }
+  }, [] );
+
   return (
-    <div className="bg-white ">
+    <div className="bg-white">
       <div className="lg:max-w-6xl">
         <div className="py-6 md:flex md:items-center md:justify-between">
           <div className="min-w-0 flex-1">
@@ -38,7 +59,7 @@ const UserProfileHeaderDashboard: React.FC<UserProfileHeaderProps> = ( {
                     className="h-16 w-16 rounded-full sm:hidden"
                   />
                   <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
-                    👋Welcome, { userName }
+                    { greeting }👋, { userName }
                   </h1>
                 </div>
                 <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">

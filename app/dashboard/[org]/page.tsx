@@ -5,6 +5,11 @@ import { db } from '../../../db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq, and } from 'drizzle-orm/expressions';
 import UserProfileHeaderDashboard from '@/components/Headers/UserProfileHeaderDashboard';
+import { BanknotesIcon, FolderIcon, HomeIcon } from '@heroicons/react/24/outline';
+import DashboardCardGrid from './components/DashboardGrid/DashboardGrid';
+import { fetchTicketSalesForOrg } from '@/app/actions/dashboardActions';
+import { Suspense } from 'react';
+import { sql } from 'drizzle-orm';
 
 
 interface DashboardPageProps
@@ -43,13 +48,28 @@ async function getDashboardData ( orgName: string )
     // Check if userProfileData has elements
     const userProfile = userProfileData.length > 0 ? userProfileData[ 0 ] : null;
 
-    // Extract user's name from Supabase auth.user table
-    const userName = user?.user_metadata?.name || user.email; // Fallback to email if no name is set
-    
-    // Use the avatar URL from the auth.users table (provided by Google or Supabase)
-    const userAvatarUrl = user?.user_metadata?.avatar_url || userProfile?.avatar || '/images/avatars/user_avatar_default.png';
+    if ( !userProfile )
+    {
+        return null;
+    }
 
-    return userProfile ? { ...userProfile, userName, avatar: userAvatarUrl } : null; // Ensure avatar is returned
+    // Extract user's name from Supabase auth.user table
+    const userName = user.user_metadata?.name || user.email; // Fallback to email if no name is set
+
+    // Use the avatar URL from the auth.users table (provided by Google or Supabase)
+    const userAvatarUrl = user.user_metadata?.avatar_url || userProfile.avatar || '/images/avatars/user_avatar_default.png';
+
+    // Fetch total member count for the current organization
+    const memberCountResult = await db
+        .select( {
+            count: sql`COUNT(*)`.as<number>(), // Ensure it's cast as a number
+        } )
+        .from( userProfiles )
+        .where( eq( userProfiles.orgId, userProfile.organizationId ) );
+
+    const totalMembers = memberCountResult[ 0 ]?.count || 0;
+
+    return { ...userProfile, userName, avatar: userAvatarUrl, totalMembers }; // Ensure avatar and totalMembers are returned
 }
 
 export default async function DashboardPage ( { params }: DashboardPageProps )
@@ -63,23 +83,55 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
         {
             notFound();
         }
+        // Fetch ticket sales data for the organization
+        const ticketSales = await fetchTicketSalesForOrg( dashboardData.organizationId );
 
+        const totalSales = ticketSales
+            ? ticketSales.reduce( ( acc, sale ) => acc + sale.amount, 0 ) // Calculate total sales
+            : 0;
+        const formattedTotalSales = `$${ ( totalSales / 100 ).toFixed( 2 ) }`; // Assuming amount is in cents
+
+        
         const events = await fetchEventsForOrg();
         const userName = dashboardData.userName || 'User'; // Fallback to 'User' if no name found
-
+        const totalMembers = dashboardData.totalMembers; // Use totalMembers from dashboardData
+        const cards = [
+            {
+                name: 'Tickets Sold',
+                icon: BanknotesIcon,
+                amount: formattedTotalSales,
+                href: '#',
+            },
+            {
+                name: 'Total Events',
+                icon: FolderIcon,
+                amount: events.length,
+                href: '#',
+            },
+            {
+                name: 'Members',
+                icon: HomeIcon,
+                amount: totalMembers.toString(),    
+                href: '#',
+            },
+        ];
         return (
             <div className="">
                 <header>
-                    <UserProfileHeaderDashboard
-                        userName={ userName }
-                        organizationName={ dashboardData.organizationName }
-                        userImageUrl={ dashboardData.avatar } // Use the correct property name
-                        accountStatus="Verified Account"
-                        orgId={ dashboardData.organizationId }
-                    />
+                    {/* Client Component Wrapped in Suspense */ }
+                    <Suspense fallback={ <div>Loading...</div> }>
+                        <UserProfileHeaderDashboard
+                            userName={ userName }
+                            organizationName={ dashboardData.organizationName }
+                            userImageUrl={ dashboardData.avatar }
+                            accountStatus="Verified Account"
+                            orgId={ dashboardData.organizationId }
+                        />
+                    </Suspense>
                 </header>
-               
+              
                 <div className="bg-white">
+                    <DashboardCardGrid cards={ cards } />
                     <div>
                         <h2 className="text-xl font-semibold mb-4">Events</h2>
                         { events.length > 0 ? (
