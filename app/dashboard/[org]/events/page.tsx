@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUser } from '@/contexts/UserContext';
 import { getEventsForOrg } from '@/app/actions/getEventsForOrg';
-import { deleteEvent } from '@/app/actions/eventActions'; // Ensure this action is correctly implemented
+import { deleteEvent } from '@/app/actions/eventActions';
 import BreadcrumbsPageHeader from '../components/BreadcrumbsPageHeading';
 
 interface Event
@@ -42,6 +42,7 @@ export default function EventsPage ()
 
       try
       {
+        setLoading( true ); // Ensure loading state is set properly
         const fetchedEvents = await getEventsForOrg( user.orgName );
         setEvents( fetchedEvents );
       } catch ( error )
@@ -113,7 +114,6 @@ export default function EventsPage ()
         </div>
       </div>
 
-      {/* Responsive Table */ }
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -148,7 +148,7 @@ export default function EventsPage ()
                           </Link>
                           <button
                             onClick={ () => handleDelete( event.id ) }
-                            className="text-blue-600 hover:text-blue-900 cursor-pointer "
+                            className="text-blue-600 hover:text-blue-900 cursor-pointer"
                           >
                             Delete<span className="sr-only">, { event.name }</span>
                           </button>

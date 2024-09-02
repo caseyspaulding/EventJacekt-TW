@@ -2,6 +2,7 @@ export interface UserType
 {
   id: string; // From auth.users
   email: string; // From auth.users
+  name?: string; // New field for user's name
   orgName: string; // From userProfiles
   organizationId: string; // From userProfiles
   role: string; // From userProfiles or auth.users depending on your logic

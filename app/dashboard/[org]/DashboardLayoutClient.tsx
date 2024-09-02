@@ -1,9 +1,7 @@
-
 'use client';
 
 import { UserProvider } from '@/contexts/UserContext';
 import DashboardLayoutTW from './components/DashboardLayoutTW/DashboardLayoutTW';
-
 import type { UserType } from '@/types/UserType';
 
 interface DashboardLayoutClientProps
@@ -15,7 +13,8 @@ interface DashboardLayoutClientProps
 export default function DashboardLayoutClient ( { children, user }: DashboardLayoutClientProps )
 {
   return (
-    <UserProvider user={ user }>
+    <UserProvider initialUser={ user }>
+      {/* Pass the user prop to UserProvider */ }
       <DashboardLayoutTW>{ children }</DashboardLayoutTW>
     </UserProvider>
   );
