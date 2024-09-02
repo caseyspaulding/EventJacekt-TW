@@ -6,6 +6,7 @@ import { ConnectAccountOnboarding, ConnectComponentsProvider } from '@stripe/rea
 import { updateOrganizationStripeData } from '@/app/actions/updateOrg';
 import BreadcrumbsPageHeader from '../components/BreadcrumbsPageHeading';
 import { Link } from '@nextui-org/react';
+import Image from 'next/image';
 
 interface BankingPageProps
 {
@@ -88,7 +89,7 @@ export default function BankingPageClient ( {
       
     ];
     return (
-        <div className="bg-white ">
+        <div className="bg-white max-w-4xl ">
 
             <BreadcrumbsPageHeader title="Banking" breadcrumbs={ breadcrumbs } />
 
@@ -131,17 +132,31 @@ export default function BankingPageClient ( {
 
                 { error && <p className="text-red-500">Something went wrong!</p> }
             </div>
-            <div className="flex justify-center items-center text-center">
+            <div className="flex flex-col justify-center items-center text-center mt-10">
                 <div>
                     <Link href="https://stripe.com/connect" target="_blank" rel="noopener noreferrer">
-                        <img
-                            src="/images/powered-by-stripe.png"
-                            className="mt-10"
-                            alt="powered by Stripe"
+                        <Image
+                            src="/images/PoweredByStripe/powered-by-stripe-black.svg"
+                            className="mb-4"
+                            alt="Powered by Stripe"
                             width={ 200 }
                             height={ 500 }
                         />
                     </Link>
+                    <p className="text-gray-600 mt-4">
+                        Our platform uses <strong>Stripe</strong> for secure payment processing. Stripe is a globally trusted payment processor that ensures your transactions are safe and secure.
+                    </p>
+                    <div className="flex flex-col items-center mt-4 space-y-2">
+                        <Link href="https://stripe.com/docs/security/stripe" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                            Learn more about Stripe's security practices
+                        </Link>
+                        <Link href="https://stripe.com/legal" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                            Stripe's Terms of Service
+                        </Link>
+                        <Link href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                            Stripe's Privacy Policy
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

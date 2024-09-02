@@ -130,7 +130,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                     </Suspense>
                 </header>
               
-                <div className="bg-white">
+                <div className="bg-white max-w-6xl">
                     <DashboardCardGrid cards={ cards } />
                     <div>
                         <h2 className="text-xl font-semibold mb-4">Events</h2>
