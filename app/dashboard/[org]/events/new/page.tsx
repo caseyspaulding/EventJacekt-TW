@@ -124,7 +124,7 @@ const CreateEventPage = () => {
         { name: 'Create Event', href: '/events/create', current: true },
     ];
     return (
-        <div className="my-4">
+        <div className="my-4 max-w-3xl">
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
 
             <form onSubmit={handleSubmit} className="space-y-6">
