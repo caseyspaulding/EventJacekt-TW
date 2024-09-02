@@ -75,7 +75,7 @@ const UserProfileHeaderDashboard: React.FC<UserProfileHeaderProps> = ( {
                   <dd className="mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0">
                     <CheckCircleIcon
                       aria-hidden="true"
-                      className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
+                      className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-500"
                     />
                     { accountStatus }
                   </dd>
@@ -87,14 +87,14 @@ const UserProfileHeaderDashboard: React.FC<UserProfileHeaderProps> = ( {
             <Button
               as="a"
               href={ `/dashboard/${ orgId }/events` } // Dynamic route for managing events
-              className="w-full md:w-auto inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              className="w-full md:w-auto inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-green-50 hover:ring-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
               Manage Event
             </Button>
             <Button
               as="a"
               href={ `/dashboard/${ orgId }/events/new` } // Dynamic route for creating an event
-              className="w-full md:w-auto inline-flex items-center rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+              className="w-full md:w-auto inline-flex items-center rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
               Create Event
             </Button>
