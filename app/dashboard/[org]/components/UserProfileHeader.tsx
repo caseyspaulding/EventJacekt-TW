@@ -18,7 +18,7 @@ export default function UserProfileHeader ( {
     <div className="rounded-lg overflow-hidden">
       <div className="rounded-t-lg overflow-hidden">
         <img
-          alt=""
+          alt="profile image"
           src={ backgroundImage }
           className="h-32 w-full object-cover lg:h-48"
         />

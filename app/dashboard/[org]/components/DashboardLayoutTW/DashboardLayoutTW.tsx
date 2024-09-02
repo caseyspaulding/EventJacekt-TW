@@ -332,16 +332,13 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
             </div>
           </div>
         </div>
-
-        <main className="">
-          <div className="">
-            <div className="mx-auto py-4 max-w-6xl px-4 sm:px-6 lg:px-8">
-              {/* Render children here */ }
-              { children }
-              {/* /End replace */ }
-            </div>
-          </div>
+        
+        <main>
+          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8"> {/* Render children here */ }
+            { children }
+            {/* /End replace */ }</div>
         </main>
+        
       </div>
     </>
   );
