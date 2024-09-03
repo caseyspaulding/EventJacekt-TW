@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+
 import { createClient } from '@utils/supabase/client';
 import { useUser } from '@/contexts/UserContext';
 import { generateSlug } from '@/utils/stringUtils';
@@ -11,23 +11,47 @@ import { Button, Input, Textarea } from '@nextui-org/react';
 import { FileUploadButton } from './FileUploadButton';
 
 import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
+import type { ChangeEvent} from 'react';
+import { useState } from 'react';
+
+type FAQ = {
+    question: string;
+    answer: string;
+};
 
 const CreateEventPage = () => {
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [venue, setVenue] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
-    const [zipCode, setZipCode] = useState('');
-    const [maxAttendees, setMaxAttendees] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [ name, setName ] = useState( '' );
+    const [ description, setDescription ] = useState( '' );
+    const [ startDate, setStartDate ] = useState( '' );
+    const [ endDate, setEndDate ] = useState( '' );
+    const [ eventStartTime, setEventStartTime ] = useState( '' );
+    const [ eventEndTime, setEventEndTime ] = useState( '' );
+    const [ venue, setVenue ] = useState( '' );
+    const [ address, setAddress ] = useState( '' );
+    const [ city, setCity ] = useState( '' );
+    const [ state, setState ] = useState( '' );
+    const [ country, setCountry ] = useState( '' );
+    const [ zipCode, setZipCode ] = useState( '' );
+    const [ maxAttendees, setMaxAttendees ] = useState( 0 );
+    const [ isModalOpen, setIsModalOpen ] = useState( false );
     const { user } = useUser();
-    const [featuredImage, setFeaturedImage] = useState<File | null>(null);
-    const [slug, setSlug] = useState<string | null>(null);
+    const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
+    const [ slug, setSlug ] = useState<string | null>( null );
+    const [ notes, setNotes ] = useState( '' );
+    const [ scheduleDetails, setScheduleDetails ] = useState( '' );
+    const [ refundPolicy, setRefundPolicy ] = useState( '' );
+    const [ timezone, setTimezone ] = useState( '' );
+    const [ tags, setTags ] = useState( '' );
+    const [ faqs, setFaqs ] = useState<{ question: string; answer: string }[]>( [ { question: '', answer: '' } ] );
+    const [ highlights, setHighlights ] = useState( '' );
+    const [ ageRestriction, setAgeRestriction ] = useState( '' );
+    const [ parkingOptions, setParkingOptions ] = useState( '' );
+
+
+    const [ previewImage, setPreviewImage ] = useState<string | null>( null ); // New state for image preview
+
+
+    const [ agendaItems, setAgendaItems ] = useState<{ title: string; startTime: string; endTime: string; description: string; hostOrArtist: string }[]>( [ { title: '', startTime: '', endTime: '', description: '', hostOrArtist: '' } ] );
 
     const handleImageUpload = async (file: File | null, orgName: string) => {
         if (!file) {
@@ -54,6 +78,31 @@ const CreateEventPage = () => {
 
         return publicUrlData?.publicUrl || '';
     };
+    const handleAgeRestrictionChange = ( option: string ) =>
+    {
+        setAgeRestriction( option );
+    };
+    const handleFaqChange = ( e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number, field: keyof FAQ ) =>
+    {
+        const newFaqs = [ ...faqs ];
+        newFaqs[ index ][ field ] = e.target.value; // TypeScript now understands field is a key of FAQ
+        setFaqs( newFaqs );
+    };
+    const handleParkingOptionsChange = ( option: string ) =>
+    {
+        setParkingOptions( option );
+    };
+
+    const addFaq = () =>
+    {
+        setFaqs( [ ...faqs, { question: '', answer: '' } ] );
+    };
+
+    const removeFaq = ( index: number ) =>
+    {
+        const newFaqs = faqs.filter( ( _, i ) => i !== index );
+        setFaqs( newFaqs );
+    };
 
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
@@ -76,7 +125,9 @@ const CreateEventPage = () => {
         formData.append('slug', generatedSlug);
         formData.append('description', description);
         formData.append('startDate', startDate);
-        formData.append('endDate', endDate);
+        formData.append( 'endDate', endDate );
+        formData.append( 'eventStartTime', eventStartTime );
+        formData.append( 'eventEndTime', eventEndTime );
         formData.append('venue', venue);
         formData.append('address', address);
         formData.append('city', city);
@@ -85,27 +136,50 @@ const CreateEventPage = () => {
         formData.append('zipCode', zipCode);
         formData.append('maxAttendees', maxAttendees.toString());
         formData.append('status', 'draft');
-        formData.append('featuredImage', imageUrl);
+        formData.append( 'featuredImage', imageUrl );
+        formData.append( 'notes', notes );
+        formData.append( 'scheduleDetails', scheduleDetails );
+        formData.append( 'refundPolicy', refundPolicy );
+        formData.append( 'timezone', timezone );
+        formData.append( 'tags', tags );
+        formData.append( 'faqs', JSON.stringify( faqs ) );
+        formData.append( 'highlights', highlights );
+        formData.append( 'ageRestriction', ageRestriction );
+        formData.append( 'parkingOptions', parkingOptions );
+        formData.append( 'agendaItems', JSON.stringify( agendaItems ) );
+
 
         try {
             const response = await createEvent(formData);
 
             if (response.success) {
-                toast.success('Event created successfully!');
-                setIsModalOpen(true);
+                toast.success( 'Event created successfully!' );
+                setIsModalOpen( true );
                 // Clear form
-                setName('');
-                setDescription('');
-                setStartDate('');
-                setEndDate('');
-                setVenue('');
-                setAddress('');
-                setCity('');
-                setState('');
-                setCountry('');
-                setZipCode('');
-                setMaxAttendees(0);
-                setFeaturedImage(null);
+                setName( '' );
+                setDescription( '' );
+                setStartDate( '' );
+                setEndDate( '' );
+                setEventStartTime( '' );
+                setEventEndTime( '' );
+                setVenue( '' );
+                setAddress( '' );
+                setCity( '' );
+                setState( '' );
+                setCountry( '' );
+                setZipCode( '' );
+                setMaxAttendees( 0 );
+                setFeaturedImage( null );
+                setNotes( '' );
+                setScheduleDetails( '' );
+                setRefundPolicy( '' );
+                setTimezone( '' );
+                setTags( '' );
+                setFaqs( [ { question: '', answer: '' } ] );
+                setHighlights( '' );
+                setAgeRestriction( '' );
+                setParkingOptions( '' );
+                setAgendaItems( [ { title: '', startTime: '', endTime: '', description: '', hostOrArtist: '' } ] );
             } else {
                 toast.error('Failed to create event: ' + response.message);
             }
@@ -114,7 +188,7 @@ const CreateEventPage = () => {
             toast.error('An unexpected error occurred.');
         }
     };
-
+   
     const handleModalClose = () => {
         setIsModalOpen(false);
     };
@@ -166,8 +240,9 @@ const CreateEventPage = () => {
                         Event Featured Image
                     </label>
                     <FileUploadButton
-                        
                         setFeaturedImage={ setFeaturedImage }
+                        previewImage={ previewImage }
+                        setPreviewImage={ setPreviewImage }
                     />
                     
                    
@@ -178,7 +253,7 @@ const CreateEventPage = () => {
                         Start Date
                     </label>
                     <Input
-                        type="datetime-local"
+                        type="date"
                         id="startDate"
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
@@ -192,7 +267,7 @@ const CreateEventPage = () => {
                         End Date
                     </label>
                     <Input
-                        type="datetime-local"
+                        type="date"
                         id="endDate"
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
@@ -200,7 +275,32 @@ const CreateEventPage = () => {
                         required
                     />
                 </div>
-
+                <div>
+                    <label htmlFor="eventStartTime" className="block text-sm font-medium text-gray-700">
+                        Event Start Time
+                    </label>
+                    <Input
+                        type="time"
+                        id="eventStartTime"
+                        value={ eventStartTime }
+                        onChange={ ( e ) => setEventStartTime( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="eventEndTime" className="block text-sm font-medium text-gray-700">
+                        Event End Time
+                    </label>
+                    <Input
+                        type="time"
+                        id="eventEndTime"
+                        value={ eventEndTime }
+                        onChange={ ( e ) => setEventEndTime( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        required
+                    />
+                </div>
                 <div>
                     <label htmlFor="venue" className="block text-sm font-medium text-gray-700">
                         Venue
@@ -295,7 +395,170 @@ const CreateEventPage = () => {
                         />
                     </div>
                 </div>
+                <div>
+                    <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
+                        Notes
+                    </label>
+                    <Textarea
+                        id="notes"
+                        value={ notes }
+                        onChange={ ( e ) => setNotes( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        placeholder="Notes"
+                    />
+                </div>
 
+                <div>
+                    <label htmlFor="scheduleDetails" className="block text-sm font-medium text-gray-700">
+                        Schedule Details
+                    </label>
+                    <Textarea
+                        id="scheduleDetails"
+                        value={ scheduleDetails }
+                        onChange={ ( e ) => setScheduleDetails( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        placeholder="Details about the schedule, agenda, etc."
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="refundPolicy" className="block text-sm font-medium text-gray-700">
+                        Refund Policy
+                    </label>
+                    <Textarea
+                        id="refundPolicy"
+                        value={ refundPolicy }
+                        onChange={ ( e ) => setRefundPolicy( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        placeholder="Refund Policy"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="timezone" className="block text-sm font-medium text-gray-700">
+                        Timezone
+                    </label>
+                    <Input
+                        type="text"
+                        id="timezone"
+                        value={ timezone }
+                        onChange={ ( e ) => setTimezone( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        placeholder="Timezone"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="tags" className="block text-sm font-medium text-gray-700">
+                        Tags
+                    </label>
+                    <Input
+                        type="text"
+                        id="tags"
+                        value={ tags }
+                        onChange={ ( e ) => setTags( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        placeholder="Tags (comma separated)"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Frequently Asked Questions</label>
+                    <p className="text-sm text-gray-500 mb-4">
+                        Answer questions your attendees may have about the event, like accessibility and amenities.
+                    </p>
+                    { faqs.map( ( faq, index ) => (
+                        <div key={ index } className="mb-4">
+                            <div>
+                                <label htmlFor={ `faq-question-${ index }` } className="block text-sm font-medium text-gray-700">
+                                    Question
+                                </label>
+                                <Input
+                                    type="text"
+                                    id={ `faq-question-${ index }` }
+                                    value={ faq.question }
+                                    onChange={ ( e ) => handleFaqChange( e, index, 'question' ) }
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                    placeholder="Enter your question"
+                                />
+                                { faq.question.trim() === '' && faq.answer.trim() !== '' && (
+                                    <p className="text-red-500 text-sm mt-1">A question is required if you provide an answer.</p>
+                                ) }
+                            </div>
+                            <div className="mt-2">
+                                <label htmlFor={ `faq-answer-${ index }` } className="block text-sm font-medium text-gray-700">
+                                    Answer
+                                </label>
+                                <Textarea
+                                    id={ `faq-answer-${ index }` }
+                                    value={ faq.answer }
+                                    onChange={ ( e ) => handleFaqChange( e, index, 'answer' ) }
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                    placeholder="Enter your answer"
+                                />
+                                { faq.answer.trim() === '' && faq.question.trim() !== '' && (
+                                    <p className="text-red-500 text-sm mt-1">An answer is required if you provide a question.</p>
+                                ) }
+                            </div>
+                            <button
+                                type="button"
+                                onClick={ () => removeFaq( index ) }
+                                className="mt-2 text-red-500 hover:text-red-700 text-sm"
+                            >
+                                Remove FAQ
+                            </button>
+                        </div>
+                    ) ) }
+                    <button
+                        type="button"
+                        onClick={ addFaq }
+                        className="mt-2 text-blue-500 hover:text-blue-700 text-sm"
+                    >
+                        + Add question
+                    </button>
+                </div>
+
+                <div>
+                    <h3 className="text-lg font-semibold mb-4">Add highlights about your event</h3>
+
+                    {/* Age Restriction Options */ }
+                    <div className="mb-6">
+                        <p className="text-sm font-medium text-gray-700 mb-2">Is there an age restriction?</p>
+                        <div className="flex gap-4">
+                            { [ 'All ages allowed', 'There’s an age restriction', 'Parent or guardian needed' ].map( ( option ) => (
+                                <button
+                                    key={ option }
+                                    type="button"
+                                    onClick={ () => handleAgeRestrictionChange( option ) }
+                                    className={ `py-2 px-4 border rounded-md ${ ageRestriction === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                                        }` }
+                                >
+                                    { option }
+                                </button>
+                            ) ) }
+                        </div>
+                    </div>
+
+                    {/* Parking Options */ }
+                    <div className="mb-6">
+                        <p className="text-sm font-medium text-gray-700 mb-2">Is there parking at your venue?</p>
+                        <div className="flex gap-4">
+                            { [ 'Free parking', 'Paid parking', 'No parking options' ].map( ( option ) => (
+                                <button
+                                    key={ option }
+                                    type="button"
+                                    onClick={ () => handleParkingOptionsChange( option ) }
+                                    className={ `py-2 px-4 border rounded-md ${ parkingOptions === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                                        }` }
+                                >
+                                    { option }
+                                </button>
+                            ) ) }
+                        </div>
+                    </div>
+                </div>
+               
+                
                 <div>
                     <label
                         htmlFor="maxAttendees"
@@ -312,6 +575,7 @@ const CreateEventPage = () => {
                         placeholder="Max Attendees"
                     />
                 </div>
+
 
                 <div className="text-center">
                     <Button

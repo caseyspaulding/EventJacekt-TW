@@ -9,6 +9,50 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      agenda: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          end_time: string | null
+          event_id: string
+          host_or_artist: string | null
+          id: string
+          start_time: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          end_time?: string | null
+          event_id: string
+          host_or_artist?: string | null
+          id?: string
+          start_time?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          end_time?: string | null
+          event_id?: string
+          host_or_artist?: string | null
+          id?: string
+          start_time?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agenda_event_id_events_id_fk"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       attendees: {
         Row: {
           check_in_time: string | null
@@ -1223,23 +1267,30 @@ export type Database = {
       events: {
         Row: {
           address: string | null
+          age_restriction: string | null
           banner_image: string | null
           city: string | null
           country: string | null
           created_at: string | null
           description: string | null
-          end_date: string | null
+          end_date: string
+          event_end_time: string | null
+          event_start_time: string | null
+          faqs: Json | null
           featured_image: string | null
           gallery_images: string[] | null
+          highlights: string[] | null
           id: string
           max_attendees: number | null
           name: string
+          notes: string | null
           org_id: string
           organizer_contact: string | null
+          parking_options: string | null
           refund_policy: string | null
           schedule_details: string | null
           slug: string
-          start_date: string | null
+          start_date: string
           state: string | null
           status: string
           tags: string[] | null
@@ -1251,23 +1302,30 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          age_restriction?: string | null
           banner_image?: string | null
           city?: string | null
           country?: string | null
           created_at?: string | null
           description?: string | null
-          end_date?: string | null
+          end_date: string
+          event_end_time?: string | null
+          event_start_time?: string | null
+          faqs?: Json | null
           featured_image?: string | null
           gallery_images?: string[] | null
+          highlights?: string[] | null
           id?: string
           max_attendees?: number | null
           name: string
+          notes?: string | null
           org_id: string
           organizer_contact?: string | null
+          parking_options?: string | null
           refund_policy?: string | null
           schedule_details?: string | null
           slug: string
-          start_date?: string | null
+          start_date: string
           state?: string | null
           status?: string
           tags?: string[] | null
@@ -1279,23 +1337,30 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          age_restriction?: string | null
           banner_image?: string | null
           city?: string | null
           country?: string | null
           created_at?: string | null
           description?: string | null
-          end_date?: string | null
+          end_date?: string
+          event_end_time?: string | null
+          event_start_time?: string | null
+          faqs?: Json | null
           featured_image?: string | null
           gallery_images?: string[] | null
+          highlights?: string[] | null
           id?: string
           max_attendees?: number | null
           name?: string
+          notes?: string | null
           org_id?: string
           organizer_contact?: string | null
+          parking_options?: string | null
           refund_policy?: string | null
           schedule_details?: string | null
           slug?: string
-          start_date?: string | null
+          start_date?: string
           state?: string | null
           status?: string
           tags?: string[] | null

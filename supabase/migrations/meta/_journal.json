@@ -8,6 +8,48 @@
       "when": 1724801269273,
       "tag": "0000_misty_blazing_skull",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1725319431324,
+      "tag": "0001_new_harrier",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1725320437505,
+      "tag": "0002_illegal_lord_tyger",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1725321345231,
+      "tag": "0003_living_turbo",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1725324589838,
+      "tag": "0004_cute_enchantress",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1725328944793,
+      "tag": "0005_colorful_warlock",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1725359351378,
+      "tag": "0006_mushy_ozymandias",
+      "breakpoints": true
     }
   ]
 }

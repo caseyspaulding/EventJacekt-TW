@@ -14,7 +14,8 @@ import
 
     date,
     jsonb,
-    doublePrecision
+    doublePrecision,
+    time
 } from 'drizzle-orm/pg-core';
 
 // Organizations Table
@@ -198,18 +199,17 @@ export const stripeConnectOnboarding = pgTable( 'stripe_connect_onboarding', {
 
 // Events Table
 export const events = pgTable( 'events', {
-    id: uuid( 'id' )
-        .primaryKey()
-        .default( sql`uuid_generate_v4()` ),
-    orgId: uuid( 'org_id' )
-        .notNull()
-        .references( () => organizations.id ),
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
     name: text( 'name' ).notNull(),
     featuredImage: varchar( 'featured_image', { length: 255 } ), // URL of the featured image
     slug: text( 'slug' ).notNull().unique(), // Add a slug column for SEO-friendly URLs
     description: text( 'description' ),
-    startDate: timestamp( 'start_date' ),
-    endDate: timestamp( 'end_date' ),
+    notes: text( 'notes' ),
+    startDate: date( 'start_date' ).notNull(),
+    endDate: date( 'end_date' ).notNull(),
+    eventStartTime: time( 'event_start_time' ), // New field for event start time
+    eventEndTime: time( 'event_end_time' ), // New field for event start time
     venue: text( 'venue' ),
     address: text( 'address' ),
     city: text( 'city' ),
@@ -226,8 +226,25 @@ export const events = pgTable( 'events', {
     refundPolicy: text( 'refund_policy' ), // Text description of the refund policy
     timezone: varchar( 'timezone', { length: 50 } ), // Timezone of the event
     tags: text( 'tags' ).array(), // Correct way to define an array of strings (tags)
+    highlights: text( 'highlights' ).array(), // Array of highlights
+    faqs: jsonb( 'faqs' ), // Store FAQs as a JSONB object for flexibility
+    ageRestriction: text( 'age_restriction' ), // 'All ages allowed', 'There’s an age restriction', 'Parent or guardian needed'
+    parkingOptions: text( 'parking_options' ), // 'Free parking', 'Paid parking', 'No parking options'
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
-    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
+} );
+
+// Agenda Table
+export const agenda = pgTable( 'agenda', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    eventId: uuid( 'event_id' ).notNull().references( () => events.id ), // Foreign key to the events table
+    title: text( 'title' ).notNull(), // Title of the agenda item
+    startTime: timestamp( 'start_time' ), // Start time of the agenda item
+    endTime: timestamp( 'end_time' ), // End time of the agenda item
+    description: text( 'description' ), // Description of the agenda item
+    hostOrArtist: text( 'host_or_artist' ), // Host or artist name
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
 } );
 
 // Event Locations Table

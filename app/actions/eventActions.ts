@@ -1,12 +1,15 @@
 'use server';
 
 import { db } from '@/db';
-import { events, organizations, orgEventTickets, orgTicketTypes } from '@/db/schema';
+import { agenda, events, organizations, orgEventTickets, orgTicketTypes } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
 
 import { revalidatePath } from 'next/cache';
-import { eq, inArray, and } from 'drizzle-orm/expressions'; 
+import { eq, inArray, and } from 'drizzle-orm/expressions';
 import { getEventIdBySlug } from './getEventIdBySlug';
+import { sql } from 'drizzle-orm/sql';
+
+
 
 
 // Get an event by its slug
@@ -41,16 +44,24 @@ export async function getEventBySlug ( eventSlug: string )
     return event;
 }
 
+
+
 // Create a new event
 export const createEvent = async ( formData: FormData ) =>
 {
     const { orgId } = await getUserAndOrgId();
 
+    // Extract data from formData
     const name = formData.get( 'name' ) as string;
     const slug = formData.get( 'slug' ) as string;
     const description = formData.get( 'description' ) as string;
-    const startDate = new Date( formData.get( 'startDate' ) as string );
-    const endDate = new Date( formData.get( 'endDate' ) as string );
+
+    // Ensure valid dates
+    const startDateString = formData.get( 'startDate' ) as string;
+    const endDateString = formData.get( 'endDate' ) as string;
+    console.log( 'endDate', endDateString )
+    const eventStartTime = formData.get( 'eventStartTime' ) as string;
+    const eventEndTime = formData.get( 'eventEndTime' ) as string;
     const venue = formData.get( 'venue' ) as string;
     const address = formData.get( 'address' ) as string;
     const city = formData.get( 'city' ) as string;
@@ -58,19 +69,28 @@ export const createEvent = async ( formData: FormData ) =>
     const country = formData.get( 'country' ) as string;
     const zipCode = formData.get( 'zipCode' ) as string;
     const maxAttendees = parseInt( formData.get( 'maxAttendees' ) as string, 10 );
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const status = formData.get( 'status' ) as string;
     const featuredImage = formData.get( 'featuredImage' ) as string;
-
-    // const slug = name.toLowerCase().replace( /\s+/g, '-' ); // Example slug generation
+    const notes = formData.get( 'notes' ) as string;
+    const scheduleDetails = formData.get( 'scheduleDetails' ) as string;
+    const refundPolicy = formData.get( 'refundPolicy' ) as string;
+    const timezone = formData.get( 'timezone' ) as string;
+    const tags = ( formData.get( 'tags' ) as string ).split( ',' ).map( ( tag ) => tag.trim() );
+    const faqs = JSON.parse( formData.get( 'faqs' ) as string );
+    const highlights = ( formData.get( 'highlights' ) as string ).split( ',' ).map( ( highlight ) => highlight.trim() );
+    const ageRestriction = formData.get( 'ageRestriction' ) as string;
+    const parkingOptions = formData.get( 'parkingOptions' ) as string;
+    const agendaItems = JSON.parse( formData.get( 'agendaItems' ) as string );
 
     const newEvent = {
         orgId,
         name,
         slug,
         description,
-        startDate,
-        endDate,
+
+        startDate: sql`${ startDateString }::date`,
+        endDate: sql`${ endDateString }::date`,
+        eventStartTime,
+        eventEndTime,
         venue,
         address,
         city,
@@ -79,13 +99,38 @@ export const createEvent = async ( formData: FormData ) =>
         zipCode,
         maxAttendees,
         featuredImage,
-        status: 'draft', // Default status, adjust as needed
-        createdAt: new Date(),
-        updatedAt: new Date()
+        notes,
+        scheduleDetails,
+        refundPolicy,
+        timezone,
+        tags,
+        faqs,
+        highlights,
+        ageRestriction,
+        parkingOptions,
+        status: 'draft', // Default status
     };
+
     try
     {
-        await db.insert( events ).values( newEvent );
+        // Insert new event into events table and get the ID
+        const [ insertedEvent ] = await db.insert( events ).values( newEvent ).returning( { id: events.id } );
+
+        // Handle agenda items
+        if ( agendaItems.length > 0 )
+        {
+            const agendaData = agendaItems.map( ( item: { title: string; startTime: string; endTime: string; description: string; hostOrArtist: string; } ) => ( {
+                eventId: insertedEvent.id,
+                title: item.title,
+                startTime: item.startTime,
+                endTime: item.endTime,
+                description: item.description,
+                hostOrArtist: item.hostOrArtist,
+            } ) );
+
+            await db.insert( agenda ).values( agendaData );
+        }
+
         return { success: true, message: 'Event created successfully' };
     } catch ( error )
     {
@@ -94,15 +139,25 @@ export const createEvent = async ( formData: FormData ) =>
     }
 };
 
+
+
+
+
 // Update an existing event
 export const updateEvent = async ( eventId: string, formData: FormData ) =>
 {
     const { orgId } = await getUserAndOrgId();
 
+    // Extract fields from formData
     const name = formData.get( 'name' ) as string;
     const description = formData.get( 'description' ) as string;
+
     const startDate = new Date( formData.get( 'startDate' ) as string );
+
     const endDate = new Date( formData.get( 'endDate' ) as string );
+
+    const eventStartTime = formData.get( 'eventStartTime' ) as string; // New field
+    const eventEndTime = formData.get( 'eventEndTime' ) as string; // New field
     const venue = formData.get( 'venue' ) as string;
     const address = formData.get( 'address' ) as string;
     const city = formData.get( 'city' ) as string;
@@ -111,34 +166,63 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
     const zipCode = formData.get( 'zipCode' ) as string;
     const maxAttendees = Number( formData.get( 'maxAttendees' ) );
     const featuredImage = formData.get( 'featuredImage' ) as string;
+    const notes = formData.get( 'notes' ) as string; // New field
+    const scheduleDetails = formData.get( 'scheduleDetails' ) as string; // New field
+    const refundPolicy = formData.get( 'refundPolicy' ) as string; // New field
+    const timezone = formData.get( 'timezone' ) as string; // New field
+    const tags = formData.get( 'tags' ) as string; // New field
+    const highlights = formData.get( 'highlights' ) as string; // New field
+    const ageRestriction = formData.get( 'ageRestriction' ) as string; // New field
+    const parkingOptions = formData.get( 'parkingOptions' ) as string; // New field
 
+    // Convert Date objects to strings in 'YYYY-MM-DD' format
+    const formattedStartDate = startDate.toString().split( 'T' )[ 0 ];
+    const formattedEndDate = endDate.toString().split( 'T' )[ 0 ];
+
+    // Prepare updated event data
     const updatedEvent = {
         name,
         description,
-        startDate,
-        endDate,
+        startDate: formattedStartDate, // Convert Date to string
+        endDate: formattedEndDate, // Convert Date to string
+        eventStartTime, // New field
+        eventEndTime, // New field
         venue,
         address,
         city,
         state,
         country,
         zipCode,
-
         maxAttendees,
         featuredImage,
-        updatedAt: new Date()
-        // Add other fields if necessary
+        notes, // New field
+        scheduleDetails, // New field
+        refundPolicy, // New field
+        timezone, // New field
+        tags: tags.split( ',' ).map( tag => tag.trim() ), // Convert string to array if necessary
+        highlights: highlights.split( ',' ).map( highlight => highlight.trim() ), // Convert string to array if necessary
+        ageRestriction, // New field
+        parkingOptions, // New field
+
     };
 
-    await db
-        .update( events )
-        .set( updatedEvent )
-        .where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
+    try
+    {
+        // Update the event in the database
+        await db
+            .update( events )
+            .set( updatedEvent )
+            .where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
 
-    // Revalidate the path to refresh the page
-    revalidatePath( `/dashboard/${ orgId }` );
+        // Revalidate the path to refresh the page
+        revalidatePath( `/dashboard/${ orgId }` );
 
-    return updatedEvent;
+        return { success: true, updatedEvent };
+    } catch ( error )
+    {
+        console.error( 'Error updating event:', error );
+        return { success: false, message: 'Error updating event in database' };
+    }
 };
 
 

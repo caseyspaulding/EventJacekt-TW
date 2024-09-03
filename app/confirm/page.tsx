@@ -10,6 +10,7 @@ const ConfirmPageContent = () =>
 {
   const [ loading, setLoading ] = useState( true );
   const [ errorMessage, setErrorMessage ] = useState( '' );
+  const [ infoMessage, setInfoMessage ] = useState( '' );
   const router = useRouter();
   const supabase = createClient();
 
@@ -35,10 +36,15 @@ const ConfirmPageContent = () =>
 
         if ( error )
         {
-          throw error;
-        }
-
-        if ( data?.session )
+          if ( error.message.includes( 'Token has already been used' ) )
+          {
+            // Handle case where email is already confirmed
+            setInfoMessage( 'Your email is already confirmed. Click here to continue creating your account.' );
+          } else
+          {
+            throw error;
+          }
+        } else if ( data?.session )
         {
           router.push( '/choose-account-type' );
         } else
@@ -49,6 +55,8 @@ const ConfirmPageContent = () =>
       {
         console.error( 'Error confirming email:', error );
         setErrorMessage( 'An error occurred during email confirmation.' );
+      } finally
+      {
         setLoading( false );
       }
     };
@@ -59,6 +67,15 @@ const ConfirmPageContent = () =>
   if ( loading )
   {
     return <div>Confirming your email...</div>;
+  }
+
+  if ( infoMessage )
+  {
+    return (
+      <div>
+        { infoMessage } <button onClick={ () => router.push( '/continue-registration' ) }>Continue</button>
+      </div>
+    );
   }
 
   if ( errorMessage )
