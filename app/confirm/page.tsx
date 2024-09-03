@@ -49,6 +49,8 @@ const ConfirmPageContent = () =>
       {
         console.error( 'Error confirming email:', error );
         setErrorMessage( 'An error occurred during email confirmation.' );
+      } finally
+      {
         setLoading( false );
       }
     };
@@ -56,23 +58,32 @@ const ConfirmPageContent = () =>
     confirmUser();
   }, [ router, supabase ] );
 
-  if ( loading )
-  {
-    return <div>Confirming your email...</div>;
-  }
+  return (
+    <div
+      className="flex h-screen flex-col items-center justify-center px-4 bg-cover bg-center"
+      style={ { backgroundImage: 'url(/images/illustrations/background-3.jpg)' } }
+    >
+      <div className="flex h-screen flex-col items-center justify-center px-4">
+        <div className="mt-2 flex w-full max-w-sm flex-col bg-white gap-4 rounded-3xl px-8 py-6 shadow-2xl text-center">
+          <img src="/images/logo.svg" alt="Logo" className="w-12 h-12 mx-auto" />
 
-  if ( errorMessage )
-  {
-    return <div>Error: { errorMessage }</div>;
-  }
-
-  return null;
+          { loading ? (
+            <p className="text-lg font-medium text-gray-800">Confirming your email...</p>
+          ) : errorMessage ? (
+            <p className="text-lg font-medium text-red-600">Error: { errorMessage }</p>
+          ) : (
+            <h1 className="text-2xl font-bold text-blue-700">Email Confirmed</h1>
+          ) }
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const ConfirmPage = () =>
 {
   return (
-    <Suspense fallback={ <div>Loading...</div> }>
+    <Suspense fallback={ <div className="flex items-center justify-center min-h-screen">Loading...</div> }>
       <ConfirmPageContent />
     </Suspense>
   );

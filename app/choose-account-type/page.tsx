@@ -1,67 +1,34 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
+import React from "react";
+import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import { registerTicketBuyer } from "./registerTicketBuyer"; // Server action for registering ticket buyer
 
-export const dynamic = 'force-dynamic';
 
-const ConfirmPageContent = () =>
+export default function ChooseAccountType ()
 {
-  const [ loading, setLoading ] = useState( true );
-  const [ errorMessage, setErrorMessage ] = useState( '' );
-  const [ infoMessage, setInfoMessage ] = useState( '' );
   const router = useRouter();
-  const supabase = createClient();
 
-  useEffect( () =>
+  const handleAttendeeRegistration = async () =>
   {
-    const confirmUser = async () =>
+    // Call server action to create ticket buyer profile
+    const result = await registerTicketBuyer();
+
+    if ( result.success )
     {
-      try
-      {
-        const searchParams = new URLSearchParams( window.location.search );
-        const tokenHash = searchParams.get( 'token_hash' );
-        const type = searchParams.get( 'type' );
+      // Redirect to the ticket buyer's dashboard
+      router.push( `/${ result.userId }/dashboard` );
+    } else
+    {
+      console.error( result.message );
+    }
+  };
 
-        if ( !tokenHash || type !== 'signup' )
-        {
-          throw new Error( 'Invalid or missing confirmation link.' );
-        }
-
-        const { data, error } = await supabase.auth.verifyOtp( {
-          token_hash: tokenHash,
-          type: 'signup',
-        } );
-
-        if ( error )
-        {
-          if ( error.message.includes( 'Token has already been used' ) )
-          {
-            setInfoMessage( 'Your email is already confirmed. Click here to continue creating your account.' );
-          } else
-          {
-            throw error;
-          }
-        } else if ( data?.session )
-        {
-          router.push( '/choose-account-type' );
-        } else
-        {
-          throw new Error( 'Failed to create session after email confirmation.' );
-        }
-      } catch ( error )
-      {
-        console.error( 'Error confirming email:', error );
-        setErrorMessage( 'An error occurred during email confirmation.' );
-      } finally
-      {
-        setLoading( false );
-      }
-    };
-
-    confirmUser();
-  }, [ router, supabase ] );
+  const handleOrganizationRegistration = () =>
+  {
+    router.push( "/registration/organization" ); 
+  };
 
   return (
     <div
@@ -69,40 +36,37 @@ const ConfirmPageContent = () =>
       style={ { backgroundImage: 'url(/images/illustrations/background-3.jpg)' } }
     >
       <div className="flex h-screen flex-col items-center justify-center px-4">
+        
+       
         <div className="mt-2 flex w-full max-w-sm flex-col bg-white gap-4 rounded-3xl px-8 py-6 shadow-2xl text-center">
           <img src="/images/logo.svg" alt="Logo" className="w-12 h-12 mx-auto" />
+        <h1 className="text-2xl font-bold text-blue-700">Choose Account Type</h1>
+        <p className="text-lg text-gray-800">Are you attending events or creating events?</p>
+        <div className="flex flex-row justify-center gap-6 mt-6">
+          <Button
+            onClick={ handleAttendeeRegistration }
+            className="flex flex-col items-center justify-center w-24 h-24 bg-orange-600 hover:bg-green-600 text-white shadow-2xl"
+            ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={ 1.5 } stroke="currentColor" className="size-8">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+              </svg>
 
-          { loading ? (
-            <p className="text-lg font-medium text-gray-800">Confirming your email...</p>
-          ) : errorMessage ? (
-            <p className="text-lg font-medium text-red-600">Error: { errorMessage }</p>
-          ) : (
-            <div>
-              <h1 className="text-2xl font-bold text-blue-700">Email Confirmed</h1>
-              <p className="text-lg text-gray-800">{ infoMessage }</p>
-              <div className="mt-6">
-                <button
-                  onClick={ () => router.push( '/continue-registration' ) }
-                  className="mt-4 w-full py-2 px-4 bg-orange-600 hover:bg-green-600 text-white rounded-full shadow-2xl"
-                >
-                  Continue
-                </button>
-              </div>
-            </div>
-          ) }
+
+           
+            <span className="text-sm">Attend</span>
+          </Button>
+          <Button
+            onClick={ handleOrganizationRegistration }
+              className="flex flex-col items-center shadow-2xl justify-center w-24 h-24 bg-orange-600 hover:bg-green-600 text-white"
+          >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={ 1.5 } stroke="currentColor" className="size-8">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+              </svg>
+
+            <span className="text-sm">Create </span>
+          </Button>
         </div>
       </div>
-    </div>
+      </div>
+      </div>
   );
-};
-
-const ConfirmPage = () =>
-{
-  return (
-    <Suspense fallback={ <div className="flex items-center justify-center min-h-screen">Loading...</div> }>
-      <ConfirmPageContent />
-    </Suspense>
-  );
-};
-
-export default ConfirmPage;
+}
