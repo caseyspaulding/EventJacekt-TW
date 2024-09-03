@@ -13,6 +13,7 @@ import { FileUploadButton } from './FileUploadButton';
 import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
 import type { ChangeEvent} from 'react';
 import { useState } from 'react';
+import { ImageUploadVenue } from './ImageUploadVenue';
 
 type FAQ = {
     question: string;
@@ -27,6 +28,7 @@ const CreateEventPage = () => {
     const [ eventStartTime, setEventStartTime ] = useState( '' );
     const [ eventEndTime, setEventEndTime ] = useState( '' );
     const [ venue, setVenue ] = useState( '' );
+    const [ venueDescription, setVenueDescription ] = useState( '' );
     const [ address, setAddress ] = useState( '' );
     const [ city, setCity ] = useState( '' );
     const [ state, setState ] = useState( '' );
@@ -36,6 +38,7 @@ const CreateEventPage = () => {
     const [ isModalOpen, setIsModalOpen ] = useState( false );
     const { user } = useUser();
     const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
+    const [ venueImage, setVenueImage ] = useState<File | null>( null );
     const [ slug, setSlug ] = useState<string | null>( null );
     const [ notes, setNotes ] = useState( '' );
     const [ scheduleDetails, setScheduleDetails ] = useState( '' );
@@ -50,7 +53,9 @@ const CreateEventPage = () => {
 
     const [ previewImage, setPreviewImage ] = useState<string | null>( null ); // New state for image preview
 
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  
+    const [ venueImagePreview, setVenueImagePreview ] = useState<string | null>( null ); // State for the venue image preview
     const [ agendaItems, setAgendaItems ] = useState<{ title: string; startTime: string; endTime: string; description: string; hostOrArtist: string }[]>( [ { title: '', startTime: '', endTime: '', description: '', hostOrArtist: '' } ] );
 
     const handleImageUpload = async (file: File | null, orgName: string) => {
@@ -111,10 +116,13 @@ const CreateEventPage = () => {
 
         const orgId = user.organizationId;
 
-        const imageUrl = await handleImageUpload( featuredImage, user.orgName );
-        if ( !imageUrl )
+        const featuredImageUrl = await handleImageUpload( featuredImage, user.orgName );
+
+        const venueImageUrl = await handleImageUpload( venueImage, user.orgName );
+
+        if ( !featuredImageUrl || !venueImageUrl )
         {
-            toast.error( 'Failed to upload the image.' );
+            toast.error( 'No Images Uploaded' );
             return;
         }
 
@@ -135,6 +143,7 @@ const CreateEventPage = () => {
         formData.append( 'eventStartTime', eventStartTime );
         formData.append( 'eventEndTime', eventEndTime );
         formData.append( 'venue', venue );
+        formData.append( 'venueDescription', venueDescription );
         formData.append( 'address', address );
         formData.append( 'city', city );
         formData.append( 'state', state );
@@ -142,7 +151,8 @@ const CreateEventPage = () => {
         formData.append( 'zipCode', zipCode );
         formData.append( 'maxAttendees', maxAttendees.toString() );
         formData.append( 'status', 'draft' );
-        formData.append( 'featuredImage', imageUrl );
+        formData.append( 'featuredImage', featuredImageUrl );
+        formData.append( 'venueImage', venueImageUrl );
         formData.append( 'notes', notes );
         formData.append( 'scheduleDetails', scheduleDetails );
         formData.append( 'refundPolicy', refundPolicy );
@@ -170,6 +180,7 @@ const CreateEventPage = () => {
                 setEventStartTime( '' );
                 setEventEndTime( '' );
                 setVenue( '' );
+                setVenueDescription( '' );
                 setAddress( '' );
                 setCity( '' );
                 setState( '' );
@@ -216,9 +227,10 @@ const CreateEventPage = () => {
                         Event Featured Image
                     </label>
                     <FileUploadButton
-                        setFeaturedImage={ setFeaturedImage }
+                        setImage={ setFeaturedImage }
                         previewImage={ previewImage }
                         setPreviewImage={ setPreviewImage }
+                        label="Upload Featured Image Photo"
                     />
 
 
@@ -313,7 +325,7 @@ const CreateEventPage = () => {
                 </div>
                 <div>
                     <label htmlFor="venue" className="block text-sm font-medium text-gray-700">
-                        Venue
+                        Venue Name
                     </label>
                     <Input
                         type="text"
@@ -322,10 +334,27 @@ const CreateEventPage = () => {
                         onChange={(e) => setVenue(e.target.value)}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         placeholder="Venue"
-                        required
+                        
                     />
                 </div>
-
+                <ImageUploadVenue
+                    setImage={ setVenueImage }
+                    previewImage={ venueImagePreview }
+                    setPreviewImage={ setVenueImagePreview }
+                    label="Upload Venue Image"
+                />
+                <div>
+                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                        Venue Description
+                    </label>
+                    <Input
+                        type="text"
+                        id="venueDescription"
+                        placeholder="Describe the venue"
+                        onChange={ ( e ) => setVenueDescription( e.target.value ) }
+                    />
+                </div>
+            
                 <div>
                     <label htmlFor="address" className="block text-sm font-medium text-gray-700">
                         Address

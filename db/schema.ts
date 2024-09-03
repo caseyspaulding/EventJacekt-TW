@@ -211,6 +211,8 @@ export const events = pgTable( 'events', {
     eventStartTime: time( 'event_start_time' ), // New field for event start time
     eventEndTime: time( 'event_end_time' ), // New field for event start time
     venue: text( 'venue' ),
+    venueDescription: text( 'venue_description' ), // New column for venue description
+    venueImage: varchar( 'venue_image', { length: 255 } ), // New column for venue image URL
     address: text( 'address' ),
     city: text( 'city' ),
     state: text( 'state' ),

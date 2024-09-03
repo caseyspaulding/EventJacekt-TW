@@ -9,7 +9,7 @@ interface FileUploadButtonProps
   label: string; // New prop for dynamic label
 }
 
-export function FileUploadButton ( {
+export function ImageUploadVenue ( {
   setImage,
   previewImage,
   setPreviewImage,
@@ -39,7 +39,7 @@ export function FileUploadButton ( {
     <div className="relative w-full bg-gray-100 rounded-md overflow-hidden shadow-md">
       {/* Placeholder or Preview Image */ }
       <img
-        src={ previewImage || '/images/ModernFamilyFunFair.png' } // Placeholder image path
+        src={ previewImage || '/images/venue.jpg' } // Placeholder image path
         alt="Preview or Placeholder"
         className="w-full h-full object-cover"
       />
