@@ -9,7 +9,10 @@ export default function SignUpSuccess() {
 
     return (
 
-        <div className="relative flex h-screen min-h-screen items-center justify-center bg-gray-100 px-4">
+        <div
+            className="flex h-screen flex-col items-center justify-center px-4 bg-cover bg-center"
+            style={ { backgroundImage: 'url(/images/illustrations/background-3.jpg)' } }
+        >
             { width && height && (
                 <Confetti
                     width={ width }
@@ -32,14 +35,14 @@ export default function SignUpSuccess() {
                             />
                         </a>
                     </div>
-                    <h1 className="mb-4 text-center text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-600">
+                    <h1 className="mb-4 text-center text-3xl font-extrabold ">
                         Sign Up Successful!
                     </h1>
-                    <p className="mb-4 text-center text-lg text-gray-700">
+                    <p className="mb-4 text-center text-xl text-gray-700">
                         Welcome to EventJacket!
                     </p>
                     <p className="mb-6 text-center text-gray-600">
-                        <span className='font-medium text-blue-500'> Check your email </span>for a verification link to activate your account.
+                        <span className='font-bold'> Check your email </span>for a verification link to activate your account.
                     </p>
                     <div className="flex justify-center">
                         <Button

@@ -7,7 +7,7 @@ import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { eq, inArray, and } from 'drizzle-orm/expressions';
 import { getEventIdBySlug } from './getEventIdBySlug';
-import { sql } from 'drizzle-orm/sql';
+
 
 
 
@@ -103,14 +103,18 @@ export const createEvent = async ( formData: FormData ) =>
         return { success: false, message: 'Invalid date format' };
     }
 
+    // Convert date strings to ISO format
+    const startDateISO = new Date( startDateString ).toISOString();
+    const endDateISO = new Date( endDateString ).toISOString();
+
     // Prepare the new event object
     const newEvent = {
         orgId,
         name,
         slug,
         description,
-        startDate: sql`${ startDateString }::date`,  // Cast to date for PostgreSQL
-        endDate: sql`${ endDateString }::date`,      // Cast to date for PostgreSQL
+        startDate: startDateISO,  // Use ISO format for Drizzle
+        endDate: endDateISO,      // Use ISO format for Drizzle
         eventStartTime: eventStartTime || null,
         eventEndTime: eventEndTime || null,
         venue: venue || null,
@@ -160,8 +164,6 @@ export const createEvent = async ( formData: FormData ) =>
         return { success: false, message: 'Error inserting event into database' };
     }
 };
-
-
 
 // Update an existing event
 export const updateEvent = async ( eventId: string, formData: FormData ) =>
