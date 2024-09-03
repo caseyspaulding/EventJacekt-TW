@@ -104,38 +104,44 @@ const CreateEventPage = () => {
         setFaqs( newFaqs );
     };
 
-    const handleSubmit = async (e: { preventDefault: () => void }) => {
+    const handleSubmit = async ( e: { preventDefault: () => void } ) =>
+    {
         e.preventDefault();
-        if (!user) return;
+        if ( !user ) return;
 
         const orgId = user.organizationId;
 
-        const imageUrl = await handleImageUpload(featuredImage, user.orgName);
-        if (!imageUrl) {
-            toast.error('Failed to upload the image.');
+        const imageUrl = await handleImageUpload( featuredImage, user.orgName );
+        if ( !imageUrl )
+        {
+            toast.error( 'Failed to upload the image.' );
             return;
         }
 
-        const generatedSlug = generateSlug(name);
-        setSlug(generatedSlug);
+        const generatedSlug = generateSlug( name );
+        setSlug( generatedSlug );
+
+        // Convert date strings to ISO format
+        const startDateISO = startDate ? new Date( startDate ).toISOString() : null;
+        const endDateISO = endDate ? new Date( endDate ).toISOString() : null;
 
         const formData = new FormData();
-        formData.append('orgId', orgId);
-        formData.append('name', name);
-        formData.append('slug', generatedSlug);
-        formData.append('description', description);
-        formData.append('startDate', startDate);
-        formData.append( 'endDate', endDate );
+        formData.append( 'orgId', orgId );
+        formData.append( 'name', name );
+        formData.append( 'slug', generatedSlug );
+        formData.append( 'description', description );
+        formData.append( 'startDate', startDateISO || '' ); // Ensure it's in ISO format
+        formData.append( 'endDate', endDateISO || '' );     // Ensure it's in ISO format
         formData.append( 'eventStartTime', eventStartTime );
         formData.append( 'eventEndTime', eventEndTime );
-        formData.append('venue', venue);
-        formData.append('address', address);
-        formData.append('city', city);
-        formData.append('state', state);
-        formData.append('country', country);
-        formData.append('zipCode', zipCode);
-        formData.append('maxAttendees', maxAttendees.toString());
-        formData.append('status', 'draft');
+        formData.append( 'venue', venue );
+        formData.append( 'address', address );
+        formData.append( 'city', city );
+        formData.append( 'state', state );
+        formData.append( 'country', country );
+        formData.append( 'zipCode', zipCode );
+        formData.append( 'maxAttendees', maxAttendees.toString() );
+        formData.append( 'status', 'draft' );
         formData.append( 'featuredImage', imageUrl );
         formData.append( 'notes', notes );
         formData.append( 'scheduleDetails', scheduleDetails );
@@ -148,11 +154,12 @@ const CreateEventPage = () => {
         formData.append( 'parkingOptions', parkingOptions );
         formData.append( 'agendaItems', JSON.stringify( agendaItems ) );
 
+        try
+        {
+            const response = await createEvent( formData );
 
-        try {
-            const response = await createEvent(formData);
-
-            if (response.success) {
+            if ( response.success )
+            {
                 toast.success( 'Event created successfully!' );
                 setIsModalOpen( true );
                 // Clear form
@@ -180,12 +187,14 @@ const CreateEventPage = () => {
                 setAgeRestriction( '' );
                 setParkingOptions( '' );
                 setAgendaItems( [ { title: '', startTime: '', endTime: '', description: '', hostOrArtist: '' } ] );
-            } else {
-                toast.error('Failed to create event: ' + response.message);
+            } else
+            {
+                toast.error( 'Failed to create event: ' + response.message );
             }
-        } catch (error) {
-            console.error('Error creating event:', error);
-            toast.error('An unexpected error occurred.');
+        } catch ( error )
+        {
+            console.error( 'Error creating event:', error );
+            toast.error( 'An unexpected error occurred.' );
         }
     };
    

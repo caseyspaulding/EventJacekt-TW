@@ -1,4 +1,3 @@
-// actions/getEvents.ts
 'use server';
 
 import { db } from '@/db';
@@ -22,7 +21,7 @@ type EventType = {
 export async function getEventsForOrg ( orgName: string ): Promise<EventType[]>
 {
   // Fetch events for a specific organization from the database, ordered by their creation date
-  const eventList: EventType[] = await db
+  const eventList = await db
     .select( {
       id: events.id,
       name: events.name,
@@ -41,5 +40,13 @@ export async function getEventsForOrg ( orgName: string ): Promise<EventType[]>
     .where( eq( organizations.name, orgName ) )
     .orderBy( events.createdAt );
 
-  return eventList;
+  // Convert string dates to Date objects
+  const formattedEventList: EventType[] = eventList.map( event => ( {
+    ...event,
+    startDate: event.startDate ? new Date( event.startDate ) : null, // Convert string to Date
+    endDate: event.endDate ? new Date( event.endDate ) : null,       // Convert string to Date
+    createdAt: event.createdAt ? new Date( event.createdAt ) : null, // Convert string to Date
+  } ) );
+
+  return formattedEventList;
 }

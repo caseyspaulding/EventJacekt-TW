@@ -47,6 +47,7 @@ export async function getEventBySlug ( eventSlug: string )
 
 
 // Create a new event
+
 export const createEvent = async ( formData: FormData ) =>
 {
     const { orgId } = await getUserAndOrgId();
@@ -59,7 +60,6 @@ export const createEvent = async ( formData: FormData ) =>
     // Ensure valid dates
     const startDateString = formData.get( 'startDate' ) as string;
     const endDateString = formData.get( 'endDate' ) as string;
-    console.log( 'endDate', endDateString )
     const eventStartTime = formData.get( 'eventStartTime' ) as string;
     const eventEndTime = formData.get( 'eventEndTime' ) as string;
     const venue = formData.get( 'venue' ) as string;
@@ -81,33 +81,55 @@ export const createEvent = async ( formData: FormData ) =>
     const parkingOptions = formData.get( 'parkingOptions' ) as string;
     const agendaItems = JSON.parse( formData.get( 'agendaItems' ) as string );
 
+    // Validation
+    if ( !name || !slug || !startDateString || !endDateString )
+    {
+        return { success: false, message: 'Missing required fields' };
+    }
+
+    if ( isNaN( maxAttendees ) )
+    {
+        return { success: false, message: 'Invalid number for max attendees' };
+    }
+
+    // Date validation helper function
+    const isValidDate = ( dateString: string ): boolean =>
+    {
+        return !isNaN( Date.parse( dateString ) );
+    };
+
+    if ( !isValidDate( startDateString ) || !isValidDate( endDateString ) )
+    {
+        return { success: false, message: 'Invalid date format' };
+    }
+
+    // Prepare the new event object
     const newEvent = {
         orgId,
         name,
         slug,
         description,
-
-        startDate: sql`${ startDateString }::date`,
-        endDate: sql`${ endDateString }::date`,
-        eventStartTime,
-        eventEndTime,
-        venue,
-        address,
-        city,
-        state,
-        country,
-        zipCode,
+        startDate: sql`${ startDateString }::date`,  // Cast to date for PostgreSQL
+        endDate: sql`${ endDateString }::date`,      // Cast to date for PostgreSQL
+        eventStartTime: eventStartTime || null,
+        eventEndTime: eventEndTime || null,
+        venue: venue || null,
+        address: address || null,
+        city: city || null,
+        state: state || null,
+        country: country || null,
+        zipCode: zipCode || null,
         maxAttendees,
-        featuredImage,
-        notes,
-        scheduleDetails,
-        refundPolicy,
-        timezone,
-        tags,
-        faqs,
-        highlights,
-        ageRestriction,
-        parkingOptions,
+        featuredImage: featuredImage || null,
+        notes: notes || null,
+        scheduleDetails: scheduleDetails || null,
+        refundPolicy: refundPolicy || null,
+        timezone: timezone || null,
+        tags: tags || [],
+        faqs: faqs || [],
+        highlights: highlights || [],
+        ageRestriction: ageRestriction || null,
+        parkingOptions: parkingOptions || null,
         status: 'draft', // Default status
     };
 
@@ -138,8 +160,6 @@ export const createEvent = async ( formData: FormData ) =>
         return { success: false, message: 'Error inserting event into database' };
     }
 };
-
-
 
 
 
