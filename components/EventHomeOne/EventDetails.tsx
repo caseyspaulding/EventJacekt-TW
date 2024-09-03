@@ -1,84 +1,153 @@
 'use client';
 
 import React from 'react';
+import { formatDate, formatTime } from '@/utils/dateFormatter'; 
+
+interface FAQ
+{
+  question: string;
+  answer: string;
+}
 
 interface EventDetailsProps
 {
-  date: string | React.ReactElement;
-  time: string;
-  timezone: string;
-  locationName: string | null;
-  locationAddress: string;
-  refundPolicy: string;
-  about: string | null;
-
+  eventId: string;
+  name: string;
+ 
+ 
+  description?: string | null;
+  notes?: string | null;
+  startDate: string;
+  endDate: string;
+  eventStartTime?: string | null;
+  eventEndTime?: string | null;
+  venue?: string | null;
+  address?: string | null;
+  city?: string | null;
+  state?: string | null;
+  country?: string | null;
+  zipCode?: string | null;
+  scheduleDetails?: string | null;
+  bannerImage?: string | null;
+  galleryImages?: string[] | null;
+  videoLinks?: string[] | null;
+  organizerContact?: string | null;
+  maxAttendees?: number | null; 
+  status: string;
+  refundPolicy?: string | null;
+  timezone: string  | null;
+  tags?: string[] | null;
+  highlights?: string[] | null;
+  faqs?: string | FAQ[] | null | undefined; // Updated type to allow string or array
+  ageRestriction?: string | null;
+  parkingOptions?: string | null;
+  createdAt: string   | null;
+  updatedAt: string  | null;
 }
 
 const EventDetails: React.FC<EventDetailsProps> = ( {
-  date,
-  time,
-  timezone,
-  locationName,
-  locationAddress,
+
+  
+  notes,
+  startDate,
+  endDate,
+  eventStartTime,
+  eventEndTime,
+  venue,
+  address,
+  city,
+  state,
+  country,
+  zipCode,
+  //scheduleDetails,
+
+  galleryImages,
+  //videoLinks,
+  organizerContact,
+
   refundPolicy,
-  about,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  timezone,
+  //tags,
+  //highlights,
+  faqs,
+  ageRestriction,
+  parkingOptions,
 
 } ) =>
 {
+  // Ensure faqs is parsed correctly
+  const parsedFaqs: FAQ[] =
+    typeof faqs === 'string' ? JSON.parse( faqs ) : Array.isArray( faqs ) ? faqs : [];
   return (
-    <div className="max-w-6xl mt-4 pb-16 mx-auto  bg-white ">
+    <div className="max-w-6xl mt-4 pb-16 mx-auto bg-white">
+     
+
       {/* Date and Time */ }
       <section className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Date</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Date & Time</h2>
         <div className="flex items-center text-gray-700">
-          <span className="mr-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" id="Notepad-Text--Streamline-Flex" height={ 14 } width={ 14 } ><desc>{ "Notepad Text Streamline Icon: https://streamlinehq.com" }</desc><g id="notepad-text--content-notes-book-notepad-notebook"><path id="Union" fill="#8fbffa" fillRule="evenodd" d="M7 1.985c-0.687 0 -2.122 0.048 -3.712 0.21A3.23 3.23 0 0 0 0.383 5.138 36.473 36.473 0 0 0 0.25 7.91c0 0.496 0.031 1.58 0.133 2.772a3.23 3.23 0 0 0 2.905 2.941c1.59 0.163 3.025 0.211 3.712 0.211 0.687 0 2.122 -0.048 3.712 -0.21a3.23 3.23 0 0 0 2.905 -2.942 36.45 36.45 0 0 0 0.133 -2.772c0 -0.496 -0.031 -1.581 -0.133 -2.774a3.23 3.23 0 0 0 -2.905 -2.941A40.168 40.168 0 0 0 7 1.985Z" clipRule="evenodd" strokeWidth={ 1 } /><path id="Union_2" fill="#2859c5" fillRule="evenodd" d="M2.809 3.454V0.915a0.75 0.75 0 0 1 1.5 0l0 2.54a0.75 0.75 0 1 1 -1.5 0Zm6.882 0 0 -2.539a0.75 0.75 0 0 1 1.5 0l0 2.54a0.75 0.75 0 0 1 -1.5 0ZM6.25 0.915l0 2.54a0.75 0.75 0 1 0 1.5 0l0 -2.54a0.75 0.75 0 0 0 -1.5 0Z" clipRule="evenodd" strokeWidth={ 1 } /><path id="Union_3" fill="#2859c5" fillRule="evenodd" d="M3.922 6.042a0.625 0.625 0 1 0 0 1.25h6.156a0.625 0.625 0 1 0 0 -1.25H3.922Zm0 2.97a0.625 0.625 0 1 0 0 1.25h2.951a0.625 0.625 0 1 0 0 -1.25H3.922Z" clipRule="evenodd" strokeWidth={ 1 } /></g></svg>
-          </span>
-          <div>
-            <p>{ date }</p>
-            <p>{ `${ time } ${ timezone }` }</p>
-          </div>
+          <p>{ formatDate( startDate ) } to { formatDate( endDate ) }</p>
+         
+        </div>
+        <div className='mt-2'>
+          <p> { eventStartTime && eventEndTime && (
+            <p> Doors Open : { formatTime( eventStartTime ) } { timezone }</p>
+          ) }</p>
         </div>
       </section>
 
       {/* Location */ }
       <section className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Location</h2>
-        <div className="flex items-center text-gray-700">
-          <span className="mr-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" id="Location-Pin-3--Streamline-Flex" height="14" width="14"><desc>Location Pin 3 Streamline Icon: https://streamlinehq.com</desc><g id="location-pin-3--navigation-map-maps-pin-gps-location"><path id="Union" fill="#2859c5" d="M2.825 9.25a1.5 1.5 0 0 0 -1.335 0.816L0.35 12.294a1 1 0 0 0 0.89 1.456h11.52a1 1 0 0 0 0.887 -1.462l-1.163 -2.232a1.5 1.5 0 0 0 -1.33 -0.806H2.825Z" stroke-width="1"></path><path id="Union_2" fill="#8fbffa" fill-rule="evenodd" d="M6.945 0a4.791 4.791 0 0 0 -4.78 4.45c-0.085 1.193 0.183 2.432 0.934 3.419 0.894 1.174 1.805 1.98 3.228 2.928 0.407 0.27 0.938 0.27 1.346 0 1.423 -0.948 2.334 -1.754 3.227 -2.928 0.752 -0.987 1.02 -2.226 0.934 -3.42A4.791 4.791 0 0 0 7.055 0h-0.11Z" clip-rule="evenodd" stroke-width="1"></path><path id="Vector" fill="#2859c5" d="M7 6.094c0.96 0 1.5 -0.54 1.5 -1.5s-0.54 -1.5 -1.5 -1.5 -1.5 0.54 -1.5 1.5 0.54 1.5 1.5 1.5Z" stroke-width="1"></path></g></svg>
-          </span>
-          <div>
-            <p className="font-semibold">{ locationName }</p>
-            <p>{ locationAddress }</p>
-
-          </div>
-        </div>
+        <p className="text-gray-700">{ venue ? `${ venue }` : 'Location not specified' }</p>
+        <p className="text-gray-700">{ venue ? `${ address }, ${ city }, ${ state }, ${ country }, ${ zipCode }` : 'Location not specified' }</p>
       </section>
 
       {/* Refund Policy */ }
       <section className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Refund Policy</h2>
-        <p className="text-gray-700">{ refundPolicy }</p>
+        <p className="text-gray-700">{ refundPolicy || 'No refund policy specified' }</p>
       </section>
+
+      {/* Gallery Images */ }
+      { galleryImages && galleryImages.length > 0 && (
+        <section className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Gallery</h2>
+          <div className="grid grid-cols-3 gap-4">
+            { galleryImages.map( ( image, index ) => (
+              <img key={ index } src={ image } alt={ `Gallery Image ${ index + 1 }` } className="w-full h-auto" />
+            ) ) }
+          </div>
+        </section>
+      ) }
 
       {/* About This Event */ }
       <section className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">About this event</h2>
-        <div className="flex items-center text-gray-700">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">About this Event</h2>
+        { notes && <p className="text-gray-700">{ notes }</p> }
+      </section>
 
+      {/* Additional Event Information */ }
+      <section className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Additional Information</h2>
+        { ageRestriction && <p className="text-gray-700 my-3">Age Restriction: { ageRestriction }</p> }
+        { parkingOptions && <p className="text-gray-700">Parking: { parkingOptions }</p> }
+        { organizerContact && <p className="text-gray-700">Contact: { organizerContact }</p> }
+      </section>
+
+      {/* FAQs Section */ }
+      <section className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">FAQs</h2>
+        <div className="flex flex-col text-gray-700">
+          { parsedFaqs.map( ( faq, index ) => (
+            <div key={ index } className="mb-4">
+              <h3 className="font-semibold">{ faq.question }</h3>
+              <p>{ faq.answer }</p>
+            </div>
+          ) ) }
         </div>
-        <p className="mt-4 text-gray-700">{ about }</p>
       </section>
-      <section className="mb-6">
-
-
-      </section>
-
-      <section className="mb-6">
-
-      </section>
+     
     </div>
   );
 };

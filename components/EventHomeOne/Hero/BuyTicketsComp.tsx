@@ -71,7 +71,7 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
 
   return (
     <div className="my-5 pb-10 ">
-      <h2 className="mb-4 mt-4 text-2xl flex justify-center font-semibold text-grey-900">
+      <h2 className="mb-4 mt-4 text-4xl flex justify-center font-semibold text-grey-900">
         Available Tickets
       </h2>
       <div className="flex justify-center mb-4">
@@ -90,7 +90,7 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
               className="border-none p-12 mb-8 text-grey-900 bg-background/20 dark:bg-default-100/50 w-full max-w-full mx-auto"
             >
               <CardHeader className="flex flex-col items-center">
-                <h3 className="text-xl text-grey-900 font-bold">{ eventName }</h3>
+                <h3 className="text-2xl text-grey-900 font-bold">{ eventName }</h3>
 
                 <p className="text-small mt-2 text-grey-900">
                   Event Date:{ " " }
@@ -101,7 +101,7 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
               </CardHeader>
               <Divider />
               <CardBody className="flex flex-col items-center">
-                <p className="text-grey-900 text-2xl text-center">
+                <p className="text-grey-900 text-xl text-center">
                   { ticket.description }
                 </p>
                 <p className="text-lg text-grey-900 font-semibold">

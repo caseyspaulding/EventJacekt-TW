@@ -24,6 +24,13 @@ interface Params
     eventSlug: string;
 }
 
+
+
+interface FAQ
+{
+    question: string;
+    answer: string;
+}
 export async function generateMetadata ( { params }: { params: Params } )
 {
     const eventSlug = params.eventSlug;
@@ -55,7 +62,7 @@ export async function generateMetadata ( { params }: { params: Params } )
     }
 
     // Use a valid absolute URL for the image
-    const imageUrl = eventData.featuredImage?.startsWith( 'http' ) 
+    const imageUrl = eventData.featuredImage?.startsWith( 'http' )
         ? eventData.featuredImage // If the featuredImage already contains a valid URL
         : absoluteUrl( eventData.featuredImage || '/images/og-eventjacket.jpg' );
 
@@ -98,6 +105,7 @@ export default async function EventPage ( { params }: { params: Params } )
         notFound();
     }
 
+
     // Fetch event with organization details
     const eventWithOrg = await db
         .select( {
@@ -106,12 +114,32 @@ export default async function EventPage ( { params }: { params: Params } )
             description: events.description,
             startDate: events.startDate,
             endDate: events.endDate,
+            eventStartTime: events.eventStartTime,
+            eventEndTime: events.eventEndTime,
             featuredImage: events.featuredImage,
             venue: events.venue,
+            address: events.address,
             city: events.city,
             state: events.state,
-            zipCode: events.zipCode,
             country: events.country,
+            zipCode: events.zipCode,
+            notes: events.notes,
+            scheduleDetails: events.scheduleDetails,
+            bannerImage: events.bannerImage,
+            galleryImages: events.galleryImages,
+            videoLinks: events.videoLinks,
+            organizerContact: events.organizerContact,
+            maxAttendees: events.maxAttendees,
+            status: events.status,
+            refundPolicy: events.refundPolicy,
+            timezone: events.timezone,
+            tags: events.tags,
+            highlights: events.highlights,
+            faqs: events.faqs,
+            ageRestriction: events.ageRestriction,
+            parkingOptions: events.parkingOptions,
+            createdAt: events.createdAt,
+            updatedAt: events.updatedAt,
             orgId: events.orgId,
             orgName: organizations.name,
         } )
@@ -121,6 +149,13 @@ export default async function EventPage ( { params }: { params: Params } )
         .limit( 1 );
 
     const eventData = eventWithOrg[ 0 ];
+    // `faqs` is already an object, no need to parse
+    const faqs: string | FAQ[] | null | undefined =
+        typeof eventData.faqs === 'string'
+            ? JSON.parse( eventData.faqs )
+            : Array.isArray( eventData.faqs )
+                ? eventData.faqs
+                : null; // Or use `[]` if you prefer an empty array instead of null
 
     if ( !eventData )
     {
@@ -163,7 +198,7 @@ export default async function EventPage ( { params }: { params: Params } )
 
     const ticket = tickets[ 0 ]; // Use the first ticket type found
     // Construct full URL for OG tags
- 
+
     const imageUrl = absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' );
 
     return (
@@ -199,7 +234,7 @@ export default async function EventPage ( { params }: { params: Params } )
                     } ) ),
                 } }
             />
-           
+
             <NavBar1 />
 
             <main className="">
@@ -223,14 +258,14 @@ export default async function EventPage ( { params }: { params: Params } )
 
 
                             </div>
-                            {/* Social Media Share */ }
+                            {/* Social Media Share TODO */ }
                             <aside aria-label="Share social media">
                                 <div className="not-format">
                                     {/* Add social media share buttons here */ }
                                 </div>
                             </aside>
                         </div>
-                        {/* Article Content */ }
+                        {/* Event Content */ }
 
 
 
@@ -279,26 +314,38 @@ export default async function EventPage ( { params }: { params: Params } )
 
 
                         <EventDetails
-                            date={
-                                eventData.startDate && eventData.endDate ? (
-                                    <>
-                                        { new Date( eventData.startDate ).toLocaleDateString() } - { new Date( eventData.endDate ).toLocaleDateString() }
-                                    </>
-                                ) : eventData.startDate ? (
-                                    new Date( eventData.startDate ).toLocaleDateString()
-                                ) : eventData.endDate ? (
-                                    new Date( eventData.endDate ).toLocaleDateString()
-                                ) : (
-                                    "No dates available"
-                                )
-                            }
-                            time={ "" }
-                            timezone={ "" }
-                            locationName={ eventData.venue }
-                            locationAddress={ "" }
-                            refundPolicy={ '' }
-                            about={ eventData.description }
-                        />
+                            eventId={ eventData.eventId }
+                            name={ eventData.eventName }
+
+
+                            description={ eventData.description }
+                            notes={ eventData.notes }
+                            startDate={ eventData.startDate }
+                            endDate={ eventData.endDate }
+                            eventStartTime={ eventData.eventStartTime }
+                            eventEndTime={ eventData.eventEndTime }
+                            venue={ eventData.venue }
+                            address={ eventData.address }
+                            city={ eventData.city }
+                            state={ eventData.state }
+                            country={ eventData.country }
+                            zipCode={ eventData.zipCode }
+                            scheduleDetails={ eventData.scheduleDetails }
+                            bannerImage={ eventData.bannerImage }
+                            galleryImages={ eventData.galleryImages }
+                            videoLinks={ eventData.videoLinks }
+                            organizerContact={ eventData.organizerContact }
+                            maxAttendees={ eventData.maxAttendees }
+                            status={ eventData.status }
+                            refundPolicy={ eventData.refundPolicy }
+                            timezone={ eventData.timezone }
+                            tags={ eventData.tags }
+                            highlights={ eventData.highlights }
+                            faqs={ faqs }
+                            ageRestriction={ eventData.ageRestriction }
+                            parkingOptions={ eventData.parkingOptions }
+                            createdAt={ eventData.createdAt as string | null }
+                            updatedAt={ eventData.updatedAt as string | null } />
 
 
                     </article>

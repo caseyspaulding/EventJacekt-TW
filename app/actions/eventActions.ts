@@ -47,7 +47,6 @@ export async function getEventBySlug ( eventSlug: string )
 
 
 // Create a new event
-
 export const createEvent = async ( formData: FormData ) =>
 {
     const { orgId } = await getUserAndOrgId();
@@ -56,8 +55,6 @@ export const createEvent = async ( formData: FormData ) =>
     const name = formData.get( 'name' ) as string;
     const slug = formData.get( 'slug' ) as string;
     const description = formData.get( 'description' ) as string;
-
-    // Ensure valid dates
     const startDateString = formData.get( 'startDate' ) as string;
     const endDateString = formData.get( 'endDate' ) as string;
     const eventStartTime = formData.get( 'eventStartTime' ) as string;
@@ -79,7 +76,18 @@ export const createEvent = async ( formData: FormData ) =>
     const highlights = ( formData.get( 'highlights' ) as string ).split( ',' ).map( ( highlight ) => highlight.trim() );
     const ageRestriction = formData.get( 'ageRestriction' ) as string;
     const parkingOptions = formData.get( 'parkingOptions' ) as string;
-    const agendaItems = JSON.parse( formData.get( 'agendaItems' ) as string );
+    const agendaItemsRaw = formData.get( 'agendaItems' ) as string;
+
+    // Parse JSON string for agenda items
+    let agendaItems;
+    try
+    {
+        agendaItems = JSON.parse( agendaItemsRaw );
+    } catch ( error )
+    {
+        console.error( 'Error parsing agenda items:', error );
+        return { success: false, message: 'Invalid agenda items format' };
+    }
 
     // Validation
     if ( !name || !slug || !startDateString || !endDateString )
@@ -92,31 +100,16 @@ export const createEvent = async ( formData: FormData ) =>
         return { success: false, message: 'Invalid number for max attendees' };
     }
 
-    // Date validation helper function
-    const isValidDate = ( dateString: string ): boolean =>
-    {
-        return !isNaN( Date.parse( dateString ) );
-    };
-
-    if ( !isValidDate( startDateString ) || !isValidDate( endDateString ) )
-    {
-        return { success: false, message: 'Invalid date format' };
-    }
-
-    // Convert date strings to ISO format
-    const startDateISO = new Date( startDateString ).toISOString();
-    const endDateISO = new Date( endDateString ).toISOString();
-
     // Prepare the new event object
     const newEvent = {
         orgId,
         name,
         slug,
         description,
-        startDate: startDateISO,  // Use ISO format for Drizzle
-        endDate: endDateISO,      // Use ISO format for Drizzle
-        eventStartTime: eventStartTime || null,
-        eventEndTime: eventEndTime || null,
+        startDate: startDateString,  // Use plain date string
+        endDate: endDateString,      // Use plain date string
+        eventStartTime, // Use plain time string
+        eventEndTime,   // Use plain time string
         venue: venue || null,
         address: address || null,
         city: city || null,
@@ -145,14 +138,21 @@ export const createEvent = async ( formData: FormData ) =>
         // Handle agenda items
         if ( agendaItems.length > 0 )
         {
-            const agendaData = agendaItems.map( ( item: { title: string; startTime: string; endTime: string; description: string; hostOrArtist: string; } ) => ( {
-                eventId: insertedEvent.id,
-                title: item.title,
-                startTime: item.startTime,
-                endTime: item.endTime,
-                description: item.description,
-                hostOrArtist: item.hostOrArtist,
-            } ) );
+            const agendaData = agendaItems.map( ( item: { title: string; startTime: string; endTime: string; description: string; hostOrArtist: string; } ) =>
+            {
+                // Validate and format start and end times
+                const formattedStartTime = item.startTime ? item.startTime : null;
+                const formattedEndTime = item.endTime ? item.endTime : null;
+
+                return {
+                    eventId: insertedEvent.id,
+                    title: item.title,
+                    startTime: formattedStartTime,  // Ensure this is a valid time format 'HH:mm'
+                    endTime: formattedEndTime,      // Ensure this is a valid time format 'HH:mm'
+                    description: item.description,
+                    hostOrArtist: item.hostOrArtist,
+                };
+            } );
 
             await db.insert( agenda ).values( agendaData );
         }
@@ -164,6 +164,7 @@ export const createEvent = async ( formData: FormData ) =>
         return { success: false, message: 'Error inserting event into database' };
     }
 };
+
 
 // Update an existing event
 export const updateEvent = async ( eventId: string, formData: FormData ) =>
