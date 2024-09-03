@@ -202,7 +202,7 @@ const CreateEventPage = () => {
         setIsModalOpen(false);
     };
     const breadcrumbs = [
-        { name: 'Dashboard', href: '/dashboard' },
+        { name: 'Dashboard', href: '/' },
         { name: 'Events', href: '/events' },
         { name: 'Create Event', href: '/events/create', current: true },
     ];
@@ -210,10 +210,22 @@ const CreateEventPage = () => {
         <div className="my-4 max-w-3xl">
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={ handleSubmit } className="space-y-6">
+                <div>
+                    <label className="block text-sm mb-3 font-medium text-gray-700">
+                        Event Featured Image
+                    </label>
+                    <FileUploadButton
+                        setFeaturedImage={ setFeaturedImage }
+                        previewImage={ previewImage }
+                        setPreviewImage={ setPreviewImage }
+                    />
+
+
+                </div>
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                        Event Name
+                        Event Title
                     </label>
                     <Input
                         type="text"
@@ -244,18 +256,7 @@ const CreateEventPage = () => {
                     />
                 </div>
 
-                <div>
-                    <label className="block text-sm mb-3 font-medium text-gray-700">
-                        Event Featured Image
-                    </label>
-                    <FileUploadButton
-                        setFeaturedImage={ setFeaturedImage }
-                        previewImage={ previewImage }
-                        setPreviewImage={ setPreviewImage }
-                    />
-                    
-                   
-                </div>
+                
 
                 <div>
                     <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
