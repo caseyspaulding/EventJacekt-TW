@@ -22,16 +22,14 @@ const ConfirmPageContent = () =>
         const searchParams = new URLSearchParams( window.location.search );
         const tokenHash = searchParams.get( 'token_hash' );
         const type = searchParams.get( 'type' );
-        const email = searchParams.get( 'email' );
 
-        if ( !tokenHash || type !== 'signup' || !email )
+        if ( !tokenHash || type !== 'signup' )
         {
           throw new Error( 'Invalid or missing confirmation link.' );
         }
 
         const { data, error } = await supabase.auth.verifyOtp( {
-          email,          // Added email parameter
-          token: tokenHash,
+          token_hash: tokenHash,
           type: 'signup',
         } );
 
