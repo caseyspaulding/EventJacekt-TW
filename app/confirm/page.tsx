@@ -24,21 +24,27 @@ const ConfirmPageContent = () =>
         const tokenHash = searchParams.get( 'token_hash' );
         const type = searchParams.get( 'type' );
 
+        // Debugging output
+        console.log( 'Token Hash:', tokenHash );
+        console.log( 'Type:', type );
+
         if ( !tokenHash || type !== 'signup' )
         {
+          console.error( 'Invalid or missing confirmation link parameters:', { tokenHash, type } );
           throw new Error( 'Invalid or missing confirmation link.' );
         }
 
+        // Call Supabase to verify OTP
         const { data, error } = await supabase.auth.verifyOtp( {
-          token_hash: tokenHash,
+          token: tokenHash, // corrected parameter name to 'token'
           type: 'signup',
         } );
 
         if ( error )
         {
+          console.error( 'Supabase verification error:', error.message );
           if ( error.message.includes( 'Token has already been used' ) )
           {
-            // Handle case where email is already confirmed
             setInfoMessage( 'Your email is already confirmed. Click here to continue creating your account.' );
           } else
           {
@@ -53,7 +59,7 @@ const ConfirmPageContent = () =>
         }
       } catch ( error )
       {
-        console.error( 'Error confirming email:', error );
+        console.error( 'Error confirming email:', error.message );
         setErrorMessage( 'An error occurred during email confirmation.' );
       } finally
       {
