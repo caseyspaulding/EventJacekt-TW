@@ -18,7 +18,6 @@ export async function generateQRCodeDataURL ( value: string ): Promise<string>
   }
 }
 
-
 export async function sendTicketEmail (
   buyer: { email: string },
   ticket: OrgTicketType,
@@ -26,13 +25,35 @@ export async function sendTicketEmail (
   description: string,
   eventData: {
     eventDate: string;
-    eventVenue: string | null; // Allow null
-    eventVenueDescription: string | null; // Allow null
-    eventFAQs: unknown; // Assuming FAQs could be JSON or any other format
+    eventVenue: string;
+    eventVenueDescription: string;
+    eventFAQs: string;
   }
 )
 {
-  const qrCodeDataURL = await generateQRCodeDataURL( `https://eventjacket.com/verify-ticket/${ ticket.id }` );
+  const qrCodeDataURL = await generateQRCodeDataURL(
+    `https://eventjacket.com/verify-ticket/${ ticket.id }`
+  );
+
+  // Parse FAQs from JSON string to an array
+  const faqs = JSON.parse( eventData.eventFAQs ) as Array<{
+    question: string;
+    answer: string;
+  }>;
+
+  // Generate HTML for FAQs
+  const faqsHtml = faqs
+    .map(
+      ( faq ) => `
+        <tr>
+          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Q:</strong> ${ faq.question }</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border: 1px solid #ddd;"><strong>A:</strong> ${ faq.answer }</td>
+        </tr>
+      `
+    )
+    .join( "" );
 
   const emailBody = `
     <html>
@@ -68,15 +89,26 @@ export async function sendTicketEmail (
             display: inline-block;
             margin-top: 20px;
           }
+            .logo-image {
+  max-width: 150px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  margin: 0 auto 10px; /* Centers the logo and adds space below it */
+}
           .qr-code {
             text-align: center;
             margin: 20px 0;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
           }
         </style>
       </head>
       <body>
         <div class="container">
           <div class="header">
+          <img src="https://www.eventjacket.com/images/logo.svg" alt="EventJacket Logo" class="logo-image" />
             <h1>Thank you for your purchase!</h1>
           </div>
           <p>We are excited to have you join us for <strong>${ eventName }</strong>!</p>
@@ -96,17 +128,18 @@ export async function sendTicketEmail (
             </tr>
             <tr>
               <td style="padding: 8px; border: 1px solid #ddd;">Venue:</td>
-              <td style="padding: 8px; border: 1px solid #ddd;">${ eventData.eventVenue || 'N/A' }</td> <!-- Default to 'N/A' if null -->
+              <td style="padding: 8px; border: 1px solid #ddd;">${ eventData.eventVenue }</td>
             </tr>
             <tr>
               <td style="padding: 8px; border: 1px solid #ddd;">Venue Description:</td>
-              <td style="padding: 8px; border: 1px solid #ddd;">${ eventData.eventVenueDescription || 'N/A' }</td> <!-- Default to 'N/A' if null -->
+              <td style="padding: 8px; border: 1px solid #ddd;">${ eventData.eventVenueDescription || "" }</td>
             </tr>
-            <tr>
-              <td style="padding: 8px; border: 1px solid #ddd;">FAQs:</td>
-              <td style="padding: 8px; border: 1px solid #ddd;">${ JSON.stringify( eventData.eventFAQs ) }</td> <!-- Assuming FAQs is in a JSON format -->
-            </tr>
-            <!-- Add more rows as needed for additional event data -->
+            ${ faqsHtml ? `
+              <tr>
+                <td colspan="2" style="padding: 8px; border: 1px solid #ddd;">FAQs:</td>
+              </tr>
+              ${ faqsHtml }
+            ` : "" }
           </table>
           <div class="qr-code">
             <p>Please save this email and present the QR code below for entry:</p>

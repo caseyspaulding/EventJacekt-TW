@@ -231,7 +231,12 @@ export async function POST ( req: NextRequest )
             insertedTicket as unknown as OrgTicketType,
             ticketTypeData.eventName,
             ticketTypeData.description || 'No description available',
-            ticketTypeData // Pass the entire event data object to the email function
+            {
+                eventDate: ticketTypeData.eventDate,
+                eventVenue: ticketTypeData.eventVenue || "",
+                eventVenueDescription: ticketTypeData.eventVenueDescription || "",
+                eventFAQs: JSON.stringify( ticketTypeData.eventFAQs ) || "[]", // Convert to JSON string
+            }
         );
         return NextResponse.json( session );
     } catch ( error )
