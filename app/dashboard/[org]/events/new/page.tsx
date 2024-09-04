@@ -249,7 +249,7 @@ const CreateEventPage = () =>
         <div className="my-4 max-w-3xl">
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
 
-            <form onSubmit={ handleSubmit } className="space-y-6">
+            <form onSubmit={ handleSubmit } className="space-y-6 pb-24">
                 <div>
                     <label className="block text-sm mb-3 font-medium text-gray-700">
                         Event Featured Image
@@ -587,14 +587,14 @@ const CreateEventPage = () =>
                 </div>
 
 
-                <div className="text-center">
+                {/* Sticky Footer Button */ }
+                <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md flex justify-center">
                     <Button
                         type="submit"
                         radius="sm"
-                        className='px-4 py-2 bg-orange-500 text-white rounded-lg w-full'
-
+                        className="px-6 py-2 bg-orange-500 text-white text-xl rounded-3xl"
                     >
-                        Create Event
+                        Save Event 
                     </Button>
                 </div>
             </form>
