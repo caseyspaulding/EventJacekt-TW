@@ -53,3 +53,13 @@ gmp-map {
   position: sticky;
   top: 20px; /* Adjust this value as needed */
 }
+:root {
+    --main-blue: #90caf9;
+    --main-white: #fff;
+    --main-grey: #f1f1f1; /* Update to a lighter grey */
+    --main-dark-grey: #121212;
+    --main-ease: cubic-bezier(.65,.05,.36,1);
+    --input-background: #ffffff; /* Lighter background color for input fields */
+    --input-border-color: #ccc; /* Subtle border color */
+    --input-focus-color: #057cdd; /* Light blue for focus */
+}

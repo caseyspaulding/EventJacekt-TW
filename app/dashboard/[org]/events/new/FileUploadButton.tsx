@@ -45,36 +45,27 @@ export function FileUploadButton ( {
       />
 
       {/* Overlay for Upload Button */ }
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-75 transition-opacity">
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40 transition-opacity">
         {/* Icon (Optional) */ }
-        <div className="text-white mb-2">
+        <div className="text-black mb-2">
           {/* Example of an upload icon */ }
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-10 w-10"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
+         
+
         </div>
         {/* Upload Text */ }
-        <p className="text-white text-lg font-semibold mb-4">
+        <p className="text-black text-lg font-semibold mb-4">
           { label } {/* Dynamic label */ }
         </p>
         {/* Upload Button */ }
         <Button
           as="label"
-          className="bg-white text-blue-500 px-4 py-2 rounded-md cursor-pointer"
+          className="bg-blue-600 text-white px-5 py-6 text-xl rounded-md cursor-pointer"
           radius="sm"
-        >
-          Upload
+
+        ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+          </svg>
+          Upload Featured Image
           <input
             type="file"
             accept="image/*"
