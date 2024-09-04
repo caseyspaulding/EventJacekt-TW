@@ -11,6 +11,7 @@ import HowItWorks from '@/components/Features/HowItWorks';
 import FAQ_TW from '@/components/FAQ/FAQ_TW';
 import Head from 'next/head';
 
+
 export const metadata: Metadata = {
     title: 'EventJacket - Event Management Software',
     description:
@@ -44,6 +45,9 @@ export default async function Index ()
             <SvgBackgroundReversed />
             <NavBar1 />
             <NavBarTW />
+
+          
+
             <HowItWorks />
             <SlantedDividerSolid color="#f1f5f9" height="81px" zIndex={ 2 } />
 

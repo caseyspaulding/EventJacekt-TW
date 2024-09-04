@@ -209,7 +209,7 @@ export const events = pgTable( 'events', {
     startDate: date( 'start_date' ).notNull(),
     endDate: date( 'end_date' ).notNull(),
     eventStartTime: time( 'event_start_time' ), // New field for event start time
-    eventEndTime: time( 'event_end_time' ), // New field for event start time
+    eventEndTime: time( 'event_end_time' ), // New field for event end time
     venue: text( 'venue' ),
     venueDescription: text( 'venue_description' ), // New column for venue description
     venueImage: varchar( 'venue_image', { length: 255 } ), // New column for venue image URL
@@ -218,6 +218,8 @@ export const events = pgTable( 'events', {
     state: text( 'state' ),
     country: text( 'country' ),
     zipCode: text( 'zip_code' ),
+    latitude: numeric( 'latitude', { precision: 9, scale: 6 } ),
+    longitude: numeric( 'longitude', { precision: 9, scale: 6 } ),
     scheduleDetails: text( 'schedule_details' ), // Details about the schedule, agenda, etc.
     bannerImage: varchar( 'banner_image', { length: 255 } ), // URL of the banner image
     galleryImages: text( 'gallery_images' ).array(), // Array of image URLs for gallery

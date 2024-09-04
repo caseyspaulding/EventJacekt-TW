@@ -11,16 +11,26 @@ import { Button, Input, Textarea } from '@nextui-org/react';
 import { FileUploadButton } from './FileUploadButton';
 
 import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
-import type { ChangeEvent} from 'react';
+import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { ImageUploadVenue } from './ImageUploadVenue';
+
+import dynamic from 'next/dynamic';
+
+
+
+const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
+    ssr: false, // This prevents server-side rendering of the component
+} );
+
 
 type FAQ = {
     question: string;
     answer: string;
 };
 
-const CreateEventPage = () => {
+const CreateEventPage = () =>
+{
     const [ name, setName ] = useState( '' );
     const [ description, setDescription ] = useState( '' );
     const [ startDate, setStartDate ] = useState( '' );
@@ -54,32 +64,35 @@ const CreateEventPage = () => {
     const [ previewImage, setPreviewImage ] = useState<string | null>( null ); // New state for image preview
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  
+
     const [ venueImagePreview, setVenueImagePreview ] = useState<string | null>( null ); // State for the venue image preview
     const [ agendaItems, setAgendaItems ] = useState<{ title: string; startTime: string; endTime: string; description: string; hostOrArtist: string }[]>( [ { title: '', startTime: '', endTime: '', description: '', hostOrArtist: '' } ] );
 
-    const handleImageUpload = async (file: File | null, orgName: string) => {
-        if (!file) {
-            console.error('No file selected');
+    const handleImageUpload = async ( file: File | null, orgName: string ) =>
+    {
+        if ( !file )
+        {
+            console.error( 'No file selected' );
             return null;
         }
 
-        const uniqueFilename = `${orgName}_${file.name}`;
+        const uniqueFilename = `${ orgName }_${ file.name }`;
         const { error } = await createClient()
-            .storage.from('eventFeaturedImages')
-            .upload(`public/${uniqueFilename}`, file, {
+            .storage.from( 'eventFeaturedImages' )
+            .upload( `public/${ uniqueFilename }`, file, {
                 cacheControl: '3600',
                 upsert: false
-            });
+            } );
 
-        if (error) {
-            console.error('Error uploading file:', error.message);
+        if ( error )
+        {
+            console.error( 'Error uploading file:', error.message );
             return null;
         }
 
         const { data: publicUrlData } = createClient()
-            .storage.from('eventFeaturedImages')
-            .getPublicUrl(`public/${uniqueFilename}`);
+            .storage.from( 'eventFeaturedImages' )
+            .getPublicUrl( `public/${ uniqueFilename }` );
 
         return publicUrlData?.publicUrl || '';
     };
@@ -208,15 +221,27 @@ const CreateEventPage = () => {
             toast.error( 'An unexpected error occurred.' );
         }
     };
-   
-    const handleModalClose = () => {
-        setIsModalOpen(false);
+
+    const handleModalClose = () =>
+    {
+        setIsModalOpen( false );
     };
     const breadcrumbs = [
         { name: 'Dashboard', href: '/' },
         { name: 'Events', href: '/events' },
         { name: 'Create Event', href: '/events/create', current: true },
     ];
+    // Combine all address fields into a single string
+    //const handlePlaceSelected = ( place: google.maps.places.PlaceResult ) =>
+    //{
+    //    console.log( 'Selected Place:', place );
+    //    // Handle the place details here
+    //};
+
+
+
+    const mapAddress = `${ address }, ${ city }, ${ state }, ${ zipCode }` || '';
+
     return (
         <div className="my-4 max-w-3xl">
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
@@ -242,9 +267,9 @@ const CreateEventPage = () => {
                     <Input
                         type="text"
                         id="name"
-                        
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+
+                        value={ name }
+                        onChange={ ( e ) => setName( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         placeholder="Event Name"
                         required
@@ -260,15 +285,15 @@ const CreateEventPage = () => {
                     </label>
                     <Textarea
                         id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={ description }
+                        onChange={ ( e ) => setDescription( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         placeholder="Description"
                         required
                     />
                 </div>
 
-                
+
 
                 <div>
                     <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
@@ -277,8 +302,8 @@ const CreateEventPage = () => {
                     <Input
                         type="date"
                         id="startDate"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
+                        value={ startDate }
+                        onChange={ ( e ) => setStartDate( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         required
                     />
@@ -288,11 +313,12 @@ const CreateEventPage = () => {
                     <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
                         End Date
                     </label>
+
                     <Input
                         type="date"
                         id="endDate"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
+                        value={ endDate }
+                        onChange={ ( e ) => setEndDate( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         required
                     />
@@ -327,14 +353,20 @@ const CreateEventPage = () => {
                     <label htmlFor="venue" className="block text-sm font-medium text-gray-700">
                         Venue Name
                     </label>
+
+
+
+
+
+
                     <Input
                         type="text"
                         id="venue"
-                        value={venue}
-                        onChange={(e) => setVenue(e.target.value)}
+                        value={ venue }
+                        onChange={ ( e ) => setVenue( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         placeholder="Venue"
-                        
+
                     />
                 </div>
                 <ImageUploadVenue
@@ -354,19 +386,24 @@ const CreateEventPage = () => {
                         onChange={ ( e ) => setVenueDescription( e.target.value ) }
                     />
                 </div>
-            
+                {/* Render the Google Maps component on the client side */ }
+
+
                 <div>
+
                     <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                        Address
+                        Street Address
                     </label>
                     <Input
                         type="text"
                         id="address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        value={ address }
+                        onChange={ ( e ) => setAddress( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         placeholder="Address"
                     />
+
+
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -377,8 +414,8 @@ const CreateEventPage = () => {
                         <Input
                             type="text"
                             id="city"
-                            value={city}
-                            onChange={(e) => setCity(e.target.value)}
+                            value={ city }
+                            onChange={ ( e ) => setCity( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             placeholder="City"
                         />
@@ -391,8 +428,8 @@ const CreateEventPage = () => {
                         <Input
                             type="text"
                             id="state"
-                            value={state}
-                            onChange={(e) => setState(e.target.value)}
+                            value={ state }
+                            onChange={ ( e ) => setState( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             placeholder="State"
                         />
@@ -400,22 +437,7 @@ const CreateEventPage = () => {
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                    <div>
-                        <label
-                            htmlFor="country"
-                            className="block text-sm font-medium text-gray-700"
-                        >
-                            Country
-                        </label>
-                        <Input
-                            type="text"
-                            id="country"
-                            value={country}
-                            onChange={(e) => setCountry(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Country"
-                        />
-                    </div>
+
 
                     <div>
                         <label
@@ -427,13 +449,16 @@ const CreateEventPage = () => {
                         <Input
                             type="text"
                             id="zipCode"
-                            value={zipCode}
-                            onChange={(e) => setZipCode(e.target.value)}
+                            value={ zipCode }
+                            onChange={ ( e ) => setZipCode( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             placeholder="Zip Code"
                         />
                     </div>
+
                 </div>
+                <VenueMap apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' } address={ mapAddress || '' } />
+
                 <div>
                     <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
                         Notes
@@ -596,9 +621,9 @@ const CreateEventPage = () => {
                         </div>
                     </div>
                 </div>
-              
-               
-                
+
+
+
                 <div>
                     <label
                         htmlFor="maxAttendees"
@@ -610,7 +635,7 @@ const CreateEventPage = () => {
                         type="number"
                         id="maxAttendees"
                         value={ maxAttendees.toString() }
-                        onChange={(e) => setMaxAttendees(Number(e.target.value))}
+                        onChange={ ( e ) => setMaxAttendees( Number( e.target.value ) ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         placeholder="Max Attendees"
                     />
@@ -622,17 +647,17 @@ const CreateEventPage = () => {
                         type="submit"
                         radius="sm"
                         className='px-4 py-2 bg-orange-500 text-white rounded-lg w-full'
-                        
+
                     >
                         Create Event
                     </Button>
                 </div>
             </form>
             <ModalBasic
-                isOpen={isModalOpen}
-                onClose={handleModalClose}
-                user={user}
-                slug={slug as string}
+                isOpen={ isModalOpen }
+                onClose={ handleModalClose }
+                user={ user }
+                slug={ slug as string }
             />
         </div>
     );

@@ -10,7 +10,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'eslint:recommended',
-    'next/core-web-vitals'
+    
   ],
   overrides: [
     {

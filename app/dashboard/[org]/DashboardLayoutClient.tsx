@@ -3,6 +3,7 @@
 import { UserProvider } from '@/contexts/UserContext';
 import DashboardLayoutTW from './components/DashboardLayoutTW/DashboardLayoutTW';
 import type { UserType } from '@/types/UserType';
+import React from 'react';
 
 interface DashboardLayoutClientProps
 {
@@ -18,10 +19,12 @@ export default function DashboardLayoutClient ( { children, user }: DashboardLay
     console.error( 'User is undefined, ensure UserProvider is initialized correctly' );
     return <div>Error: User context is not properly initialized.</div>;
   }
-
+  
   return (
+   
     <UserProvider initialUser={ user }>
       <DashboardLayoutTW>{ children }</DashboardLayoutTW>
-    </UserProvider>
+      </UserProvider>
+   
   );
 }

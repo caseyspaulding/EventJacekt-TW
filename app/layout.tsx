@@ -9,6 +9,7 @@ import Head from 'next/head';
 
 
 
+
 export const metadata = {
     title: 'EventJacket - Event Management Software',
     openGraph: {
@@ -44,6 +45,8 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 <meta property="og:image:alt" content="EventJacket - Your Event Management Solution" />
                 <meta property="fb:app_id" content="453279560972900" />
                 <link rel="canonical" href="https://www.eventjacket.com" />
+         
+              
                 <script
                     dangerouslySetInnerHTML={ {
                         __html: `
@@ -58,11 +61,11 @@ export default function RootLayout ( { children }: PropsWithChildren )
             </Head>
 
             <body className={ twMerge( 'bg-white dark:bg-gray-900' ) }>
-               
+              
                     <ClientProviders>
                         { children }
                     </ClientProviders>
-             
+       
             </body>
         </html>
     );
