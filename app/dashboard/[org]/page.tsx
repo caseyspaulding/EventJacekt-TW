@@ -117,7 +117,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                             organizationName={ dashboardData.organizationName }
                             userImageUrl={ dashboardData.avatar }
                             accountStatus="Verified Account"
-                            orgId={ dashboardData.organizationId }
+
                         />
                     </Suspense>
                 </header>
