@@ -16,6 +16,7 @@ import
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { signOut } from '@/app/actions/SignOut';
+import { Button } from '@nextui-org/button';
 
 
 
@@ -87,14 +88,14 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
             >
               <Dialog.Panel className="relative flex-1 flex flex-col max-w-xs w-full bg-blue-600">
                 <div className="absolute top-0 right-0 -mr-12 pt-2">
-                  <button
+                  <Button
                     type="button"
                     className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:bg-blue-600"
                     onClick={ () => setSidebarOpen( false ) }
                   >
                     <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
-                  </button>
+                    <XMarkIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
+                  </Button>
                 </div>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                   <div className="flex-shrink-0 flex items-center  px-4">
@@ -106,7 +107,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                       />
                     </Link>
                     <Link href="/">
-                      <span className="pl-2 font-semibold text-white">
+                      <span className="pl-2 font-medium text-white">
                         { orgName }
                       </span>
                     </Link>
@@ -118,12 +119,12 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                           key={ item.name }
                           href={ generateHref( item.href ) }
                           className={ classNames(
-                            item.current ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white',
+                            item.current ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700 hover:text-white',
                             'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                           ) }
                         >
                           <item.icon
-                            className="mr-3 flex-shrink-0 h-6 w-6 text-blue-200"
+                            className="mr-3 flex-shrink-0 h-6 w-6 text-blue-100"
                             aria-hidden="true"
                           />
                           { item.name }
@@ -134,7 +135,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                             <>
                               <Disclosure.Button
                                 className={ classNames(
-                                  item.current ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white',
+                                  item.current ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700 hover:text-white',
                                   'group flex items-center w-full rounded-md p-1 mx-1 text-left text-base font-medium leading-6'
                                 ) }
                               >
@@ -190,7 +191,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
               />
             </Link>
             <Link href="/">
-              <span className="pl-2 font-extrabold text-white">
+              <span className="pl-2 semi-bold text-white">
                 { orgName }
               </span>
             </Link>
@@ -271,8 +272,10 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
           <div className="flex-1 px-4 flex justify-between">
             <div className="flex-1 flex">
               <div className="w-full flex md:ml-0">
-                <div className="relative w-full text-blue-400 focus-within:text-blue-600">
-                  <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none"></div>
+                <div className="relative w-full text-white focus-within:text-blue-600">
+                  <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none  lg:hidden">
+                    { orgName }
+                  </div>
                 </div>
               </div>
             </div>
