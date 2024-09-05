@@ -168,12 +168,12 @@ export async function sendTicketEmail (
         margin: 20px auto;
       }
 
-      .logo{
+      .logo {
         width: 80px;
 
       }
 
-      .logo-footer{
+      .logo-footer {
         width: 150px;
       }
 
@@ -198,6 +198,11 @@ export async function sendTicketEmail (
           padding: 8px 15px;
         }
       }
+
+      .first-name {
+        font-size: 28px;
+        margin: 0 0 10px 0;
+      }
     </style>
   </head>
 
@@ -214,10 +219,11 @@ export async function sendTicketEmail (
       <div class="content">
         <!-- Custom Message Section -->
         <div class="content" style="margin-top: 20px; text-align: center;">
-          <h2>"${ buyer.firstName }",</h2>
+          <h2 style='font-size: 36px;' class="first-name">"${ buyer.firstName }",</h2>
           <h2 style="font-size: 28px;">you've got <span
-              style="background-color: #fe8522; color: #000; padding: 2px 5px;">tickets!</span></h2>
-          <img src="https://www.eventjacket.com/images/tickets.png" alt="Ticket Icon" class="icon" style="max-width: 100px;">
+              style="background-color: #fe8522; color: #000; padding: 2px 5px;">Tickets!</span></h2>
+          <img src="https://www.eventjacket.com/images/tickets.png" alt="Ticket Icon" class="icon"
+            style="max-width: 200px;">
         </div>
 
         <p>We are excited to have you join us for <strong>${ eventName }</strong>!</p>
@@ -259,13 +265,13 @@ export async function sendTicketEmail (
             style="color: #fe8522; text-decoration: none;">support@eventjacket.com</a>.</p>
       </div>
 
-    
+
 
       <!-- Footer Section -->
       <div class="footer">
-     
-<img src="https://www.eventjacket.com/images/logo-full.png" class='logo-footer' alt="EventJacket Logo">
-  <p>EventJacket, 1893 Chuctaw Trl, Kissimme, FL. 34747</p>
+
+        <img src="https://www.eventjacket.com/images/logo-full.png" class='logo-footer' alt="EventJacket Logo">
+        <p>EventJacket, 1893 Chuctaw Trl, Kissimme, FL. 34747</p>
       </div>
     </div>
   </body>
