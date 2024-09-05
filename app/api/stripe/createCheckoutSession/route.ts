@@ -227,7 +227,7 @@ export async function POST ( req: NextRequest )
 
         // Step 6: Send the ticket email with QR code
         await sendTicketEmail(
-            buyer,
+            buyer, // Pass the whole buyer object
             insertedTicket as unknown as OrgTicketType,
             ticketTypeData.eventName,
             ticketTypeData.description || 'No description available',

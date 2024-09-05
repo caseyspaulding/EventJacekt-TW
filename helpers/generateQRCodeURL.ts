@@ -19,7 +19,10 @@ export async function generateQRCodeDataURL ( value: string ): Promise<string>
 }
 
 export async function sendTicketEmail (
-  buyer: { email: string },
+  buyer: {
+    email: string;
+    firstName: string;
+  },
   ticket: OrgTicketType,
   eventName: string,
   description: string,
@@ -236,7 +239,7 @@ export async function sendTicketEmail (
 
     <!-- Custom Message Section -->
     <div class="content" style="margin-top: 20px; text-align: center;">
-      <h2>Casey,</h2>
+      <h2>"${ buyer.firstName }",</h2>
       <h2 style="font-size: 28px;">you've got <span style="background-color: #ffcc00; color: #000; padding: 2px 5px;">tickets!</span></h2>
       <img src="https://www.eventjacket.com/images/tickets.png" alt="Ticket Icon" class="icon" style="max-width: 100px;">
     </div>
