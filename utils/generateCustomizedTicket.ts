@@ -15,7 +15,7 @@ export async function generateCustomizedTicket ( ticketData: {
   const { customerName, eventName, eventDate, eventTime, price, address, qrCodeText } = ticketData;
 
   // Use the public URL to load the image
-  const baseImage = await loadImage( 'http://localhost:3000/images/blank-ticket-blue.svg' ); // Update this URL to match your localhost or deployed path
+  const baseImage = await loadImage( 'https://eventjacket.com/images/blank-ticket-blue.svg' ); // Update this URL to match your localhost or deployed path
 
   // Create a canvas
   const canvas = createCanvas( baseImage.width, baseImage.height );
