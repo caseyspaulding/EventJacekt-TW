@@ -138,9 +138,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                                         <p className="text-gray-600">
                                             <strong>Venue:</strong> { event.venue || 'TBD' }
                                         </p>
-                                        <p className="text-gray-600">
-                                            <strong>Status:</strong> { event.status }
-                                        </p>
+
                                     </div>
                                 ) ) }
                             </div>
