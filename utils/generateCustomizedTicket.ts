@@ -15,7 +15,7 @@ export async function generateCustomizedTicket ( ticketData: {
   const { customerName, eventName, eventDate, eventTime, price, address, qrCodeText } = ticketData;
 
   // Use the public URL to load the image
-  const baseImage = await loadImage( 'https://eventjacket.com/images/ticket-blue.jpg' ); // Update this URL to match your localhost or deployed path
+  const baseImage = await loadImage( '/images/ticket-blue.jpg' ); // Update this URL to match your localhost or deployed path
 
   // Create a canvas
   const canvas = createCanvas( baseImage.width, baseImage.height );
@@ -26,22 +26,22 @@ export async function generateCustomizedTicket ( ticketData: {
 
   // Set text styles for general text
   ctx.fillStyle = '#fff'; // White color for text
-  ctx.font = '20px Poppins'; // Standard font size for most text
+  ctx.font = '40px Poppins'; // Standard font size for most text
 
   // Add text for non-bold elements (adjust coordinates as needed)
-  ctx.fillText( eventDate, 50, 80 );
-  ctx.fillText( eventTime, 50, 110 );
-  ctx.fillText( `$${ price }`, 50, 140 );
-  ctx.fillText( address, 50, 170 );
+  ctx.fillText( eventDate, 70, 220 );
+  ctx.fillText( eventTime, 70, 280 );
+  ctx.fillText( `$${ price }`, 70, 340 );
+  ctx.fillText( address, 70, 400 );
 
 
   // Set font style specifically for the event name to make it bold
-  ctx.font = 'bold 30px Poppins'; // Bold font for the event name
-  ctx.fillText( eventName, 50, 50 ); // Example coordinates for event name
+  ctx.font = 'bold 70px Poppins'; // Bold font for the event name
+  ctx.fillText( eventName, 70, 100 ); // Example coordinates for event name
 
   // Set font style specifically for the customer's name to make it bigger
-  ctx.font = 'bold 40px Poppins'; // Larger and bolder font for the customer's name
-  ctx.fillText( customerName, 50, 240 ); // Add customer's name
+  ctx.font = 'bold 110px Poppins'; // Larger and bolder font for the customer's name
+  ctx.fillText( customerName, 70, 580 ); // Add customer's name
 
   // Generate QR code as a data URL
   const qrCodeDataURL = await QRCode.toDataURL( qrCodeText );
@@ -50,7 +50,7 @@ export async function generateCustomizedTicket ( ticketData: {
   const qrImage = await loadImage( qrCodeDataURL );
 
   // Draw QR code on the canvas (adjust coordinates as needed)
-  ctx.drawImage( qrImage, 575, 30, 200, 200 ); // Example coordinates for QR code
+  ctx.drawImage( qrImage, 1400, 60, 500, 500 ); // Example coordinates for QR code
 
   // Export the customized ticket as a data URL
   return canvas.toDataURL( 'image/png' );
