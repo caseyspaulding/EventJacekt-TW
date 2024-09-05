@@ -12,7 +12,7 @@ export async function generateCustomizedTicket ( ticketData: {
   ticketNumber: string;
 } ): Promise<string>
 {
-  const { customerName, eventName, eventDate, eventTime, price, address, qrCodeText, ticketNumber } = ticketData;
+  const { customerName, eventName, eventDate, eventTime, price, address, qrCodeText } = ticketData;
 
   // Use the public URL to load the image
   const baseImage = await loadImage( 'http://localhost:3000/images/blank-ticket-blue.svg' ); // Update this URL to match your localhost or deployed path
