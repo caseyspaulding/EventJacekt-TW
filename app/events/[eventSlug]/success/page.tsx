@@ -85,15 +85,18 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
     const eventLocation = `${ eventData.venue || '' }, ${ eventData.city || '' }, ${ eventData.state || '' } ${ eventData.zipCode || '' }, ${ eventData.country || '' }`;
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center bg-blue-500">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-gray-200">
             <ConfettiComponent />
             <div className="relative w-full max-w-lg m-2">
                 <div className="absolute inset-0 rounded-2xl "></div>
                 <div className="relative m-3 rounded-2xl bg-white p-8 text-center shadow-2xl">
-                    <h1 className="mb-4 text-4xl font-extrabold text-green-500">Success!</h1>
-                    <p className="mb-4 text-2xl">
+                    <div className="flex justify-center">
+                        <img src='/images/green-checkmark.png' className="mb-4 h-14"></img>
+                    </div>
+                    
+                    <h1 className="mb-4 text-2xl">
                         Thank you for purchasing a ticket(s) to <span className="font-extrabold">{ cleanedEventName }</span>.
-                    </p>
+                    </h1>
 
                     {/* Insert the client component to display the generated ticket */ }
                     <TicketDisplay
@@ -106,7 +109,7 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
                         customerName={ ticket.customerName } // Pass the customer name
                     />
 
-                    <p className="mb-4 text-lg">Your ticket(s) have been sent to the email address you provided during checkout.</p>
+                    <p className="mb-2 mt-2 text-lg">Your ticket(s) have been sent to the email address you provided during checkout.</p>
                     <div className="mb-4 text-left">
                         <h2 className="text-xl font-semibold mb-2">Event Details</h2>
                         <p><strong>Date:</strong> { eventDate }</p>

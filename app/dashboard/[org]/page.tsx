@@ -98,7 +98,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                 name: 'Total Events',
                 icon: FolderIcon,
                 amount: events.length,
-                href: '#',
+                href: '`/dashboard/${ orgName }',
             },
             {
                 name: 'Members',
