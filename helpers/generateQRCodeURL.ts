@@ -1,7 +1,8 @@
+
 import type { OrgTicketType } from '@/types/dbTypes';
 import { sendEmail } from '@/utils/sendEmail';
 import QRCode from 'qrcode';
-import { generateCustomizedTicket } from '@/utils/generateCustomizedTicket'; // Adjust path as needed
+
 
 export async function generateQRCodeDataURL ( value: string ): Promise<string>
 {
@@ -36,18 +37,6 @@ export async function sendTicketEmail (
   const qrCodeDataURL = await generateQRCodeDataURL(
     `https://eventjacket.com/verify-ticket/${ ticket.id }`
   );
-
-  // Generate the customized ticket image
-  const ticketImage = await generateCustomizedTicket( {
-    customerName: buyer.firstName,
-    eventName,
-    eventDate: eventData.eventDate,
-    eventTime: 'TBD', // Provide actual event time if available
-    price: ticket.price.toString(),
-    address: eventData.eventVenue,
-    qrCodeText: qrCodeDataURL,
-    ticketNumber: ticket.id,
-  } );
 
   // Parse FAQs from JSON string to an array
   const faqs = JSON.parse( eventData.eventFAQs ) as Array<{
@@ -158,6 +147,7 @@ export async function sendTicketEmail (
 
       table td {
         padding: 8px;
+
         color: #333;
       }
 
@@ -180,6 +170,7 @@ export async function sendTicketEmail (
 
       .logo {
         width: 80px;
+
       }
 
       .logo-footer {
@@ -220,6 +211,8 @@ export async function sendTicketEmail (
       <!-- Header Section -->
       <div class="header">
         <img src="https://www.eventjacket.com/images/logo.svg" class='logo' alt="EventJacket Logo">
+
+
       </div>
 
       <!-- Main Content Section -->
@@ -267,20 +260,16 @@ export async function sendTicketEmail (
           <p>Please save this email and present the QR code below for entry:</p>
           <img src="${ qrCodeDataURL }" alt="Your Ticket QR Code" style="max-width: 200px; height: auto;" />
         </div>
-
-        <!-- Add the generated ticket image here -->
-        <div class="ticket-image" style="text-align: center; margin-top: 20px;">
-          <p>Here is your customized ticket:</p>
-          <img src="${ ticketImage }" alt="Your Customized Ticket" style="max-width: 100%; height: auto;" />
-        </div>
-
         <p>We look forward to seeing you at the event!</p>
         <p>If you have any questions, feel free to contact us at <a href="mailto:support@eventjacket.com"
             style="color: #fe8522; text-decoration: none;">support@eventjacket.com</a>.</p>
       </div>
 
+
+
       <!-- Footer Section -->
       <div class="footer">
+
         <img src="https://www.eventjacket.com/images/logo-full.png" class='logo-footer' alt="EventJacket Logo">
         <p>EventJacket, 1893 Chuctaw Trl, Kissimme, FL. 34747</p>
       </div>

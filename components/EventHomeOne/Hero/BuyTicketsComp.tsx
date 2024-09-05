@@ -141,7 +141,7 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
                   ticket={ ticket }
                   eventSlug={ eventSlug }
                   ref={ firstInputRef } // Pass ref to input field
-                  onPurchaseComplete={ ( buyer: { email: string; firstName: string; } ) => handleTicketPurchase( buyer, ticket ) } // Handle purchase completion
+                  onPurchaseComplete={ ( buyer ) => handleTicketPurchase( buyer, ticket ) } // Handle purchase completion
                 />
               </CardFooter>
             </Card>
