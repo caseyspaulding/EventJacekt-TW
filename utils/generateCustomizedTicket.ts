@@ -26,7 +26,7 @@ export async function generateCustomizedTicket ( ticketData: {
 
   // Set text styles for general text
   ctx.fillStyle = '#fff'; // White color for text
-  ctx.font = '40px Poppins'; // Standard font size for most text
+  ctx.font = '50px Poppins'; // Standard font size for most text
 
   // Add text for non-bold elements (adjust coordinates as needed)
   ctx.fillText( eventDate, 70, 220 );
@@ -36,7 +36,7 @@ export async function generateCustomizedTicket ( ticketData: {
 
 
   // Set font style specifically for the event name to make it bold
-  ctx.font = 'bold 70px Poppins'; // Bold font for the event name
+  ctx.font = 'bold 75px Poppins'; // Bold font for the event name
   ctx.fillText( eventName, 70, 100 ); // Example coordinates for event name
 
   // Set font style specifically for the customer's name to make it bigger
@@ -50,7 +50,7 @@ export async function generateCustomizedTicket ( ticketData: {
   const qrImage = await loadImage( qrCodeDataURL );
 
   // Draw QR code on the canvas (adjust coordinates as needed)
-  ctx.drawImage( qrImage, 1400, 60, 500, 500 ); // Example coordinates for QR code
+  ctx.drawImage( qrImage, 1400, 70, 500, 500 ); // Example coordinates for QR code
 
   // Export the customized ticket as a data URL
   return canvas.toDataURL( 'image/png' );
