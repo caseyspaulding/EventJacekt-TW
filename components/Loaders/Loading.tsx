@@ -9,7 +9,7 @@ export const LoadingScreen = () =>
     >
       <div className="flex flex-col items-center">
         {/* Use Next.js Image component for optimized image loading */ }
-        <p className="mt-4 text-base sm:text-lg md:text-xl font-medium text-gray-700 text-center">
+        <p className="mt-4 text-2xl sm:text-xl md:text-2xl font-medium text-white text-center">
           We are building your dashboard....
         </p>
         <Image
