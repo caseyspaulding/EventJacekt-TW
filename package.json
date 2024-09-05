@@ -50,6 +50,7 @@
     "@vis.gl/react-google-maps": "^1.1.1",
     "animate.css": "^4.1.1",
     "aws-sdk": "^2.1687.0",
+    "canvas": "^2.11.2",
     "clsx": "^2.1.1",
     "dompurify": "^3.1.6",
     "drizzle-orm": "^0.32.2",

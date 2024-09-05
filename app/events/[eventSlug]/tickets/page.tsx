@@ -10,6 +10,7 @@ import type { Metadata } from "next/types";
 import BuyTicketsComp from "@/components/EventHomeOne/Hero/BuyTicketsComp";
 import FooterTW from "@/components/Footers/FooterTW";
 
+
 export async function generateMetadata ( { params }: { params: Params } ): Promise<Metadata>
 {
   const eventSlug = params.eventSlug;
@@ -154,6 +155,8 @@ export default async function BuyTickets ( { params }: { params: Params } )
     } )
     .from( orgTicketTypes )
     .where( eq( orgTicketTypes.eventId, eventId ) );
+  
+  
 
   return (
     <>

@@ -81,7 +81,7 @@ export async function sendTicketEmail (
       .container {
         width: 100%;
         max-width: 600px;
-        margin: 0 auto;
+        margin: 5 auto;
         border-radius: 12px;
         background-color: #ffffff;
         padding: 20px;
@@ -219,7 +219,7 @@ export async function sendTicketEmail (
       <div class="content">
         <!-- Custom Message Section -->
         <div class="content" style="margin-top: 20px; text-align: center;">
-          <h2 style='font-size: 36px;' class="first-name">"${ buyer.firstName }",</h2>
+          <h2 style='font-size: 36px;' class="first-name">${ buyer.firstName },</h2>
           <h2 style="font-size: 28px;">you've got <span
               style="background-color: #fe8522; color: #000; padding: 2px 5px;">Tickets!</span></h2>
           <img src="https://www.eventjacket.com/images/tickets.png" alt="Ticket Icon" class="icon"

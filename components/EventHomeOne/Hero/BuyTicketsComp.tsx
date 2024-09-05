@@ -1,19 +1,21 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import
+  {
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    Divider,
+  } from '@nextui-org/react';
+import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
+import { generateCustomizedTicket } from '@/utils/generateCustomizedTicket'; // Import your helper function
+
 const Countdown = dynamic( () => import( '../../Countdown/Countdown' ), {
   ssr: false, // Disable SSR for this component
 } );
-import
-{
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-} from '@nextui-org/react';
-import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
-import dynamic from 'next/dynamic';
 
 interface Ticket
 {
@@ -54,7 +56,6 @@ interface MainBannerProps
 
 export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
   eventName,
-
   tickets,
   eventSlug,
 } ) =>
@@ -68,6 +69,32 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
       firstInputRef.current.focus();
     }
   }, [] );
+
+  // Handler for ticket purchase completion
+  const handleTicketPurchase = async ( buyer: { email: string; firstName: string }, ticket: Ticket, ) =>
+  {
+    try
+    {
+      // Call generateCustomizedTicket to create a customized ticket
+      const ticketImage = await generateCustomizedTicket( {
+        customerName: buyer.firstName,
+        eventName,
+        eventDate: new Date( ticket.eventDate ).toLocaleDateString(),
+        eventTime: `${ ticket }, `,  // Example time; replace with actual if available
+        price: parseFloat( ticket.price ).toFixed( 2 ),
+        address: `${ location }`,
+        qrCodeText: `https://eventjacket.com/verify-ticket/${ ticket.id }`,
+        ticketNumber: "123456789" // Example ticket number; replace with actual if available
+      } );
+
+      console.log( 'Generated Ticket Image:', ticketImage );
+
+      // Here you could send the image via email or display in the UI
+    } catch ( error )
+    {
+      console.error( 'Error generating customized ticket:', error );
+    }
+  };
 
   return (
     <div className="my-5 pb-10 ">
@@ -93,10 +120,10 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
                 <h3 className="text-2xl text-grey-900 font-bold">{ eventName }</h3>
 
                 <p className="text-small mt-2 text-grey-900">
-                  Event Date:{ " " }
+                  Event Date:{ ' ' }
                   { ticket.eventDate
                     ? new Date( ticket.eventDate ).toDateString()
-                    : "No date available" }
+                    : 'No date available' }
                 </p>
               </CardHeader>
               <Divider />
@@ -114,6 +141,7 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
                   ticket={ ticket }
                   eventSlug={ eventSlug }
                   ref={ firstInputRef } // Pass ref to input field
+                  onPurchaseComplete={ ( buyer: { email: string; firstName: string; } ) => handleTicketPurchase( buyer, ticket ) } // Handle purchase completion
                 />
               </CardFooter>
             </Card>

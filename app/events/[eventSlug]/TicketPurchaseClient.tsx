@@ -5,9 +5,16 @@ import { useState, forwardRef } from 'react';
 import getStripe from '@/utils/stripeClient';
 import { Button, Input } from '@nextui-org/react';
 
+interface TicketPurchaseClientProps
+{
+    ticket: unknown; // Define your Ticket type here if you have it
+    eventSlug: string;
+    onPurchaseComplete?: ( buyer: { email: string; firstName: string } ) => Promise<void>;
+}
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const TicketPurchaseClient = ( { ticket, eventSlug }, ref: Ref<HTMLInputElement> ) =>
+const TicketPurchaseClient = ( { ticket, eventSlug, onPurchaseComplete }: TicketPurchaseClientProps, ref: Ref<HTMLInputElement> ) =>
 {
     const [ loading, setLoading ] = useState( false );
     const [ errorMessage, setErrorMessage ] = useState<string | null>( null );
@@ -45,7 +52,6 @@ const TicketPurchaseClient = ( { ticket, eventSlug }, ref: Ref<HTMLInputElement>
 
             if ( !response.ok )
             {
-                // Handle the error from the server
                 setErrorMessage( data.error || 'An error occurred while processing your request.' );
                 return;
             }
@@ -60,6 +66,13 @@ const TicketPurchaseClient = ( { ticket, eventSlug }, ref: Ref<HTMLInputElement>
                 {
                     console.error( 'Stripe Checkout error:', error );
                     setErrorMessage( 'An error occurred during checkout. Please try again.' );
+                } else
+                {
+                    // Call the onPurchaseComplete callback after successful checkout
+                    if ( onPurchaseComplete )
+                    {
+                        await onPurchaseComplete( { email, firstName } );
+                    }
                 }
             }
         } catch ( error )

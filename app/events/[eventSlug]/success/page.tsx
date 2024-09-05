@@ -1,6 +1,7 @@
 
 
 
+
 import { startCase, toLower } from 'lodash';
 import { Button } from '@nextui-org/button';
 import { getEventIdBySlug } from '@/app/actions/getEventIdBySlug';
@@ -10,6 +11,7 @@ import { db } from '@/db';
 import { notFound } from 'next/navigation';
 
 import ConfettiComponent from '@/components/Confetti/Confetti';
+import TicketDisplay from '@/components/TicketViewer';
 
 
 export default async function SuccessPage ( { params }: { params: { eventSlug: string } } )
@@ -115,6 +117,16 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
                         Thank you for purchasing a ticket(s) to{ ' ' }
                         <span className="font-extrabold">{ cleanedEventName }</span>.
                     </p>
+                    {/* Insert the client component to display the generated ticket */ }
+                    <TicketDisplay
+                        eventName={ eventData.eventName }
+                        eventDate={ eventDate }
+                        eventTime="7:00 PM" // Replace with actual event time
+                        price={ ticket.price.toString() }
+                        address={ eventLocation }
+                        ticketNumber="12345" // Replace with actual ticket number
+                    />
+        
                     <p className="mb-4 text-lg">
                         Your ticket(s) have been sent to the email address you provided during checkout. 
                     </p>
