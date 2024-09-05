@@ -13,6 +13,7 @@ interface TicketDisplayProps
   price: string;
   address: string;
   ticketNumber: string;
+  customerName: string; // Add this line
 }
 
 const TicketDisplay: React.FC<TicketDisplayProps> = ( {
@@ -22,6 +23,7 @@ const TicketDisplay: React.FC<TicketDisplayProps> = ( {
   price,
   address,
   ticketNumber,
+  customerName, // Destructure customerName
 } ) =>
 {
   const [ ticketImage, setTicketImage ] = useState<string | null>( null );
@@ -32,11 +34,12 @@ const TicketDisplay: React.FC<TicketDisplayProps> = ( {
     const generateTicket = async () =>
     {
       const ticketUrl = await generateCustomizedTicket( {
-        customerName: 'John Doe', // Replace with actual customer data
+        customerName, // Replace with actual customer data
         eventName,
         eventDate,
         eventTime,
         price,
+        
         address,
         qrCodeText: `https://eventjacket.com/verify-ticket/${ ticketNumber }`,
         ticketNumber,
