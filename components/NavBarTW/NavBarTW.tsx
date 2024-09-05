@@ -42,16 +42,16 @@ export default function NavBarTW ()
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
               <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
-                Just Launched
+                Event CRM Software
               </span>
               <h1>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
-                  <span className="block text-gray-900">Event Management </span>
-                  <span className="animate__animated animate__rubberBand block text-blue-600">Software</span>
+                  <span className="block text-gray-900">Simplify Event Management  </span>
+                  <span className="animate__animated animate__rubberBand block text-blue-600">Build Relationships.</span>
                 </span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                Simplify planning, boost ticket sales, and manage everything in one place. For every event, big or small.
+                Manage all your vendors, volunteers, attendees, performers, and sponsors in one unified platform.
 
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
@@ -68,7 +68,9 @@ export default function NavBarTW ()
                   >
                     Get Started
                   </Button>
+                 
                 </div>
+                <p className="mt-4 text-sm text-gray-500">No credit card required. Start today!</p>
               </div>
             </div>
             <div className="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-none lg:items-center">
