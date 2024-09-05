@@ -132,16 +132,11 @@ const CreateEventPage = () =>
 
         const orgId = user.organizationId;
 
-        const featuredImageUrl = await handleImageUpload( featuredImage, user.orgName );
+        // Try uploading images, but don't block if no image is uploaded
+        const featuredImageUrl = featuredImage ? await handleImageUpload( featuredImage, user.orgName ) : '';
+        const venueImageUrl = venueImage ? await handleImageUpload( venueImage, user.orgName ) : '';
 
-        const venueImageUrl = await handleImageUpload( venueImage, user.orgName );
-
-        if ( !featuredImageUrl || !venueImageUrl )
-        {
-            toast.error( 'No Images Uploaded' );
-            return;
-        }
-
+      
         const generatedSlug = generateSlug( name );
         setSlug( generatedSlug );
 
@@ -167,8 +162,15 @@ const CreateEventPage = () =>
         formData.append( 'zipCode', zipCode );
         formData.append( 'maxAttendees', maxAttendees.toString() );
         formData.append( 'status', 'draft' );
-        formData.append( 'featuredImage', featuredImageUrl );
-        formData.append( 'venueImage', venueImageUrl );
+        // Only append image URLs if they exist
+        if ( featuredImageUrl )
+        {
+            formData.append( 'featuredImage', featuredImageUrl );
+        }
+        if ( venueImageUrl )
+        {
+            formData.append( 'venueImage', venueImageUrl );
+        }
         formData.append( 'notes', notes );
         formData.append( 'scheduleDetails', scheduleDetails );
         formData.append( 'refundPolicy', refundPolicy );

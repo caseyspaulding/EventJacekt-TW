@@ -1,5 +1,6 @@
 'use client';
 
+
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
@@ -11,7 +12,6 @@ import { createTicketType } from '@/app/actions/ticketActions';
 import ModalEventCreation from '@/components/modals/ModalEventCreation';
 import { Button, Input, Textarea } from '@nextui-org/react';
 
-
 const CreateTicketsPage = () =>
 {
     const [ ticketName, setTicketName ] = useState( '' );
@@ -20,10 +20,13 @@ const CreateTicketsPage = () =>
     const [ quantity, setQuantity ] = useState( 0 );
     const [ saleStartDate, setSaleStartDate ] = useState( '' );
     const [ saleEndDate, setSaleEndDate ] = useState( '' );
+    const [ eventDate, setEventDate ] = useState( '' );
+    const [ doorOpenTime, setDoorOpenTime ] = useState( '' ); // New state for door open time
+    const [ eventStartTime, setEventStartTime ] = useState( '' ); // New state for event start time
+    const [ eventEndTime, setEventEndTime ] = useState( '' ); // New state for event end time
     const [ isEarlyBird, setIsEarlyBird ] = useState( false );
     const [ maxPerCustomer, setMaxPerCustomer ] = useState( 1 );
     const [ eventId, setEventId ] = useState<string | null>( null );
-    const [ eventDate, setEventDate ] = useState( '' );
     const [ isModalOpen, setIsModalOpen ] = useState( false );
     const { user } = useUser();
     const { eventSlug } = useParams();
@@ -64,6 +67,9 @@ const CreateTicketsPage = () =>
         formData.append( 'saleStartDate', saleStartDate );
         formData.append( 'saleEndDate', saleEndDate );
         formData.append( 'eventDate', eventDate );
+        formData.append( 'doorOpenTime', doorOpenTime ); // Append door open time
+        formData.append( 'eventStartTime', eventStartTime ); // Append event start time
+        formData.append( 'eventEndTime', eventEndTime ); // Append event end time
         formData.append( 'isEarlyBird', isEarlyBird.toString() );
         formData.append( 'maxPerCustomer', maxPerCustomer?.toString() ?? '' );
 
@@ -82,6 +88,9 @@ const CreateTicketsPage = () =>
                 setSaleStartDate( '' );
                 setSaleEndDate( '' );
                 setEventDate( '' );
+                setDoorOpenTime( '' ); // Clear door open time
+                setEventStartTime( '' ); // Clear event start time
+                setEventEndTime( '' ); // Clear event end time
                 setIsEarlyBird( false );
                 setMaxPerCustomer( 1 );
                 setIsModalOpen( true );
@@ -135,7 +144,7 @@ const CreateTicketsPage = () =>
                         onChange={ ( e ) => setPrice( Number( e.target.value ) ) } // Convert string back to number
                         placeholder="Price"
                         required
-                        className="mt-1 block w-full  focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                        className="mt-1 block w-full focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                     />
                 </div>
 
@@ -184,6 +193,43 @@ const CreateTicketsPage = () =>
                     />
                 </div>
 
+                {/* New fields for door open time, event start time, and event end time */ }
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Door Open Time</label>
+                    <Input
+                        type="time"
+                        value={ doorOpenTime }
+                        onChange={ ( e ) => setDoorOpenTime( e.target.value ) }
+                        placeholder="HH:MM"
+                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Event Start Time</label>
+                    <Input
+                        type="time"
+                        value={ eventStartTime }
+                        onChange={ ( e ) => setEventStartTime( e.target.value ) }
+                        placeholder="HH:MM"
+                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Event End Time</label>
+                    <Input
+                        type="time"
+                        value={ eventEndTime }
+                        onChange={ ( e ) => setEventEndTime( e.target.value ) }
+                        placeholder="HH:MM"
+                        required
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                </div>
+
                 <div className="flex items-center">
                     <input
                         type="checkbox"
@@ -221,12 +267,7 @@ const CreateTicketsPage = () =>
                         <p className="text-gray-700 mb-4">
                             Your ticket types for the event have been created. You can now share the event page with your audience.
                         </p>
-                        <Button
-                            as="a"
-                            href={ `/events/${ eventSlug }` }
-                            color="warning"
-
-                        >
+                        <Button as="a" href={ `/events/${ eventSlug }` } color="warning">
                             View Event Page
                         </Button>
                     </div>

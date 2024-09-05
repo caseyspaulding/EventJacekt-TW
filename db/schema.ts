@@ -433,7 +433,10 @@ export const orgTicketTypes = pgTable( 'org_ticket_types', {
     description: text( 'description' ),
     price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
     quantity: integer( 'quantity' ).notNull(),
-    eventDate: date( 'event_date' ).notNull(), // New column to represent the specific day of the event
+    eventDate: date( 'event_date' ).notNull(), 
+    doorOpenTime: time( 'gate_open_time' ), // New column for gate open time
+    eventStartTime: time( 'event_start_time' ), // New column for event start time
+    eventEndTime: time( 'event_end_time' ), // New column for event end time
     saleStartDate: date( 'sale_start_date' ).notNull(),
     saleEndDate: date( 'sale_end_date' ).notNull(),
     isEarlyBird: boolean( 'is_early_bird' ).default( false ),

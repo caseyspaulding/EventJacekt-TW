@@ -99,7 +99,7 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
                     <TicketDisplay
                         eventName={ eventData.eventName }
                         eventDate={ eventDate }
-                        eventTime="7:00 PM" // Replace with actual event time
+                        eventTime={eventDate} // Replace with actual event time
                         price={ ticket.price.toString() }
                         address={ eventLocation }
                         ticketNumber={ '' }
