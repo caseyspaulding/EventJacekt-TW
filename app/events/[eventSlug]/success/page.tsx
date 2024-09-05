@@ -103,12 +103,12 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
     const eventLocation = `${ eventData.venue }, ${ eventData.city }, ${ eventData.state } ${ eventData.zipCode }, ${ eventData.country }`;
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-blue-500">
             <ConfettiComponent />
             {/* Wrapper for glow effect */ }
             <div className="relative w-full max-w-lg m-2">
                 {/* Glowing effect using a green blurred background */ }
-                <div className="absolute inset-0 rounded-2xl bg-green-500 blur-xl opacity-60"></div>
+                <div className="absolute inset-0 rounded-2xl "></div>
 
                 {/* Main card content */ }
                 <div className="relative m-3 rounded-2xl bg-white p-8 text-center shadow-2xl">
@@ -126,7 +126,7 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
                         address={ eventLocation }
                         ticketNumber="12345" // Replace with actual ticket number
                     />
-        
+
                     <p className="mb-4 text-lg">
                         Your ticket(s) have been sent to the email address you provided during checkout. 
                     </p>
