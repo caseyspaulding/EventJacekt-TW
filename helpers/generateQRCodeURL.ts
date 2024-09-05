@@ -129,7 +129,7 @@ export async function sendTicketEmail (
         color: #fff;
         text-decoration: none;
         padding: 10px 20px;
-        border-radius: 5px;
+        border-radius: 12px;
         margin-top: 20px;
       }
 
@@ -142,12 +142,12 @@ export async function sendTicketEmail (
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
-        background-color: #fff;
+        background-color: #ffffff;
       }
 
       table td {
         padding: 8px;
-        border: 1px solid #ddd;
+
         color: #333;
       }
 
@@ -251,7 +251,7 @@ export async function sendTicketEmail (
           </tr>
           ${ faqsHtml ? `
           <tr>
-            <td colspan="2" style="text-align: center; font-weight: bold;">FAQs</td>
+            <td colspan="2" style="text-align: center; font-size: 28px; font-weight: bold;">FAQs</td>
           </tr>
           ${ faqsHtml }
           ` : "" }
