@@ -291,7 +291,7 @@ const CreateEventPage = () =>
 
 
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+           
                     <div>
                         <InputFieldEJ
                             type="date"
@@ -314,8 +314,8 @@ const CreateEventPage = () =>
                             label="End Date"
                         />
                     </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+               
+                
                     <div>
                         <InputFieldEJ
                             type="time"
@@ -338,7 +338,7 @@ const CreateEventPage = () =>
                             label="Event End Time"
                         />
                     </div>
-                </div>
+               
                 <div>
                   
 
@@ -357,17 +357,17 @@ const CreateEventPage = () =>
                     setPreviewImage={ setVenueImagePreview }
                     label=""
                 />
-                <div>
-                    <Textarea
-                        id="venueDescription"
-                        value={ venueDescription }
-                        onChange={ ( e ) => setVenueDescription( e.target.value ) }
-                        label="Venue Description"
-                        placeholder="Describe the venue"
-                        rows={ 4 } // Adjust the number of visible rows
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
-                </div>
+               <div>
+    <Textarea
+        id="venueDescription"
+        value={ venueDescription }
+        onChange={ ( e ) => setVenueDescription( e.target.value ) }
+        label="Venue Description"
+        placeholder="Describe the venue"
+        rows={4} // Adjust the number of visible rows
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+    />
+</div>
             
 
                 <div>
