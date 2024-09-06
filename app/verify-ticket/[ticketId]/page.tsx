@@ -70,7 +70,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
         throw new Error( errorData.error || 'Failed to check in ticket' );
       }
 
-      const result = await response.json();
+     
      
 
       setTicket( ( prevTicket ) => ( prevTicket ? { ...prevTicket, checkInStatus: true } : prevTicket ) );

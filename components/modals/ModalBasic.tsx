@@ -3,7 +3,7 @@ import { Button } from '@nextui-org/button';
 import React, { useState, useEffect } from 'react';
 
 
-const ModalBasic = ( { isOpen, onClose, user, slug }:
+const ModalBasic = ( { isOpen, onClose, slug }:
   { isOpen: boolean; onClose: () => void; user: unknown; slug: string } ) =>
 {
 

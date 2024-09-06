@@ -129,7 +129,7 @@ export default function ScanTicketsPage ()
   return (
     <div className="max-w-md mx-auto bg-white overflow-hidden">
       <div className="">
-        <h1 className="text-3xl font-extrabold text-center">Scan Tickets</h1>
+        <h1 className="text-5xl font-extrabold text-center">Scan Tickets</h1>
 
         <QrCodeScanner
           
