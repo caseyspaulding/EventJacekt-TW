@@ -46,7 +46,7 @@ export default function NavBarTW ()
               </span>
               <h1>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
-                  <span className="block text-gray-900">Simplify Event Management  </span>
+                  <span className="block text-gray-900">Simplify Event Management.  </span>
                   <span className="animate__animated animate__rubberBand block text-blue-600">Build Relationships.</span>
                 </span>
               </h1>
@@ -68,7 +68,7 @@ export default function NavBarTW ()
                   >
                     Get Started
                   </Button>
-                 
+
                 </div>
                 <p className="mt-4 text-sm text-gray-500">No credit card required. Start today!</p>
               </div>
