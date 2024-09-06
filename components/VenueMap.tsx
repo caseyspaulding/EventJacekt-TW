@@ -11,7 +11,17 @@ interface VenueMapProps
 
 const VenueMap: React.FC<VenueMapProps> = ( { apiKey, address } ) =>
 {
-  const coordinates = useGeolocation( address );
+  const { coordinates, loading, error } = useGeolocation( address );
+
+  if ( loading )
+  {
+    return <div>Loading map...</div>;
+  }
+
+  if ( error )
+  {
+    return <div>{ error }</div>;
+  }
 
   if ( !coordinates )
   {

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { formatDate, formatTime } from '@/utils/dateFormatter'; 
+import VenueMap from '../VenueMap';
 
 interface FAQ
 {
@@ -101,6 +102,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Location</h2>
         <p className="text-gray-700">{ venue ? `${ venue }` : 'Location not specified' }</p>
         <p className="text-gray-700">{ venue ? `${ address }, ${ city }, ${ state }, ${ country }, ${ zipCode }` : 'Location not specified' }</p>
+        <VenueMap apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' } address={ address || '' } />
       </section>
 
       {/* Refund Policy */ }
