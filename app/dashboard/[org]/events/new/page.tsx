@@ -293,15 +293,15 @@ const CreateEventPage = () =>
 
            
                     <div>
-                        <InputFieldEJ
-                            type="date"
-                            id="startDate"
-                            value={ startDate }
-                            onChange={ ( e ) => setStartDate( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            required
-                            label="Start Date"
-                        />
+                    <InputFieldEJ
+                        type="date"
+                        id="startDate"
+                        value={ startDate }
+                        onChange={ ( e ) => setStartDate( e.target.value ) }
+                        className="mt-1 block  max-w-xs rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        required
+                        label="Start Date"
+                    />
                     </div>
                     <div>
                         <InputFieldEJ
@@ -309,7 +309,7 @@ const CreateEventPage = () =>
                             id="endDate"
                             value={ endDate }
                             onChange={ ( e ) => setEndDate( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="mt-1 block  max-w-xs rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             required
                             label="End Date"
                         />
@@ -322,7 +322,7 @@ const CreateEventPage = () =>
                             id="eventStartTime"
                             value={ eventStartTime }
                             onChange={ ( e ) => setEventStartTime( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="mt-1 block max-w-xs rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             required
                             label="Event Start Time"
                         />
@@ -333,7 +333,7 @@ const CreateEventPage = () =>
                             id="eventEndTime"
                             value={ eventEndTime }
                             onChange={ ( e ) => setEventEndTime( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="mt-1 block max-w-xs rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             required
                             label="Event End Time"
                         />
