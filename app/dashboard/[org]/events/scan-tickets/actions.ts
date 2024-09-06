@@ -26,7 +26,7 @@ export async function fetchTicketInfo ( ticketId: string )
     return null;
   }
   
-  console.log( 'Fetched ticket:', ticket ); // Log the fetched ticket 
+
 
   return {
     ...ticket,

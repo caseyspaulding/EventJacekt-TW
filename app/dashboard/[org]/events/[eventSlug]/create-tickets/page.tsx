@@ -136,98 +136,105 @@ const CreateTicketsPage = () =>
                     />
                 </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Price</label>
-                    <Input
-                        type="number"
-                        value={ price.toString() } // Convert number to string
-                        onChange={ ( e ) => setPrice( Number( e.target.value ) ) } // Convert string back to number
-                        placeholder="Price"
-                        required
-                        className="mt-1 block w-full focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
-                    />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Price</label>
+                        <Input
+                            type="number"
+                            value={ price.toString() } // Convert number to string
+                            onChange={ ( e ) => setPrice( Number( e.target.value ) ) } // Convert string back to number
+                            placeholder="Price"
+                            required
+                            className="mt-1 block w-full focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Quantity</label>
+                        <Input
+                            type="number"
+                            value={ quantity.toString() } // Convert number to string
+                            onChange={ ( e ) => setQuantity( Number( e.target.value ) ) }
+                            placeholder="Quantity"
+                            required
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
                 </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Quantity</label>
-                    <Input
-                        type="number"
-                        value={ quantity.toString() } // Convert number to string
-                        onChange={ ( e ) => setQuantity( Number( e.target.value ) ) }
-                        placeholder="Quantity"
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Sale Start Date</label>
+                        <Input
+                            type="date"
+                            value={ saleStartDate }
+                            onChange={ ( e ) => setSaleStartDate( e.target.value ) }
+                            required
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Sale End Date</label>
+                        <Input
+                            type="date"
+                            value={ saleEndDate }
+                            onChange={ ( e ) => setSaleEndDate( e.target.value ) }
+                            required
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
                 </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Sale Start Date</label>
-                    <Input
-                        type="date"
-                        value={ saleStartDate }
-                        onChange={ ( e ) => setSaleStartDate( e.target.value ) }
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Event Date</label>
+                        <Input
+                            type="date"
+                            value={ eventDate }
+                            onChange={ ( e ) => setEventDate( e.target.value ) }
+                            required
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Door Open Time</label>
+                        <Input
+                            type="time"
+                            value={ doorOpenTime }
+                            onChange={ ( e ) => setDoorOpenTime( e.target.value ) }
+                            placeholder="HH:MM"
+                            required
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
                 </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Sale End Date</label>
-                    <Input
-                        type="date"
-                        value={ saleEndDate }
-                        onChange={ ( e ) => setSaleEndDate( e.target.value ) }
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
-                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Event Start Time</label>
+                        <Input
+                            type="time"
+                            value={ eventStartTime }
+                            onChange={ ( e ) => setEventStartTime( e.target.value ) }
+                            placeholder="HH:MM"
+                            required
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Event Date</label>
-                    <Input
-                        type="date"
-                        value={ eventDate }
-                        onChange={ ( e ) => setEventDate( e.target.value ) }
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
-                </div>
-
-                {/* New fields for door open time, event start time, and event end time */ }
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Door Open Time</label>
-                    <Input
-                        type="time"
-                        value={ doorOpenTime }
-                        onChange={ ( e ) => setDoorOpenTime( e.target.value ) }
-                        placeholder="HH:MM"
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Event Start Time</label>
-                    <Input
-                        type="time"
-                        value={ eventStartTime }
-                        onChange={ ( e ) => setEventStartTime( e.target.value ) }
-                        placeholder="HH:MM"
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Event End Time</label>
-                    <Input
-                        type="time"
-                        value={ eventEndTime }
-                        onChange={ ( e ) => setEventEndTime( e.target.value ) }
-                        placeholder="HH:MM"
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Event End Time</label>
+                        <Input
+                            type="time"
+                            value={ eventEndTime }
+                            onChange={ ( e ) => setEventEndTime( e.target.value ) }
+                            placeholder="HH:MM"
+                            required
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
                 </div>
 
                 <div className="flex items-center">
@@ -259,6 +266,7 @@ const CreateTicketsPage = () =>
                     Create Ticket
                 </Button>
             </form>
+
 
             { isModalOpen && (
                 <ModalEventCreation onClose={ () => setIsModalOpen( false ) }>

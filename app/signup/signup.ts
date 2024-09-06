@@ -39,7 +39,7 @@ export const signUp = async ( formData: FormData ) =>
         return { success: false, message: 'Session not created after Google sign-in' };
       }
 
-      console.log( 'User session established successfully:', sessionData.session );
+     
       return { success: true, redirectTo: '/choose-account-type' };
     } catch ( error )
     {

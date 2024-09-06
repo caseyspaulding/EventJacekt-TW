@@ -238,48 +238,26 @@ export default async function EventPage ( { params }: { params: Params } )
             <NavBar1 />
 
             <main className="">
-                <div className="mt-52 absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+                <div className="mt-20 absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
 
-                <header className="w-full h-[170px] xl:h-[150px] relative overflow-hidden gradient-bg">
-                    {/* Gradient Overlay */ }
-                    {/*<div className="absolute inset-0 bg-blue-600 bg-opacity-30"></div>*/ }
-
-
-                    <div className="relative z-10 text-center p-4">
-                        {/* Your header content goes here */ }
-                    </div>
-                </header>
+               
 
                 {/* Main Content */ }
-                <div className="flex relative z-20 justify-between shadow-2xl p-3 -m-36 mx-4 max-w-screen-xl bg-white dark:bg-gray-800 rounded-xl xl:-m-32 xl:p-9 xl:mx-auto">
-                    <article className="xl:w-[828px] w-full max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-                        <div className="flex flex-col lg:flex-row justify-between lg:items-center ">
-                            <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400 text-base lg:mb-0">
+                <div className="relative z-20 max-w-screen-xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 xl:p-9">
 
+                    {/* Event Image */ }
+                    <EventImage
+                        imageUrl={ eventData.featuredImage || '' }
+                        alt={ `${ eventData.eventName } image` }
+                        overlayColor=""
+                        height="h-[260px] xl:h-[437px]"
+                    />
 
-                            </div>
-                            {/* Social Media Share TODO */ }
-                            <aside aria-label="Share social media">
-                                <div className="not-format">
-                                    {/* Add social media share buttons here */ }
-                                </div>
-                            </aside>
-                        </div>
-                        {/* Event Content */ }
-
-
-
-
-                        <EventImage
-                            imageUrl={ eventData.featuredImage || '' }
-                            alt={ `${ eventData.eventName } image` }
-                            overlayColor=""
-                            height="h-[260px] xl:h-[437px]"
-                        >
-                        </EventImage>
-                        <div className="mt-8">
-                            <span className="">
-
+                    {/* Main Content in Two Columns */ }
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mt-8">
+                        {/* Left Column (Event Info) */ }
+                        <div className="space-y-6">
+                            <span className="text-gray-500 dark:text-gray-400">
                                 { eventData.startDate && eventData.endDate ? (
                                     <>
                                         { new Date( eventData.startDate ).toDateString() } - { new Date( eventData.endDate ).toDateString() }
@@ -291,83 +269,77 @@ export default async function EventPage ( { params }: { params: Params } )
                                 ) : (
                                     "No dates available"
                                 ) }
-
-
-
                             </span>
-                        </div>
-                        <span className="block mb-2 text-gray-800">
-                            <h1 className="font-extrabold text-5xl lg:text-6xl ">
+
+                            <h1 className="font-extrabold text-5xl lg:text-6xl text-gray-800 dark:text-white">
                                 { eventData.eventName }
                             </h1>
-                        </span>
-                        <h2 className="mb-4 max-w-4xl text-xl leading-none text-gray-900  sm:text-xl lg:text-xl">
-                            { eventData.description }
-                        </h2>
-                        <div className="my-2 ">
-                            <Countdown
-                                startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
-                                color="text-gray-700" // Text color for numbers
-                                labelColor="text-gray-500" // Text color for labels
+
+                            <h2 className="text-xl leading-none text-gray-900 dark:text-gray-200">
+                                { eventData.description }
+                            </h2>
+
+                            {/* Event Details */ }
+                            <EventDetails
+                                eventId={ eventData.eventId }
+                                name={ eventData.eventName }
+                                description={ eventData.description }
+                                notes={ eventData.notes }
+                                startDate={ eventData.startDate }
+                                endDate={ eventData.endDate }
+                                eventStartTime={ eventData.eventStartTime }
+                                eventEndTime={ eventData.eventEndTime }
+                                venue={ eventData.venue }
+                                address={ eventData.address }
+                                city={ eventData.city }
+                                state={ eventData.state }
+                                country={ eventData.country }
+                                zipCode={ eventData.zipCode }
+                                scheduleDetails={ eventData.scheduleDetails }
+                                bannerImage={ eventData.bannerImage }
+                                galleryImages={ eventData.galleryImages }
+                                videoLinks={ eventData.videoLinks }
+                                organizerContact={ eventData.organizerContact }
+                                maxAttendees={ eventData.maxAttendees }
+                                status={ eventData.status }
+                                refundPolicy={ eventData.refundPolicy }
+                                timezone={ eventData.timezone }
+                                tags={ eventData.tags }
+                                highlights={ eventData.highlights }
+                                faqs={ faqs }
+                                ageRestriction={ eventData.ageRestriction }
+                                parkingOptions={ eventData.parkingOptions }
+                                createdAt={ eventData.createdAt as string | null }
+                                updatedAt={ eventData.updatedAt as string | null }
                             />
                         </div>
 
+                        {/* Right Column (Sidebar) */ }
+                        <aside className="space-y-6 xl:space-y-10">
+                            <div className="sticky top-20">
+                                {/* Buy Tickets Button */ }
+                                <BuyTicketsButton eventSlug={ eventSlug } priceRange={ ticket.price } />
 
-                        <EventDetails
-                            eventId={ eventData.eventId }
-                            name={ eventData.eventName }
-
-
-                            description={ eventData.description }
-                            notes={ eventData.notes }
-                            startDate={ eventData.startDate }
-                            endDate={ eventData.endDate }
-                            eventStartTime={ eventData.eventStartTime }
-                            eventEndTime={ eventData.eventEndTime }
-                            venue={ eventData.venue }
-                            address={ eventData.address }
-                            city={ eventData.city }
-                            state={ eventData.state }
-                            country={ eventData.country }
-                            zipCode={ eventData.zipCode }
-                            scheduleDetails={ eventData.scheduleDetails }
-                            bannerImage={ eventData.bannerImage }
-                            galleryImages={ eventData.galleryImages }
-                            videoLinks={ eventData.videoLinks }
-                            organizerContact={ eventData.organizerContact }
-                            maxAttendees={ eventData.maxAttendees }
-                            status={ eventData.status }
-                            refundPolicy={ eventData.refundPolicy }
-                            timezone={ eventData.timezone }
-                            tags={ eventData.tags }
-                            highlights={ eventData.highlights }
-                            faqs={ faqs }
-                            ageRestriction={ eventData.ageRestriction }
-                            parkingOptions={ eventData.parkingOptions }
-                            createdAt={ eventData.createdAt as string | null }
-                            updatedAt={ eventData.updatedAt as string | null } />
-
-
-                    </article>
-
-
-                    {/* Sidebar */ }
-                    <aside className="hidden xl:block pt-0 mt-0" aria-labelledby="sidebar-label">
-                        <div className="mt-0 pt-0 xl:w-[330px] sticky top-20">
-                            <h3 id="sidebar-label" className=" sr-only">Sidebar</h3>
-                            {/* Buy Tickets Card */ }
-
-                            <BuyTicketsButton eventSlug={ eventSlug } priceRange={ ticket.price } />
-
-                            {/* Sidebar content */ }
-                        </div>
-                    </aside>
+                                {/* Countdown */ }
+                                <div className="lg:ml-72 sm:text-center mt-2">
+                                <Countdown
+                                    startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
+                                    color="text-gray-700"
+                                    labelColor="text-gray-500"
+                                    />
+                            </div>
+                            </div>
+                        </aside>
+                    </div>
                 </div>
-                <div className='lg:mt-8 pt-5 mt-20 '>
+
+                {/* Footer */ }
+                <div className="lg:mt-8 pt-5 mt-20">
                     <FooterTW />
                 </div>
-
             </main>
+
+
             <StickyFooterBuyTickets eventSlug={ eventSlug } priceRange={ ticket.price } />
         </>
     );

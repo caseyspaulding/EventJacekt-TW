@@ -50,7 +50,7 @@ export default function FooterTW() {
   const currentYear = new Date().getFullYear(); // Get the current year
   return (
     <footer className="bg-white">
-      <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl overflow-hidden px-6   lg:px-8">
         <div className=" mt-4 flex justify-center items-center">
           <Link href="https://www.eventjacket.com">
             <img src="/images/logo-full.png" alt="EventJacket" className="h-8" />

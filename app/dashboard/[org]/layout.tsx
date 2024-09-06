@@ -18,14 +18,14 @@ export default async function DashboardLayout ( { children }: React.PropsWithChi
         return null; // Safeguard in case redirect fails
     }
 
-    console.log( 'Supabase session:', session );
+  
 
     // Fetch user profile safely
     let user = null;
     try
     {
         user = await fetchUserProfile();
-        console.log( 'Fetched user profile:', user );
+
     } catch ( error )
     {
         console.error( 'Error fetching user profile:', error );

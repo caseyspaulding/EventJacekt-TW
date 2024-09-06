@@ -20,8 +20,8 @@ const VenueMap: React.FC<VenueMapProps> = ( { apiKey, address } ) =>
 
   return (
     <APIProvider apiKey={ apiKey }>
-      <div className="h-44">
-        <Map zoom={ 12 } center={ coordinates } mapId={ process.env.NEXT_PUBLIC_MAP_ID }>
+      <div className="h-96">
+        <Map zoom={ 15 } center={ coordinates } mapId={ process.env.NEXT_PUBLIC_MAP_ID }>
           <AdvancedMarker position={ coordinates }>
             <Pin background={ 'orange' } borderColor={ "blue" } glyphColor={ 'blue' } />
           </AdvancedMarker>

@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 
 export async function getEventIdBySlug ( eventSlug: string ): Promise<string | null>
 {
-    console.log( 'Fetching event ID for slug:', eventSlug ); // Debug log
+   
     const supabase = createClient();
 
     try

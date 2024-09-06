@@ -6,7 +6,8 @@ interface FileUploadButtonProps
   setImage: ( file: File | null ) => void;
   previewImage: string | null;
   setPreviewImage: ( imageUrl: string | null ) => void;
-  label: string; // New prop for dynamic label
+  label: string;
+  orgName: string; // New prop for the organization name or ID
 }
 
 export function FileUploadButton ( {
@@ -14,6 +15,7 @@ export function FileUploadButton ( {
   previewImage,
   setPreviewImage,
   label,
+  orgName, // Org name or ID passed as a prop
 }: FileUploadButtonProps )
 {
   const handleFileChange = ( e: React.ChangeEvent<HTMLInputElement> ) =>
@@ -23,6 +25,10 @@ export function FileUploadButton ( {
 
     if ( file )
     {
+      // Generate a unique filename using orgName and a timestamp
+      const uniqueFilename = `${ orgName }_${ Date.now() }_${ file.name }`;
+      console.log( 'Unique file name:', uniqueFilename );
+
       const reader = new FileReader();
       reader.onloadend = () =>
       {
@@ -47,11 +53,7 @@ export function FileUploadButton ( {
       {/* Overlay for Upload Button */ }
       <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40 transition-opacity">
         {/* Icon (Optional) */ }
-        <div className="text-black mb-2">
-          {/* Example of an upload icon */ }
-         
-
-        </div>
+        <div className="text-black mb-2"></div>
         {/* Upload Text */ }
         <p className="text-black text-lg font-semibold mb-4">
           { label } {/* Dynamic label */ }
@@ -61,9 +63,20 @@ export function FileUploadButton ( {
           as="label"
           className="bg-blue-600 text-white px-5 py-6 text-xl rounded-md cursor-pointer"
           radius="sm"
-
-        ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-10"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+            />
           </svg>
           Upload Featured Image
           <input

@@ -43,7 +43,7 @@ export const registerTicketBuyer = async () =>
       // other fields can be added later by the user in their dashboard
     } );
 
-    console.log( "Ticket buyer registered successfully." );
+   
     return { success: true, userId };
   } catch ( error )
   {

@@ -71,7 +71,7 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
       }
 
       const result = await response.json();
-      console.log( 'Check-In Result:', result );
+     
 
       setTicket( ( prevTicket ) => ( prevTicket ? { ...prevTicket, checkInStatus: true } : prevTicket ) );
     } catch ( error )

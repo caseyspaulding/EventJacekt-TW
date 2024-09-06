@@ -20,8 +20,6 @@ const ModalBasic = ( { isOpen, onClose, user, slug }:
     onClose();
   };
 
-  console.log( 'User:', user ); // Debugging user
-  console.log( 'Slug:', slug ); // Debugging slug
   
   if ( !isModalOpen ) return null;
 

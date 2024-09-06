@@ -67,7 +67,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                             setErrorMessage( 'Error fetching organization. Please try again.' );
                         } else if ( org )
                         {
-                            console.log( 'Organization found, redirecting to /dashboard' );
+                           
                             router.push( '/dashboard' ); // Only redirect after all checks are successful
                         } else
                         {
