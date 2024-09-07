@@ -16,7 +16,7 @@ const BuyTicketsButton: React.FC<BuyTicketsButtonProps> = ( { eventSlug, priceRa
       {/* Button for large screens */ }
       <div className="hidden lg:flex mt-1 justify-center  ">
         {/* Container with border and padding for styling */ }
-        <div className="border rounded-lg px-16 ml-64 py-4 bg-white shadow-md max-w-xs text-center">
+        <div className="border rounded-lg px-16  py-4 bg-white shadow-md max-w-xs text-center">
           {/* Price range display */ }
           <div className="mb-4 text-xl font-semibold text-gray-700">
             ${ priceRange }

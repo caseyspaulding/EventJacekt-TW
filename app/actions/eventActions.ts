@@ -216,6 +216,7 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
     const eventStartTime = formData.get( 'eventStartTime' ) as string;
     const eventEndTime = formData.get( 'eventEndTime' ) as string;
     const venue = formData.get( 'venue' ) as string;
+    const venueImage = formData.get( 'venueImage' ) as string;
     const address = formData.get( 'address' ) as string;
     const city = formData.get( 'city' ) as string;
     const state = formData.get( 'state' ) as string;
@@ -227,8 +228,8 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
     const scheduleDetails = formData.get( 'scheduleDetails' ) as string;
     const refundPolicy = formData.get( 'refundPolicy' ) as string;
     const timezone = formData.get( 'timezone' ) as string;
-    const tags = formData.get( 'tags' ) ? ( formData.get( 'tags' ) as string ).split( ',' ).map( tag => tag.trim() ) : [];
-    const faqs = formData.get( 'faqs' ) ? JSON.parse( formData.get( 'faqs' ) as string ) : [];
+    const tags = ( formData.get( 'tags' ) as string ).split( ',' ).map( ( tag ) => tag.trim() );
+    const faqs = JSON.parse( formData.get( 'faqs' ) as string );
     const highlights = formData.get( 'highlights' ) ? ( formData.get( 'highlights' ) as string ).split( ',' ).map( highlight => highlight.trim() ) : [];
     const ageRestriction = formData.get( 'ageRestriction' ) as string;
     const parkingOptions = formData.get( 'parkingOptions' ) as string;
@@ -265,6 +266,8 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
         eventStartTime,              // Use plain time string
         eventEndTime,                // Use plain time string
         venue: venue || null,
+        venueDescription: formData.get( 'venueDescription' ) as string || null, 
+        venueImage: venueImage || null, 
         address: address || null,
         city: city || null,
         state: state || null,

@@ -239,8 +239,7 @@ export default async function EventPage ( { params }: { params: Params } )
             <NavBar1 />
 
             <main className="">
-                <div className="mt-20 absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
-
+                
                
 
                 {/* Main Content */ }
@@ -255,9 +254,9 @@ export default async function EventPage ( { params }: { params: Params } )
                     />
 
                     {/* Main Content in Two Columns */ }
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mt-8">
+                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 mt-8">
                         {/* Left Column (Event Info) */ }
-                        <div className="space-y-6">
+                        <div className="xl:col-span-2 space-y-4">
                             <span className="text-gray-500 dark:text-gray-400">
                                 { eventData.startDate && eventData.endDate ? (
                                     <>
@@ -291,7 +290,7 @@ export default async function EventPage ( { params }: { params: Params } )
                                 eventStartTime={ eventData.eventStartTime }
                                 eventEndTime={ eventData.eventEndTime }
                                 venue={ eventData.venue }
-                                venueImage={ eventData.venueImage }  // Pass the venue image here
+                                venueImage={ eventData.venueImage } // Pass the venue image here
                                 address={ eventData.address }
                                 city={ eventData.city }
                                 state={ eventData.state }
@@ -317,19 +316,19 @@ export default async function EventPage ( { params }: { params: Params } )
                         </div>
 
                         {/* Right Column (Sidebar) */ }
-                        <aside className="space-y-6 xl:space-y-10">
+                        <aside className="xl:col-span-1 space-y-6 xl:space-y-10">
                             <div className="sticky top-20">
                                 {/* Buy Tickets Button */ }
                                 <BuyTicketsButton eventSlug={ eventSlug } priceRange={ ticket.price } />
 
                                 {/* Countdown */ }
-                                <div className="lg:ml-72 sm:text-center mt-2">
-                                <Countdown
-                                    startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
-                                    color="text-gray-700"
-                                    labelColor="text-gray-500"
+                                <div className="lg:ml-16 sm:text-center mt-2">
+                                    <Countdown
+                                        startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
+                                        color="text-gray-700"
+                                        labelColor="text-gray-500"
                                     />
-                            </div>
+                                </div>
                             </div>
                         </aside>
                     </div>

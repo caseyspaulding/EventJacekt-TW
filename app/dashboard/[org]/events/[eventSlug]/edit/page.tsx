@@ -53,8 +53,9 @@ const EditEventPage = () =>
   const [ refundPolicy, setRefundPolicy ] = useState( '' );
   const [ timezone, setTimezone ] = useState( '' );
   const [ tags, setTags ] = useState<string[]>( [] );
-  const [ highlights, setHighlights ] = useState<string[]>( [] );
   const [ faqs, setFaqs ] = useState<{ question: string; answer: string }[]>( [ { question: '', answer: '' } ] );
+  const [ highlights, setHighlights ] = useState<string[]>( [] );
+ 
   const { user } = useUser();
   const [ ageRestriction, setAgeRestriction ] = useState( '' );
   const [ parkingOptions, setParkingOptions ] = useState( '' );
@@ -76,6 +77,7 @@ const EditEventPage = () =>
         try
         {
           const data = await getEventBySlug( slug );
+         
           setName( data.name || '' );
           setDescription( data.description || '' );
           setStartDate( data.startDate ? new Date( data.startDate ).toISOString().split( 'T' )[ 0 ] : '' );
@@ -171,6 +173,7 @@ const EditEventPage = () =>
     formData.append( 'eventEndTime', eventEndTime );
     formData.append( 'venue', venue );
     formData.append( 'venueDescription', venueDescription );
+  
     formData.append( 'address', address );
     formData.append( 'city', city );
     formData.append( 'state', state );
@@ -181,9 +184,10 @@ const EditEventPage = () =>
     formData.append( 'scheduleDetails', scheduleDetails );
     formData.append( 'refundPolicy', refundPolicy );
     formData.append( 'timezone', timezone );
-    formData.append( 'tags', JSON.stringify( tags ) ); // Convert array to JSON
+    formData.append( 'tags', tags.join( ',' ) ); // Convert array to comma-separated string
+    formData.append( 'highlights', highlights.join( ',' ) ); // Convert array to comma-separated string
     formData.append( 'faqs', JSON.stringify( faqs ) );
-    formData.append( 'highlights', JSON.stringify( highlights ) ); // Convert array to JSON
+   
     formData.append( 'ageRestriction', ageRestriction );
     formData.append( 'parkingOptions', parkingOptions );
     formData.append( 'agendaItems', JSON.stringify( agendaItems ) );
@@ -193,6 +197,7 @@ const EditEventPage = () =>
 
     try
     {
+     
       const response = await updateEvent( eventId, formData );
 
       if ( response.success )
