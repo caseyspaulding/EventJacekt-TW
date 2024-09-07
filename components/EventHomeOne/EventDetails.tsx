@@ -118,22 +118,30 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
 
         {/* Display venue image if available */ }
         <section className="my-4 ">
-          { venueImage && (
+          { venueImage && (<>
+             <h2 className="text-2xl font-bold text-gray-900 mb-2">Venue Image</h2>
             <EventImage
               imageUrl={ venueImage } // Use venueImage prop
               alt={ `${ venue || 'Venue' } image` }
               overlayColor=""
               height="h-[260px] xl:h-[437px]"
-            />
+            /></>
           ) }
         </section>
+
+
         {/* Show the map only if address exists */ }
-        { address && (
-          <VenueMap
-            apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' }
-            address={ address }
-          />
-        ) }
+        <section className="my-4 ">
+      
+          { address && (<>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Venue Map</h2>
+            <VenueMap
+              apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' }
+              address={ address }
+        
+            /></>
+          ) }
+        </section>
       </section>
 
       {/* Refund Policy */ }
