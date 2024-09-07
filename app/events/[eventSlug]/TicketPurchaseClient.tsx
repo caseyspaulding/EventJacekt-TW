@@ -3,7 +3,8 @@
 import type { Ref } from 'react';
 import { useState, forwardRef } from 'react';
 import getStripe from '@/utils/stripeClient';
-import { Button, Input } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
+import InputFieldEJ from '@/components/Input/InputEJ';
 
 interface TicketPurchaseClientProps
 {
@@ -88,35 +89,32 @@ const TicketPurchaseClient = ( { ticket, eventSlug, onPurchaseComplete }: Ticket
     return (
         <div className="space-y-4 w-full">
             { errorMessage && <div className="mb-4 text-red-600 font-bold">{ errorMessage }</div> }
-            <Input
+            <InputFieldEJ
                 type="text"
                 placeholder="First Name"
                 value={ firstName }
                 onChange={ ( e ) => setFirstName( e.target.value ) }
                 className="w-full"
-                ref={ ref }  // Assign the ref to the first input
-                required
-            />
-            <Input
+                ref={ ref } // Assign the ref to the first input
+                required label={ 'First Name' }            />
+            <InputFieldEJ
                 type="text"
                 placeholder="Last Name"
                 value={ lastName }
                 onChange={ ( e ) => setLastName( e.target.value ) }
                 className="w-full"
-                required
-            />
-            <Input
+                required label={ 'Last Name' }            />
+            <InputFieldEJ
                 type="email"
                 placeholder="Email"
                 value={ email }
                 onChange={ ( e ) => setEmail( e.target.value ) }
                 className="w-full"
-                required
-            />
+                required label={ 'Email' }            />
             <Button
                 onClick={ handleBuyTicket }
                 disabled={ loading }
-                className="w-full mt-2 rounded-2xl bg-orange-600 px-4 py-2 font-semibold text-white hover:bg-green-500"
+                className="w-full mt-2 rounded-3xl bg-orange-600 px-4 py-2 font-semibold text-white hover:bg-green-500"
             >
                 { loading ? 'Processing...' : 'Buy Ticket' }
             </Button>
