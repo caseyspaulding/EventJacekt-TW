@@ -1,10 +1,12 @@
+import React from 'react';
+
 interface EventImageProps
 {
   imageUrl: string;
   alt?: string;
   overlayColor?: string;
   children?: React.ReactNode;
-  height?: string; // New prop for height
+  minHeight?: string;
 }
 
 export default function EventImage ( {
@@ -12,22 +14,20 @@ export default function EventImage ( {
   alt = "Event image",
   overlayColor = "bg-indigo-700",
   children,
-  height = "h-125" // Default height, adjust as needed
+  minHeight = "min-h-[12rem] sm:min-h-[26rem] lg:min-h-[28rem]",
 }: EventImageProps )
 {
   return (
-    <div className="mx-auto max-w-7xl">
-      <div className={ `relative shadow-xl overflow-hidden ${ height } rounded-lg sm:rounded-xl` }>
-        <div className="absolute inset-0">
-          <img
-            alt={ alt }
-            src={ imageUrl }
-            className="h-full w-full object-cover"
-          />
-          <div className={ `absolute inset-0 ${ overlayColor } mix-blend-multiply` } />
-        </div>
+    <div className="mx-auto max-w-7xl ">
+      <div className={ `relative w-full ${ minHeight } overflow-hidden shadow-xl rounded-lg sm:rounded-xl` }>
+        <img
+          alt={ alt }
+          src={ imageUrl }
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className={ `absolute inset-0 ${ overlayColor } mix-blend-multiply` } />
         <div className="relative h-full flex items-center justify-center">
-          <div className="px-6 py-16 sm:py-24 lg:px-8 lg:py-32">
+          <div className="text-center  ">
             { children }
           </div>
         </div>
@@ -35,17 +35,3 @@ export default function EventImage ( {
     </div>
   );
 }
-
-// Example Usage
-// <EventImage
-//   imageUrl={eventData.featuredImage || ''}
-//   alt={`${eventData.eventName} image`}
-//   overlayColor="bg-black bg-opacity-50"
-//   height="h-[460px] xl:h-[537px]"
-// >
-//   <div className="text-center text-white">
-//     <h1 className="font-extrabold text-5xl mb-2">{eventData.eventName}</h1>
-//     <h2 className="mb-4 text-xl font-semibold">{eventData.description}</h2>
-//     <p className="text-lg font-normal">{`Location: ${eventData.venue || "No venue available"}`}</p>
-//   </div>
-// </EventImage>

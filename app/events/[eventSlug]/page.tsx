@@ -251,7 +251,7 @@ export default async function EventPage ( { params }: { params: Params } )
                         imageUrl={ eventData.featuredImage || '' }
                         alt={ `${ eventData.eventName } image` }
                         overlayColor=""
-                        height="h-[260px] xl:h-[437px]"
+                        height="h-[400px]"
                     />
 
                     {/* Main Content in Two Columns */ }
