@@ -28,7 +28,7 @@ export  default async function ProfilePage (  )
       <UserProfileHeader
         name={ userProfile.email }
         avatar={ userProfile.avatar }
-        backgroundImage={ '/images/illustrations/profileBG.jpg' }
+        backgroundImage={ '/images/profileBG3.png' }
         email={ userProfile.email }
         
       />
