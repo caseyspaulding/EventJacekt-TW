@@ -64,7 +64,7 @@ export default function NavBarTW ()
                     className="relative z-10 py-2 bg-blue-600  hover:bg-green-600 text-white text-xl rounded-3xl 
                  w-full sm:w-auto px-4 sm:px-52"
                   >
-                    Get Started
+                    Create Event
                   </Button>
 
                 </div>
