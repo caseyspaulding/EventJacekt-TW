@@ -58,7 +58,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
   address,
   city,
   state,
-  country,
+ 
   zipCode,
   //scheduleDetails,
 
@@ -100,9 +100,29 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
       {/* Location */ }
       <section className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Location</h2>
-        <p className="text-gray-700">{ venue ? `${ venue }` : 'Location not specified' }</p>
-        <p className="text-gray-700">{ venue ? `${ address }, ${ city }, ${ state }, ${ country }, ${ zipCode }` : 'Location not specified' }</p>
-        <VenueMap apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' } address={ address || '' } />
+
+        {/* Only show venue if it exists */ }
+        { venue && <p className="text-gray-700">{ venue }</p> }
+
+        {/* Construct the address dynamically to avoid displaying "null" */ }
+        { ( address || city || state || zipCode ) ? (
+          <p className="text-gray-700">
+            { address && `${ address }, ` }
+            { city && `${ city }, ` }
+            { state && `${ state }, ` }
+            { zipCode && `${ zipCode }` }
+          </p>
+        ) : (
+          <p className="text-gray-700">Location not specified</p>
+        ) }
+
+        {/* Show the map only if address exists */ }
+        { address && (
+          <VenueMap
+            apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' }
+            address={ address }
+          />
+        ) }
       </section>
 
       {/* Refund Policy */ }
