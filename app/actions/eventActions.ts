@@ -11,11 +11,10 @@ import { getEventIdBySlug } from './getEventIdBySlug';
 
 
 
-
 // Get an event by its slug for updating purposes
 export async function getEventBySlug ( eventSlug: string )
 {
-    const [ event ] = await db
+    const eventQuery = db
         .select( {
             id: events.id,
             orgId: events.orgId,
@@ -58,12 +57,30 @@ export async function getEventBySlug ( eventSlug: string )
         .from( events )
         .where( eq( events.slug, eventSlug ) );
 
+    const [ event ] = await eventQuery;
+
     if ( !event )
     {
         throw new Error( 'Event not found' );
     }
 
-    return event;
+    // Fetch agendaItems separately if needed
+    const agendaItems = await db
+        .select( {
+            id: agenda.id,
+            title: agenda.title,
+            startTime: agenda.startTime,
+            endTime: agenda.endTime,
+            description: agenda.description,
+            hostOrArtist: agenda.hostOrArtist,
+        } )
+        .from( agenda )
+        .where( eq( agenda.eventId, event.id ) );
+
+    return {
+        ...event,
+        agendaItems, // Attach agendaItems to the event
+    };
 }
 
 // Create a new event
@@ -191,62 +208,79 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
 {
     const { orgId } = await getUserAndOrgId();
 
-    // Extract fields from formData
+    // Extract data from formData
     const name = formData.get( 'name' ) as string;
     const description = formData.get( 'description' ) as string;
-
-    const startDate = new Date( formData.get( 'startDate' ) as string );
-
-    const endDate = new Date( formData.get( 'endDate' ) as string );
-
-    const eventStartTime = formData.get( 'eventStartTime' ) as string; // New field
-    const eventEndTime = formData.get( 'eventEndTime' ) as string; // New field
+    const startDateString = formData.get( 'startDate' ) as string;
+    const endDateString = formData.get( 'endDate' ) as string;
+    const eventStartTime = formData.get( 'eventStartTime' ) as string;
+    const eventEndTime = formData.get( 'eventEndTime' ) as string;
     const venue = formData.get( 'venue' ) as string;
     const address = formData.get( 'address' ) as string;
     const city = formData.get( 'city' ) as string;
     const state = formData.get( 'state' ) as string;
     const country = formData.get( 'country' ) as string;
     const zipCode = formData.get( 'zipCode' ) as string;
-    const maxAttendees = Number( formData.get( 'maxAttendees' ) );
+    const maxAttendees = parseInt( formData.get( 'maxAttendees' ) as string, 10 );
     const featuredImage = formData.get( 'featuredImage' ) as string;
-    const notes = formData.get( 'notes' ) as string; // New field
-    const scheduleDetails = formData.get( 'scheduleDetails' ) as string; // New field
-    const refundPolicy = formData.get( 'refundPolicy' ) as string; // New field
-    const timezone = formData.get( 'timezone' ) as string; // New field
-    const tags = formData.get( 'tags' ) as string; // New field
-    const highlights = formData.get( 'highlights' ) as string; // New field
-    const ageRestriction = formData.get( 'ageRestriction' ) as string; // New field
-    const parkingOptions = formData.get( 'parkingOptions' ) as string; // New field
+    const notes = formData.get( 'notes' ) as string;
+    const scheduleDetails = formData.get( 'scheduleDetails' ) as string;
+    const refundPolicy = formData.get( 'refundPolicy' ) as string;
+    const timezone = formData.get( 'timezone' ) as string;
+    const tags = formData.get( 'tags' ) ? ( formData.get( 'tags' ) as string ).split( ',' ).map( tag => tag.trim() ) : [];
+    const faqs = formData.get( 'faqs' ) ? JSON.parse( formData.get( 'faqs' ) as string ) : [];
+    const highlights = formData.get( 'highlights' ) ? ( formData.get( 'highlights' ) as string ).split( ',' ).map( highlight => highlight.trim() ) : [];
+    const ageRestriction = formData.get( 'ageRestriction' ) as string;
+    const parkingOptions = formData.get( 'parkingOptions' ) as string;
+    const agendaItemsRaw = formData.get( 'agendaItems' ) as string;
 
-    // Convert Date objects to strings in 'YYYY-MM-DD' format
-    const formattedStartDate = startDate.toString().split( 'T' )[ 0 ];
-    const formattedEndDate = endDate.toString().split( 'T' )[ 0 ];
+    // Parse JSON string for agenda items
+    let agendaItems;
+    try
+    {
+        agendaItems = JSON.parse( agendaItemsRaw );
+    } catch ( error )
+    {
+        console.error( 'Error parsing agenda items:', error );
+        return { success: false, message: 'Invalid agenda items format' };
+    }
 
-    // Prepare updated event data
+    // Validation
+    if ( !name || !startDateString || !endDateString )
+    {
+        return { success: false, message: 'Missing required fields' };
+    }
+
+    if ( isNaN( maxAttendees ) )
+    {
+        return { success: false, message: 'Invalid number for max attendees' };
+    }
+
+    // Prepare the updated event object
     const updatedEvent = {
         name,
         description,
-        startDate: formattedStartDate, // Convert Date to string
-        endDate: formattedEndDate, // Convert Date to string
-        eventStartTime, // New field
-        eventEndTime, // New field
-        venue,
-        address,
-        city,
-        state,
-        country,
-        zipCode,
+        startDate: startDateString,  // Use plain date string
+        endDate: endDateString,      // Use plain date string
+        eventStartTime,              // Use plain time string
+        eventEndTime,                // Use plain time string
+        venue: venue || null,
+        address: address || null,
+        city: city || null,
+        state: state || null,
+        country: country || null,
+        zipCode: zipCode || null,
         maxAttendees,
-        featuredImage,
-        notes, // New field
-        scheduleDetails, // New field
-        refundPolicy, // New field
-        timezone, // New field
-        tags: tags.split( ',' ).map( tag => tag.trim() ), // Convert string to array if necessary
-        highlights: highlights.split( ',' ).map( highlight => highlight.trim() ), // Convert string to array if necessary
-        ageRestriction, // New field
-        parkingOptions, // New field
-
+        featuredImage: featuredImage || null,
+        notes: notes || null,
+        scheduleDetails: scheduleDetails || null,
+        refundPolicy: refundPolicy || null,
+        timezone: timezone || null,
+        tags: tags || [],
+        faqs: faqs || [],
+        highlights: highlights || [],
+        ageRestriction: ageRestriction || null,
+        parkingOptions: parkingOptions || null,
     };
 
     try
@@ -257,10 +291,33 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
             .set( updatedEvent )
             .where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
 
+        // Handle agenda items
+        if ( agendaItems.length > 0 )
+        {
+            const agendaData = agendaItems.map( ( item: { title: string; startTime: string; endTime: string; description: string; hostOrArtist: string } ) =>
+            {
+                const formattedStartTime = item.startTime ? item.startTime : null;
+                const formattedEndTime = item.endTime ? item.endTime : null;
+
+                return {
+                    eventId,
+                    title: item.title,
+                    startTime: formattedStartTime,
+                    endTime: formattedEndTime,
+                    description: item.description,
+                    hostOrArtist: item.hostOrArtist,
+                };
+            } );
+
+            // Delete existing agenda items for the event and insert new ones
+            await db.delete( agenda ).where( eq( agenda.eventId, eventId ) );
+            await db.insert( agenda ).values( agendaData );
+        }
+
         // Revalidate the path to refresh the page
         revalidatePath( `/dashboard/${ orgId }` );
 
-        return { success: true, updatedEvent };
+        return { success: true, message: 'Event updated successfully' };
     } catch ( error )
     {
         console.error( 'Error updating event:', error );

@@ -1,74 +1,121 @@
 'use client';
 
+import type { ChangeEvent} from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { useUser } from '@/contexts/UserContext';
 import { getEventBySlug, updateEvent } from '@/app/actions/eventActions';
 import toast from 'react-hot-toast';
-import { Button, Input, Textarea } from '@nextui-org/react';
+import { Button,Textarea } from '@nextui-org/react';
 
 import { createClient } from '@utils/supabase/client'; // For Supabase bucket storage
 import { FileUploadButton } from '../../new/FileUploadButton';
 import { ImageUploadVenue } from '../../new/ImageUploadVenue';
+import { useUser } from '@/contexts/UserContext';
+import InputFieldEJ from '@/components/Input/InputEJ';
+import { useRouter } from 'next/navigation'; 
+
+type AgendaItem = {
+  id: string;
+  title: string;
+  startTime: Date | null;
+  endTime: Date | null;
+  description: string | null;
+  hostOrArtist: string | null;
+};
+
+
+type FAQ = {
+  question: string;
+  answer: string;
+};
 
 const EditEventPage = () =>
 {
-  const [ eventData, setEventData ] = useState( {
-    name: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    venue: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
-    zipCode: '',
-    maxAttendees: 0,
-    featuredImage: '',
-    venueImage: '', // New field for venue image
-  } );
-
-  const [ eventId, setEventId ] = useState<string | null>( null );
-  const [ previewImage, setPreviewImage ] = useState<string | null>( null ); // Preview for the featured image
-  const [ venueImagePreview, setVenueImagePreview ] = useState<string | null>( null ); // Preview for the venue image
-  const [ featuredImageFile, setFeaturedImageFile ] = useState<File | null>( null ); // File for the featured image
-  const [ venueImageFile, setVenueImageFile ] = useState<File | null>( null ); // File for the venue image
+  const router = useRouter();
+  const [ name, setName ] = useState( '' );
+  const [ description, setDescription ] = useState( '' );
+  const [ startDate, setStartDate ] = useState( '' );
+  const [ endDate, setEndDate ] = useState( '' );
+  const [ eventStartTime, setEventStartTime ] = useState( '' );
+  const [ eventEndTime, setEventEndTime ] = useState( '' );
+  const [ venue, setVenue ] = useState( '' );
+  const [ venueDescription, setVenueDescription ] = useState( '' );
+  const [ address, setAddress ] = useState( '' );
+  const [ city, setCity ] = useState( '' );
+  const [ state, setState ] = useState( '' );
+  const [ country, setCountry ] = useState( '' );
+  const [ zipCode, setZipCode ] = useState( '' );
+  const [ maxAttendees, setMaxAttendees ] = useState( 0 );
+  const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
+  const [ venueImage, setVenueImage ] = useState<File | null>( null );
+  const [ notes, setNotes ] = useState( '' );
+  const [ scheduleDetails, setScheduleDetails ] = useState( '' );
+  const [ refundPolicy, setRefundPolicy ] = useState( '' );
+  const [ timezone, setTimezone ] = useState( '' );
+  const [ tags, setTags ] = useState<string[]>( [] );
+  const [ highlights, setHighlights ] = useState<string[]>( [] );
+  const [ faqs, setFaqs ] = useState<{ question: string; answer: string }[]>( [ { question: '', answer: '' } ] );
   const { user } = useUser();
-  const { eventSlug } = useParams();
-  const slug = Array.isArray( eventSlug ) ? eventSlug[ 0 ] : eventSlug;
+  const [ ageRestriction, setAgeRestriction ] = useState( '' );
+  const [ parkingOptions, setParkingOptions ] = useState( '' );
+  const [ agendaItems, setAgendaItems ] = useState( [ { title: '', startTime: '', endTime: '', description: '', hostOrArtist: '' } ] );
 
+  const [ previewImage, setPreviewImage ] = useState<string | null>( null );
+  const [ venueImagePreview, setVenueImagePreview ] = useState<string | null>( null );
+  const [ eventId, setEventId ] = useState<string | null>( null );
+
+  const { eventSlug } = useParams(); // Get event slug from URL
+  const slug = Array.isArray( eventSlug ) ? eventSlug[ 0 ] : eventSlug;
+  
   useEffect( () =>
   {
     async function fetchEventDetails ()
     {
-      if ( eventSlug )
+      if ( slug )
       {
         try
         {
-          const data = await getEventBySlug( slug as string );
-          setEventData( {
-            name: data.name || '',
-            description: data.description || '',
-            startDate: data.startDate ? new Date( data.startDate ).toISOString().split( 'T' )[ 0 ] : '',
-            endDate: data.endDate ? new Date( data.endDate ).toISOString().split( 'T' )[ 0 ] : '',
-            venue: data.venue || '',
-            address: data.address || '',
-            city: data.city || '',
-            state: data.state || '',
-            country: data.country || '',
-            zipCode: data.zipCode || '',
-            maxAttendees: data.maxAttendees ?? 0,
-            featuredImage: data.featuredImage || '',
-            venueImage: data.venueImage || '', // Load existing venue image
-          } );
-
-          // Store eventId for later use
-          setEventId( data.id );
-
-          // Set preview images if they exist
+          const data = await getEventBySlug( slug );
+          setName( data.name || '' );
+          setDescription( data.description || '' );
+          setStartDate( data.startDate ? new Date( data.startDate ).toISOString().split( 'T' )[ 0 ] : '' );
+          setEndDate( data.endDate ? new Date( data.endDate ).toISOString().split( 'T' )[ 0 ] : '' );
+          setEventStartTime( data.eventStartTime || '' );
+          setEventEndTime( data.eventEndTime || '' );
+          setVenue( data.venue || '' );
+          setVenueDescription( data.venueDescription || '' );
+          setAddress( data.address || '' );
+          setCity( data.city || '' );
+          setState( data.state || '' );
+          setCountry( data.country || '' );
+          setZipCode( data.zipCode || '' );
+          setMaxAttendees( data.maxAttendees || 0 );
+          setNotes( data.notes || '' );
+          setScheduleDetails( data.scheduleDetails || '' );
+          setRefundPolicy( data.refundPolicy || '' );
+          setTimezone( data.timezone || '' );
+          setTags( data.tags || [] );
+          setHighlights( data.highlights || [] );
+          setFaqs( Array.isArray( data.faqs ) ? data.faqs : [ { question: '', answer: '' } ] );
+          
+          setAgeRestriction( data.ageRestriction || '' );
+          setParkingOptions( data.parkingOptions || '' );
+          // Set agendaItems (assuming it comes from the server)
+          // Set agenda items, converting Date | null to string
+          const formattedAgendaItems = data.agendaItems.map( ( item: AgendaItem ) => ( {
+            title: item.title,
+            startTime: item.startTime ? new Date( item.startTime ).toISOString() : '',
+            endTime: item.endTime ? new Date( item.endTime ).toISOString() : '',
+            description: item.description || '',
+            hostOrArtist: item.hostOrArtist || '',
+          } ) );
+          // Set the state for agendaItems
+          setAgendaItems( formattedAgendaItems );
+          
           if ( data.featuredImage ) setPreviewImage( data.featuredImage );
           if ( data.venueImage ) setVenueImagePreview( data.venueImage );
+
+          setEventId( data.id );
         } catch ( error )
         {
           console.error( 'Error fetching event details:', error );
@@ -78,13 +125,8 @@ const EditEventPage = () =>
     }
 
     fetchEventDetails();
-  }, [ eventSlug ] );
+  }, [ slug ] );
 
-  const handleInputChange = ( e: { target: { name: string; value: string } } ) =>
-  {
-    const { name, value } = e.target;
-    setEventData( { ...eventData, [ name ]: value } );
-  };
 
   const handleImageUpload = async ( file: File | null, orgName: string, bucketName: string ) =>
   {
@@ -93,10 +135,7 @@ const EditEventPage = () =>
     const uniqueFilename = `${ orgName }_${ Date.now() }_${ file.name }`;
     const { error } = await createClient()
       .storage.from( bucketName )
-      .upload( `public/${ uniqueFilename }`, file, {
-        cacheControl: '3600',
-        upsert: false,
-      } );
+      .upload( `public/${ uniqueFilename }`, file, { cacheControl: '3600', upsert: false } );
 
     if ( error )
     {
@@ -104,46 +143,50 @@ const EditEventPage = () =>
       return null;
     }
 
-    const { data: publicUrlData } = createClient()
-      .storage.from( bucketName )
-      .getPublicUrl( `public/${ uniqueFilename }` );
-
+    const { data: publicUrlData } = createClient().storage.from( bucketName ).getPublicUrl( `public/${ uniqueFilename }` );
     return publicUrlData?.publicUrl || '';
   };
 
   const handleSubmit = async ( e: { preventDefault: () => void } ) =>
   {
     e.preventDefault();
-    if ( !user ) return;
-
     if ( !eventId )
     {
       toast.error( 'Event ID is missing. Cannot update event.' );
       return;
     }
 
-    // Upload featured image if updated
-    const featuredImageUrl = featuredImageFile
-      ? await handleImageUpload( featuredImageFile, user.orgName, 'eventFeaturedImages' )
-      : eventData.featuredImage;
+    const featuredImageUrl = featuredImage ? await handleImageUpload( featuredImage, user?.orgName || '', 'eventFeaturedImages' ) : previewImage;
+    const venueImageUrl = venueImage ? await handleImageUpload( venueImage, user?.orgName || '', 'venueImages' ) : venueImagePreview;
 
-    // Upload venue image if updated
-    const venueImageUrl = venueImageFile
-      ? await handleImageUpload( venueImageFile, user.orgName, 'venueImages' )
-      : eventData.venueImage;
+    const startDateISO = startDate ? new Date( startDate ).toISOString() : null;
+    const endDateISO = endDate ? new Date( endDate ).toISOString() : null;
 
     const formData = new FormData();
-    formData.append( 'name', eventData.name );
-    formData.append( 'description', eventData.description );
-    formData.append( 'startDate', eventData.startDate );
-    formData.append( 'endDate', eventData.endDate );
-    formData.append( 'venue', eventData.venue );
-    formData.append( 'address', eventData.address );
-    formData.append( 'city', eventData.city );
-    formData.append( 'state', eventData.state );
-    formData.append( 'country', eventData.country );
-    formData.append( 'zipCode', eventData.zipCode );
-    formData.append( 'maxAttendees', eventData.maxAttendees.toString() );
+    formData.append( 'name', name );
+    formData.append( 'description', description );
+    formData.append( 'startDate', startDateISO || '' );
+    formData.append( 'endDate', endDateISO || '' );
+    formData.append( 'eventStartTime', eventStartTime );
+    formData.append( 'eventEndTime', eventEndTime );
+    formData.append( 'venue', venue );
+    formData.append( 'venueDescription', venueDescription );
+    formData.append( 'address', address );
+    formData.append( 'city', city );
+    formData.append( 'state', state );
+    formData.append( 'country', country );
+    formData.append( 'zipCode', zipCode );
+    formData.append( 'maxAttendees', maxAttendees.toString() );
+    formData.append( 'notes', notes );
+    formData.append( 'scheduleDetails', scheduleDetails );
+    formData.append( 'refundPolicy', refundPolicy );
+    formData.append( 'timezone', timezone );
+    formData.append( 'tags', JSON.stringify( tags ) ); // Convert array to JSON
+    formData.append( 'faqs', JSON.stringify( faqs ) );
+    formData.append( 'highlights', JSON.stringify( highlights ) ); // Convert array to JSON
+    formData.append( 'ageRestriction', ageRestriction );
+    formData.append( 'parkingOptions', parkingOptions );
+    formData.append( 'agendaItems', JSON.stringify( agendaItems ) );
 
     if ( featuredImageUrl ) formData.append( 'featuredImage', featuredImageUrl );
     if ( venueImageUrl ) formData.append( 'venueImage', venueImageUrl );
@@ -151,12 +194,18 @@ const EditEventPage = () =>
     try
     {
       const response = await updateEvent( eventId, formData );
-      if ( response )
+
+      if ( response.success )
       {
         toast.success( 'Event updated successfully!' );
+        // Delay the redirection after showing the toast
+        setTimeout( () =>
+        {
+          router.push( `/dashboard/${ user?.orgName }/events` );
+        }, 2000 ); // Delay the redirect by 2 seconds (optional)
       } else
       {
-        toast.error( 'Failed to update event.' );
+        toast.error( 'Failed to update event: ' + response.message );
       }
     } catch ( error )
     {
@@ -165,67 +214,395 @@ const EditEventPage = () =>
     }
   };
 
+
+  const handleAgeRestrictionChange = ( option: string ) =>
+  {
+    setAgeRestriction( option );
+  };
+
+
+  const handleFaqChange = ( e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number, field: keyof FAQ ) =>
+  {
+    const newFaqs = [ ...faqs ];
+    newFaqs[ index ][ field ] = e.target.value; // TypeScript now understands field is a key of FAQ
+    setFaqs( newFaqs );
+  };
+  const handleParkingOptionsChange = ( option: string ) =>
+  {
+    setParkingOptions( option );
+  };
+
+  const addFaq = () =>
+  {
+    setFaqs( [ ...faqs, { question: '', answer: '' } ] );
+  };
+
+  const removeFaq = ( index: number ) =>
+  {
+    const newFaqs = faqs.filter( ( _, i ) => i !== index );
+    setFaqs( newFaqs );
+  };
   return (
     <div className="container mx-auto max-w-3xl bg-white p-8 rounded-lg">
       <h1 className="mb-6 text-center text-2xl font-bold text-gray-900">Edit Event</h1>
 
-      <form onSubmit={ handleSubmit } className="space-y-6">
+      <form onSubmit={ handleSubmit } className="space-y-6 pb-24">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Event Name</label>
-          <Input
-            type="text"
-            name="name"
-            value={ eventData.name }
-            onChange={ handleInputChange }
-            placeholder="Event Name"
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
-          <Textarea
-            name="description"
-            value={ eventData.description }
-            onChange={ handleInputChange }
-            placeholder="Description"
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-          />
-        </div>
-
-        {/* Featured Image Upload */ }
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Featured Image</label>
+          <label className="block text-sm mb-3 font-medium text-gray-700">
+            Event Featured Image
+          </label>
           <FileUploadButton
-            setImage={ setFeaturedImageFile }
+            setImage={ setFeaturedImage }
             previewImage={ previewImage }
             setPreviewImage={ setPreviewImage }
-            label="Upload Featured Image"
-            orgName={ user?.orgName || '' }
-          />
-        </div>
+            label=""
+            orgName={ user?.orgName || '' } />
 
-        {/* Venue Image Upload */ }
+
+        </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Venue Image</label>
-          <ImageUploadVenue
-            setImage={ setVenueImageFile }
-            previewImage={ venueImagePreview }
-            setPreviewImage={ setVenueImagePreview }
-            label="Upload Venue Image"
+
+          <InputFieldEJ
+            type="text"
+            id="name"
+
+            value={ name }
+            onChange={ ( e ) => setName( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Event Name"
+            required label={ 'Event Title' } />
+        </div>
+
+        <div>
+
+          <InputFieldEJ
+            id="description"
+            value={ description }
+            onChange={ ( e ) => setDescription( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Description"
+            required label={ 'Description' } />
+        </div>
+
+
+
+
+        <div>
+          <InputFieldEJ
+            type="date"
+            id="startDate"
+            value={ startDate }
+            onChange={ ( e ) => setStartDate( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            required
+            label="Start Date"
+          />
+        </div>
+        <div>
+          <InputFieldEJ
+            type="date"
+            id="endDate"
+            value={ endDate }
+            onChange={ ( e ) => setEndDate( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            required
+            label="End Date"
           />
         </div>
 
-        {/* Other form fields for event details like start date, end date, venue, etc. */ }
-        <Button
-          type="submit"
-          color="warning"
-          className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          Update Event
-        </Button>
+
+        <div>
+          <InputFieldEJ
+            type="time"
+            id="eventStartTime"
+            value={ eventStartTime }
+            onChange={ ( e ) => setEventStartTime( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            required
+            label="Event Start Time"
+          />
+        </div>
+        <div>
+          <InputFieldEJ
+            type="time"
+            id="eventEndTime"
+            value={ eventEndTime }
+            onChange={ ( e ) => setEventEndTime( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            required
+            label="Event End Time"
+          />
+        </div>
+
+        <div>
+
+
+          <InputFieldEJ
+            type="text"
+            id="venue"
+            value={ venue }
+            onChange={ ( e ) => setVenue( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Venue" label={ ' Venue Name' }
+          />
+        </div>
+        <ImageUploadVenue
+          setImage={ setVenueImage }
+          previewImage={ venueImagePreview }
+          setPreviewImage={ setVenueImagePreview }
+          label=""
+        />
+        <div>
+          <Textarea
+            id="venueDescription"
+            value={ venueDescription }
+            onChange={ ( e ) => setVenueDescription( e.target.value ) }
+            label="Venue Description"
+            placeholder="Describe the venue"
+            rows={ 4 } // Adjust the number of visible rows
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+          />
+        </div>
+
+
+        <div>
+
+
+          <InputFieldEJ
+            type="text"
+            id="address"
+            value={ address }
+            onChange={ ( e ) => setAddress( e.target.value ) }
+            className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Address" label={ '  Venue Street Address' } />
+
+
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
+
+            <InputFieldEJ
+              type="text"
+              id="city"
+              value={ city }
+              onChange={ ( e ) => setCity( e.target.value ) }
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              placeholder="City" label={ 'City' } />
+          </div>
+
+          <div>
+
+            <InputFieldEJ
+              type="text"
+              id="state"
+              value={ state }
+              onChange={ ( e ) => setState( e.target.value ) }
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              placeholder="State" label={ 'State' } />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+
+          <div>
+
+            <InputFieldEJ
+              type="text"
+              id="zipCode"
+              value={ zipCode }
+              onChange={ ( e ) => setZipCode( e.target.value ) }
+              className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              placeholder="Zip Code" label={ 'Zip Code' } />
+          </div>
+
+        </div>
+     
+
+        <div>
+          <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
+            Notes
+          </label>
+          <InputFieldEJ
+            id="notes"
+            value={ notes }
+            onChange={ ( e ) => setNotes( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Notes" label={ 'Notes' } />
+        </div>
+
+        <div>
+          <label htmlFor="scheduleDetails" className="block text-sm font-medium text-gray-700">
+            Schedule Details
+          </label>
+          <Textarea
+            id="scheduleDetails"
+            value={ scheduleDetails }
+            onChange={ ( e ) => setScheduleDetails( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Details about the schedule, agenda, etc." label={ '' } />
+        </div>
+
+        <div>
+          <label htmlFor="refundPolicy" className="block text-sm font-medium text-gray-700">
+            Refund Policy
+          </label>
+          <Textarea
+            id="refundPolicy"
+            value={ refundPolicy }
+            onChange={ ( e ) => setRefundPolicy( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Refund Policy"
+          />
+        </div>
+
+        <div>
+
+          <InputFieldEJ
+            type="text"
+            id="timezone"
+            value={ timezone }
+            onChange={ ( e ) => setTimezone( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Timezone"
+            label={ ' Timezone' } />
+        </div>
+
+        <div>
+
+          <InputFieldEJ
+            type="text"
+            id="tags"
+            value={ tags.join( ', ' ) } // Convert array to comma-separated string for display
+            onChange={ ( e ) => setTags( e.target.value.split( ',' ).map( tag => tag.trim() ) ) } // Split by commas and trim spaces
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Tags (comma separated)"
+            label="Tags"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Frequently Asked Questions</label>
+          <p className="text-sm text-gray-500 mb-4">
+            Answer questions your attendees may have about the event, like accessibility and amenities.
+          </p>
+          { faqs.map( ( faq, index ) => (
+            <div key={ index } className="mb-4">
+              <div>
+                <label htmlFor={ `faq-question-${ index }` } className="block text-sm font-medium text-gray-700">
+                  Question
+                </label>
+                <InputFieldEJ
+                  type="text"
+                  id={ `faq-question-${ index }` }
+                  value={ faq.question }
+                  onChange={ ( e ) => handleFaqChange( e, index, 'question' ) }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                  placeholder="Enter your question"
+                  label={ 'Question' } />
+                { faq.question.trim() === '' && faq.answer.trim() !== '' && (
+                  <p className="text-red-500 text-sm mt-1">A question is required if you provide an answer.</p>
+                ) }
+              </div>
+              <div className="mt-2">
+                <label htmlFor={ `faq-answer-${ index }` } className="block text-sm font-medium text-gray-700">
+                  Answer
+                </label>
+                <InputFieldEJ
+                  id={ `faq-answer-${ index }` }
+                  value={ faq.answer }
+                  onChange={ ( e ) => handleFaqChange( e, index, 'answer' ) }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                  placeholder="Enter your answer"
+                  label={ 'Answer' } />
+                { faq.answer.trim() === '' && faq.question.trim() !== '' && (
+                  <p className="text-red-500 text-sm mt-1">An answer is required if you provide a question.</p>
+                ) }
+              </div>
+              <button
+                type="button"
+                onClick={ () => removeFaq( index ) }
+                className="mt-2 text-red-500 hover:text-red-700 text-sm"
+              >
+                Remove FAQ
+              </button>
+            </div>
+          ) ) }
+          <button
+            type="button"
+            onClick={ addFaq }
+            className="mt-2 text-blue-500 hover:text-blue-700 text-sm"
+          >
+            + Add question
+          </button>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Add highlights about your event</h3>
+
+          {/* Age Restriction Options */ }
+          <div className="mb-6">
+            <p className="text-sm font-medium text-gray-700 mb-2">Is there an age restriction?</p>
+            <div className="flex gap-4">
+              { [ 'All ages allowed', 'There’s an age restriction', 'Parent or guardian needed' ].map( ( option ) => (
+                <button
+                  key={ option }
+                  type="button"
+                  onClick={ () => handleAgeRestrictionChange( option ) }
+                  className={ `py-2 px-4 border rounded-md ${ ageRestriction === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                    }` }
+                >
+                  { option }
+                </button>
+              ) ) }
+            </div>
+          </div>
+
+          {/* Parking Options */ }
+          <div className="mb-6">
+            <p className="text-sm font-medium text-gray-700 mb-2">Is there parking at your venue?</p>
+            <div className="flex gap-4">
+              { [ 'Free parking', 'Paid parking', 'No parking options' ].map( ( option ) => (
+                <button
+                  key={ option }
+                  type="button"
+                  onClick={ () => handleParkingOptionsChange( option ) }
+                  className={ `py-2 px-4 border rounded-md ${ parkingOptions === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                    }` }
+                >
+                  { option }
+                </button>
+              ) ) }
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+
+          <InputFieldEJ
+            type="number"
+            id="maxAttendees"
+            value={ maxAttendees.toString() }
+            onChange={ ( e ) => setMaxAttendees( Number( e.target.value ) ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Max Attendees"
+            label={ ' Max Attendees' } />
+        </div>
+
+
+        {/* Sticky Footer Button */ }
+        <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md flex justify-center">
+          <Button
+            type="submit"
+            radius="sm"
+            className="px-6 py-2 bg-orange-500 text-white text-xl rounded-3xl"
+          >
+            Save Event
+          </Button>
+        </div>
       </form>
     </div>
   );
