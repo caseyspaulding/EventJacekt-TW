@@ -57,9 +57,7 @@ export default function NavBarTW ()
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
 
                 <div className="relative group cursor-pointer">
-                  <div
-                    className="absolute -inset-1 bg-gradient-to-l from-orange-500 via-green-500 to-blue-500 rounded-lg blur-lg opacity-50 transition duration-1000 "
-                  ></div>
+                 
                   <Button
                     href="/signup"
                     as="a"
