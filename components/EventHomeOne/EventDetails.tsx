@@ -124,7 +124,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
               imageUrl={ venueImage } // Use venueImage prop
               alt={ `${ venue || 'Venue' } image` }
               overlayColor=""
-              height="h-[260px] xl:h-[437px]"
+             
             /></>
           ) }
         </section>
