@@ -113,6 +113,9 @@ export default function FooterFull ()
                 </a>
               ) ) }
             </div>
+            <div className="text-sm text-white mt-4 md:mt-0">
+              Proud Veteran-Owned Business
+            </div>
           </div>
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">

@@ -4,7 +4,7 @@ import React from 'react';
 import { formatDate, formatTime } from '@/utils/dateFormatter'; 
 import VenueMap from '../VenueMap';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { MinusIcon, PlusIcon, PlusSmallIcon } from '@heroicons/react/20/solid';
+import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
 
 
 
