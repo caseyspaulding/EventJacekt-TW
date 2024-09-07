@@ -78,7 +78,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
   return (
     <div className="max-w-6xl mt-4 pb-16 mx-auto bg-white">
       {/* Date and Time */ }
-      <section className="mb-6">
+      <section className="mb-4">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Date & Time</h2>
         <div className="flex items-center text-gray-700">
           <p>{ formatDate( startDate ) } to { formatDate( endDate ) }</p>
@@ -97,28 +97,36 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
         {/* Only show venue if it exists */ }
         { venue && <p className="text-gray-700">{ venue }</p> }
 
-        {/* Display venue image if available */ }
-        { venueImage && (
-          <EventImage
-            imageUrl={ venueImage } // Use venueImage prop
-            alt={ `${ venue || 'Venue' } image` }
-            overlayColor=""
-            height="h-[260px] xl:h-[437px]"
-          />
-        ) }
+    
 
         {/* Construct the address dynamically to avoid displaying "null" */ }
-        { ( address || city || state || zipCode ) ? (
-          <p className="text-gray-700">
-            { address && `${ address }, ` }
-            { city && `${ city }, ` }
-            { state && `${ state }, ` }
-            { zipCode && `${ zipCode }` }
-          </p>
-        ) : (
-          <p className="text-gray-700">Location not specified</p>
-        ) }
+        <section className="mb-4">
+          <div className="inline-flex items-center">
+            <span className="font-semibold">Address:</span>
+            { ( address || city || state || zipCode ) ? (
+              <p className="text-gray-700 ml-2"> {/* Add ml-2 to add spacing between the label and address */ }
+                { address && `${ address }, ` }
+                { city && `${ city }, ` }
+                { state && `${ state }, ` }
+                { zipCode && `${ zipCode }` }
+              </p>
+            ) : (
+              <p className="text-gray-700 ml-2">Location not specified</p>  )}
+          </div>
+        </section>
 
+
+        {/* Display venue image if available */ }
+        <section className="my-4 ">
+          { venueImage && (
+            <EventImage
+              imageUrl={ venueImage } // Use venueImage prop
+              alt={ `${ venue || 'Venue' } image` }
+              overlayColor=""
+              height="h-[260px] xl:h-[437px]"
+            />
+          ) }
+        </section>
         {/* Show the map only if address exists */ }
         { address && (
           <VenueMap
@@ -154,9 +162,9 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
 
       {/* Additional Event Information */ }
       <section className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Additional Information</h2>
-        { ageRestriction && <p className="text-gray-700 my-3">Age Restriction: { ageRestriction }</p> }
-        { parkingOptions && <p className="text-gray-700">Parking: { parkingOptions }</p> }
+        <h2 className="text-2xl font-bold text-gray-700 mb-2">Additional Information</h2>
+        { ageRestriction && <p className="text-gray-700 font-semibold my-3">Age Restriction: <span className='font-normal'>{ ageRestriction }</span></p> }
+        { parkingOptions && <p className="text-gray-700 font-semibold">Parking: <span className='font-normal'>{ parkingOptions }</span></p> }
         { organizerContact && <p className="text-gray-700">Contact: { organizerContact }</p> }
       </section>
 

@@ -73,12 +73,14 @@ export default function FooterTW() {
             </a>
           ))}
         </div>
-        <p className="mt-10 pb-12 text-center text-xs leading-5 text-gray-500">
+        <p className="mt-5 pb-4 text-center text-xs leading-5 text-gray-500">
+          Proud Veteran-Owned Business <br /> 
+          Kissimmee, FL 34747
+        </p>
+        <p className="mt-5 pb-12 text-center text-xs leading-5 text-gray-500">
           &copy; {currentYear} EventJacket, LLC. All rights reserved.
         </p>
-        <div className="text-sm text-white mt-4 md:mt-0">
-          Proud Veteran-Owned Business
-        </div>
+        
       </div>
     </footer>
   );
