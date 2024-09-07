@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 function useGeolocation ( address: string )
 {
   const [ coordinates, setCoordinates ] = useState<{ lat: number; lng: number } | null>( null );
-  const [ loading, setLoading ] = useState( true );  // Add loading state
+  const [ loading, setLoading ] = useState( true ); // Add loading state
   const [ error, setError ] = useState<string | null>( null ); // Add error state
 
   // Default coordinates (e.g., San Francisco)
@@ -21,15 +21,15 @@ function useGeolocation ( address: string )
       return;
     }
 
-    // Ensure Google Maps API is loaded
+    // Ensure Google Maps API is loaded and Geocoder is available
     const loadGeocoder = () =>
     {
-      if ( !window.google || !window.google.maps )
+      if ( !window.google || !window.google.maps || !window.google.maps.Geocoder )
       {
-        console.error( 'Google Maps API is not loaded.' );
+        console.error( 'Google Maps API is not fully loaded.' );
         setCoordinates( defaultCoordinates ); // Use default if API not loaded
         setLoading( false ); // Set loading to false
-        setError( 'Google Maps API is not loaded.' );
+        setError( 'Google Maps API is not fully loaded.' );
         return;
       }
 
@@ -53,22 +53,14 @@ function useGeolocation ( address: string )
       } );
     };
 
-    if ( window.google && window.google.maps )
+    // Check if the Google Maps API is ready
+    if ( window.google && window.google.maps && window.google.maps.Geocoder )
     {
       loadGeocoder();
     } else
     {
-      const script = document.createElement( 'script' );
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }`;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => loadGeocoder();
-      script.onerror = () =>
-      {
-        setError( 'Failed to load Google Maps API' );
-        setLoading( false );
-      };
-      document.head.appendChild( script );
+      setError( 'Google Maps API is not loaded.' );
+      setLoading( false );
     }
   }, [ address ] );
 
