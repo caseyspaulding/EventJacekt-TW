@@ -118,6 +118,7 @@ export default async function EventPage ( { params }: { params: Params } )
             eventEndTime: events.eventEndTime,
             featuredImage: events.featuredImage,
             venue: events.venue,
+            organizerContact: events.organizerContact,  
             venueImage: events.venueImage,  // Add venueImage to the query
             address: events.address,
             city: events.city,
@@ -129,7 +130,7 @@ export default async function EventPage ( { params }: { params: Params } )
             bannerImage: events.bannerImage,
             galleryImages: events.galleryImages,
             videoLinks: events.videoLinks,
-            organizerContact: events.organizerContact,
+          
             maxAttendees: events.maxAttendees,
             status: events.status,
             refundPolicy: events.refundPolicy,

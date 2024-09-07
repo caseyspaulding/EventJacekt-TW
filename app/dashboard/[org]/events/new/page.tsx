@@ -40,6 +40,8 @@ const CreateEventPage = () =>
     const [ endDate, setEndDate ] = useState( '' );
     const [ eventStartTime, setEventStartTime ] = useState( '' );
     const [ eventEndTime, setEventEndTime ] = useState( '' );
+    const [ organizerContact, setOrganizerContact ] = useState( '' );
+
     const [ venue, setVenue ] = useState( '' );
     const [ venueDescription, setVenueDescription ] = useState( '' );
     const [ address, setAddress ] = useState( '' );
@@ -164,6 +166,8 @@ const CreateEventPage = () =>
         formData.append( 'state', state );
         formData.append( 'country', country );
         formData.append( 'zipCode', zipCode );
+        formData.append( 'organizerContact', organizerContact );
+
         formData.append( 'maxAttendees', maxAttendees.toString() );
         formData.append( 'status', 'draft' );
         // Only append image URLs if they exist
@@ -293,6 +297,18 @@ const CreateEventPage = () =>
                         required label={ 'Description' }                    />
                 </div>
 
+                <div>
+                    <InputFieldEJ
+                        type="text"
+                        id="organizerContact"
+                        value={ organizerContact }
+                        onChange={ ( e ) => setOrganizerContact( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        placeholder="Organizer Contact Information"
+                        label={ 'Organizer Contact' }
+                        required
+                    />
+                </div>
 
 
            

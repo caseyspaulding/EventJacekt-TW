@@ -114,6 +114,8 @@ export const createEvent = async ( formData: FormData ) =>
     const ageRestriction = formData.get( 'ageRestriction' ) as string;
     const parkingOptions = formData.get( 'parkingOptions' ) as string;
     const agendaItemsRaw = formData.get( 'agendaItems' ) as string;
+    const organizerContact = formData.get( 'organizerContact' ) as string;
+    const venueDescription = formData.get( 'venueDescription' ) as string;  
 
     // Parse JSON string for agenda items
     let agendaItems;
@@ -143,11 +145,14 @@ export const createEvent = async ( formData: FormData ) =>
         name,
         slug,
         description,
+        
+        organizerContact,
         startDate: startDateString,  // Use plain date string
         endDate: endDateString,      // Use plain date string
         eventStartTime, // Use plain time string
         eventEndTime,   // Use plain time string
         venue: venue || null,
+        venueDescription: venueDescription || null,
         address: address || null,
         city: city || null,
         state: state || null,
