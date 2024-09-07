@@ -97,7 +97,7 @@ export default function EventsPage ()
   ];
 
   return (
-    <div className="sm:px-6">
+    <div className="sm:px-6 p-6 rounded-2xl bg-white">
       <BreadcrumbsPageHeader title="All Events" breadcrumbs={ breadcrumbs } />
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">

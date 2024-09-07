@@ -5,7 +5,7 @@ import { db } from '../../../db';
 import { userProfiles, organizations } from '@/db/schema';
 import { eq, and } from 'drizzle-orm/expressions';
 import UserProfileHeaderDashboard from '@/components/Headers/UserProfileHeaderDashboard';
-import { BanknotesIcon,  ChevronRightIcon, FolderIcon, HomeIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, ChevronRightIcon, FolderIcon, HomeIcon } from '@heroicons/react/24/outline';
 import DashboardCardGrid from './components/DashboardGrid/DashboardGrid';
 import { fetchTicketSalesForOrg } from '@/app/actions/dashboardActions';
 import { Suspense } from 'react';
@@ -93,36 +93,36 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                 name: 'Tickets Sold',
                 icon: BanknotesIcon,
                 amount: formattedTotalSales,
-                href: '#',
+                href: `/dashboard/${ decodedOrgName }/tickets-sole`,
             },
             {
                 name: 'Total Events',
                 icon: FolderIcon,
                 amount: events.length,
-                href: '`/dashboard/${ orgName }',
+                href: `/dashboard/${ decodedOrgName }/events`, // Dynamic link based on orgName
             },
             {
                 name: 'Members',
                 icon: HomeIcon,
                 amount: totalMembers.toString(),
-                href: '#',
+                href: `/dashboard/${ decodedOrgName }/members`,
             },
         ];
-       
+
         const breadcrumbs = [
             { name: 'Dashboard', href: '/' },
             { name: '', href: '' },
-          
+
         ];
-       
+
 
         return (
-            <div className="">
+            <div className="bg-white rounded-2xl p-5">
                 <div>
                     <div>
                         {/* Back Navigation for Small Screens */ }
                         <nav aria-label="Back" className="sm:hidden">
-                            
+
                         </nav>
 
                         {/* Breadcrumbs for Larger Screens */ }
@@ -141,7 +141,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                                                 <div
                                                     className={ ` text-sm  font-medium text-gray-500 hover:text-gray-700 ${ breadcrumb ? 'text-gray-700' : ''
                                                         }` }
-                                                    aria-current={ breadcrumb? 'page' : undefined }
+                                                    aria-current={ breadcrumb ? 'page' : undefined }
                                                 >
                                                     { breadcrumb.name }
                                                 </div>
@@ -153,17 +153,8 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                         </nav>
                     </div>
 
-                    {/* Page Title and Actions */ }
-                    <div className="mt-2 md:flex md:items-center md:justify-between mb-2">
-                        <div className="min-w-0 flex-1">
-                            <h2 className="text-5xl pt-2 mt-1 font-bold leading-7 text-gray-900 sm:mt-1 sm:truncate sm:text-6xl sm:tracking-tight">
-                               Dashboard
-                            </h2>
-                        </div>
-                        <div className="mt-4 flex flex-shrink-0 md:ml-4 md:mt-0">
 
-                        </div>
-                    </div>
+
                 </div>
                 <header>
                     <Suspense fallback={ <div>Loading...</div> }>
@@ -180,26 +171,8 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                 <div className="bg-white max-w-6xl">
                     <DashboardCardGrid cards={ cards } />
                     <div>
-                        <h2 className="text-xl font-semibold mb-4">Events</h2>
-                        { events.length > 0 ? (
-                            <div className="space-y-4">
-                                { events.map( ( event ) => (
-                                    <div key={ event.id } className="bg-gray-100 p-4 rounded-lg shadow-sm">
-                                        <h3 className="text-lg font-bold">{ event.name }</h3>
-                                        <p className="text-gray-600">
-                                            <strong>Date:</strong> { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'No start date' } -{ ' ' }
-                                            { event.endDate ? new Date( event.endDate ).toLocaleDateString() : 'No end date' }
-                                        </p>
-                                        <p className="text-gray-600">
-                                            <strong>Venue:</strong> { event.venue || 'TBD' }
-                                        </p>
 
-                                    </div>
-                                ) ) }
-                            </div>
-                        ) : (
-                            <p className="text-gray-500">No events found for this organization.</p>
-                        ) }
+
                     </div>
                 </div>
             </div>

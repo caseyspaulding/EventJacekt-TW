@@ -15,7 +15,7 @@ export default function UserProfileHeader ( {
 }: UserProfileHeaderProps )
 {
   return (
-    <div className="rounded-lg overflow-hidden">
+    <div className="rounded-lg overflow-hidden bg-white pb-10">
       <div className="rounded-t-lg overflow-hidden">
         <img
           alt="profile image"

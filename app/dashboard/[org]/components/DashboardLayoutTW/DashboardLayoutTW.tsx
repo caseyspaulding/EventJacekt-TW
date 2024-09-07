@@ -90,7 +90,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                 <div className="absolute top-0 right-0 -mr-12 pt-2">
                   <Button
                     type="button"
-                    className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:bg-blue-600"
+                    className=" flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:bg-blue-600"
                     onClick={ () => setSidebarOpen( false ) }
                   >
                     <span className="sr-only">Close sidebar</span>
@@ -180,7 +180,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       </Transition.Root>
 
       {/* Desktop Sidebar */ }
-      <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
+      <div className="hidden bg-gray-50  lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
         <div className="flex flex-col flex-grow bg-blue-600 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
             <Link href="/">
@@ -260,7 +260,8 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       </div>
 
       <div className="flex flex-col flex-1 lg:pl-64">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-blue-600 ">
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-blue-600 lg:bg-white max-w-8xl">
+
           <button
             type="button"
             className="px-4   text-gray-100 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 lg:hidden"
@@ -339,13 +340,12 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
           </div>
         </div>
         
-        <main>
-          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8"> {/* Render children here */ }
-          
+        <main className="bg-gray-100 min-h-screen">
+          <div className="max-w-7xl h-fit px-4 py-8 sm:px-6 lg:px-8">
             { children }
-            {/* /End replace */ }</div>
+            {/* Render children here */ }
+          </div>
         </main>
-        
       </div>
     </>
   );
