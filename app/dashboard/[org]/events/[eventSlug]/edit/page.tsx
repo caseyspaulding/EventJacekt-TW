@@ -1,18 +1,18 @@
 'use client';
 
-import type { ChangeEvent} from 'react';
+import type { ChangeEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getEventBySlug, updateEvent } from '@/app/actions/eventActions';
 import toast from 'react-hot-toast';
-import { Button,Textarea } from '@nextui-org/react';
+import { Button, Textarea } from '@nextui-org/react';
 
 import { createClient } from '@utils/supabase/client'; // For Supabase bucket storage
 import { FileUploadButton } from '../../new/FileUploadButton';
 import { ImageUploadVenue } from '../../new/ImageUploadVenue';
 import { useUser } from '@/contexts/UserContext';
 import InputFieldEJ from '@/components/Input/InputEJ';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 
 type AgendaItem = {
   id: string;
@@ -48,6 +48,7 @@ const EditEventPage = () =>
   const [ maxAttendees, setMaxAttendees ] = useState( 0 );
   const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
   const [ venueImage, setVenueImage ] = useState<File | null>( null );
+  const [ organizerContact, setOrganizerContact ] = useState( '' );
   const [ notes, setNotes ] = useState( '' );
   const [ scheduleDetails, setScheduleDetails ] = useState( '' );
   const [ refundPolicy, setRefundPolicy ] = useState( '' );
@@ -55,7 +56,7 @@ const EditEventPage = () =>
   const [ tags, setTags ] = useState<string[]>( [] );
   const [ faqs, setFaqs ] = useState<{ question: string; answer: string }[]>( [ { question: '', answer: '' } ] );
   const [ highlights, setHighlights ] = useState<string[]>( [] );
- 
+
   const { user } = useUser();
   const [ ageRestriction, setAgeRestriction ] = useState( '' );
   const [ parkingOptions, setParkingOptions ] = useState( '' );
@@ -67,7 +68,7 @@ const EditEventPage = () =>
 
   const { eventSlug } = useParams(); // Get event slug from URL
   const slug = Array.isArray( eventSlug ) ? eventSlug[ 0 ] : eventSlug;
-  
+
   useEffect( () =>
   {
     async function fetchEventDetails ()
@@ -77,7 +78,7 @@ const EditEventPage = () =>
         try
         {
           const data = await getEventBySlug( slug );
-         
+
           setName( data.name || '' );
           setDescription( data.description || '' );
           setStartDate( data.startDate ? new Date( data.startDate ).toISOString().split( 'T' )[ 0 ] : '' );
@@ -99,7 +100,7 @@ const EditEventPage = () =>
           setTags( data.tags || [] );
           setHighlights( data.highlights || [] );
           setFaqs( Array.isArray( data.faqs ) ? data.faqs : [ { question: '', answer: '' } ] );
-          
+          setOrganizerContact( data.organizerContact || '' );
           setAgeRestriction( data.ageRestriction || '' );
           setParkingOptions( data.parkingOptions || '' );
           // Set agendaItems (assuming it comes from the server)
@@ -113,7 +114,7 @@ const EditEventPage = () =>
           } ) );
           // Set the state for agendaItems
           setAgendaItems( formattedAgendaItems );
-          
+
           if ( data.featuredImage ) setPreviewImage( data.featuredImage );
           if ( data.venueImage ) setVenueImagePreview( data.venueImage );
 
@@ -173,7 +174,7 @@ const EditEventPage = () =>
     formData.append( 'eventEndTime', eventEndTime );
     formData.append( 'venue', venue );
     formData.append( 'venueDescription', venueDescription );
-  
+    formData.append( 'organizerContact', organizerContact );
     formData.append( 'address', address );
     formData.append( 'city', city );
     formData.append( 'state', state );
@@ -187,7 +188,7 @@ const EditEventPage = () =>
     formData.append( 'tags', tags.join( ',' ) ); // Convert array to comma-separated string
     formData.append( 'highlights', highlights.join( ',' ) ); // Convert array to comma-separated string
     formData.append( 'faqs', JSON.stringify( faqs ) );
-   
+
     formData.append( 'ageRestriction', ageRestriction );
     formData.append( 'parkingOptions', parkingOptions );
     formData.append( 'agendaItems', JSON.stringify( agendaItems ) );
@@ -197,7 +198,7 @@ const EditEventPage = () =>
 
     try
     {
-     
+
       const response = await updateEvent( eventId, formData );
 
       if ( response.success )
@@ -289,7 +290,18 @@ const EditEventPage = () =>
             required label={ 'Description' } />
         </div>
 
-
+        <div>
+          <InputFieldEJ
+            type="text"
+            id="organizerContact"
+            value={ organizerContact }
+            onChange={ ( e ) => setOrganizerContact( e.target.value ) }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            placeholder="Organizer Contact Information"
+            label={ 'Organizer Contact' }
+            required
+          />
+        </div>
 
 
         <div>
@@ -423,7 +435,7 @@ const EditEventPage = () =>
           </div>
 
         </div>
-     
+
 
         <div>
           <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
@@ -605,7 +617,7 @@ const EditEventPage = () =>
             radius="sm"
             className="px-6 py-2 bg-orange-500 text-white text-xl rounded-3xl"
           >
-            Save Event
+            Update Event
           </Button>
         </div>
       </form>

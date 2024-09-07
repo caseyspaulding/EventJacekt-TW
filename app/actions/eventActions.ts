@@ -230,6 +230,7 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
     const maxAttendees = parseInt( formData.get( 'maxAttendees' ) as string, 10 );
     const featuredImage = formData.get( 'featuredImage' ) as string;
     const notes = formData.get( 'notes' ) as string;
+    const organizerContact = formData.get( 'organizerContact' ) as string;
     const scheduleDetails = formData.get( 'scheduleDetails' ) as string;
     const refundPolicy = formData.get( 'refundPolicy' ) as string;
     const timezone = formData.get( 'timezone' ) as string;
@@ -266,6 +267,7 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
     const updatedEvent = {
         name,
         description,
+        organizerContact,
         startDate: startDateString,  // Use plain date string
         endDate: endDateString,      // Use plain date string
         eventStartTime,              // Use plain time string
