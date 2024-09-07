@@ -2,7 +2,7 @@ export default function HowItWorks ()
 {
   return (
     <section className="py-10 sm:py-16 lg:py-24">
-      
+
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">
@@ -16,14 +16,14 @@ export default function HowItWorks ()
         <div className="relative mt-12 lg:mt-20">
           {/* Dotted line positioned above the cards */ }
           <div className="absolute inset-x-0 -top-8 flex justify-center">
-           
+
           </div>
 
           <div className="relative grid grid-cols-1 text-center gap-y-12 md:grid-cols-3 gap-x-12 mt-20">
             {/* Card 1 */ }
-            <div className="p-[2px] bg-gradient-to-r from-blue-500 to-blue-300 rounded-xl shadow-lg transition duration-300 shadow-blue-500/50">
+            <div className="p-[2px] bg-gradient-to-r from-blue-400 to-blue-300 rounded-xl transition duration-300 ">
               <div className="flex flex-col h-full p-4 bg-white rounded-xl">
-                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-white border-2 border-gray-200 rounded-full shadow">
+                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-white border-1 border-gray-200 rounded-full shadow">
                   <span className="text-xl font-semibold text-blue-600">1</span>
                 </div>
                 <h3 className="mt-6 text-xl font-semibold leading-tight text-black md:mt-10">
@@ -36,9 +36,9 @@ export default function HowItWorks ()
             </div>
 
             {/* Card 2 */ }
-            <div className="p-[2px] bg-gradient-to-r from-blue-500 to-blue-300 rounded-xl shadow-lg transition duration-300 shadow-blue-500/50">
+            <div className="p-[2px] bg-gradient-to-r from-blue-300 to-blue-400 rounded-xl  transition duration-300 ">
               <div className="flex flex-col h-full p-4 bg-white rounded-xl">
-                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-white border-2 border-gray-200 rounded-full shadow">
+                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-white border-1 border-gray-200 rounded-full shadow">
                   <span className="text-xl font-semibold text-blue-600">2</span>
                 </div>
                 <h3 className="mt-6 text-xl font-semibold leading-tight text-black md:mt-10">
@@ -51,9 +51,9 @@ export default function HowItWorks ()
             </div>
 
             {/* Card 3 */ }
-            <div className="p-[2px] bg-gradient-to-r from-blue-500 to-blue-300 rounded-xl shadow-lg transition duration-300 shadow-blue-500/50">
+            <div className="p-[2px] bg-gradient-to-r from-blue-400 to-blue-300 rounded-xl  transition duration-300 ">
               <div className="flex flex-col h-full p-4 bg-white rounded-xl">
-                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-white border-2 border-gray-200 rounded-full shadow">
+                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-white border-1 border-gray-200 rounded-full shadow">
                   <span className="text-xl font-semibold text-blue-600">3</span>
                 </div>
                 <h3 className="mt-6 text-xl font-semibold leading-tight text-black md:mt-10">

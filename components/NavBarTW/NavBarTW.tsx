@@ -57,11 +57,11 @@ export default function NavBarTW ()
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
 
                 <div className="relative group cursor-pointer">
-                 
+
                   <Button
                     href="/signup"
                     as="a"
-                    className="relative z-10 py-2 bg-blue-600  hover:bg-green-500 text-white text-xl rounded-3xl 
+                    className="relative z-10 py-2 bg-blue-600  hover:bg-green-600 text-white text-xl rounded-3xl 
                  w-full sm:w-auto px-4 sm:px-52"
                   >
                     Get Started
@@ -75,7 +75,7 @@ export default function NavBarTW ()
 
               <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
                 <div className="text-center text-gray-400">
-                  <span className="text-center text-sm">Featured Video by Whidbey Ren Faire</span>
+                 
                 </div>
 
                 <div
@@ -88,7 +88,6 @@ export default function NavBarTW ()
                     thumbnailUrl="/images/icons/166.png"
 
                   />
-
 
 
                 </div>

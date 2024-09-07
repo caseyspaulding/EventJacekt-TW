@@ -3,6 +3,10 @@
 import React from 'react';
 import { formatDate, formatTime } from '@/utils/dateFormatter'; 
 import VenueMap from '../VenueMap';
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
+import { MinusIcon, PlusIcon, PlusSmallIcon } from '@heroicons/react/20/solid';
+
+
 
 interface FAQ
 {
@@ -79,6 +83,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
   // Ensure faqs is parsed correctly
   const parsedFaqs: FAQ[] =
     typeof faqs === 'string' ? JSON.parse( faqs ) : Array.isArray( faqs ) ? faqs : [];
+  
   return (
     <div className="max-w-6xl mt-4 pb-16 mx-auto bg-white">
      
@@ -157,15 +162,25 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
         { organizerContact && <p className="text-gray-700">Contact: { organizerContact }</p> }
       </section>
 
-      {/* FAQs Section */ }
+      {/* FAQs Section with Disclosure */ }
       <section className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">FAQs</h2>
-        <div className="flex flex-col text-gray-700">
+        <div className="divide-y divide-gray-900/10">
           { parsedFaqs.map( ( faq, index ) => (
-            <div key={ index } className="mb-4">
-              <h3 className="font-semibold">{ faq.question }</h3>
-              <p>{ faq.answer }</p>
-            </div>
+            <Disclosure key={ index } as="div" className="pt-6">
+              <dt>
+                <DisclosureButton className="group flex   items-start justify-between text-left text-gray-900">
+                  <span className="text-base font-semibold leading-7">{ faq.question }</span>
+                  <span className="ml-6 flex h-7 items-center">
+                    <PlusIcon aria-hidden="true" className="h-6 w-6 group-data-[open]:hidden" />
+                    <MinusIcon aria-hidden="true" className="h-6 w-6 [.group:not([data-open])_&]:hidden" />
+                  </span>
+                </DisclosureButton>
+              </dt>
+              <DisclosurePanel as="dd" className="mt-2 pr-12">
+                <p className="text-base leading-7 text-gray-600">{ faq.answer }</p>
+              </DisclosurePanel>
+            </Disclosure>
           ) ) }
         </div>
       </section>
