@@ -335,7 +335,7 @@ export default async function EventPage ( { params }: { params: Params } )
                 </div>
 
                 {/* Footer */ }
-                <div className="lg:mt-8 pt-5 mt-20">
+                <div className="lg:mt-8 pt-2 mt-20 mb-16">
                     <FooterTW />
                 </div>
             </main>
