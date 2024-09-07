@@ -176,9 +176,11 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
         { organizerContact && <p className="text-gray-700">Contact: { organizerContact }</p> }
       </section>
 
+      
+      {/* FAQ */ }
       <section className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
-        <div className="divide-y divide-gray-200">
+        <div className="">
           { parsedFaqs.map( ( faq, index ) => (
             <Disclosure key={ index } as="div" className="pt-6 first:pt-0">
               <dt>
@@ -199,6 +201,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
               <Disclosure.Panel as="dd" className="mt-2 bg-gray-50 rounded-md p-4">
                 <p className="text-base leading-7 text-gray-700">{ faq.answer }</p>
               </Disclosure.Panel>
+              <hr />
             </Disclosure>
           ) ) }
         </div>
