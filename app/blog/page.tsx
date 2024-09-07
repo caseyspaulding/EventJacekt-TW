@@ -2,79 +2,69 @@ import React from 'react';
 import Link from 'next/link';
 import { db } from '@/db';
 import { blogPosts } from '@/db/schema';
+import { desc } from 'drizzle-orm';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
 import HeaderCentered from '@/components/HeaderCentered';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Academy - EventJacket',
-    description:
-        'Read the latest articles from our blog for tips to grow and organize stellar events with EventJacket.'
+    title: 'Blog - EventJacket',
+    description: 'Read the latest articles from our blog for tips to grow and organize stellar events with EventJacket.'
 };
 
 export default async function BlogList ()
 {
-    const posts = await db.select().from( blogPosts ).orderBy( blogPosts.createdAt );
+    const posts = await db.select().from( blogPosts ).orderBy( desc( blogPosts.createdAt ) ).limit( 9 );
 
     return (
         <>
             <NavBar1 />
             <HeaderCentered
-                title="Academy"
-                description=" Read the latest articles from our blog for tips to grow and organize stellar events with EventJacket."
+                title="Blog"
+                description="Read the latest articles from our blog for tips to grow and organize stellar events with EventJacket."
             />
-            <div className="bg-white ">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto max-w-2xl text-center"></div>
-                    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            <main className="bg-white py-16">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         { posts.map( ( post ) => (
-                            <article
-                                key={ post.id }
-                                className="flex flex-col items-start justify-between"
-                            >
-                                <Link href={ `/blog/${ post.slug }` }>
-                                    <div className="relative w-full">
+                            <article key={ post.id } className="flex flex-col bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
+                                <Link href={ `/blog/${ post.slug }` } className="block">
+                                    <div className="relative h-48">
                                         <img
                                             alt={ post.title }
                                             src={ post.featuredImage || '/images/blog/image-1.jpg' }
-                                            className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+                                            className="w-full h-full object-cover rounded-t-lg"
                                         />
-                                        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
                                     </div>
                                 </Link>
-                                <div className="max-w-xl">
-                                    <div className="mt-8 flex items-center gap-x-4 text-xs">
-                                        <p className="text-sm text-gray-500">
-                                            By { post.author } on{ ' ' }
+                                <div className="p-6 flex-grow">
+                                    <div className="flex items-center gap-x-4 text-xs text-gray-500 mb-2">
+                                        <time dateTime={ post.createdAt.toISOString() } className="text-0.875rem">
                                             { new Date( post.createdAt ).toLocaleDateString() }
-                                        </p>
+                                        </time>
+                                        <span className="text-0.875rem">By { post.author }</span>
                                     </div>
-                                    <div className="group relative">
-                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                                            <Link href={ `/blog/${ post.slug }` }>
-                                                <span className="absolute inset-0" />
-                                                { post.title }
-                                            </Link>
-                                        </h3>
-                                        <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-                                            { post.excerpt }
-                                        </p>
-                                    </div>
-                                    <div className="relative mt-8 flex items-center gap-x-4">
-                                        {/*<img alt="Author" src={ post.author } className="h-10 w-10 rounded-full bg-gray-100" />*/ }
-                                        <div className="text-sm leading-6">
-                                            <p className="font-semibold text-gray-900"></p>
-                                            {/*<p className="text-gray-600">{ post.author }</p>*/ }
-                                        </div>
-                                    </div>
+                                    <h3 className="text-1.25rem font-semibold mb-2 text-gray-900 hover:text-blue-600">
+                                        <Link href={ `/blog/${ post.slug }` }>
+                                            { post.title }
+                                        </Link>
+                                    </h3>
+                                    <p className="text-1rem text-gray-600 mb-4 line-clamp-3">
+                                        { post.excerpt }
+                                    </p>
+                                </div>
+                                <div className="px-6 py-4 bg-gray-50 mt-auto">
+                                    <Link href={ `/blog/${ post.slug }` } className="text-blue-600 hover:text-blue-800 font-medium text-1rem">
+                                        Read more →
+                                    </Link>
                                 </div>
                             </article>
                         ) ) }
                     </div>
                 </div>
-            </div>
-            <FooterFull />{ ' ' }
+            </main>
+            <FooterFull />
         </>
     );
 }

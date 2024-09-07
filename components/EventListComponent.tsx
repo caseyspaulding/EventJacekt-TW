@@ -1,7 +1,6 @@
-// components/EventsListComponent.tsx
 import React from 'react';
 import Link from 'next/link';
-
+import { CalendarIcon, MapPinIcon } from '@heroicons/react/24/outline';
 
 type EventType = {
   id: string;
@@ -24,48 +23,47 @@ interface EventsListComponentProps
 const EventsListComponent: React.FC<EventsListComponentProps> = ( { eventList } ) =>
 {
   return (
-    <div className="mb-28 ">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          {/* You can add some introductory text or a subtitle here */ }
-        </div>
-        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+    <section className="py-16 ">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+       
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           { eventList.map( ( event ) => (
-            <article key={ event.id } className="flex flex-col items-start justify-between">
-              <Link href={ `/events/${ event.slug }` }>
-                <div className="relative w-full">
+            <article key={ event.id } className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
+              <Link href={ `/events/${ event.slug }` } className="block">
+                <div className="relative h-48 w-full">
                   <img
-                    alt={ event.name }
                     src={ event.featuredImage || '/images/festival-4.webp' }
-                    width={ 300 }
-                    height={ 200 }
-                    className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+                    alt={ event.name }
+                    className="object-cover w-full h-full"
                   />
-                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2 text-gray-900 hover:text-blue-600">
+                    { event.name }
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">{ event.description }</p>
+                  <div className="flex items-center text-sm text-gray-500 mb-2">
+                    <CalendarIcon className="w-4 h-4 mr-2" />
+                    { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'TBA' }
+                  </div>
+                  { event.venue && (
+                    <div className="flex items-center text-sm text-gray-500">
+                      <MapPinIcon className="w-4 h-4 mr-2" />
+                      { event.venue }
+                    </div>
+                  ) }
                 </div>
               </Link>
-              <div className="max-w-xl ">
-                <div className="mt-2 flex items-center gap-x-4 text-xs text-gray-500">
-                  By { event.organizationName } on{ ' ' }
-                  { event.createdAt ? new Date( event.createdAt ).toLocaleDateString() : 'N/A' }
-                </div>
-                <div className="group relative">
-                  <h3 className="mt-1 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                    <Link href={ `/events/${ event.slug }` }>
-                      <span className="absolute inset-0" />
-                      { event.name }
-                    </Link>
-                  </h3>
-                  <p className="line-clamp-3 text-sm leading-6 text-gray-600">
-                    { event.description }
-                  </p>
-                </div>
+              <div className="px-6 py-4 bg-gray-100">
+                <p className="text-xs text-gray-500">
+                  By { event.organizationName } on { event.createdAt ? new Date( event.createdAt ).toLocaleDateString() : 'N/A' }
+                </p>
               </div>
             </article>
           ) ) }
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
