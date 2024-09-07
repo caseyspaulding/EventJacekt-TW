@@ -333,7 +333,7 @@ const CreateEventPage = () =>
                             id="eventEndTime"
                             value={ eventEndTime }
                             onChange={ ( e ) => setEventEndTime( e.target.value ) }
-                        className="mt-1 block max-w-xs rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="block max-w-xs rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm h-10"
                             required
                             label="Event End Time"
                         />
