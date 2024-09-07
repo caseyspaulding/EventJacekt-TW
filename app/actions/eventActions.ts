@@ -12,26 +12,48 @@ import { getEventIdBySlug } from './getEventIdBySlug';
 
 
 
-// Get an event by its slug
+// Get an event by its slug for updating purposes
 export async function getEventBySlug ( eventSlug: string )
 {
     const [ event ] = await db
         .select( {
             id: events.id,
+            orgId: events.orgId,
             name: events.name,
+            featuredImage: events.featuredImage,
             slug: events.slug,
             description: events.description,
+            notes: events.notes,
             startDate: events.startDate,
             endDate: events.endDate,
+            eventStartTime: events.eventStartTime,
+            eventEndTime: events.eventEndTime,
             venue: events.venue,
+            venueDescription: events.venueDescription,
+            venueImage: events.venueImage,
             address: events.address,
             city: events.city,
             state: events.state,
             country: events.country,
             zipCode: events.zipCode,
+            latitude: events.latitude,
+            longitude: events.longitude,
+            scheduleDetails: events.scheduleDetails,
+            bannerImage: events.bannerImage,
+            galleryImages: events.galleryImages,
+            videoLinks: events.videoLinks,
+            organizerContact: events.organizerContact,
             maxAttendees: events.maxAttendees,
-            featuredImage: events.featuredImage,
-            // Include other fields if necessary
+            status: events.status,
+            refundPolicy: events.refundPolicy,
+            timezone: events.timezone,
+            tags: events.tags,
+            highlights: events.highlights,
+            faqs: events.faqs,
+            ageRestriction: events.ageRestriction,
+            parkingOptions: events.parkingOptions,
+            createdAt: events.createdAt,
+            updatedAt: events.updatedAt,
         } )
         .from( events )
         .where( eq( events.slug, eventSlug ) );
@@ -43,8 +65,6 @@ export async function getEventBySlug ( eventSlug: string )
 
     return event;
 }
-
-
 
 // Create a new event
 export const createEvent = async ( formData: FormData ) =>
@@ -257,28 +277,27 @@ export const deleteEvent = async ( eventId: string ) =>
         const { orgId } = await getUserAndOrgId();
 
         // Step 1: Find all ticket types associated with the event
-        const ticketTypeIds = await db.select( {
-            id: orgTicketTypes.id,
-        } )
+        const ticketTypeIds = await db
+            .select( { id: orgTicketTypes.id } )
             .from( orgTicketTypes )
             .where( eq( orgTicketTypes.eventId, eventId ) );
 
         // Step 2: Extract ticket type IDs from the result
-        const ticketTypeIdsArray = ticketTypeIds.map( ticketType => ticketType.id );
+        const ticketTypeIdsArray = ticketTypeIds.map( ( ticketType ) => ticketType.id );
 
         // Step 3: Delete all related records in orgEventTickets
-        await db.delete( orgEventTickets )
-            .where( inArray( orgEventTickets.ticketTypeId, ticketTypeIdsArray ) );
+        await db.delete( orgEventTickets ).where( inArray( orgEventTickets.ticketTypeId, ticketTypeIdsArray ) );
 
         // Step 4: Delete all related ticket types before deleting the event
-        await db.delete( orgTicketTypes )
-            .where( eq( orgTicketTypes.eventId, eventId ) );
+        await db.delete( orgTicketTypes ).where( eq( orgTicketTypes.eventId, eventId ) );
 
-        // Step 5: Delete the event itself
-        await db.delete( events )
-            .where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
+        // Step 5: Delete all related records in the agenda table
+        await db.delete( agenda ).where( eq( agenda.eventId, eventId ) );
 
-        // Step 6: Revalidate the paths to refresh the pages
+        // Step 6: Delete the event itself
+        await db.delete( events ).where( and( eq( events.id, eventId ), eq( events.orgId, orgId ) ) );
+
+        // Step 7: Revalidate the paths to refresh the pages
         await revalidatePath( `/dashboard/${ orgId }/events` );
         await revalidatePath( '/' ); // Revalidate the homepage path
 

@@ -7,6 +7,10 @@ import { getEventBySlug, updateEvent } from '@/app/actions/eventActions';
 import toast from 'react-hot-toast';
 import { Button, Input, Textarea } from '@nextui-org/react';
 
+import { createClient } from '@utils/supabase/client'; // For Supabase bucket storage
+import { FileUploadButton } from '../../new/FileUploadButton';
+import { ImageUploadVenue } from '../../new/ImageUploadVenue';
+
 const EditEventPage = () =>
 {
   const [ eventData, setEventData ] = useState( {
@@ -22,11 +26,14 @@ const EditEventPage = () =>
     zipCode: '',
     maxAttendees: 0,
     featuredImage: '',
+    venueImage: '', // New field for venue image
   } );
 
-  
-
   const [ eventId, setEventId ] = useState<string | null>( null );
+  const [ previewImage, setPreviewImage ] = useState<string | null>( null ); // Preview for the featured image
+  const [ venueImagePreview, setVenueImagePreview ] = useState<string | null>( null ); // Preview for the venue image
+  const [ featuredImageFile, setFeaturedImageFile ] = useState<File | null>( null ); // File for the featured image
+  const [ venueImageFile, setVenueImageFile ] = useState<File | null>( null ); // File for the venue image
   const { user } = useUser();
   const { eventSlug } = useParams();
   const slug = Array.isArray( eventSlug ) ? eventSlug[ 0 ] : eventSlug;
@@ -53,11 +60,15 @@ const EditEventPage = () =>
             zipCode: data.zipCode || '',
             maxAttendees: data.maxAttendees ?? 0,
             featuredImage: data.featuredImage || '',
+            venueImage: data.venueImage || '', // Load existing venue image
           } );
 
           // Store eventId for later use
           setEventId( data.id );
 
+          // Set preview images if they exist
+          if ( data.featuredImage ) setPreviewImage( data.featuredImage );
+          if ( data.venueImage ) setVenueImagePreview( data.venueImage );
         } catch ( error )
         {
           console.error( 'Error fetching event details:', error );
@@ -69,24 +80,57 @@ const EditEventPage = () =>
     fetchEventDetails();
   }, [ eventSlug ] );
 
-  const handleInputChange = ( e: { target: { name: unknown; value: unknown; }; } ) =>
+  const handleInputChange = ( e: { target: { name: string; value: string } } ) =>
   {
-    const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
-
+    const { name, value } = e.target;
     setEventData( { ...eventData, [ name ]: value } );
   };
 
-  const handleSubmit = async ( e: { preventDefault: () => void; } ) =>
+  const handleImageUpload = async ( file: File | null, orgName: string, bucketName: string ) =>
+  {
+    if ( !file ) return null;
+
+    const uniqueFilename = `${ orgName }_${ Date.now() }_${ file.name }`;
+    const { error } = await createClient()
+      .storage.from( bucketName )
+      .upload( `public/${ uniqueFilename }`, file, {
+        cacheControl: '3600',
+        upsert: false,
+      } );
+
+    if ( error )
+    {
+      console.error( 'Error uploading file:', error.message );
+      return null;
+    }
+
+    const { data: publicUrlData } = createClient()
+      .storage.from( bucketName )
+      .getPublicUrl( `public/${ uniqueFilename }` );
+
+    return publicUrlData?.publicUrl || '';
+  };
+
+  const handleSubmit = async ( e: { preventDefault: () => void } ) =>
   {
     e.preventDefault();
     if ( !user ) return;
 
     if ( !eventId )
     {
-      // Handle the case where eventId is null
       toast.error( 'Event ID is missing. Cannot update event.' );
       return;
     }
+
+    // Upload featured image if updated
+    const featuredImageUrl = featuredImageFile
+      ? await handleImageUpload( featuredImageFile, user.orgName, 'eventFeaturedImages' )
+      : eventData.featuredImage;
+
+    // Upload venue image if updated
+    const venueImageUrl = venueImageFile
+      ? await handleImageUpload( venueImageFile, user.orgName, 'venueImages' )
+      : eventData.venueImage;
 
     const formData = new FormData();
     formData.append( 'name', eventData.name );
@@ -100,12 +144,13 @@ const EditEventPage = () =>
     formData.append( 'country', eventData.country );
     formData.append( 'zipCode', eventData.zipCode );
     formData.append( 'maxAttendees', eventData.maxAttendees.toString() );
-    formData.append( 'featuredImage', eventData.featuredImage );
+
+    if ( featuredImageUrl ) formData.append( 'featuredImage', featuredImageUrl );
+    if ( venueImageUrl ) formData.append( 'venueImage', venueImageUrl );
 
     try
     {
-      const response = await updateEvent( eventId, formData ); // Send eventId and formData to updateEvent function
-
+      const response = await updateEvent( eventId, formData );
       if ( response )
       {
         toast.success( 'Event updated successfully!' );
@@ -150,8 +195,30 @@ const EditEventPage = () =>
           />
         </div>
 
-        {/* Repeat for all other fields */ }
+        {/* Featured Image Upload */ }
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Featured Image</label>
+          <FileUploadButton
+            setImage={ setFeaturedImageFile }
+            previewImage={ previewImage }
+            setPreviewImage={ setPreviewImage }
+            label="Upload Featured Image"
+            orgName={ user?.orgName || '' }
+          />
+        </div>
 
+        {/* Venue Image Upload */ }
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Venue Image</label>
+          <ImageUploadVenue
+            setImage={ setVenueImageFile }
+            previewImage={ venueImagePreview }
+            setPreviewImage={ setVenueImagePreview }
+            label="Upload Venue Image"
+          />
+        </div>
+
+        {/* Other form fields for event details like start date, end date, venue, etc. */ }
         <Button
           type="submit"
           color="warning"

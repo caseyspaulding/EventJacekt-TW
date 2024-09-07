@@ -118,6 +118,7 @@ export default async function EventPage ( { params }: { params: Params } )
             eventEndTime: events.eventEndTime,
             featuredImage: events.featuredImage,
             venue: events.venue,
+            venueImage: events.venueImage,  // Add venueImage to the query
             address: events.address,
             city: events.city,
             state: events.state,
@@ -290,6 +291,7 @@ export default async function EventPage ( { params }: { params: Params } )
                                 eventStartTime={ eventData.eventStartTime }
                                 eventEndTime={ eventData.eventEndTime }
                                 venue={ eventData.venue }
+                                venueImage={ eventData.venueImage }  // Pass the venue image here
                                 address={ eventData.address }
                                 city={ eventData.city }
                                 state={ eventData.state }

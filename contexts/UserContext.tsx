@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useCallback, useMemo, useEffect } from 'react';
 import useSWR from 'swr';
 import { createClient } from '@/utils/supabase/client';

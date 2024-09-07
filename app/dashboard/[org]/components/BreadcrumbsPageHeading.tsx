@@ -1,3 +1,5 @@
+'use client'; 
+
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import { useUser } from '@/contexts/UserContext'; // Importing the custom user context

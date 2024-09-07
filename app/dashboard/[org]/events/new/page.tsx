@@ -71,7 +71,7 @@ const CreateEventPage = () =>
     const [ venueImagePreview, setVenueImagePreview ] = useState<string | null>( null ); // State for the venue image preview
     const [ agendaItems, setAgendaItems ] = useState<{ title: string; startTime: string; endTime: string; description: string; hostOrArtist: string }[]>( [ { title: '', startTime: '', endTime: '', description: '', hostOrArtist: '' } ] );
 
-    const handleImageUpload = async ( file: File | null, orgName: string ) =>
+    const handleImageUpload = async ( file: File | null, orgName: string, bucketName: string ) =>
     {
         if ( !file )
         {
@@ -79,12 +79,12 @@ const CreateEventPage = () =>
             return null;
         }
 
-        const uniqueFilename = `${ orgName }_${ file.name }`;
+        const uniqueFilename = `${ orgName }_${ Date.now() }_${ file.name }`;
         const { error } = await createClient()
-            .storage.from( 'eventFeaturedImages' )
+            .storage.from( bucketName ) // Use bucketName to decide which bucket to upload to
             .upload( `public/${ uniqueFilename }`, file, {
                 cacheControl: '3600',
-                upsert: false
+                upsert: false,
             } );
 
         if ( error )
@@ -94,11 +94,12 @@ const CreateEventPage = () =>
         }
 
         const { data: publicUrlData } = createClient()
-            .storage.from( 'eventFeaturedImages' )
+            .storage.from( bucketName )
             .getPublicUrl( `public/${ uniqueFilename }` );
 
         return publicUrlData?.publicUrl || '';
     };
+
     const handleAgeRestrictionChange = ( option: string ) =>
     {
         setAgeRestriction( option );
@@ -133,8 +134,11 @@ const CreateEventPage = () =>
         const orgId = user.organizationId;
 
         // Try uploading images, but don't block if no image is uploaded
-        const featuredImageUrl = featuredImage ? await handleImageUpload( featuredImage, user.orgName ) : '';
-        const venueImageUrl = venueImage ? await handleImageUpload( venueImage, user.orgName ) : '';
+       // Upload featured image to "eventFeaturedImages" bucket
+        const featuredImageUrl = featuredImage ? await handleImageUpload( featuredImage, user.orgName, 'eventFeaturedImages' ) : '';
+
+        // Upload venue image to "venueImages" bucket
+        const venueImageUrl = venueImage ? await handleImageUpload( venueImage, user.orgName, 'venueImages' ) : '';
 
       
         const generatedSlug = generateSlug( name );

@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { formatDate, formatTime } from '@/utils/dateFormatter'; 
+import { formatDate, formatTime } from '@/utils/dateFormatter';
 import VenueMap from '../VenueMap';
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
-
-
+import { Disclosure } from '@headlessui/react';
+import { ArrowUpCircleIcon } from '@heroicons/react/20/solid';
+import { ArrowDownCircleIcon } from '@heroicons/react/24/outline';
+import EventImage from './Hero/EventImage';
 
 interface FAQ
 {
@@ -18,8 +18,6 @@ interface EventDetailsProps
 {
   eventId: string;
   name: string;
- 
- 
   description?: string | null;
   notes?: string | null;
   startDate: string;
@@ -27,6 +25,7 @@ interface EventDetailsProps
   eventStartTime?: string | null;
   eventEndTime?: string | null;
   venue?: string | null;
+  venueImage?: string | null;  // Add venueImage prop
   address?: string | null;
   city?: string | null;
   state?: string | null;
@@ -37,22 +36,20 @@ interface EventDetailsProps
   galleryImages?: string[] | null;
   videoLinks?: string[] | null;
   organizerContact?: string | null;
-  maxAttendees?: number | null; 
+  maxAttendees?: number | null;
   status: string;
   refundPolicy?: string | null;
-  timezone: string  | null;
+  timezone: string | null;
   tags?: string[] | null;
   highlights?: string[] | null;
-  faqs?: string | FAQ[] | null | undefined; // Updated type to allow string or array
+  faqs?: string | FAQ[] | null | undefined;
   ageRestriction?: string | null;
   parkingOptions?: string | null;
-  createdAt: string   | null;
-  updatedAt: string  | null;
+  createdAt: string | null;
+  updatedAt: string | null;
 }
 
 const EventDetails: React.FC<EventDetailsProps> = ( {
-
-  
   notes,
   startDate,
   endDate,
@@ -62,43 +59,34 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
   address,
   city,
   state,
- 
   zipCode,
-  //scheduleDetails,
-
+ 
   galleryImages,
-  //videoLinks,
   organizerContact,
-
   refundPolicy,
   timezone,
-  //tags,
-  //highlights,
   faqs,
   ageRestriction,
   parkingOptions,
-
+  venueImage, // Add venueImage to props
 } ) =>
 {
   // Ensure faqs is parsed correctly
   const parsedFaqs: FAQ[] =
     typeof faqs === 'string' ? JSON.parse( faqs ) : Array.isArray( faqs ) ? faqs : [];
-  
+
   return (
     <div className="max-w-6xl mt-4 pb-16 mx-auto bg-white">
-     
-
       {/* Date and Time */ }
       <section className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Date & Time</h2>
         <div className="flex items-center text-gray-700">
           <p>{ formatDate( startDate ) } to { formatDate( endDate ) }</p>
-         
         </div>
         <div className='mt-2'>
-          <p> { eventStartTime && eventEndTime && (
-            <p> Doors Open : { formatTime( eventStartTime ) } { timezone }</p>
-          ) }</p>
+          { eventStartTime && eventEndTime && (
+            <p> Doors Open: { formatTime( eventStartTime ) } { timezone }</p>
+          ) }
         </div>
       </section>
 
@@ -108,6 +96,16 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
 
         {/* Only show venue if it exists */ }
         { venue && <p className="text-gray-700">{ venue }</p> }
+
+        {/* Display venue image if available */ }
+        { venueImage && (
+          <EventImage
+            imageUrl={ venueImage } // Use venueImage prop
+            alt={ `${ venue || 'Venue' } image` }
+            overlayColor=""
+            height="h-[260px] xl:h-[437px]"
+          />
+        ) }
 
         {/* Construct the address dynamically to avoid displaying "null" */ }
         { ( address || city || state || zipCode ) ? (
@@ -162,29 +160,33 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
         { organizerContact && <p className="text-gray-700">Contact: { organizerContact }</p> }
       </section>
 
-      {/* FAQs Section with Disclosure */ }
       <section className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">FAQs</h2>
-        <div className="divide-y divide-gray-900/10">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+        <div className="divide-y divide-gray-200">
           { parsedFaqs.map( ( faq, index ) => (
-            <Disclosure key={ index } as="div" className="pt-6">
+            <Disclosure key={ index } as="div" className="pt-6 first:pt-0">
               <dt>
-                <DisclosureButton className="group flex   items-start justify-between text-left text-gray-900">
-                  <span className="text-base font-semibold leading-7">{ faq.question }</span>
+                <Disclosure.Button className="group flex w-full items-start justify-between text-left text-gray-900">
+                  <span className="text-lg font-semibold leading-7">{ faq.question }</span>
                   <span className="ml-6 flex h-7 items-center">
-                    <PlusIcon aria-hidden="true" className="h-6 w-6 group-data-[open]:hidden" />
-                    <MinusIcon aria-hidden="true" className="h-6 w-6 [.group:not([data-open])_&]:hidden" />
+                    <ArrowDownCircleIcon
+                      aria-hidden="true"
+                      className="h-6 w-6 group-data-[open]:hidden text-gray-500"
+                    />
+                    <ArrowUpCircleIcon
+                      aria-hidden="true"
+                      className="h-6 w-6 [.group:not([data-open])_&]:hidden text-gray-500"
+                    />
                   </span>
-                </DisclosureButton>
+                </Disclosure.Button>
               </dt>
-              <DisclosurePanel as="dd" className="mt-2 pr-12">
-                <p className="text-base leading-7 text-gray-600">{ faq.answer }</p>
-              </DisclosurePanel>
+              <Disclosure.Panel as="dd" className="mt-2 bg-gray-50 rounded-md p-4">
+                <p className="text-base leading-7 text-gray-700">{ faq.answer }</p>
+              </Disclosure.Panel>
             </Disclosure>
           ) ) }
         </div>
       </section>
-     
     </div>
   );
 };
