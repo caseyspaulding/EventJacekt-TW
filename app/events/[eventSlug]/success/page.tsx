@@ -96,7 +96,7 @@ export default async function SuccessPage ( {
     const eventDate = ticket.eventDate;
     const eventLocation1 = `${ eventData.venue || '' }, ${ eventData.city || '' }, ${ eventData.state || '' } ${ eventData.zipCode || '' } }`;
     const eventLocation = eventLocation1.trim();
-    
+
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-gray-200">
             <ConfettiComponent />
@@ -108,7 +108,7 @@ export default async function SuccessPage ( {
                     </div>
 
                     <h1 className="mb-4 text-2xl">
-                        Thank you for purchasing a ticket(s) to <span className="font-extrabold">{ cleanedEventName }</span>.
+                        Thank you for purchasing a ticket(s) to <br/> <span className="font-extrabold">{ cleanedEventName }</span>.
                     </h1>
 
                     {/* Display ticket information */ }
