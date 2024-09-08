@@ -15,48 +15,20 @@ import TicketDisplay from '@/components/TicketViewer';
 
 export default async function SuccessPage ( {
     params,
-    searchParams
+    searchParams,
 }: {
-    params: { eventSlug: string },
-    searchParams: { customerId?: string }
+    params: { eventSlug: string };
+    searchParams: { firstName?: string; lastName?: string };
 } )
 {
     const { eventSlug } = params;
-    const { customerId } = searchParams;
+    const { firstName, lastName } = searchParams;
+    // If names are passed in the query params, use them
+    const customerName = `${ firstName ?? '' } ${ lastName ?? '' }`.trim() || '';
 
-    let customerName = 'Valued Customer';
 
-    console.log( 'Received Customer ID :', customerId, eventSlug );
     
-    // Fetch customer details if customerId is available
-    if ( customerId )
-    {
-        const customerDetails = await db
-            .select( {
-                firstName: orgCustomers.firstName,
-                lastName: orgCustomers.lastName,
-                email: orgCustomers.email,
-            } )
-            .from( orgCustomers )
-            .where( eq( orgCustomers.id, customerId ) )
-            .limit( 1 );
-
-        if ( customerDetails.length > 0 )
-        {
-            const customer = customerDetails[ 0 ];
-
-            // Check for null or empty values for firstName and lastName
-            const firstName = customer.firstName?.trim() || '';
-            const lastName = customer.lastName?.trim() || '';
-
-            // Only set the customer name if either firstName or lastName is provided
-            if ( firstName || lastName )
-            {
-                customerName = `${ firstName } ${ lastName }`.trim();
-            }
-        }
-    }
-
+   
     const eventId = await getEventIdBySlug( eventSlug );
 
     if ( !eventId )
@@ -122,7 +94,7 @@ export default async function SuccessPage ( {
 
     const cleanedEventName = startCase( toLower( eventSlug.replace( /-/g, ' ' ) ) );
     const eventDate = ticket.eventDate;
-    const eventLocation = `${ eventData.venue || '' }, ${ eventData.city || '' }, ${ eventData.state || '' } ${ eventData.zipCode || '' }, ${ eventData.country || '' }`;
+    const eventLocation = `${ eventData.venue || '' }, ${ eventData.city || '' }, ${ eventData.state || '' } ${ eventData.zipCode || '' } }`;
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-gray-200">

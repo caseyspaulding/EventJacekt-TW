@@ -3,7 +3,7 @@ import { orgEventTickets } from '@/db/schema';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { getOrgCreateCustomer, fetchTicketAndEventDetails, sendTicketEmailWithDetails } from '@/app/actions/updateOrg'; // Import helpers
+import { fetchTicketAndEventDetails, sendTicketEmailWithDetails } from '@/app/actions/updateOrg'; // Import helpers
 import type { OrgTicketType } from '@/types/dbTypes';
 import { eq } from 'drizzle-orm/expressions';
 
@@ -56,8 +56,8 @@ export async function POST ( request: NextRequest )
           firstName: session.customer_details?.name,
           email: session.customer_email,
         }; // Get buyer info from Stripe session
-        const customer = await getOrgCreateCustomer( buyer, ticket.ticketTypeId );
-console.log( `Customer ${ customer.email } created` );
+       
+        console.log( `Customer ${ buyer.email } created` );
         // Send ticket email
         await sendTicketEmailWithDetails(
           buyer,
