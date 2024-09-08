@@ -6,8 +6,11 @@ const stripe = new Stripe( process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20',
 } );
 
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export async function POST ( request: NextRequest )
 {
@@ -23,9 +26,14 @@ export async function POST ( request: NextRequest )
 
   try
   {
-    const rawBody = await request.text();
+    const text = await request.text();
+    const rawBody = new TextEncoder().encode( text );
 
-    event = stripe.webhooks.constructEvent(
+    console.log( 'Received signature:', sig );
+    console.log( 'Raw body (first 100 chars):', text.substring( 0, 100 ) );
+    console.log( 'Raw body length:', text.length );
+
+    event = await stripe.webhooks.constructEventAsync(
       rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
@@ -33,9 +41,11 @@ export async function POST ( request: NextRequest )
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch ( err: any )
   {
-    console.log( `⚠️  Webhook signature verification failed.`, err.message );
+    console.error( '⚠️ Webhook signature verification failed.', err.message );
     return NextResponse.json( { error: `Webhook Error: ${ err.message }` }, { status: 400 } );
   }
+
+  console.log( 'Event processed successfully:', event.type );
 
   // Handle the event
   switch ( event.type )
@@ -46,7 +56,6 @@ export async function POST ( request: NextRequest )
       console.log( `PaymentIntent for ${ paymentIntent.amount } was successful!` );
       // Add your business logic here
       break;
-    
     case 'checkout.session.completed':
       // eslint-disable-next-line no-case-declarations
       const session = event.data.object as Stripe.Checkout.Session;
