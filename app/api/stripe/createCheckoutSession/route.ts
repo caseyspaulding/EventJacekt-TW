@@ -12,7 +12,8 @@ import type { OrgTicketType } from '@/types/dbTypes';
 type Customer = {
     id: string;
     orgId: string;
-    name: string;
+    firstName: string | null;  // Allow firstName to be nullable
+    lastName: string | null;   // Allow lastName to be nullable
     email: string;
     phone: string | null;
     address: string | null;
@@ -21,7 +22,7 @@ type Customer = {
     country: string | null;
     zipCode: string | null;
     profileImageUrl: string | null;
-    status: string | null; // Adjusted to allow for null values
+    status: string | null;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     metadata: any;
     notes: string | null;
@@ -87,6 +88,7 @@ export async function POST ( req: NextRequest )
         }
 
         console.log( 'Fetched ticket type and event data:', ticketTypeData );
+
         // Step 2: Check if the customer already exists
         const customers: Customer[] = await db
             .select()
@@ -101,9 +103,10 @@ export async function POST ( req: NextRequest )
             // Step 3: Insert the new customer if they do not exist
             await db.insert( orgCustomers ).values( {
                 orgId: orgId,
-                name: `${ buyer.firstName } ${ buyer.lastName }`,
+                firstName: buyer.firstName || null,  // Handle potential null values
+                lastName: buyer.lastName || null,    // Handle potential null values
                 email: buyer.email,
-                phone: buyer.phone || null, // Add additional fields as necessary
+                phone: buyer.phone || null,
                 address: buyer.address || null,
                 city: buyer.city || null,
                 state: buyer.state || null,
@@ -113,8 +116,8 @@ export async function POST ( req: NextRequest )
                 status: 'active',
                 metadata: buyer.metadata || null,
                 notes: buyer.notes || null,
-                favoriteEventId: null, // Or set this dynamically if needed
-                favoritePerformerId: null, // Or set this dynamically if needed
+                favoriteEventId: null,  // Default to null unless populated
+                favoritePerformerId: null,  // Default to null unless populated
                 createdAt: new Date(),
                 updatedAt: new Date()
             } );
@@ -193,12 +196,12 @@ export async function POST ( req: NextRequest )
             stripeSessionId: session.id,
             createdAt: new Date(),
             updatedAt: new Date(),
-            // Add missing fields from OrgTicketType
-            quantity: ticketTypeData.quantity,  // Ensure this field is fetched and present
-            eventDate: ticketTypeData.eventDate, // Ensure this field is fetched and present
-            saleStartDate: ticketTypeData.saleStartDate, // Ensure this field is fetched and present
-            saleEndDate: ticketTypeData.saleEndDate // Ensure this field is fetched and present
+            quantity: ticketTypeData.quantity,
+            eventDate: ticketTypeData.eventDate,
+            saleStartDate: ticketTypeData.saleStartDate,
+            saleEndDate: ticketTypeData.saleEndDate
         };
+
         // Insert the ticket and return the full row including the id
         console.log( 'Inserting ticket data:', ticketData );
 
@@ -213,17 +216,12 @@ export async function POST ( req: NextRequest )
                 orgId: orgEventTickets.orgId,
                 customerId: orgEventTickets.customerId,
                 ticketTypeId: orgEventTickets.ticketTypeId,
-
-
                 purchaseDate: orgEventTickets.purchaseDate,
                 stripeSessionId: orgEventTickets.stripeSessionId,
                 createdAt: orgEventTickets.createdAt,
                 updatedAt: orgEventTickets.updatedAt
             } )
             .execute();
-
-
-        // await db.insert( orgEventTickets ).values( ticketData );
 
         // Step 6: Send the ticket email with QR code
         await sendTicketEmail(

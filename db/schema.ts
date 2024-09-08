@@ -377,7 +377,9 @@ export const orgCustomers = pgTable( 'org_customers', {
     orgId: uuid( 'org_id' )
         .notNull()
         .references( () => organizations.id ),
-    name: text( 'name' ).notNull(),
+   
+    firstName: text( 'first_name' ),
+    lastName: text( 'last_name' ),
     email: text( 'email' ).notNull().unique(),
     phone: text( 'phone' ),
     address: text( 'address' ),

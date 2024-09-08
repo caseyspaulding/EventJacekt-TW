@@ -67,7 +67,7 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
             eventDate: orgTicketTypes.eventDate,
             saleStartDate: orgTicketTypes.saleStartDate,
             saleEndDate: orgTicketTypes.saleEndDate,
-            customerName: orgCustomers.name, // Get the customer's name
+            customerName: orgCustomers.firstName, // Get the customer's name
         } )
         .from( orgTicketTypes )
         .innerJoin( orgCustomers, eq( orgTicketTypes.orgId, orgCustomers.orgId ) )
@@ -106,7 +106,7 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
                         price={ ticket.price.toString() }
                         address={ eventLocation }
                         ticketNumber={ '' }
-                        customerName={ ticket.customerName } // Pass the customer name
+                        customerName={ ticket.customerName || '' } // Pass the customer name
                     />
 
                     <p className="mb-2 mt-2 text-lg">Your ticket(s) have been sent to the email address you provided during checkout.</p>

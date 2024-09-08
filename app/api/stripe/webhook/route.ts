@@ -1,8 +1,11 @@
-/* eslint-disable no-case-declarations */
+import { db } from '@/db';
+import { orgEventTickets } from '@/db/schema';
 import type { NextRequest} from 'next/server';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-
+import { getOrgCreateCustomer, fetchTicketAndEventDetails, sendTicketEmailWithDetails } from '@/app/actions/updateOrg'; // import your helpers
+import type { OrgTicketType } from '@/types/dbTypes';
+import { eq } from 'drizzle-orm/expressions';
 
 const stripe = new Stripe( process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20',
@@ -26,30 +29,46 @@ export async function POST ( request: NextRequest )
   try
   {
     const text = await request.text();
-
-    console.log( 'Received signature:', sig );
-    console.log( 'Raw body (first 100 chars):', text.substring( 0, 100 ) );
-    console.log( 'Raw body length:', text.length );
-    console.log( 'Webhook Secret (first 10 chars):', endpointSecret.substring( 0, 10 ) );
-
     const event = stripe.webhooks.constructEvent( text, sig, endpointSecret );
 
-    console.log( 'Event processed successfully:', event.type );
-
-    // Handle the event
     switch ( event.type )
     {
-      case 'payment_intent.succeeded':
-        const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        console.log( `PaymentIntent for ${ paymentIntent.amount } was successful!` );
-        // Add your business logic here
-        break;
-      case 'checkout.session.completed':
+      case 'checkout.session.completed': {
         // eslint-disable-next-line no-case-declarations
         const session = event.data.object as Stripe.Checkout.Session;
-        console.log( `Checkout session ${ session.id } was completed!` );
-        // Add your business logic here
+
+        // Retrieve ticket data
+        const [ ticket ] = await db
+          .select()
+          .from( orgEventTickets )
+          .where( eq( orgEventTickets.stripeSessionId, session.id ) )
+          .execute();
+
+        if ( !ticket )
+        {
+          throw new Error( 'Ticket not found' );
+        }
+
+        // Fetch ticket type and event details
+        const ticketTypeData = await fetchTicketAndEventDetails( ticket.ticketTypeId );
+
+        // Fetch or create customer
+        const buyer = {
+          firstName: session.customer_details?.name,
+          email: session.customer_email
+        }; // Get buyer info from Stripe session
+        const customer = await getOrgCreateCustomer( buyer, ticket.ticketTypeId );
+
+        // Send ticket email
+        await sendTicketEmailWithDetails(
+          customer,
+          ticket as unknown as OrgTicketType,
+          ticketTypeData
+        );
+
+        console.log( `Ticket email sent to ${ customer.email }` );
         break;
+      }
       default:
         console.log( `Unhandled event type ${ event.type }` );
     }

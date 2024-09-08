@@ -71,6 +71,20 @@
       "when": 1725566307109,
       "tag": "0009_daily_gertrude_yorkes",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1725811984110,
+      "tag": "0010_handy_ulik",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1725812512578,
+      "tag": "0011_clumsy_talkback",
+      "breakpoints": true
     }
   ]
 }
