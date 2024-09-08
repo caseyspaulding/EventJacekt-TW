@@ -10,12 +10,12 @@ interface TicketPurchaseClientProps
 {
     ticket: unknown; // Define your Ticket type here if you have it
     eventSlug: string;
-    onPurchaseComplete?: ( buyer: { email: string; firstName: string } ) => Promise<void>;
+    //onPurchaseComplete?: ( buyer: { email: string; firstName: string } ) => Promise<void>;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const TicketPurchaseClient = ( { ticket, eventSlug, onPurchaseComplete }: TicketPurchaseClientProps, ref: Ref<HTMLInputElement> ) =>
+const TicketPurchaseClient = ( { ticket, eventSlug }: TicketPurchaseClientProps, ref: Ref<HTMLInputElement> ) =>
 {
     const [ loading, setLoading ] = useState( false );
     const [ errorMessage, setErrorMessage ] = useState<string | null>( null );
@@ -67,14 +67,7 @@ const TicketPurchaseClient = ( { ticket, eventSlug, onPurchaseComplete }: Ticket
                 {
                     console.error( 'Stripe Checkout error:', error );
                     setErrorMessage( 'An error occurred during checkout. Please try again.' );
-                } else
-                {
-                    // Call the onPurchaseComplete callback after successful checkout
-                    if ( onPurchaseComplete )
-                    {
-                        await onPurchaseComplete( { email, firstName } );
-                    }
-                }
+                } 
             }
         } catch ( error )
         {

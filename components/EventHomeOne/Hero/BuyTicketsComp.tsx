@@ -11,7 +11,7 @@ import
     Divider,
   } from '@nextui-org/react';
 import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
-import { generateCustomizedTicket } from '@/utils/generateCustomizedTicket'; // Import your helper function
+//import { generateCustomizedTicket } from '@/utils/generateCustomizedTicket'; // Import your helper function
 
 const Countdown = dynamic( () => import( '../../Countdown/Countdown' ), {
   ssr: false, // Disable SSR for this component
@@ -71,30 +71,30 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
   }, [] );
 
   // Handler for ticket purchase completion
-  const handleTicketPurchase = async ( buyer: { email: string; firstName: string }, ticket: Ticket, ) =>
-  {
-    try
-    {
-      // Call generateCustomizedTicket to create a customized ticket
-      const ticketImage = await generateCustomizedTicket( {
-        customerName: buyer.firstName,
-        eventName,
-        eventDate: new Date( ticket.eventDate ).toLocaleDateString(),
-        eventTime: `${ ticket }, `,  // Example time; replace with actual if available
-        price: parseFloat( ticket.price ).toFixed( 2 ),
-        address: `${ location }`,
-        qrCodeText: `https://eventjacket.com/verify-ticket/${ ticket.id }`,
-        ticketNumber: "123456789" // Example ticket number; replace with actual if available
-      } );
+  //const handleTicketPurchase = async ( buyer: { email: string; firstName: string }, ticket: Ticket, ) =>
+  //{
+  //  try
+  //  {
+  //    // Call generateCustomizedTicket to create a customized ticket
+  //    const ticketImage = await generateCustomizedTicket( {
+  //      customerName: buyer.firstName,
+  //      eventName,
+  //      eventDate: new Date( ticket.eventDate ).toLocaleDateString(),
+  //      eventTime: `${ ticket }, `,  // Example time; replace with actual if available
+  //      price: parseFloat( ticket.price ).toFixed( 2 ),
+  //      address: `${ location }`,
+  //      qrCodeText: `https://eventjacket.com/verify-ticket/${ ticket.id }`,
+  //      ticketNumber: "123456789" // Example ticket number; replace with actual if available
+  //    } );
 
-      console.log( 'Generated Ticket Image:', ticketImage );
+  //    console.log( 'Generated Ticket Image:', ticketImage );
 
-      // Here you could send the image via email or display in the UI
-    } catch ( error )
-    {
-      console.error( 'Error generating customized ticket:', error );
-    }
-  };
+  //    // Here you could send the image via email or display in the UI
+  //  } catch ( error )
+  //  {
+  //    console.error( 'Error generating customized ticket:', error );
+  //  }
+  //};
 
   return (
     <div className="my-5 pb-10 ">
@@ -141,7 +141,7 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( {
                   ticket={ ticket }
                   eventSlug={ eventSlug }
                   ref={ firstInputRef } // Pass ref to input field
-                  onPurchaseComplete={ ( buyer ) => handleTicketPurchase( buyer, ticket ) } // Handle purchase completion
+                  //onPurchaseComplete={ ( buyer ) => handleTicketPurchase( buyer, ticket ) } // Handle purchase completion
                 />
               </CardFooter>
             </Card>
