@@ -37,7 +37,7 @@ export async function generateCustomizedTicket ( ticketData: {
 
   // Set font style specifically for the event name to make it bold
   ctx.font = 'bold 110px Poppins'; // Bold font for the event name
-  ctx.fillText( eventName, 70, 105 ); // Example coordinates for event name
+  ctx.fillText( eventName, 70, 115 ); // Example coordinates for event name
 
   // Set font style specifically for the customer's name to make it bigger
   ctx.font = 'bold 80px Poppins'; // Larger and bolder font for the customer's name
