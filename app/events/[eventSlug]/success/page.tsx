@@ -13,7 +13,6 @@ import { notFound } from 'next/navigation';
 import ConfettiComponent from '@/components/Confetti/Confetti';
 import TicketDisplay from '@/components/TicketViewer';
 
-
 export default async function SuccessPage ( {
     params,
     searchParams
@@ -27,7 +26,9 @@ export default async function SuccessPage ( {
 
     let customerName = 'Valued Customer';
 
-
+    console.log( 'Received Customer ID :', customerId, eventSlug );
+    
+    // Fetch customer details if customerId is available
     if ( customerId )
     {
         const customerDetails = await db
@@ -43,8 +44,16 @@ export default async function SuccessPage ( {
         if ( customerDetails.length > 0 )
         {
             const customer = customerDetails[ 0 ];
-            customerName = `${ customer.firstName } ${ customer.lastName }`.trim() || 'Valued Customer';
 
+            // Check for null or empty values for firstName and lastName
+            const firstName = customer.firstName?.trim() || '';
+            const lastName = customer.lastName?.trim() || '';
+
+            // Only set the customer name if either firstName or lastName is provided
+            if ( firstName || lastName )
+            {
+                customerName = `${ firstName } ${ lastName }`.trim();
+            }
         }
     }
 
@@ -97,7 +106,7 @@ export default async function SuccessPage ( {
             eventDate: orgTicketTypes.eventDate,
             saleStartDate: orgTicketTypes.saleStartDate,
             saleEndDate: orgTicketTypes.saleEndDate,
-            customerName: orgCustomers.firstName, // Get the customer's name
+            customerName: orgCustomers.firstName,
         } )
         .from( orgTicketTypes )
         .innerJoin( orgCustomers, eq( orgTicketTypes.orgId, orgCustomers.orgId ) )
@@ -108,7 +117,7 @@ export default async function SuccessPage ( {
         notFound();
     }
 
-    const ticket = ticketsWithCustomer[ 0 ]; // Use the first ticket type found
+    const ticket = ticketsWithCustomer[ 0 ];
 
     const cleanedEventName = startCase( toLower( eventSlug.replace( /-/g, ' ' ) ) );
     const eventDate = ticket.eventDate;
@@ -128,11 +137,11 @@ export default async function SuccessPage ( {
                         Thank you for purchasing a ticket(s) to <span className="font-extrabold">{ cleanedEventName }</span>.
                     </h1>
 
-                    {/* Insert the client component to display the generated ticket */ }
+                    {/* Display ticket information */ }
                     <TicketDisplay
                         eventName={ eventData.eventName }
                         eventDate={ eventDate }
-                        eventTime={ eventDate } // Replace with actual event time
+                        eventTime={ eventData.startDate } // Replace with actual event time
                         price={ ticket.price.toString() }
                         address={ eventLocation }
                         ticketNumber={ '' }

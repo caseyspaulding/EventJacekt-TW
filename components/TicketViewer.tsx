@@ -23,7 +23,7 @@ const TicketDisplay: React.FC<TicketDisplayProps> = ( {
   price,
   address,
   ticketNumber,
-  customerName, // Destructure customerName
+  customerName // Destructure customerName
 } ) =>
 {
   const [ ticketImage, setTicketImage ] = useState<string | null>( null );
@@ -39,10 +39,9 @@ const TicketDisplay: React.FC<TicketDisplayProps> = ( {
         eventDate,
         eventTime,
         price,
-        
-        address,
         qrCodeText: `https://eventjacket.com/verify-ticket/${ ticketNumber }`,
-        ticketNumber,
+        address,
+        ticketNumber
       } );
 
       setTicketImage( ticketUrl );
