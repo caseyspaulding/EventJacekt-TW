@@ -36,11 +36,11 @@ export async function generateCustomizedTicket ( ticketData: {
 
 
   // Set font style specifically for the event name to make it bold
-  ctx.font = 'bold 75px Poppins'; // Bold font for the event name
+  ctx.font = 'bold 110px Poppins'; // Bold font for the event name
   ctx.fillText( eventName, 70, 100 ); // Example coordinates for event name
 
   // Set font style specifically for the customer's name to make it bigger
-  ctx.font = 'bold 110px Poppins'; // Larger and bolder font for the customer's name
+  ctx.font = 'bold 80px Poppins'; // Larger and bolder font for the customer's name
   ctx.fillText( customerName, 70, 580 ); // Add customer's name
 
   // Generate QR code as a data URL
