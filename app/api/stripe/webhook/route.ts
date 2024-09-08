@@ -57,15 +57,15 @@ export async function POST ( request: NextRequest )
           email: session.customer_email,
         }; // Get buyer info from Stripe session
         const customer = await getOrgCreateCustomer( buyer, ticket.ticketTypeId );
-
+console.log( `Customer ${ customer.email } created` );
         // Send ticket email
         await sendTicketEmailWithDetails(
-          customer,
+          buyer,
           ticket as unknown as OrgTicketType,
           ticketTypeData
         );
 
-        console.log( `Ticket email sent to ${ customer.email }` );
+        console.log( `Ticket email sent to ${ buyer.email }` );
         break;
       }
 

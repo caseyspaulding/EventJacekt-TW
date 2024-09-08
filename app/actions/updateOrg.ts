@@ -134,7 +134,7 @@ export async function getOrgCreateCustomer ( buyer: any, ticketId: string ): Pro
 
         customer = insertedCustomers[ 0 ];
     }
-
+console.log( `Customer ${ customer.email, buyer  } created` );
     return customer;
 }
 
@@ -199,4 +199,5 @@ export async function sendTicketEmailWithDetails (
             eventFAQs: JSON.stringify( ticketTypeData.eventFAQs ) || '[]',
         }
     );
+    console.log( `Ticket email sent to ${ buyer.email, buyer.firstName }` );
 }

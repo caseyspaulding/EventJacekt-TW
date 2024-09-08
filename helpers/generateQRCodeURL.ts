@@ -19,7 +19,9 @@ export async function generateQRCodeDataURL ( value: string ): Promise<string>
 }
 
 export async function sendTicketEmail (
+  
   buyer: {
+    
     email: string;
     firstName: string;
   },
@@ -34,6 +36,7 @@ export async function sendTicketEmail (
   }
 )
 {
+  console.log( `Sending ticket email to ${ buyer.email, buyer.firstName }` );
   const qrCodeDataURL = await generateQRCodeDataURL(
     `https://eventjacket.com/verify-ticket/${ ticket.id }`
   );
