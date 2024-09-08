@@ -1,9 +1,9 @@
 import { db } from '@/db';
 import { orgEventTickets } from '@/db/schema';
-import type { NextRequest} from 'next/server';
+import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { getOrgCreateCustomer, fetchTicketAndEventDetails, sendTicketEmailWithDetails } from '@/app/actions/updateOrg'; // import your helpers
+import { getOrgCreateCustomer, fetchTicketAndEventDetails, sendTicketEmailWithDetails } from '@/app/actions/updateOrg'; // Import helpers
 import type { OrgTicketType } from '@/types/dbTypes';
 import { eq } from 'drizzle-orm/expressions';
 
@@ -34,7 +34,6 @@ export async function POST ( request: NextRequest )
     switch ( event.type )
     {
       case 'checkout.session.completed': {
-        // eslint-disable-next-line no-case-declarations
         const session = event.data.object as Stripe.Checkout.Session;
 
         // Retrieve ticket data
@@ -55,7 +54,7 @@ export async function POST ( request: NextRequest )
         // Fetch or create customer
         const buyer = {
           firstName: session.customer_details?.name,
-          email: session.customer_email
+          email: session.customer_email,
         }; // Get buyer info from Stripe session
         const customer = await getOrgCreateCustomer( buyer, ticket.ticketTypeId );
 
@@ -69,6 +68,44 @@ export async function POST ( request: NextRequest )
         console.log( `Ticket email sent to ${ customer.email }` );
         break;
       }
+
+      // Handle additional Stripe events
+      case 'payment_intent.succeeded': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        console.log( `PaymentIntent for ${ paymentIntent.amount } was successful!` );
+        break;
+      }
+
+      case 'payment_intent.created': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        console.log( `PaymentIntent created for ${ paymentIntent.amount }` );
+        break;
+      }
+
+      case 'charge.succeeded': {
+        const charge = event.data.object as Stripe.Charge;
+        console.log( `Charge succeeded for ${ charge.amount }` );
+        break;
+      }
+
+      case 'transfer.created': {
+        const transfer = event.data.object as Stripe.Transfer;
+        console.log( `Transfer created for ${ transfer.amount }` );
+        break;
+      }
+
+      case 'application_fee.created': {
+        const applicationFee = event.data.object as Stripe.ApplicationFee;
+        console.log( `Application fee created for ${ applicationFee.amount }` );
+        break;
+      }
+
+      case 'charge.updated': {
+        const charge = event.data.object as Stripe.Charge;
+        console.log( `Charge updated for ${ charge.amount }` );
+        break;
+      }
+
       default:
         console.log( `Unhandled event type ${ event.type }` );
     }
