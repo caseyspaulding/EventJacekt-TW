@@ -26,7 +26,7 @@ export async function generateCustomizedTicket ( ticketData: {
 
   // Set text styles for general text
   ctx.fillStyle = '#fff'; // White color for text
-  ctx.font = '50px Poppins'; // Standard font size for most text
+  ctx.font = '60px Poppins'; // Standard font size for most text
 
   // Add text for non-bold elements (adjust coordinates as needed)
   ctx.fillText( eventDate, 70, 220 );
