@@ -1,8 +1,4 @@
 
-
-
-
-import { startCase, toLower } from 'lodash';
 import { Button } from '@nextui-org/button';
 import { getEventIdBySlug } from '@/app/actions/getEventIdBySlug';
 import { events, organizations, orgCustomers, orgTicketTypes } from '@/db/schema';
