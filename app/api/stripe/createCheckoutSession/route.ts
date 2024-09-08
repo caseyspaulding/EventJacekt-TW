@@ -173,7 +173,7 @@ export async function POST ( req: NextRequest )
             },
             customer_email: buyer.email, // Automatically send receipt to buyer's email
             mode: 'payment',
-            success_url: `https://eventjacket.com/events/${ eventSlug }/success?session_id={CHECKOUT_SESSION_ID}`,
+            success_url: `https://eventjacket.com/events/${ eventSlug }/success?session_id={CHECKOUT_SESSION_ID}&customer_id=${ customerId }`,  // Include customerId
             cancel_url: `https://eventjacket.com/events/${ eventSlug }/cancel`
         } );
 

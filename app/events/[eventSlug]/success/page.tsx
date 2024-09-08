@@ -14,9 +14,39 @@ import ConfettiComponent from '@/components/Confetti/Confetti';
 import TicketDisplay from '@/components/TicketViewer';
 
 
-export default async function SuccessPage ( { params }: { params: { eventSlug: string } } )
+export default async function SuccessPage ( {
+    params,
+    searchParams
+}: {
+    params: { eventSlug: string },
+    searchParams: { customerId?: string }
+} )
 {
     const { eventSlug } = params;
+    const { customerId } = searchParams;
+
+    let customerName = 'Valued Customer';
+
+
+    if ( customerId )
+    {
+        const customerDetails = await db
+            .select( {
+                firstName: orgCustomers.firstName,
+                lastName: orgCustomers.lastName,
+                email: orgCustomers.email,
+            } )
+            .from( orgCustomers )
+            .where( eq( orgCustomers.id, customerId ) )
+            .limit( 1 );
+
+        if ( customerDetails.length > 0 )
+        {
+            const customer = customerDetails[ 0 ];
+            customerName = `${ customer.firstName } ${ customer.lastName }`.trim() || 'Valued Customer';
+
+        }
+    }
 
     const eventId = await getEventIdBySlug( eventSlug );
 
@@ -93,7 +123,7 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
                     <div className="flex justify-center">
                         <img src='/images/green-checkmark.png' className="mb-4 h-14"></img>
                     </div>
-                    
+
                     <h1 className="mb-4 text-2xl">
                         Thank you for purchasing a ticket(s) to <span className="font-extrabold">{ cleanedEventName }</span>.
                     </h1>
@@ -102,11 +132,11 @@ export default async function SuccessPage ( { params }: { params: { eventSlug: s
                     <TicketDisplay
                         eventName={ eventData.eventName }
                         eventDate={ eventDate }
-                        eventTime={eventDate} // Replace with actual event time
+                        eventTime={ eventDate } // Replace with actual event time
                         price={ ticket.price.toString() }
                         address={ eventLocation }
                         ticketNumber={ '' }
-                        customerName={ ticket.customerName || '' } // Pass the customer name
+                        customerName={ customerName } // Use the fetched customer name
                     />
 
                     <p className="mb-2 mt-2 text-lg">Your ticket(s) have been sent to the email address you provided during checkout.</p>
