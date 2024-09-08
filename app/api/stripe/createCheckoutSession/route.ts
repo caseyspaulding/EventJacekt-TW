@@ -6,8 +6,7 @@ import { orgEventTickets, orgCustomers, orgTicketTypes, events } from '@/db/sche
 import { getOrgIdFromTicketType, getStripeAccountIdFromOrgId } from '@/app/actions/ticketActions';
 
 import { eq } from 'drizzle-orm';
-import { sendTicketEmail } from '@/helpers/generateQRCodeURL';
-import type { OrgTicketType } from '@/types/dbTypes';
+
 
 type Customer = {
     id: string;
@@ -224,18 +223,7 @@ export async function POST ( req: NextRequest )
             .execute();
 
         // Step 6: Send the ticket email with QR code
-        await sendTicketEmail(
-            buyer, // Pass the whole buyer object
-            insertedTicket as unknown as OrgTicketType,
-            ticketTypeData.eventName,
-            ticketTypeData.description || 'No description available',
-            {
-                eventDate: ticketTypeData.eventDate,
-                eventVenue: ticketTypeData.eventVenue || "",
-                eventVenueDescription: ticketTypeData.eventVenueDescription || "",
-                eventFAQs: JSON.stringify( ticketTypeData.eventFAQs ) || "[]", // Convert to JSON string
-            }
-        );
+        console.log( 'Email information:', customer.email, 'with', insertedTicket );
         return NextResponse.json( session );
     } catch ( error )
     {
