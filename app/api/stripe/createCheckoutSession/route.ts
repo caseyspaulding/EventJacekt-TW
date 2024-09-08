@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { stripe } from '@/utils/stripe';
 import { db } from '@/db';
-import { orgEventTickets, orgCustomers, orgTicketTypes, events } from '@/db/schema';
+import { orgCustomers, orgTicketTypes, events } from '@/db/schema';
 import { getOrgIdFromTicketType, getStripeAccountIdFromOrgId } from '@/app/actions/ticketActions';
 
 import { eq } from 'drizzle-orm';
@@ -44,37 +44,35 @@ export async function POST ( req: NextRequest )
         // Step 1: Get the organization ID by ticket type
         const orgId = await getOrgIdFromTicketType( ticket.id );
 
-        console.log( 'Fetched orgId:', orgId );
-
         if ( !orgId )
         {
             throw new Error( 'Organization ID not found.' );
         }
 
-        // Fetch ticket type and complete event details in a single query
+        // Fetch ticket type and event details
         const [ ticketTypeData ] = await db
             .select( {
                 eventName: events.name,
-                eventDescription: events.description, // Fetch event description
-                eventFAQs: events.faqs, // Fetch event FAQs
-                eventVenue: events.venue, // Fetch event venue
-                eventVenueDescription: events.venueDescription, // Fetch event venue description
-                eventStartDate: events.startDate, // Fetch event start date
-                eventEndDate: events.endDate, // Fetch event end date
-                eventStartTime: events.eventStartTime, // Fetch event start time
-                eventEndTime: events.eventEndTime, // Fetch event end time
-                eventAddress: events.address, // Fetch event address
-                eventCity: events.city, // Fetch event city
-                eventState: events.state, // Fetch event state
-                eventCountry: events.country, // Fetch event country
-                eventZipCode: events.zipCode, // Fetch event zip code
-                eventGalleryImages: events.galleryImages, // Fetch gallery images
-                eventOrganizerContact: events.organizerContact, // Fetch organizer contact info
+                eventDescription: events.description,
+                eventFAQs: events.faqs,
+                eventVenue: events.venue,
+                eventVenueDescription: events.venueDescription,
+                eventStartDate: events.startDate,
+                eventEndDate: events.endDate,
+                eventStartTime: events.eventStartTime,
+                eventEndTime: events.eventEndTime,
+                eventAddress: events.address,
+                eventCity: events.city,
+                eventState: events.state,
+                eventCountry: events.country,
+                eventZipCode: events.zipCode,
+                eventGalleryImages: events.galleryImages,
+                eventOrganizerContact: events.organizerContact,
                 description: orgTicketTypes.description,
                 quantity: orgTicketTypes.quantity,
                 eventDate: orgTicketTypes.eventDate,
                 saleStartDate: orgTicketTypes.saleStartDate,
-                saleEndDate: orgTicketTypes.saleEndDate
+                saleEndDate: orgTicketTypes.saleEndDate,
             } )
             .from( orgTicketTypes )
             .innerJoin( events, eq( orgTicketTypes.eventId, events.id ) )
@@ -88,22 +86,22 @@ export async function POST ( req: NextRequest )
 
         console.log( 'Fetched ticket type and event data:', ticketTypeData );
 
-        // Step 2: Check if the customer already exists
+        // Check if customer already exists
         const customers: Customer[] = await db
             .select()
             .from( orgCustomers )
             .where( eq( orgCustomers.email, buyer.email ) )
             .execute();
 
-        let customer = customers[ 0 ]; // Assuming there's at most one customer with a given email
+        let customer = customers[ 0 ];
 
         if ( !customer )
         {
-            // Step 3: Insert the new customer if they do not exist
+            // Insert new customer if they do not exist
             await db.insert( orgCustomers ).values( {
                 orgId: orgId,
-                firstName: buyer.firstName || null,  // Handle potential null values
-                lastName: buyer.lastName || null,    // Handle potential null values
+                firstName: buyer.firstName || null,
+                lastName: buyer.lastName || null,
                 email: buyer.email,
                 phone: buyer.phone || null,
                 address: buyer.address || null,
@@ -115,10 +113,10 @@ export async function POST ( req: NextRequest )
                 status: 'active',
                 metadata: buyer.metadata || null,
                 notes: buyer.notes || null,
-                favoriteEventId: null,  // Default to null unless populated
-                favoritePerformerId: null,  // Default to null unless populated
+                favoriteEventId: null,
+                favoritePerformerId: null,
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
             } );
 
             // Fetch the customer again after insertion to get the new ID
@@ -131,21 +129,16 @@ export async function POST ( req: NextRequest )
             customer = insertedCustomers[ 0 ];
         }
 
-        // At this point, customer should be defined with an ID
         const customerId = customer.id;
-
         const orgStripeAccountId = await getStripeAccountIdFromOrgId( orgId );
 
         if ( !orgStripeAccountId )
         {
-            // If the Stripe account ID is null, send an error response back to the UI
             return NextResponse.json(
                 { error: 'Stripe account is not set up for this organization.' },
                 { status: 400 }
             );
         }
-
-        console.log( 'Fetched Stripe account ID:', orgStripeAccountId );
 
         const unitAmount = Math.round( ticket.price * 100 );
 
@@ -158,72 +151,30 @@ export async function POST ( req: NextRequest )
                         currency: 'usd',
                         product_data: {
                             name: ticket.name,
-                            description: `Ticket for ${ ticketTypeData.eventName }` // Use the event name fetched via join
+                            description: `Ticket for ${ ticketTypeData.eventName }`, // Use event name
                         },
-                        unit_amount: unitAmount
+                        unit_amount: unitAmount,
                     },
-                    quantity: 1
-                }
+                    quantity: 1,
+                },
             ],
             payment_intent_data: {
                 application_fee_amount: 50,
                 transfer_data: {
-                    destination: orgStripeAccountId
-                }
+                    destination: orgStripeAccountId,
+                },
             },
             customer_email: buyer.email, // Automatically send receipt to buyer's email
             mode: 'payment',
-            success_url: `https://eventjacket.com/events/${ eventSlug }/success?session_id={CHECKOUT_SESSION_ID}&firstName=${ encodeURIComponent( customer.firstName || '' ) }&lastName=${ encodeURIComponent( customer.lastName || '' ) }`,
-            cancel_url: `https://eventjacket.com/events/${ eventSlug }/cancel`
+            // Pass firstName and lastName directly from buyer object
+            success_url: `https://eventjacket.com/events/${ eventSlug }/success?session_id={CHECKOUT_SESSION_ID}&firstName=${ encodeURIComponent( buyer.firstName ) }&lastName=${ encodeURIComponent( buyer.lastName ) }&customer_id=${ customerId }`,
+            cancel_url: `https://eventjacket.com/events/${ eventSlug }/cancel`,
         } );
 
-        // Step 5: Save the ticket purchase details directly to the database
-        const ticketData = {
-            eventId: ticket.eventId,
-            orgId: orgId,
-            customerId: customerId,
-            ticketTypeId: ticket.id,
-            name: ticket.name,
-            price: ticket.price,
-            currency: 'USD',
-            status: 'sold',
-            eventName: ticketTypeData.eventName,
-            description: ticketTypeData.description,
-            validFrom: ticket.validFrom,
-            validUntil: ticket.validUntil,
-            purchaseDate: new Date(),
-            stripeSessionId: session.id,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            quantity: ticketTypeData.quantity,
-            eventDate: ticketTypeData.eventDate,
-            saleStartDate: ticketTypeData.saleStartDate,
-            saleEndDate: ticketTypeData.saleEndDate
-        };
+        console.log( 'Session created:', session.id );
 
-        // Insert the ticket and return the full row including the id
-        console.log( 'Inserting ticket data:', ticketData );
+        // Insert ticket data into database...
 
-        const [ insertedTicket ] = await db.insert( orgEventTickets )
-            .values( ticketData )
-            .returning( {
-                id: orgEventTickets.id,
-                name: orgEventTickets.name,
-                price: orgEventTickets.price,
-                status: orgEventTickets.status,
-                eventId: orgEventTickets.eventId,
-                orgId: orgEventTickets.orgId,
-                customerId: orgEventTickets.customerId,
-                ticketTypeId: orgEventTickets.ticketTypeId,
-                purchaseDate: orgEventTickets.purchaseDate,
-                stripeSessionId: orgEventTickets.stripeSessionId,
-                createdAt: orgEventTickets.createdAt,
-                updatedAt: orgEventTickets.updatedAt
-            } )
-            .execute();
-
-        // Step 6: Send the ticket email with QR code
-        console.log( 'Email information:', customer.email, 'with', insertedTicket );
         return NextResponse.json( session );
     } catch ( error )
     {
