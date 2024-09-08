@@ -92,7 +92,7 @@ export default async function SuccessPage ( {
 
     const ticket = ticketsWithCustomer[ 0 ];
 
-    const cleanedEventName = startCase( toLower( eventSlug.replace( /-/g, ' ' ) ) );
+   
     const eventDate = ticket.eventDate;
     const eventLocation1 = `${ eventData.venue || '' } `;
     const eventLocation = eventLocation1.trim();
@@ -108,7 +108,7 @@ export default async function SuccessPage ( {
                     </div>
 
                     <h1 className="mb-4 text-2xl">
-                        You got ticket(s) to <br/> <span className="font-extrabold">{ cleanedEventName }</span>.
+                        You got ticket(s) to <br /> <span className="font-extrabold">{ eventData.eventName }</span>.
                     </h1>
 
                     {/* Display ticket information */ }

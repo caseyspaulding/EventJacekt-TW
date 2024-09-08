@@ -32,7 +32,7 @@ export async function generateCustomizedTicket ( ticketData: {
   ctx.fillText( eventDate, 70, 220 );
   ctx.fillText( eventTime, 70, 280 );
   ctx.fillText( `$${ price }`, 70, 340 );
-  ctx.fillText( address, 70, 400 );
+  ctx.fillText( address, 70, 410 );
 
 
   // Set font style specifically for the event name to make it bold
