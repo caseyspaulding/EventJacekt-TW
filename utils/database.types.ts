@@ -1278,9 +1278,12 @@ export type Database = {
           event_start_time: string | null
           faqs: Json | null
           featured_image: string | null
-          gallery_images: string[] | null
+          featured_image_gallary: string[] | null
+          gallery_images: Json | null
           highlights: string[] | null
           id: string
+          latitude: number | null
+          longitude: number | null
           max_attendees: number | null
           name: string
           notes: string | null
@@ -1297,6 +1300,8 @@ export type Database = {
           timezone: string | null
           updated_at: string | null
           venue: string | null
+          venue_description: string | null
+          venue_image: string | null
           video_links: string[] | null
           zip_code: string | null
         }
@@ -1313,9 +1318,12 @@ export type Database = {
           event_start_time?: string | null
           faqs?: Json | null
           featured_image?: string | null
-          gallery_images?: string[] | null
+          featured_image_gallary?: string[] | null
+          gallery_images?: Json | null
           highlights?: string[] | null
           id?: string
+          latitude?: number | null
+          longitude?: number | null
           max_attendees?: number | null
           name: string
           notes?: string | null
@@ -1332,6 +1340,8 @@ export type Database = {
           timezone?: string | null
           updated_at?: string | null
           venue?: string | null
+          venue_description?: string | null
+          venue_image?: string | null
           video_links?: string[] | null
           zip_code?: string | null
         }
@@ -1348,9 +1358,12 @@ export type Database = {
           event_start_time?: string | null
           faqs?: Json | null
           featured_image?: string | null
-          gallery_images?: string[] | null
+          featured_image_gallary?: string[] | null
+          gallery_images?: Json | null
           highlights?: string[] | null
           id?: string
+          latitude?: number | null
+          longitude?: number | null
           max_attendees?: number | null
           name?: string
           notes?: string | null
@@ -1367,6 +1380,8 @@ export type Database = {
           timezone?: string | null
           updated_at?: string | null
           venue?: string | null
+          venue_description?: string | null
+          venue_image?: string | null
           video_links?: string[] | null
           zip_code?: string | null
         }
@@ -1997,9 +2012,10 @@ export type Database = {
           email: string
           favorite_event_id: string | null
           favorite_performer_id: string | null
+          first_name: string | null
           id: string
+          last_name: string | null
           metadata: Json | null
-          name: string
           notes: string | null
           org_id: string
           phone: string | null
@@ -2017,9 +2033,10 @@ export type Database = {
           email: string
           favorite_event_id?: string | null
           favorite_performer_id?: string | null
+          first_name?: string | null
           id?: string
+          last_name?: string | null
           metadata?: Json | null
-          name: string
           notes?: string | null
           org_id: string
           phone?: string | null
@@ -2037,9 +2054,10 @@ export type Database = {
           email?: string
           favorite_event_id?: string | null
           favorite_performer_id?: string | null
+          first_name?: string | null
           id?: string
+          last_name?: string | null
           metadata?: Json | null
-          name?: string
           notes?: string | null
           org_id?: string
           phone?: string | null
@@ -2660,7 +2678,10 @@ export type Database = {
           currency: string | null
           description: string | null
           event_date: string
+          event_end_time: string | null
           event_id: string
+          event_start_time: string | null
+          gate_open_time: string | null
           group_discount_available: boolean | null
           id: string
           is_early_bird: boolean | null
@@ -2684,7 +2705,10 @@ export type Database = {
           currency?: string | null
           description?: string | null
           event_date: string
+          event_end_time?: string | null
           event_id: string
+          event_start_time?: string | null
+          gate_open_time?: string | null
           group_discount_available?: boolean | null
           id?: string
           is_early_bird?: boolean | null
@@ -2708,7 +2732,10 @@ export type Database = {
           currency?: string | null
           description?: string | null
           event_date?: string
+          event_end_time?: string | null
           event_id?: string
+          event_start_time?: string | null
+          gate_open_time?: string | null
           group_discount_available?: boolean | null
           id?: string
           is_early_bird?: boolean | null

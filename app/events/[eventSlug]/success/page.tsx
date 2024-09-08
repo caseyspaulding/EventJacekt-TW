@@ -100,6 +100,7 @@ export default async function SuccessPage ( {
             eventId: orgTicketTypes.eventId,
             orgId: orgTicketTypes.orgId,
             ticketName: orgTicketTypes.name,
+            doorOpenTime: orgTicketTypes.doorOpenTime,    
             description: orgTicketTypes.description,
             price: orgTicketTypes.price,
             quantity: orgTicketTypes.quantity,
@@ -141,7 +142,7 @@ export default async function SuccessPage ( {
                     <TicketDisplay
                         eventName={ eventData.eventName }
                         eventDate={ eventDate }
-                        eventTime={ eventData.startDate } // Replace with actual event time
+                        eventTime={ ticket.doorOpenTime || '' } // Replace with actual event time
                         price={ ticket.price.toString() }
                         address={ eventLocation }
                         ticketNumber={ '' }
