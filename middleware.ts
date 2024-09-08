@@ -8,9 +8,8 @@ export async function middleware ( request: NextRequest )
 
 export const config = {
     matcher: [
-        '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$|$|^/auth/sign-in$|^/pricing$|^/faqs$).*)',
+        '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$|$|^/auth/sign-in$|^/pricing$|^/faqs$|^/api/stripe/webhook$|^/api/billing/webhook$).*)',
         '/createpost',
         '/dashboard' // Ensure this route is protected
-
     ]
 };
