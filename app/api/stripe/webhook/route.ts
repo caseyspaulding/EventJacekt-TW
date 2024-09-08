@@ -6,24 +6,12 @@ const stripe = new Stripe( process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20',
 } );
 
-// New configuration method
-export const runtime = 'edge'; // This enables Edge runtime
-export const dynamic = 'force-dynamic'; // This ensures the route is not statically optimized
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
-async function getRawBody ( req: NextRequest ): Promise<Buffer>
+export async function POST ( request: NextRequest )
 {
-  const chunks = [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  for await ( const chunk of req.body as any )
-  {
-    chunks.push( typeof chunk === 'string' ? Buffer.from( chunk ) : chunk );
-  }
-  return Buffer.concat( chunks );
-}
-
-export async function POST ( req: NextRequest )
-{
-  const sig = req.headers.get( 'stripe-signature' );
+  const sig = request.headers.get( 'stripe-signature' );
 
   if ( !sig )
   {
@@ -35,10 +23,7 @@ export async function POST ( req: NextRequest )
 
   try
   {
-    const rawBody = await getRawBody( req );
-    console.log( 'Raw body (first 100 chars):', rawBody.toString().substring( 0, 100 ) );
-    console.log( 'Raw body length:', rawBody.length );
-    console.log( 'Received signature:', sig );
+    const rawBody = await request.text();
 
     event = stripe.webhooks.constructEvent(
       rawBody,
@@ -48,25 +33,30 @@ export async function POST ( req: NextRequest )
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch ( err: any )
   {
-    console.error( `Webhook Error: ${ err.message }` );
+    console.log( `⚠️  Webhook signature verification failed.`, err.message );
     return NextResponse.json( { error: `Webhook Error: ${ err.message }` }, { status: 400 } );
   }
-
-  console.log( 'Event processed successfully:', event.type );
 
   // Handle the event
   switch ( event.type )
   {
+    case 'payment_intent.succeeded':
+      // eslint-disable-next-line no-case-declarations
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      console.log( `PaymentIntent for ${ paymentIntent.amount } was successful!` );
+      // Add your business logic here
+      break;
+    
     case 'checkout.session.completed':
       // eslint-disable-next-line no-case-declarations
       const session = event.data.object as Stripe.Checkout.Session;
-      console.log( `Payment for session ${ session.id } was successful!` );
+      console.log( `Checkout session ${ session.id } was completed!` );
       // Add your business logic here
       break;
-    // Add more cases for other event types you want to handle
     default:
       console.log( `Unhandled event type ${ event.type }` );
   }
 
+  // Return a response to acknowledge receipt of the event
   return NextResponse.json( { received: true } );
 }
