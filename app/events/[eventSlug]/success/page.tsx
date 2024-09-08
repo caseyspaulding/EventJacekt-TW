@@ -94,8 +94,9 @@ export default async function SuccessPage ( {
 
     const cleanedEventName = startCase( toLower( eventSlug.replace( /-/g, ' ' ) ) );
     const eventDate = ticket.eventDate;
-    const eventLocation = `${ eventData.venue || '' }, ${ eventData.city || '' }, ${ eventData.state || '' } ${ eventData.zipCode || '' } }`;
-
+    const eventLocation1 = `${ eventData.venue || '' }, ${ eventData.city || '' }, ${ eventData.state || '' } ${ eventData.zipCode || '' } }`;
+    const eventLocation = eventLocation1.trim();
+    
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-gray-200">
             <ConfettiComponent />
@@ -142,9 +143,7 @@ export default async function SuccessPage ( {
                         <p>If you have any questions, please contact our support team at <a href="mailto:support@eventjacket.com" className="text-blue-600">support@eventjacket.com</a>.</p>
                     </div>
 
-                    <div className="mt-6">
-                        <p className="text-sm">We value your feedback! Please take a moment to <a href="/feedback" className="text-blue-600 underline">fill out our survey</a> to help us improve.</p>
-                    </div>
+                    
                 </div>
             </div>
         </div>
