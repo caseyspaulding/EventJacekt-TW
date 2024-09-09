@@ -113,7 +113,7 @@ export default function FooterFull ()
               ) ) }
             </div>
             <div className="text-sm text-white mt-4 md:mt-0">
-              Proud Veteran-Owned Business <br />
+              <p>Proud Veteran-Owned Business</p>  <br />
               Kissimmee, FL 34747
             </div>
           </div>
