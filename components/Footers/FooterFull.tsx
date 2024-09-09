@@ -11,12 +11,12 @@ const navigation = {
     { name: 'Help Center', href: '/help' },
     { name: 'Documentation', href: '/docs' },
     { name: 'Contact', href: '/contact' },
- 
+
     { name: 'Academy', href: '/blog' },
 
   ],
   company: [
-    
+
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
     { name: 'Affiliate', href: '/affiliate' },
@@ -112,9 +112,21 @@ export default function FooterFull ()
                 </a>
               ) ) }
             </div>
-            <div className="text-sm text-white mt-4 md:mt-0">
-              <p>Proud Veteran-Owned Business</p>  <br />
-              Kissimmee, FL 34747
+            <div className="text-sm text-white mt-4 md:mt-0 inline-flex items-center">
+              <div> 
+                <p>Proud Veteran-Owned Business <br />
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
+                    className="h-4 w-6 "
+                    alt="US Flag"
+                  />
+                </p>
+                <br />
+                Kissimmee, FL 34747
+              </div>
+             
+           
+             
             </div>
           </div>
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">

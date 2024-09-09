@@ -73,14 +73,27 @@ export default function FooterTW() {
             </a>
           ))}
         </div>
-        <p className="mt-5 pb-4 text-center text-xs leading-5 text-gray-500">
-          Proud Veteran-Owned Business <br /> 
+        {/* Centering the flag and text together */ }
+        <div className="mt-5 flex justify-center items-center space-x-2">
+          <p className="text-center text-xs leading-5 text-gray-500">
+            Proud Veteran-Owned Business
+          </p>
+          
+        </div>
+        <div className="flex justify-center items-center mt-1 h-full">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
+            className="h-4 w-6"
+            alt="US Flag"
+          />
+        </div>
+        <p className="mt-1 text-center text-xs leading-5 text-gray-500">
           Kissimmee, FL 34747
         </p>
+
         <p className="mt-5 pb-12 text-center text-xs leading-5 text-gray-500">
-          &copy; {currentYear} EventJacket, LLC. All rights reserved.
+          &copy; { currentYear } EventJacket, LLC. All rights reserved.
         </p>
-        
       </div>
     </footer>
   );
