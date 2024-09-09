@@ -145,17 +145,17 @@ export default function NavBar1 ()
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <Link href="/">
                 <span className="sr-only">EventJacket</span>
-                <Image
+                <img
                   alt="Evenjacket logo"
-                  height={ 40 }
-                  width={ 40 }
-                  src="/images/logo.svg"
-                  className="h-8 w-auto sm:h-10"
+                  height={ 30 }
+                  width={ 30 }
+                  src="/images/logo-full.png"
+                  className="h-8 w-auto sm:h-8"
                 />
               </Link>
               <Link href="/">
                 <p className="ml-2 font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-700">
-                  <span>EventJacket</span>
+                  <span></span>
                 </p>
               </Link>
             </div>

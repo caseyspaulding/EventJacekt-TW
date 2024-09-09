@@ -86,28 +86,27 @@ export default function FooterFull ()
 {
   const currentYear = new Date().getFullYear(); // Get the current year
   return (
-    <><footer className='bg-blue-700 ' aria-labelledby="footer-heading" >
+    <><footer className='bg-[#1b2341] ' aria-labelledby="footer-heading" >
 
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+      <div className="mx-auto max-w-7xl px-4 pb-8 pt-16 sm:pt-24 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
 
             <img
               alt="EventJacket"
 
-
-              src="/images/logo.svg"
-              className="h-10" />
+              src="/images/logo-full.png"
+              className="h-8" />
 
             <p className="text-sm leading-6 text-slate-100">
               All in one event management software
             </p>
             <div className="flex space-x-6">
               { navigation.social.map( ( item ) => (
-                <a key={ item.name } href={ item.href } className=" text-zinc-50 hover:text-blue-200">
+                <a key={ item.name } href={ item.href } className=" text-zinc-50 hover:text-blue-400">
                   <span className="sr-only">{ item.name }</span>
                   <item.icon aria-hidden="true" className="h-6 w-6" />
                 </a>
@@ -125,7 +124,7 @@ export default function FooterFull ()
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.solutions.map( ( item ) => (
                     <li key={ item.name }>
-                      <a href={ item.href } className="text-sm leading-6  text-zinc-50 hover:text-blue-200">
+                      <a href={ item.href } className="text-sm leading-6  text-zinc-50 hover:text-blue-400">
                         { item.name }
                       </a>
                     </li>
@@ -137,7 +136,7 @@ export default function FooterFull ()
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.support.map( ( item ) => (
                     <li key={ item.name }>
-                      <a href={ item.href } className="text-sm leading-6  text-zinc-50 hover:text-blue-200">
+                      <a href={ item.href } className="text-sm leading-6  text-zinc-50 hover:text-blue-400">
                         { item.name }
                       </a>
                     </li>
@@ -151,7 +150,7 @@ export default function FooterFull ()
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.company.map( ( item ) => (
                     <li key={ item.name }>
-                      <a href={ item.href } className="text-sm leading-6  text-zinc-50 hover:text-blue-200 ">
+                      <a href={ item.href } className="text-sm leading-6  text-zinc-50 hover:text-blue-400 ">
                         { item.name }
                       </a>
                     </li>
@@ -163,7 +162,7 @@ export default function FooterFull ()
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.free.map( ( item ) => (
                     <li key={ item.name }>
-                      <a href={ item.href } className="text-sm leading-6 text-zinc-50 hover:text-blue-200">
+                      <a href={ item.href } className="text-sm leading-6 text-zinc-50 hover:text-blue-400">
                         { item.name }
                       </a>
                     </li>

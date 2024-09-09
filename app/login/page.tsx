@@ -170,7 +170,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                         <div className="mb-1">
                             <img
                                 alt="EventJacket Logo"
-                                src="/images/logo.svg"
+                                src="/images/logo-full.png"
                                 className="h-12 w-auto mx-auto"
                             />
                             <h2 className="mt-2 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">

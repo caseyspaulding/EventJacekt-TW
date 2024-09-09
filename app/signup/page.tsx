@@ -126,15 +126,13 @@ export default function Component ()
                         <div className="mb-1">
                             <img
                                 alt="EventJacket Logo"
-                                src="/images/logo.svg"
+                                src="/images/logo-full.png"
                                 className="h-12 w-auto mx-auto"
                             />
-                            <h2 className="mt-2 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">
+                            <h2 className="mt-1 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">
                                 Create an account
                             </h2>
-                            <p className="mt-2 text-lg leading-6 text-gray-700 text-center">
-                                Sign up to get started with EventJacket
-                            </p>
+                           
                         </div>
 
 
@@ -204,7 +202,7 @@ export default function Component ()
                             />
                             <MyButton
                                 type="submit"
-                                className="w-full bg-orange-500 font-medium py-2 text-medium text-white hover:bg-orange-400 rounded-3xl"
+                                className="w-full bg-blue-600 font-medium py-2 text-medium text-white hover:bg-green-500 rounded-3xl"
                                 isLoading={ isLoading }
                                 spinnerDelay={ 1000 } // 1 second delay before hiding spinner
                                 loadingMessage="Signing In..."
