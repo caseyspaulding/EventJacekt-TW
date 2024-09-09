@@ -169,11 +169,11 @@ export default function NavBar1 ()
             <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
               {/* Solutions Popover */ }
               <Popover className="relative">
-                <PopoverButton className="group inline-flex items-center rounded-md text-base font-medium text-gray-700 hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-white  data-[open]:text-gray-900">
+                <PopoverButton className="group inline-flex items-center rounded-md text-base font-medium text-gray-900 hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-white  data-[open]:text-gray-900">
                   <span>Solutions</span>
                   <ChevronDownIcon
                     aria-hidden="true"
-                    className="ml-2 h-5 w-5 text-gray-700  group-hover:text-gray-500 group-data-[open]:text-gray-600 group-data-[open]:group-hover:text-gray-500"
+                    className="ml-2 h-5 w-5 text-gray-800  group-hover:text-gray-500 group-data-[open]:text-gray-600 group-data-[open]:group-hover:text-gray-500"
                   />
                 </PopoverButton>
 
