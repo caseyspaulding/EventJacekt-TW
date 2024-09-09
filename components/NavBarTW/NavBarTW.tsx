@@ -46,8 +46,8 @@ export default function NavBarTW ()
               </span>
               <h1>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
-                  <span className="block text-gray-900">Simplify Event Management.  </span>
-                  <span className="animate__animated animate__rubberBand block text-blue-600">Build Relationships.</span>
+                  <span className="block text-gray-900">Event Management + </span>
+                  <span className="animate__animated animate__rubberBand block text-blue-600">Built-In CRM</span>
                 </span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
@@ -75,7 +75,7 @@ export default function NavBarTW ()
 
               <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
                 <div className="text-center text-gray-400">
-                 
+
                 </div>
 
                 <div
