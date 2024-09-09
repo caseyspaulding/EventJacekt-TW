@@ -10,23 +10,23 @@ interface TicketPurchaseClientProps
 {
     ticket: unknown; // Define your Ticket type here if you have it
     eventSlug: string;
-    //onPurchaseComplete?: ( buyer: { email: string; firstName: string } ) => Promise<void>;
+    quantity: number; // Quantity for the selected ticket
+    setQuantity: ( quantity: number ) => void; // Function to update the quantity
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const TicketPurchaseClient = ( { ticket, eventSlug }: TicketPurchaseClientProps, ref: Ref<HTMLInputElement> ) =>
+const TicketPurchaseClient = ( { ticket, eventSlug, quantity, setQuantity }: TicketPurchaseClientProps, ref: Ref<HTMLInputElement> ) =>
 {
     const [ loading, setLoading ] = useState( false );
     const [ errorMessage, setErrorMessage ] = useState<string | null>( null );
     const [ firstName, setFirstName ] = useState( '' );
     const [ lastName, setLastName ] = useState( '' );
     const [ email, setEmail ] = useState( '' );
-
+   
+    
     const handleBuyTicket = async () =>
     {
         setLoading( true );
-        setErrorMessage( null ); // Reset error message
+        setErrorMessage( null );
 
         if ( !firstName || !lastName || !email )
         {
@@ -40,13 +40,14 @@ const TicketPurchaseClient = ( { ticket, eventSlug }: TicketPurchaseClientProps,
             const response = await fetch( '/api/stripe/createCheckoutSession', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify( {
                     ticket,
                     eventSlug,
-                    buyer: { firstName, lastName, email }
-                } )
+                    buyer: { firstName, lastName, email },
+                    quantity, // Send the selected quantity to backend
+                } ),
             } );
 
             const data = await response.json();
@@ -67,7 +68,7 @@ const TicketPurchaseClient = ( { ticket, eventSlug }: TicketPurchaseClientProps,
                 {
                     console.error( 'Stripe Checkout error:', error );
                     setErrorMessage( 'An error occurred during checkout. Please try again.' );
-                } 
+                }
             }
         } catch ( error )
         {
@@ -88,22 +89,37 @@ const TicketPurchaseClient = ( { ticket, eventSlug }: TicketPurchaseClientProps,
                 value={ firstName }
                 onChange={ ( e ) => setFirstName( e.target.value ) }
                 className="w-full"
-                ref={ ref } // Assign the ref to the first input
-                required label={ 'First Name' }            />
+                ref={ ref }
+                required
+                label={ 'First Name' }
+            />
             <InputFieldEJ
                 type="text"
                 placeholder="Last Name"
                 value={ lastName }
                 onChange={ ( e ) => setLastName( e.target.value ) }
                 className="w-full"
-                required label={ 'Last Name' }            />
+                required
+                label={ 'Last Name' }
+            />
             <InputFieldEJ
                 type="email"
                 placeholder="Email"
                 value={ email }
                 onChange={ ( e ) => setEmail( e.target.value ) }
                 className="w-full"
-                required label={ 'Email' }            />
+                required
+                label={ 'Email' }
+            />
+            <InputFieldEJ
+                type="number"
+                placeholder="Quantity"
+                value={ quantity }
+                onChange={ ( e ) => setQuantity( Number( e.target.value ) ) } // Update quantity state in the parent
+                className="w-full"
+                required
+                label={ 'Quantity' }
+            />
             <Button
                 onClick={ handleBuyTicket }
                 disabled={ loading }
@@ -113,6 +129,6 @@ const TicketPurchaseClient = ( { ticket, eventSlug }: TicketPurchaseClientProps,
             </Button>
         </div>
     );
-}
+};
 
-export default forwardRef( TicketPurchaseClient );  // Wrap component with forwardRef to accept the ref
+export default forwardRef( TicketPurchaseClient );

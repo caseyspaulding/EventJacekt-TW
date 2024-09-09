@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { stripe } from '@/utils/stripe';
 import { db } from '@/db';
-import { orgCustomers, orgTicketTypes, events } from '@/db/schema';
+import { orgCustomers, orgTicketTypes, events, orgEventTickets } from '@/db/schema';
 import { getOrgIdFromTicketType, getStripeAccountIdFromOrgId } from '@/app/actions/ticketActions';
 
 import { eq } from 'drizzle-orm';
@@ -36,7 +36,7 @@ export async function POST ( req: NextRequest )
     try
     {
         const body = await req.json();
-        const { ticket, eventSlug, buyer } = body;
+        const { ticket, eventSlug, buyer, quantity } = body;
 
         console.log( 'Received ticket data:', ticket );
         console.log( 'Received buyer data:', buyer );
@@ -155,7 +155,7 @@ export async function POST ( req: NextRequest )
                         },
                         unit_amount: unitAmount,
                     },
-                    quantity: 1,
+                    quantity: quantity, // Use the total quantity here for Stripe session
                 },
             ],
             payment_intent_data: {
@@ -167,13 +167,38 @@ export async function POST ( req: NextRequest )
             customer_email: buyer.email, // Automatically send receipt to buyer's email
             mode: 'payment',
             // Pass firstName and lastName directly from buyer object
-            success_url: `https://eventjacket.com/events/${ eventSlug }/success?session_id={CHECKOUT_SESSION_ID}&firstName=${ encodeURIComponent( buyer.firstName ) }&lastName=${ encodeURIComponent( buyer.lastName ) }&customer_id=${ customerId }`,
+            success_url: `https://eventjacket.com/events/${ eventSlug }/success?session_id={CHECKOUT_SESSION_ID}&firstName=${ encodeURIComponent(
+                buyer.firstName
+            ) }&lastName=${ encodeURIComponent( buyer.lastName ) }&customer_id=${ customerId }`,
             cancel_url: `https://eventjacket.com/events/${ eventSlug }/cancel`,
         } );
 
         console.log( 'Session created:', session.id );
 
-        // Insert ticket data into database...
+        // Step 5: Insert ticket data into database for each ticket purchased
+        for ( let i = 0; i < quantity; i++ )
+        {
+            await db.insert( orgEventTickets ).values( {
+                eventId: ticket.eventId,                // Matches schema
+                orgId: orgId,                           // Matches schema
+                customerId: customerId,                 // Matches schema
+                ticketTypeId: ticket.id,                // Matches schema
+                name: ticket.name,                      // Matches schema
+                price: ticket.price,                    // Matches schema
+                currency: 'USD',                        // Matches schema
+                status: 'checkout-started',                         // Matches schema (default 'available', but here 'sold')
+                validFrom: ticket.validFrom,            // Matches schema (assuming it's available in your ticket data)
+                validUntil: ticket.validUntil,          // Matches schema (assuming it's available in your ticket data)
+                purchaseDate: new Date(),               // Matches schema
+                stripeSessionId: session.id,            // Matches schema
+                createdAt: new Date(),                  // Matches schema
+                updatedAt: new Date(),                  // Matches schema
+                // You can also include other fields based on your ticket data and logic, like:
+                isVIP: ticket.isVIP || false,           // Assuming `isVIP` is part of the ticket logic, or set to false
+                seatNumber: ticket.seatNumber || null,  // If available, otherwise null
+                // More fields from your schema can be added as needed
+            } );
+        }
 
         return NextResponse.json( session );
     } catch ( error )

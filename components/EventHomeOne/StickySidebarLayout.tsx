@@ -6,7 +6,7 @@ import { CardHeader } from "@nextui-org/card";
 import { CardBody } from "@nextui-org/card";
 import { CardFooter } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
-import TicketPurchaseClient from '@/app/events/[eventSlug]/TicketPurchaseClient';
+
 
 interface Ticket
 {
@@ -40,7 +40,7 @@ interface StickySidebarProps
   eventSlug: string;
 }
 
-const StickySidebar: React.FC<StickySidebarProps> = ( { tickets, eventSlug } ) =>
+const StickySidebar: React.FC<StickySidebarProps> = ( { tickets } ) =>
 {
   return (
     <aside className="sticky top-6 p-6 bg-opacity-70 backdrop-filter backdrop-blur-sm rounded-md max-w-[400px]">
@@ -74,7 +74,7 @@ const StickySidebar: React.FC<StickySidebarProps> = ( { tickets, eventSlug } ) =
               </CardBody>
               <Divider />
               <CardFooter>
-                <TicketPurchaseClient ticket={ ticket } eventSlug={ eventSlug } />
+              
               </CardFooter>
             </Card>
           ) ) }

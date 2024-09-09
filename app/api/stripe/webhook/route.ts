@@ -33,39 +33,43 @@ export async function POST ( request: NextRequest )
 
     switch ( event.type )
     {
+      // Handle checkout.session.completed
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
 
-        // Retrieve ticket data
-        const [ ticket ] = await db
+        // Retrieve tickets based on the Stripe session ID
+        const tickets = await db
           .select()
           .from( orgEventTickets )
           .where( eq( orgEventTickets.stripeSessionId, session.id ) )
           .execute();
 
-        if ( !ticket )
+        if ( tickets.length === 0 )
         {
-          throw new Error( 'Ticket not found' );
+          throw new Error( 'No tickets found for this session' );
         }
 
-        // Fetch ticket type and event details
-        const ticketTypeData = await fetchTicketAndEventDetails( ticket.ticketTypeId );
+        // Update ticket statuses to 'sold'
+        await db.update( orgEventTickets )
+          .set( { status: 'sold' } )
+          .where( eq( orgEventTickets.stripeSessionId, session.id ) )
+          .execute();
 
-        // Fetch or create customer
+        // Send ticket emails after payment is completed
         const buyer = {
           firstName: session.customer_details?.name,
           email: session.customer_email,
-        }; // Get buyer info from Stripe session
-       
-        console.log( `Customer ${ buyer.email } created` );
-        // Send ticket email
-        await sendTicketEmailWithDetails(
-          buyer,
-          ticket as unknown as OrgTicketType,
-          ticketTypeData
-        );
+        };
 
-        console.log( `Ticket email sent to ${ buyer.email }` );
+        for ( const ticket of tickets )
+        {
+          const ticketTypeData = await fetchTicketAndEventDetails( ticket.ticketTypeId );
+
+          // Send the ticket email with QR code and details
+          await sendTicketEmailWithDetails( buyer, ticket as unknown as OrgTicketType, ticketTypeData );
+        }
+
+        console.log( `Tickets confirmed and email sent to ${ buyer.email }` );
         break;
       }
 
