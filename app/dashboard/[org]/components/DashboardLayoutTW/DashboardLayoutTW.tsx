@@ -86,7 +86,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative flex-1 flex flex-col max-w-xs w-full bg-blue-600">
+              <Dialog.Panel className="relative flex-1 flex flex-col max-w-xs w-full bg-blue-800">
                 <div className="absolute top-0 right-0 -mr-12 pt-2">
                   <Button
                     type="button"
@@ -94,7 +94,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                     onClick={ () => setSidebarOpen( false ) }
                   >
                     <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
+                    <XMarkIcon className="h-6 w-6 text-blue-800" aria-hidden="true" />
                   </Button>
                 </div>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
@@ -102,7 +102,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                     <Link href="/">
                       <img
                         className="h-8 w-auto"
-                        src="/images/logo.svg"
+                        src="/images/logo-icon-white.png"
                         alt="EventJacket"
                       />
                     </Link>
@@ -181,12 +181,12 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
 
       {/* Desktop Sidebar */ }
       <div className="hidden bg-gray-50  lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
-        <div className="flex flex-col flex-grow bg-blue-600 pt-5 pb-4 overflow-y-auto">
+        <div className="flex flex-col flex-grow bg-gradient-to-l from-blue-500 via-blue-700 to-blue-900 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
             <Link href="/">
               <img
                 className="h-8 w-auto"
-                src="/images/logo.svg"
+                src="/images/logo-icon-white.png"
                 alt="EventJacket"
               />
             </Link>
@@ -260,7 +260,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       </div>
 
       <div className="flex flex-col flex-1 lg:pl-64">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-blue-600 lg:bg-white max-w-8xl">
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-gradient-to-l from-blue-500 via-blue-700 to-blue-900 sm:bg-none lg:bg-white max-w-8xl">
 
           <button
             type="button"
@@ -339,7 +339,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
             </div>
           </div>
         </div>
-        
+
         <main className="bg-gray-100 min-h-screen">
           <div className="max-w-7xl h-fit px-4 py-8 sm:px-6 lg:px-8">
             { children }
