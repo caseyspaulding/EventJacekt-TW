@@ -21,29 +21,27 @@ gmp-map {
   width: 300px;
 }
 
-
-
 /* Spinner */
 /* Spinner */
 .spinner {
   position: relative;
-  width: 108px;  /* Doubled from 54px */
-  height: 108px; /* Doubled from 54px */
+  width: 108px;
+  height: 108px;
   display: inline-block;
-  padding: 20px;  /* Increased from 10px */
+  padding: 20px;
   border-radius: 50%;
 }
 
 .spinner div {
   width: 6%;
   height: 16%;
-  background: #155ce9;
+  background: #155ce9; /* Updated color */
   position: absolute;
-  left: 49%;  /* Slightly adjusted for better centering */
-  top: 43%;   /* Slightly adjusted for better centering */
+  left: 49%;
+  top: 43%;
   opacity: 0;
   border-radius: 50px;
-  box-shadow: 0 0 6px rgba(0, 60, 255, 0.2); /* Increased shadow size */
+  box-shadow: 0 0 6px rgba(21, 92, 233, 0.2); /* Updated shadow color to match new spinner color */
   animation: fade 1s linear infinite;
 }
 
@@ -57,21 +55,56 @@ gmp-map {
 }
 
 /* Bar rotations remain the same */
-.spinner div.bar1 { transform: rotate(0deg) translate(0, -130%); animation-delay: 0s; }
-.spinner div.bar2 { transform: rotate(30deg) translate(0, -130%); animation-delay: -0.9167s; }
-.spinner div.bar3 { transform: rotate(60deg) translate(0, -130%); animation-delay: -0.833s; }
-.spinner div.bar4 { transform: rotate(90deg) translate(0, -130%); animation-delay: -0.7497s; }
-.spinner div.bar5 { transform: rotate(120deg) translate(0, -130%); animation-delay: -0.667s; }
-.spinner div.bar6 { transform: rotate(150deg) translate(0, -130%); animation-delay: -0.5837s; }
-.spinner div.bar7 { transform: rotate(180deg) translate(0, -130%); animation-delay: -0.5s; }
-.spinner div.bar8 { transform: rotate(210deg) translate(0, -130%); animation-delay: -0.4167s; }
-.spinner div.bar9 { transform: rotate(240deg) translate(0, -130%); animation-delay: -0.333s; }
-.spinner div.bar10 { transform: rotate(270deg) translate(0, -130%); animation-delay: -0.2497s; }
-.spinner div.bar11 { transform: rotate(300deg) translate(0, -130%); animation-delay: -0.167s; }
-.spinner div.bar12 { transform: rotate(330deg) translate(0, -130%); animation-delay: -0.0833s; }
+.spinner div.bar1 {
+  transform: rotate(0deg) translate(0, -130%);
+  animation-delay: 0s;
+}
+.spinner div.bar2 {
+  transform: rotate(30deg) translate(0, -130%);
+  animation-delay: -0.9167s;
+}
+.spinner div.bar3 {
+  transform: rotate(60deg) translate(0, -130%);
+  animation-delay: -0.833s;
+}
+.spinner div.bar4 {
+  transform: rotate(90deg) translate(0, -130%);
+  animation-delay: -0.7497s;
+}
+.spinner div.bar5 {
+  transform: rotate(120deg) translate(0, -130%);
+  animation-delay: -0.667s;
+}
+.spinner div.bar6 {
+  transform: rotate(150deg) translate(0, -130%);
+  animation-delay: -0.5837s;
+}
+.spinner div.bar7 {
+  transform: rotate(180deg) translate(0, -130%);
+  animation-delay: -0.5s;
+}
+.spinner div.bar8 {
+  transform: rotate(210deg) translate(0, -130%);
+  animation-delay: -0.4167s;
+}
+.spinner div.bar9 {
+  transform: rotate(240deg) translate(0, -130%);
+  animation-delay: -0.333s;
+}
+.spinner div.bar10 {
+  transform: rotate(270deg) translate(0, -130%);
+  animation-delay: -0.2497s;
+}
+.spinner div.bar11 {
+  transform: rotate(300deg) translate(0, -130%);
+  animation-delay: -0.167s;
+}
+.spinner div.bar12 {
+  transform: rotate(330deg) translate(0, -130%);
+  animation-delay: -0.0833s;
+}
 
-/* End iOS spinner  */
-
+/* End Spinner */
 
 .map-container {
   width: 100%;
@@ -89,7 +122,6 @@ gmp-map {
 
 .scan-region-highlight-svg {
   stroke: #0053df !important; /* Change stroke color to blue */
-  
 }
 
 .qr-scan-region.scanned {
@@ -106,12 +138,12 @@ gmp-map {
   top: 20px; /* Adjust this value as needed */
 }
 :root {
-    --main-blue: #1b82d6;
-    --main-white: #fff;
-    --main-grey: #f1f1f1; /* Update to a lighter grey */
-    --main-dark-grey: #121212;
-    --main-ease: cubic-bezier(.65,.05,.36,1);
-    --input-background: #ffffff; /* Lighter background color for input fields */
-    --input-border-color: #ccc; /* Subtle border color */
-    --input-focus-color: #057cdd; /* Light blue for focus */
+  --main-blue: #1b82d6;
+  --main-white: #fff;
+  --main-grey: #f1f1f1; /* Update to a lighter grey */
+  --main-dark-grey: #121212;
+  --main-ease: cubic-bezier(0.65, 0.05, 0.36, 1);
+  --input-background: #ffffff; /* Lighter background color for input fields */
+  --input-border-color: #ccc; /* Subtle border color */
+  --input-focus-color: #057cdd; /* Light blue for focus */
 }
