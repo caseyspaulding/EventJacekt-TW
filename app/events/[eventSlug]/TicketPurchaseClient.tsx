@@ -112,20 +112,20 @@ const TicketPurchaseClient = ( { ticket, eventSlug, quantity, setQuantity }: Tic
                 required
                 label={ 'Email' }
             />
-            <div className="flex items-center justify-between">
-                <label className="font-semibold mr-2">Quantity</label>
-                <QuantitySelector
-                    quantity={ quantity }
-                    setQuantity={ setQuantity }
-                    min={ 1 }
-                />
-            </div>
+
+            <QuantitySelector
+                quantity={ quantity }
+                setQuantity={ setQuantity }
+                min={ 1 }  // Assuming minimum quantity is 1
+                max={ 10 }  // Set a maximum if needed, or remove this prop for no upper limit
+            />
+           
             <Button
                 onClick={ handleBuyTicket }
                 disabled={ loading }
-                className="w-full mt-2 rounded-3xl bg-orange-500 px-4 py-2 text-xl font-normal text-white hover:bg-green-500"
+                className="w-full mt-2 rounded-3xl bg-orange-600 px-4 py-2 font-semibold text-white hover:bg-green-500"
             >
-                { loading ? 'Processing...' : 'Check out' }
+                { loading ? 'Processing...' : 'Buy Ticket' }
             </Button>
         </div>
     );
