@@ -4,10 +4,12 @@ import type { MutableRefObject} from "react";
 import { useRef, useState } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { InputField } from "./InputField";
-import { TextArea } from "./TextArea";
+
 import { CheckboxField } from "./CheckboxField";
 import { SelectField } from "./SelectField";
 import { ImageUploadField } from "./ImageUploadField";
+import { Button } from "@nextui-org/button";
+import InputFieldEJ from "./Input/InputEJ";
 
 export default function NewQRCodeGenerator ()
 {
@@ -89,19 +91,19 @@ export default function NewQRCodeGenerator ()
                     ],
                   } }
                 />
-                <button
+                <Button
                   type="button"
                   onClick={ handleDownload }
                   className="mt-5 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg shadow-md hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
                 >
                   Download QR Code
-                </button>
+                </Button>
               </div>
 
             </div>
             <div className="flex flex-col space-y-4">
 
-              <TextArea
+              <InputFieldEJ
                 name="value"
                 label="Web Address"
                 handleChange={ handleChange }
