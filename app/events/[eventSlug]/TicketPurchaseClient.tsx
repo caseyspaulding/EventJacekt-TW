@@ -5,6 +5,7 @@ import { useState, forwardRef } from 'react';
 import getStripe from '@/utils/stripeClient';
 import { Button } from '@nextui-org/react';
 import InputFieldEJ from '@/components/Input/InputEJ';
+import QuantitySelector from '@/components/QuantitySelector';
 
 interface TicketPurchaseClientProps
 {
@@ -111,15 +112,14 @@ const TicketPurchaseClient = ( { ticket, eventSlug, quantity, setQuantity }: Tic
                 required
                 label={ 'Email' }
             />
-            <InputFieldEJ
-                type="number"
-                placeholder="Quantity"
-                value={ quantity }
-                onChange={ ( e ) => setQuantity( Number( e.target.value ) ) } // Update quantity state in the parent
-                className="w-full"
-                required
-                label={ 'Quantity' }
-            />
+            <div className="flex items-center justify-between">
+                <label className="font-semibold mr-2">Quantity</label>
+                <QuantitySelector
+                    quantity={ quantity }
+                    setQuantity={ setQuantity }
+                    min={ 1 }
+                />
+            </div>
             <Button
                 onClick={ handleBuyTicket }
                 disabled={ loading }
