@@ -29,7 +29,7 @@ gmp-map {
   width: 54px;
   height: 54px;
   display: inline-block;
-  background: #74a6f2;
+ background-color: #003cff;
   padding: 10px;
   border-radius: 50%;
 }
@@ -37,10 +37,10 @@ gmp-map {
 .spinner div {
   width: 6%;
   height: 16%;
-  background: #FFF;
+  background: #ffffff;
   position: absolute;
-  left: 49%;
-  top: 43%;
+  left: 48%;
+  top: 42%;
   opacity: 0;
   border-radius: 50px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
