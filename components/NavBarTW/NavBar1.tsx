@@ -63,7 +63,7 @@ const solutions = [
     icon: ChartBarIcon,
   },
   {
-    name: "QR Code",
+    name: "QR Code Generator",
     description: "Free Custom QR Code Generator.",
     href: "/qrcode",
     icon: QrCodeIcon,
@@ -241,7 +241,7 @@ export default function NavBar1 ()
                         {/* Container to stack the orgName and email vertically */ }
                         <div className="flex flex-col items-start">
                           <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
-                          <p className="text-xs text-gray-500">{ user?.email || user2.user?.name }</p>
+                          <p className="text-xs text-gray-500">{ user2.user?.name || user?.email }</p>
                         </div>
                       </div>
                     </Menu.Button>
@@ -295,7 +295,7 @@ export default function NavBar1 ()
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <Image alt="EventJacket" height={ 40 } width={ 40 } src="/images/logo.svg" className="h-8 w-auto" />
+                    <img alt="EventJacket" height={ 40 } width={ 40 } src="/images/logo-full.png" className="h-8 w-auto" />
                   </div>
                   <div className="-mr-2">
                     <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-500 focus:outline-none  ">
@@ -313,16 +313,16 @@ export default function NavBar1 ()
                     <Menu as="div" className="relative">
                       <div>
                         <Menu.Button className="flex items-center rounded-md text-base font-medium text-gray-700 hover:text-gray-900">
-                          <Image
+                          <img
                             className="h-8 w-8 rounded-full"
-                            src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
+                            src={ user2?.user?.avatar || '/images/avatars/user_avatar_default.png' }
                             alt="Profile image"
                             height={ 32 }
                             width={ 32 }
                           />
                           <div className="ml-2 flex flex-col items-start">
                             <span className="font-medium text-gray-900">{ user?.orgName || 'User' }</span>
-                            <span className="text-sm text-gray-500">{ user?.email || 'user@example.com' }</span>
+                            <p className="text-xs text-gray-500">{ user2.user?.name || user?.email }</p>
                           </div>
                         </Menu.Button>
                       </div>
