@@ -6,6 +6,7 @@ import { useUser } from '@/contexts/UserContext';
 import { getEventsForOrg } from '@/app/actions/getEventsForOrg';
 import { deleteEvent } from '@/app/actions/eventActions';
 import BreadcrumbsPageHeader from '../components/BreadcrumbsPageHeading';
+import Loaderios from '@/components/Loaders/LoaderIos';
 
 interface Event
 {
@@ -83,7 +84,7 @@ export default function EventsPage ()
 
   if ( loading )
   {
-    return <p>Loading events...</p>;
+    return <p> <Loaderios/>  </p>;
   }
 
   if ( error )

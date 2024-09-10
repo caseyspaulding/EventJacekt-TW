@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function loading()
+export default function Loaderios ()
 {
   return (
     <div className="flex h-screen items-center justify-center">
