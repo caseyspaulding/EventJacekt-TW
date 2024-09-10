@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@nextui-org/react';
-import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
+
 
 
 interface QuantitySelectorProps
