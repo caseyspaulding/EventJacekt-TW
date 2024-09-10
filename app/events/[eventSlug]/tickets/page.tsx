@@ -160,7 +160,7 @@ export default async function BuyTickets ( { params }: { params: Params } )
 
   return (
     <>
-      <div className="bg-gray-100 flex justify-center items-center min-h-screen">
+      <div className="bg-white flex justify-center items-center min-h-screen">
         <BuyTicketsComp
           eventName={ eventData.eventName }
           eventSubtitle={ eventData.description || "" }
