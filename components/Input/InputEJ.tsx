@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes } from 'react';
+import type { InputHTMLAttributes} from 'react';
 import React, { forwardRef } from 'react';
 import styles from './InputEJ.module.css';
 
@@ -7,21 +7,15 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement>
 {
   label: string;
   variant?: 'outlined' | 'standard';
-  handleChange?: ( event: React.ChangeEvent<HTMLInputElement> ) => void; // Make handleChange optional
 }
 
 // Use forwardRef to pass the ref to the input element
 const InputFieldEJ = forwardRef<HTMLInputElement, InputFieldProps>(
-  ( { label, variant = 'outlined', handleChange, ...props }, ref ) =>
+  ( { label, variant = 'outlined', ...props }, ref ) =>
   {
     return (
       <div className={ variant === 'outlined' ? styles[ 'outlined-input' ] : styles[ 'standard-input' ] }>
-        <input
-          ref={ ref }
-          { ...props }
-          placeholder=" "
-          onChange={ handleChange } // Use handleChange here
-        />
+        <input ref={ ref } { ...props } placeholder=" " />
         <label>{ label }</label>
         { variant === 'standard' && <span className={ styles[ 'underline' ] }></span> }
       </div>
