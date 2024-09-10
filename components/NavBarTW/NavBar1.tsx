@@ -10,6 +10,7 @@ import { createClient } from "@/utils/supabase/client";
 import React from "react";
 import type { Json } from "@/database.types";
 import { Button } from "@nextui-org/button";
+import { useUser } from "@/contexts/UserContext";
 
 
 // Define your UserType
@@ -135,6 +136,7 @@ export default function NavBar1 ()
     { name: 'Sign out', href: '#' },
   ];
 
+  const user2 = useUser()   // Get the current user
   return (
     <div
       className={ `sticky top-0 z-50  shadow-sm  ${ isSticky ? 'bg-white ' : 'bg-white/60 backdrop-blur-none' }` }
@@ -229,9 +231,9 @@ export default function NavBar1 ()
                     <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       <span className="sr-only">Open user menu</span>
                       <div className="flex items-center space-x-4">
-                        <Image
+                        <img
                           className="h-8 w-8 rounded-full"
-                          src={ user?.avatar || '/images/avatars/user_avatar_default.png' }
+                          src={ user2?.user?.avatar || '/images/avatars/user_avatar_default.png' }
                           alt="Profile image"
                           height={ 32 }
                           width={ 32 }
@@ -239,7 +241,7 @@ export default function NavBar1 ()
                         {/* Container to stack the orgName and email vertically */ }
                         <div className="flex flex-col items-start">
                           <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
-                          <p className="text-xs text-gray-500">{ user?.email }</p>
+                          <p className="text-xs text-gray-500">{ user?.email || user2.user?.name }</p>
                         </div>
                       </div>
                     </Menu.Button>
