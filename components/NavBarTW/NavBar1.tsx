@@ -3,7 +3,7 @@
 import { Menu, Popover, PopoverButton, PopoverGroup, PopoverPanel, Transition } from "@headlessui/react";
 import { ChevronDownIcon, QrCodeIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import Image from "next/image";
+
 import { useEffect, useState } from "react";
 import { Bars3CenterLeftIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import { createClient } from "@/utils/supabase/client";
