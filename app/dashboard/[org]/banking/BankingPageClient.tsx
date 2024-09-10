@@ -85,13 +85,13 @@ export default function BankingPageClient ( {
     };
     const breadcrumbs = [
         { name: 'Dashboard', href: '/' },
-        { name: 'Banking', href: '/banking', current: true },
+        { name: 'Connect Account', href: '/banking', current: true },
       
     ];
     return (
         <div className="bg-white max-w-4xl p-6 rounded-2xl ">
 
-            <BreadcrumbsPageHeader title="Banking" breadcrumbs={ breadcrumbs } />
+            <BreadcrumbsPageHeader title="Connect Account" breadcrumbs={ breadcrumbs } />
 
             { ( connectedAccountId || accountCreatePending || onboardingExited ) && (
                 <div className="mt-6 p-4 bg-gray-50 rounded-lg">
@@ -143,17 +143,17 @@ export default function BankingPageClient ( {
                             height={ 500 }
                         />
                     </Link>
-                    <p className="text-gray-600 mt-4">
+                    <p className="text-gray-600 text-sm mt-4">
                         Our platform uses <strong>Stripe</strong> for secure payment processing. Stripe is a globally trusted payment processor that ensures your transactions are safe and secure.
                     </p>
-                    <div className="flex flex-col items-center mt-4 space-y-2">
-                        <Link href="https://stripe.com/docs/security/stripe" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    <div className="flex flex-col items-center mt-4 space-y-2 text-sm">
+                        <Link href="https://stripe.com/docs/security/stripe" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">
                             Learn more about Stripe's security practices
                         </Link>
-                        <Link href="https://stripe.com/legal" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                        <Link href="https://stripe.com/legal" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">
                             Stripe's Terms of Service
                         </Link>
-                        <Link href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                        <Link href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">
                             Stripe's Privacy Policy
                         </Link>
                     </div>

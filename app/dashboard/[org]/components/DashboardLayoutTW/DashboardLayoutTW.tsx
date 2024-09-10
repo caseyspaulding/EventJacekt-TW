@@ -22,18 +22,31 @@ import { Button } from '@nextui-org/button';
 
 
 const navigation = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: false },
+  { name: 'Dashboard', href: '/', icon: HomeIcon, current: false },
   {
     name: 'Events',
     icon: FolderIcon,
     current: false,
     children: [
-      { name: 'All Events', href: '/events' },
+      { name: 'Manage Events', href: '/events' },
       { name: 'Create Event', href: '/events/new' },
       { name: 'Scan Tickets', href: '/events/scan-tickets' },
+      { name: 'Event Analytics', href: '/events/analytics' },
     ],
   },
-  { name: 'Banking', href: '/banking', icon: BanknotesIcon, current: false },
+  {
+    name: 'Banking',
+    icon: BanknotesIcon,
+    current: false,
+    children: [
+      { name: 'Connect Account', href: '/banking' },
+      { name: 'Payments', href: '/banking/payments' },
+      { name: 'Pay outs', href: '/banking/payouts' },
+      { name: 'Refunds and Disputes', href: '/banking/refunds' },
+      { name: 'Account Settings', href: '/banking/account-settings' },
+      { name: 'Help', href: '/banking/help' },
+    ],
+  },
 ];
 
 const userNavigation = [
