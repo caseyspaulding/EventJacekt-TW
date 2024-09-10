@@ -14,11 +14,29 @@ interface ITextAreaProps
 	placeholder?: string; // New prop for placeholder text
 }
 
-export const TextArea = ( { name, handleChange, role, rows, cols, defaultValue, hideLabel, value, label, placeholder }: ITextAreaProps ) =>
+export const TextArea = ( {
+	name,
+	handleChange,
+	role,
+	rows = 4,
+	cols,
+	defaultValue,
+	hideLabel,
+	value,
+	label,
+	placeholder
+}: ITextAreaProps ) =>
 {
 	return (
-		<div style={ { display: 'flex', flexDirection: 'column', marginBottom: '6px', whiteSpace: 'pre-line' } }>
-			{ !hideLabel && <label htmlFor={ name }>{ label || name }</label> }
+		<div className="flex flex-col mb-4">
+			{/* Label */ }
+			{ !hideLabel && (
+				<label htmlFor={ name } className="mb-2 text-gray-700 font-medium">
+					{ label || name }
+				</label>
+			) }
+
+			{/* TextArea */ }
 			<textarea
 				id={ name }
 				name={ name }
@@ -28,8 +46,9 @@ export const TextArea = ( { name, handleChange, role, rows, cols, defaultValue, 
 				role={ role }
 				defaultValue={ defaultValue }
 				value={ value }
-				placeholder={ placeholder } // Apply placeholder here
+				placeholder={ placeholder }
+				className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700 bg-gray-100 resize-none" // Tailwind styles
 			/>
 		</div>
 	);
-}
+};

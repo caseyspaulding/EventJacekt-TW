@@ -4,12 +4,11 @@ import type { MutableRefObject} from "react";
 import { useRef, useState } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { InputField } from "./InputField";
-
+import { TextArea } from "./TextArea";
 import { CheckboxField } from "./CheckboxField";
 import { SelectField } from "./SelectField";
 import { ImageUploadField } from "./ImageUploadField";
 import { Button } from "@nextui-org/button";
-import InputFieldEJ from "./Input/InputEJ";
 
 export default function NewQRCodeGenerator ()
 {
@@ -103,11 +102,11 @@ export default function NewQRCodeGenerator ()
             </div>
             <div className="flex flex-col space-y-4">
 
-              <InputFieldEJ
+              <TextArea
                 name="value"
-                label="Web Address"
+                label="Your Web Address"
                 handleChange={ handleChange }
-                placeholder="Enter the web address here"
+                placeholder="Enter your web address here that you would like to convert to a QR code"
               />
               <SelectField name="ecLevel" options={ [ 'L', 'M', 'Q', 'H' ] } handleChange={ handleChange } />
               <InputField name="size" type="range" handleChange={ handleChange } min={ 100 } max={ 500 } />
