@@ -8,29 +8,25 @@ import type { Event as SchemaEvent } from 'schema-dts'
 import { events, organizations, orgTicketTypes } from "@/db/schema";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 import { absoluteUrl } from "@/lib/utils";
-
 import EventImage from "@/components/EventHomeOne/Hero/EventImage";
 import Countdown from "@/components/Countdown/Countdown";
 import BuyTicketsButton from "@/components/EventHomeOne/BuyTicketsButton";
 import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTickets";
 import EventDetails from "@/components/EventHomeOne/EventDetails";
-
-import '@/styles/gradientHeader.css'
+import '@/styles/gradientHeader.css';
 import FooterTW from "@/components/Footers/FooterTW";
-
 
 interface Params
 {
     eventSlug: string;
 }
 
-
-
 interface FAQ
 {
     question: string;
     answer: string;
 }
+
 export async function generateMetadata ( { params }: { params: Params } )
 {
     const eventSlug = params.eventSlug;
@@ -61,9 +57,8 @@ export async function generateMetadata ( { params }: { params: Params } )
         return notFound();
     }
 
-    // Use a valid absolute URL for the image
     const imageUrl = eventData.featuredImage?.startsWith( 'http' )
-        ? eventData.featuredImage // If the featuredImage already contains a valid URL
+        ? eventData.featuredImage
         : absoluteUrl( eventData.featuredImage || '/images/og-eventjacket.jpg' );
 
     const fullUrl = absoluteUrl( `/events/${ eventSlug }` );
@@ -85,7 +80,6 @@ export async function generateMetadata ( { params }: { params: Params } )
                 },
             ],
         },
-        // Add the `fb:app_id` directly here
         additionalMetaTags: [
             {
                 property: 'fb:app_id',
@@ -105,7 +99,6 @@ export default async function EventPage ( { params }: { params: Params } )
         notFound();
     }
 
-
     // Fetch event with organization details
     const eventWithOrg = await db
         .select( {
@@ -118,8 +111,8 @@ export default async function EventPage ( { params }: { params: Params } )
             eventEndTime: events.eventEndTime,
             featuredImage: events.featuredImage,
             venue: events.venue,
-            organizerContact: events.organizerContact,  
-            venueImage: events.venueImage,  // Add venueImage to the query
+            organizerContact: events.organizerContact,
+            venueImage: events.venueImage,
             address: events.address,
             city: events.city,
             state: events.state,
@@ -130,7 +123,6 @@ export default async function EventPage ( { params }: { params: Params } )
             bannerImage: events.bannerImage,
             galleryImages: events.galleryImages,
             videoLinks: events.videoLinks,
-          
             maxAttendees: events.maxAttendees,
             status: events.status,
             refundPolicy: events.refundPolicy,
@@ -151,13 +143,9 @@ export default async function EventPage ( { params }: { params: Params } )
         .limit( 1 );
 
     const eventData = eventWithOrg[ 0 ];
-    // `faqs` is already an object, no need to parse
-    const faqs: string | FAQ[] | null | undefined =
-        typeof eventData.faqs === 'string'
-            ? JSON.parse( eventData.faqs )
-            : Array.isArray( eventData.faqs )
-                ? eventData.faqs
-                : null; // Or use `[]` if you prefer an empty array instead of null
+
+    const faqs: FAQ[] | null =
+        typeof eventData.faqs === 'string' ? JSON.parse( eventData.faqs ) : Array.isArray( eventData.faqs ) ? eventData.faqs : null;
 
     if ( !eventData )
     {
@@ -198,8 +186,7 @@ export default async function EventPage ( { params }: { params: Params } )
         notFound();
     }
 
-    const ticket = tickets[ 0 ]; // Use the first ticket type found
-    // Construct full URL for OG tags
+    const ticket = tickets[ 0 ];
 
     const imageUrl = absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' );
 
@@ -224,9 +211,7 @@ export default async function EventPage ( { params }: { params: Params } )
                             addressCountry: eventData.country || "No country available",
                         },
                     },
-                    image: [
-                        imageUrl,
-                    ],
+                    image: [ imageUrl ],
                     offers: tickets.map( ticket => ( {
                         "@type": "Offer",
                         price: ticket.price || "0.00",
@@ -240,23 +225,14 @@ export default async function EventPage ( { params }: { params: Params } )
             <NavBar1 />
 
             <main className="">
-                
-               
-
-                {/* Main Content */ }
                 <div className="relative z-20 max-w-screen-xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 xl:p-9">
-
-                    {/* Event Image */ }
                     <EventImage
                         imageUrl={ eventData.featuredImage || '' }
                         alt={ `${ eventData.eventName } image` }
                         overlayColor=""
-                       
                     />
 
-                    {/* Main Content in Two Columns */ }
                     <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 mt-8">
-                        {/* Left Column (Event Info) */ }
                         <div className="xl:col-span-2 space-y-4">
                             <span className="text-gray-500 dark:text-gray-400">
                                 { eventData.startDate && eventData.endDate ? (
@@ -280,7 +256,6 @@ export default async function EventPage ( { params }: { params: Params } )
                                 { eventData.description }
                             </h2>
 
-                            {/* Event Details */ }
                             <EventDetails
                                 eventId={ eventData.eventId }
                                 name={ eventData.eventName }
@@ -291,7 +266,7 @@ export default async function EventPage ( { params }: { params: Params } )
                                 eventStartTime={ eventData.eventStartTime }
                                 eventEndTime={ eventData.eventEndTime }
                                 venue={ eventData.venue }
-                                venueImage={ eventData.venueImage } // Pass the venue image here
+                                venueImage={ eventData.venueImage }
                                 address={ eventData.address }
                                 city={ eventData.city }
                                 state={ eventData.state }
@@ -316,13 +291,10 @@ export default async function EventPage ( { params }: { params: Params } )
                             />
                         </div>
 
-                        {/* Right Column (Sidebar) */ }
                         <aside className="xl:col-span-1 space-y-6 xl:space-y-10">
                             <div className="sticky top-20">
-                                {/* Buy Tickets Button */ }
                                 <BuyTicketsButton eventSlug={ eventSlug } priceRange={ ticket.price } />
 
-                                {/* Countdown */ }
                                 <div className="lg:ml-16 sm:text-center mt-2">
                                     <Countdown
                                         startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
@@ -335,12 +307,10 @@ export default async function EventPage ( { params }: { params: Params } )
                     </div>
                 </div>
 
-                {/* Footer */ }
                 <div className="lg:mt-8 pt-2 mt-20 mb-16">
                     <FooterTW />
                 </div>
             </main>
-
 
             <StickyFooterBuyTickets eventSlug={ eventSlug } priceRange={ ticket.price } />
         </>
