@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useUser } from '@/contexts/UserContext';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
-import DisputesComponent from '@/components/Disputes';
+
 
 export default function PaymentsPage ()
 {
