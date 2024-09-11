@@ -143,7 +143,7 @@ export default function NavBar1 ()
     >
       <header>
         <Popover className="relative ">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:justify-start md:space-x-10 lg:px-4">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 md:justify-start md:space-x-10 lg:px-4">
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <Link href="/">
                 <span className="sr-only">EventJacket</span>
