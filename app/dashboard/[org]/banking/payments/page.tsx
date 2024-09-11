@@ -1,9 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { createPaymentSession } from '@/app/actions/createPaymentSession'; // Server action
 import { ConnectPaymentDetails, ConnectComponentsProvider } from '@stripe/react-connect-js';
+
+const PaymentDetailsModal = ({ paymentId, stripeConnectInstance, onClose }: any) => {
+  return (
+    <ConnectComponentsProvider connectInstance={stripeConnectInstance}>
+      <ConnectPaymentDetails payment={paymentId} onClose={onClose} />
+    </ConnectComponentsProvider>
+  );
+};
 
 export default function PaymentsPage({ params }: { params: { org: string } }) {
   const [stripeConnectInstance, setStripeConnectInstance] = useState<any>(null);
@@ -11,7 +19,7 @@ export default function PaymentsPage({ params }: { params: { org: string } }) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [selectedPaymentId, setSelectedPaymentId] = useState<string | null>(null); // For payment details
-  const [payments, setPayments] = useState<any[]>([]); // Fetch actual payments
+  const [payments, setPayments] = useState<any[]>([]); // Simulate actual payments
 
   useEffect(() => {
     const fetchClientSecret = async () => {
@@ -28,10 +36,9 @@ export default function PaymentsPage({ params }: { params: { org: string } }) {
     fetchClientSecret();
   }, [params.org]);
 
+  // Initialize Stripe Connect once client secret is ready
   useEffect(() => {
-    if (clientSecret) {
-      console.log('Client Secret:', clientSecret); // Log to verify it's passed correctly
-
+    if (clientSecret && !stripeConnectInstance) {
       const initializeStripe = async () => {
         const instance = await loadConnectAndInitialize({
           publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
@@ -42,17 +49,14 @@ export default function PaymentsPage({ params }: { params: { org: string } }) {
 
       initializeStripe();
     }
-  }, [clientSecret]);
+  }, [clientSecret, stripeConnectInstance]);
 
+  // Append the payments component once Stripe is ready
   useEffect(() => {
-    if (stripeConnectInstance) {
+    if (stripeConnectInstance && !document.querySelector('.StripeElement')) {
       const container = document.getElementById('payments-container');
 
-      // Clear the container before appending the new component to avoid duplicates
       if (container) {
-        container.innerHTML = ''; // Clear previous component
-
-        // Create and mount the payments component
         const paymentsComponent = stripeConnectInstance.create('payments');
         container.appendChild(paymentsComponent);
       }
@@ -66,10 +70,10 @@ export default function PaymentsPage({ params }: { params: { org: string } }) {
   };
 
   // Function to close payment details overlay
-  const closePaymentDetails = () => {
+  const closePaymentDetails = useCallback(() => {
     setShowPaymentDetails(false);
     setSelectedPaymentId(null);
-  };
+  }, []);
 
   if (loading) {
     return <div>Loading payments management...</div>;
@@ -80,8 +84,8 @@ export default function PaymentsPage({ params }: { params: { org: string } }) {
   }
 
   return (
-    <div className = 'bg-white p-6 rounded-2xl shadow-md'>
-      <h1 className="text-3xl font-semibold mb-4 ">Payments</h1>
+    <div className='bg-white p-6 rounded-2xl shadow-md'>
+      <h1 className="text-3xl font-semibold mb-4">Payments</h1>
       <div id="payments-container"></div>
 
       {/* Dynamic payment buttons */}
@@ -96,14 +100,13 @@ export default function PaymentsPage({ params }: { params: { org: string } }) {
       </div>
 
       {/* Payment Details Overlay */}
-      { showPaymentDetails && selectedPaymentId && stripeConnectInstance && (
-        <ConnectComponentsProvider connectInstance={ stripeConnectInstance }>
-          <ConnectPaymentDetails
-            payment={ selectedPaymentId } // Pass the payment ID dynamically
-            onClose={ closePaymentDetails } // Close the overlay
-          />
-        </ConnectComponentsProvider>
-      ) }
+      {showPaymentDetails && selectedPaymentId && stripeConnectInstance && (
+        <PaymentDetailsModal
+          paymentId={selectedPaymentId}
+          stripeConnectInstance={stripeConnectInstance}
+          onClose={closePaymentDetails}
+        />
+      )}
     </div>
   );
 }

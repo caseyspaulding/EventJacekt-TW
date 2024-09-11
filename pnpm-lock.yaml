@@ -65,6 +65,9 @@ importers:
       '@types/qrcode.react':
         specifier: ^1.0.5
         version: 1.0.5
+      '@types/stripe':
+        specifier: ^8.0.417
+        version: 8.0.417
       '@vis.gl/react-google-maps':
         specifier: ^1.1.3
         version: 1.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -159,8 +162,8 @@ importers:
         specifier: ^1.6.6
         version: 1.6.6
       stripe:
-        specifier: ^14.23.0
-        version: 14.23.0
+        specifier: ^16.10.0
+        version: 16.10.0
       swr:
         specifier: ^2.2.5
         version: 2.2.5(react@18.3.1)
@@ -2313,6 +2316,10 @@ packages:
   '@types/sortablejs@1.15.7':
     resolution: {integrity: sha512-PvgWCx1Lbgm88FdQ6S7OGvLIjWS66mudKPlfdrWil0TjsO5zmoZmzoKiiwRShs1dwPgrlkr0N4ewuy0/+QUXYQ==}
 
+  '@types/stripe@8.0.417':
+    resolution: {integrity: sha512-PTuqskh9YKNENnOHGVJBm4sM0zE8B1jZw1JIskuGAPkMB+OH236QeN8scclhYGPA4nG6zTtPXgwpXdp+HPDTVw==}
+    deprecated: This is a stub types definition. stripe provides its own type definitions, so you do not need this installed.
+
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
 
@@ -4223,8 +4230,8 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  stripe@14.23.0:
-    resolution: {integrity: sha512-OPD7LqBmni6uDdqA05GGgMZyyRWxJOehONBNC9tYgY4Uh089EtXd6QLIgRGrqTDlQH3cA2BXo848nxwa/zsQzw==}
+  stripe@16.10.0:
+    resolution: {integrity: sha512-H0qeSCkZVvk4fVchUbg0rNNviwOyw3Rsr9X6MKe84ajBeMz4ogEOZykaUcb/n0GSdvWlXAtbnB1gxl3xOlH+ZA==}
     engines: {node: '>=12.*'}
 
   strnum@1.0.5:
@@ -8011,6 +8018,10 @@ snapshots:
 
   '@types/sortablejs@1.15.7': {}
 
+  '@types/stripe@8.0.417':
+    dependencies:
+      stripe: 16.10.0
+
   '@types/trusted-types@2.0.7': {}
 
   '@types/uuid@10.0.0': {}
@@ -10074,7 +10085,7 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  stripe@14.23.0:
+  stripe@16.10.0:
     dependencies:
       '@types/node': 22.5.4
       qs: 6.13.0

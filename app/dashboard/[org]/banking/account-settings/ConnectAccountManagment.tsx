@@ -1,11 +1,9 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { ConnectAccountManagement, ConnectComponentsProvider } from '@stripe/react-connect-js';
 import { createAccountSession } from '@/app/actions/createAccountSession'; // Server action to create account session
 
-export default function AccountManagementPage ()
-{
+export default function AccountManagementPage ( { params }: { params: { org: string } } )
+{  // Accept `org` param
   const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
   const [ clientSecret, setClientSecret ] = useState<string | null>( null );
   const [ loading, setLoading ] = useState<boolean>( true );
@@ -16,7 +14,7 @@ export default function AccountManagementPage ()
     {
       try
       {
-        const secret = await createAccountSession();
+        const secret = await createAccountSession( params.org );  // Pass `org` param to the server action
         setClientSecret( secret );
       } catch ( error )
       {
@@ -28,7 +26,7 @@ export default function AccountManagementPage ()
     };
 
     fetchClientSecret();
-  }, [] );
+  }, [ params.org ] );  // Make sure the effect runs when `org` changes
 
   useEffect( () =>
   {
