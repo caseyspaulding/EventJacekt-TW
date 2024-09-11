@@ -276,7 +276,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                       <Disclosure.Button
                         className={ classNames(
                           item.current ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700 hover:text-white',
-                          'group flex items-center w-full rounded-md p-2 text-left text-sm font-semibold leading-6'
+                          'group flex items-center w-full rounded-md p-2 text-left text-sm font-normal leading-6'
                         ) }
                       >
                         <div className="flex items-center gap-x-3">
