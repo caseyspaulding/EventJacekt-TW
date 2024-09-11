@@ -89,7 +89,7 @@ export default function BankingPageClient ( {
       
     ];
     return (
-        <div className="bg-white max-w-4xl p-6 rounded-2xl ">
+        <div className="bg-white shadow-md p-6 rounded-2xl ">
 
             <BreadcrumbsPageHeader title="Connect Account" breadcrumbs={ breadcrumbs } />
 

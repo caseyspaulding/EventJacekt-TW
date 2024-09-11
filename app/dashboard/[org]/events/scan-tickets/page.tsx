@@ -127,7 +127,7 @@ export default function ScanTicketsPage ()
   };
 
   return (
-    <div className="max-w-md mx-auto  p-6 rounded-2xl bg-white overflow-hidden">
+    <div className="max-w-md mx-auto  p-6 rounded-2xl shadow-md bg-white overflow-hidden">
       <div className="">
         <h1 className="text-5xl font-extrabold text-center">Scan Tickets</h1>
 

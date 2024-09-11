@@ -256,7 +256,7 @@ const CreateEventPage = () =>
     const mapAddress = `${ address }, ${ city }, ${ state }, ${ zipCode }` || '';
 
     return (
-        <div className="my-4 max-w-5xl p-6 rounded-2xl bg-white">
+        <div className="my-4 max-w-5xl p-6 rounded-2xl bg-white shadow-md">
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
 
             <form onSubmit={ handleSubmit } className="space-y-6 pb-24">
