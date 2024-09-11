@@ -44,7 +44,6 @@ const navigation = [
       { name: 'Connect Account', href: '/banking' },
       { name: 'Payments', href: '/banking/payments' },
       { name: 'Pay outs', href: '/banking/payouts' },
-      { name: 'Refunds and Disputes', href: '/banking/refunds' },
       { name: 'Account Settings', href: '/banking/account-settings' },
       { name: 'Help', href: '/banking/help' },
     ],

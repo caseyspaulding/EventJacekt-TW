@@ -74,7 +74,7 @@ export default function PaymentsPage ()
       <div id="payments-container"></div>
       <div id="error" hidden>Something went wrong!</div>
     </div>
-    <DisputesComponent />
+    
   </>
   );
 }
