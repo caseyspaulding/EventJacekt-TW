@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
+import { organizations } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import { db } from '@/db';
+
 const stripe = new Stripe( process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2024-06-20',
 } );
@@ -9,10 +13,30 @@ export async function POST ( req: Request )
 {
   try
   {
-    const { accountId } = await req.json();
+    const { orgId } = await req.json();
 
+    if ( !orgId )
+    {
+      return NextResponse.json( { error: 'Missing orgId' }, { status: 400 } );
+    }
+
+    // Fetch the stripeAccountId from the organizations table
+    const organization = await db
+      .select( { stripeAccountId: organizations.stripeAccountId } )
+      .from( organizations )
+      .where( eq( organizations.id, orgId ) )
+      .limit( 1 ); // Ensure you're fetching only one result
+
+    const stripeAccountId = organization[ 0 ]?.stripeAccountId;
+
+    if ( !stripeAccountId )
+    {
+      return NextResponse.json( { error: 'Stripe account not found for this organization' }, { status: 404 } );
+    }
+
+    // Create the account session with the stripeAccountId
     const accountSession = await stripe.accountSessions.create( {
-      account: accountId, // Replace this with your connected account ID
+      account: stripeAccountId,
       components: {
         payments: {
           enabled: true,
@@ -25,16 +49,15 @@ export async function POST ( req: Request )
       },
     } );
 
+    console.log( 'Stripe account session created:', accountSession );
+
     return NextResponse.json( {
       client_secret: accountSession.client_secret,
     } );
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   } catch ( error: any )
   {
-    console.error(
-      'An error occurred when calling the Stripe API to create an account session',
-      error
-    );
+    console.error( 'Error creating account session:', error.message );
     return NextResponse.json( { error: error.message }, { status: 500 } );
   }
 }

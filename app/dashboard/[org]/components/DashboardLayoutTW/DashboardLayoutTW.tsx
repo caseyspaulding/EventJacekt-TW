@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Disclosure, Dialog, Transition, Menu } from '@headlessui/react';
 import { useUser } from '@/contexts/UserContext'; // Custom hook for user context
 import type { ReactNode } from 'react';
@@ -17,6 +17,8 @@ import
 import Link from 'next/link';
 import { signOut } from '@/app/actions/SignOut';
 import { Button } from '@nextui-org/button';
+import { loadConnectAndInitialize } from '@stripe/connect-js';
+import { fetchClientSecret } from './fetchClientSecret';
 
 
 
@@ -69,7 +71,49 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
   const [ sidebarOpen, setSidebarOpen ] = useState( false );
   const { user } = useUser(); // Fetch user data from context
   const orgName = user?.orgName;
+  const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
 
+  // Initialize Stripe Connect
+  const initializeStripeConnect = async () =>
+  {
+    const clientSecret = await fetchClientSecret(user?.organizationId ||''); // Fetch the client secret from your server-side
+    if ( clientSecret )
+    {
+      const instance = loadConnectAndInitialize( {
+        publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+        fetchClientSecret: () => Promise.resolve( clientSecret ),
+      } );
+      setStripeConnectInstance( instance );
+    }
+  };
+  useEffect( () =>
+  {
+    initializeStripeConnect();
+  }, [] ); // This ensures the Stripe instance is initialized when the component mounts.
+  // Call Stripe logout before server-side logout
+
+
+  const handleLogout = async () =>
+  {
+    try
+    {
+      // Logout from Stripe Connect session, if instance is initialized
+      if ( stripeConnectInstance )
+      {
+        await stripeConnectInstance.logout(); // Ensure this is awaited
+        console.log( "Stripe Connect session destroyed." );
+      }
+
+      // Proceed with server-side sign out (Supabase logout)
+      await signOut();
+      console.log( "Signed out successfully from Supabase." );
+
+    } catch ( error )
+    {
+      console.error( "Error during logout:", error );
+    }
+  };
+  
   const generateHref = ( href: string ) => ( orgName ? `/dashboard/${ orgName }${ href }` : href );
 
   return (
@@ -323,7 +367,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                             // Use a form to trigger the signOut server action
                             <form action={ signOut } method="post" className="w-full">
                               <button
-                                type="submit"
+                                onClick={ handleLogout } // Refactored to use the handleLogout function
                                 className={ classNames(
                                   active ? 'bg-gray-100' : '',
                                   'w-full text-left px-4 py-2 text-sm text-gray-700'

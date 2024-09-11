@@ -1,4 +1,5 @@
-import { Button } from "flowbite-react";
+
+import { Button } from "@nextui-org/button";
 import { createClient } from "../utils/supabase/server";
 import { signOut } from "app/actions/SignOut";
 
