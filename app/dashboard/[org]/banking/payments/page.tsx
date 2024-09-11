@@ -2,54 +2,52 @@
 
 import { useEffect, useState } from 'react';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
-import { useUser } from '@/contexts/UserContext'; // Fetch your user context
+import { createPaymentSession } from '@/app/actions/createPaymentSession'; // Server action
 
-export default function PaymentsPage() {
-  const [stripeConnectInstance, setStripeConnectInstance] = useState<any>(null);
-  const { user } = useUser(); // Assuming user has an organization field
-
-  const fetchPaymentSession = async () => {
-    try {
-      const res = await fetch('/api/stripe/paymentsession', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ orgId: user?.organizationId }),
-      });
-
-      if (!res.ok) {
-        throw new Error(`Error fetching payment session: ${res.statusText}`);
-      }
-
-      const { client_secret: clientSecret } = await res.json();
-      return clientSecret;
-    } catch (error) {
-      console.error('Error fetching payment session:', error);
-      return null;
-    }
-  };
+export default function PaymentsPage ( { params }: { params: { org: string } } )
+{
+  const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
+  const [ loading, setLoading ] = useState( true );
+  const [ clientSecret, setClientSecret ] = useState<string | null>( null );
 
   useEffect( () =>
   {
-    const initializeStripe = async () =>
+    const fetchClientSecret = async () =>
     {
-      if ( user?.organizationId && !stripeConnectInstance )
-      { // Only run if not initialized
-        const clientSecret = await fetchPaymentSession();
-        if ( clientSecret )
-        {
-          const instance = loadConnectAndInitialize( {
-            publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
-            fetchClientSecret: () => Promise.resolve( clientSecret ),
-          } );
-          setStripeConnectInstance( instance );
-        }
+      try
+      {
+        const secret = await createPaymentSession( params.org ); // Fetch session from server action
+        setClientSecret( secret );
+      } catch ( error )
+      {
+        console.error( 'Error fetching client secret:', error );
+      } finally
+      {
+        setLoading( false );
       }
     };
 
-    initializeStripe();
-  }, [ user?.organizationId, stripeConnectInstance ] );
+    fetchClientSecret();
+  }, [ params.org ] );
+
+  useEffect( () =>
+  {
+    if ( clientSecret )
+    {
+      console.log( 'Client Secret:', clientSecret ); // Log to verify it's passed correctly
+
+      const initializeStripe = async () =>
+      {
+        const instance = await loadConnectAndInitialize( {
+          publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+          fetchClientSecret: () => Promise.resolve( clientSecret ),
+        } );
+        setStripeConnectInstance( instance );
+      };
+
+      initializeStripe();
+    }
+  }, [ clientSecret ] );
 
   useEffect( () =>
   {
@@ -69,9 +67,19 @@ export default function PaymentsPage() {
     }
   }, [ stripeConnectInstance ] );
 
+  if ( loading )
+  {
+    return <div>Loading payments management...</div>;
+  }
+
+  if ( !stripeConnectInstance )
+  {
+    return <div>Failed to load payments management. Please try again later.</div>;
+  }
+
   return (
     <div>
-      <h1>Payments</h1>
+      <h1 className='text-3xl font-semibold mb-4'>Payments</h1>
       <div id="payments-container"></div>
       <div id="error" hidden>
         Something went wrong!

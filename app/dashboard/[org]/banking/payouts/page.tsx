@@ -1,80 +1,76 @@
-'use client'; 
+'use client';
 
 import { useEffect, useState } from 'react';
+import { ConnectComponentsProvider, ConnectPayouts } from '@stripe/react-connect-js';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
-import { useUser } from '@/contexts/UserContext'; // Fetch your user context
+import { createPayoutSession } from '@/app/actions/createPayoutSession'; // The server action
 
-export default function PayoutsPage ()
+export default function PayoutsPage ( { params }: { params: { org: string } } )
 {
   const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
-  const { user } = useUser(); // Assuming user has an organization field
-
-  const fetchPayoutSession = async () =>
-  {
-    try
-    {
-      const res = await fetch( '/api/stripe/payoutsession', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify( { orgId: user?.organizationId } ),
-      } );
-
-      if ( !res.ok )
-      {
-        throw new Error( `Error fetching payout session: ${ res.statusText }` );
-      }
-
-      const { client_secret: clientSecret } = await res.json();
-      return clientSecret;
-    } catch ( error )
-    {
-      console.error( 'Error fetching payout session:', error );
-      return null;
-    }
-  };
+  const [ loading, setLoading ] = useState( true );
+  const [ clientSecret, setClientSecret ] = useState<string | null>( null );
 
   useEffect( () =>
   {
-    const initializeStripe = async () =>
+    const fetchClientSecret = async () =>
     {
-      if ( user?.organizationId )
+      try
       {
-        const clientSecret = await fetchPayoutSession();
-        if ( clientSecret )
+        const secret = await createPayoutSession( params.org );
+        setClientSecret( secret );
+      } catch ( error )
+      {
+        console.error( 'Error fetching client secret:', error );
+      } finally
+      {
+        setLoading( false );
+      }
+    };
+
+    fetchClientSecret();
+  }, [ params.org ] );
+
+  useEffect( () =>
+  {
+    if ( clientSecret )
+    {
+      console.log( 'Client Secret:', clientSecret ); // Log to ensure we have the client secret
+      const initializeStripe = async () =>
+      {
+        try
         {
-          const instance = loadConnectAndInitialize( {
+          const instance = await loadConnectAndInitialize( {
             publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
             fetchClientSecret: () => Promise.resolve( clientSecret ),
           } );
           setStripeConnectInstance( instance );
+        } catch ( error )
+        {
+          console.error( 'Error initializing Stripe Connect:', error );
         }
-      }
-    };
+      };
 
-    initializeStripe();
-  }, [ user?.organizationId ] );
-
-  useEffect( () =>
-  {
-    if ( stripeConnectInstance )
-    {
-      // Create and mount the payouts component
-      const payoutsComponent = stripeConnectInstance.create( 'payouts' );
-      const container = document.getElementById( 'payouts-container' );
-      if ( container )
-      {
-        container.appendChild( payoutsComponent );
-      }
+      initializeStripe();
     }
-  }, [ stripeConnectInstance ] );
+  }, [ clientSecret ] );
+
+  if ( loading )
+  {
+    return <div>Loading payout management...</div>;
+  }
+
+  if ( !stripeConnectInstance )
+  {
+    return <div>Failed to load payout management. Please try again later.</div>;
+  }
 
   return (
-    <div>
-      <h1>Payouts</h1>
-      <div id="payouts-container"></div>
-      <div id="error" hidden>Something went wrong!</div>
-    </div>
+    <ConnectComponentsProvider connectInstance={ stripeConnectInstance }>
+      <div>
+        <h1 className="text-3xl font-semibold mb-4">Manage Your Payouts</h1>
+        <ConnectPayouts />
+      </div>
+    </ConnectComponentsProvider>
   );
 }

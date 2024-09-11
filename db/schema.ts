@@ -561,126 +561,6 @@ export const orgTransactionItems = pgTable( 'org_transaction_items', {
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
 
-// Org Members Table
-export const orgMembers = pgTable( 'org_members', {
-    id: uuid( 'id' )
-        .primaryKey()
-        .default( sql`uuid_generate_v4()` ),
-    orgId: uuid( 'org_id' )
-        .notNull()
-        .references( () => organizations.id ),
-    eventId: uuid( 'event_id' )
-        .notNull()
-        .references( () => events.id ),
-    name: text( 'name' ).notNull(),
-    email: text( 'email' ).notNull().unique(),
-    role: text( 'role' ).notNull(), // Role within the organization
-    isActive: boolean( 'is_active' ).default( true ), // Indicates if the member is currently active
-    lastLogin: timestamp( 'last_login' ), // Last login time of the member
-    department: text( 'department' ), // Department or team the member belongs to
-    permissions: jsonb( 'permissions' ), // List of permissions or access levels
-    joinedDate: date( 'joined_date' ).notNull(), // Date the member joined the organization
-    profileImageUrl: text( 'profile_image_url' ), // URL of the member's profile image
-    phoneNumber: text( 'phone_number' ), // Member's phone number
-    isVerified: boolean( 'is_verified' ).default( false ), // Indicates if the member's email or profile is verified
-    isAdmin: boolean( 'is_admin' ).default( false ), // Indicates if the member has admin privileges
-    departedAt: timestamp( 'departed_at' ), // Date when the member left the organization
-    notes: text( 'notes' ), // Additional notes or information about the member
-    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
-    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
-} );
-
-// Guilds Table
-export const guilds = pgTable( 'guilds', {
-    id: uuid( 'id' )
-        .primaryKey()
-        .default( sql`uuid_generate_v4()` ),
-    name: text( 'name' ).notNull(),
-    orgId: uuid( 'org_id' )
-        .notNull()
-        .references( () => organizations.id ),
-    eventId: uuid( 'event_id' )
-        .notNull()
-        .references( () => events.id ),
-    description: text( 'description' ),
-    leaderName: text( 'leader_name' ).notNull(),
-    leaderContact: text( 'leader_contact' ),
-    leaderEmail: text( 'leader_email' ).notNull(), // Email of the guild leader for communication
-    guildType: text( 'guild_type' ), // e.g., 'performer', 'artisan', 'vendor'
-    website: text( 'website' ),
-    profileImageUrl: text( 'profile_image_url' ), // URL for guild's logo or image
-    status: text( 'status' ).default( 'confirmed' ), // e.g., 'confirmed', 'pending', 'cancelled'
-    contractDetails: jsonb( 'contract_details' ), // JSONB field for contracts or agreements
-    contactFrequency: text( 'contact_frequency' ).default( 'monthly' ), // How often to follow up (e.g., 'weekly', 'monthly')
-    lastContacted: timestamp( 'last_contacted' ), // When was the last contact made
-    nextFollowUp: timestamp( 'next_follow_up' ), // When to follow up next
-    emailGroup: text( 'email_group' ), // Group name for email campaigns
-    notes: text( 'notes' ),
-    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
-    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
-} );
-
-// Performers Table
-export const orgPerformers = pgTable( 'org_performers', {
-    id: uuid( 'id' )
-        .primaryKey()
-        .default( sql`uuid_generate_v4()` ),
-    orgId: uuid( 'org_id' )
-        .notNull()
-        .references( () => organizations.id ),
-    eventId: uuid( 'event_id' )
-        .notNull()
-        .references( () => events.id ),
-    name: text( 'name' ).notNull(),
-    stageName: text( 'stage_name' ).notNull(),
-    email: text( 'email' ).notNull().unique(),
-    phone: text( 'phone' ),
-    profileImageUrl: text( 'profile_image_url' ), // URL of the performer's profile image
-    genre: text( 'genre' ), // Type of performance or genre
-    performanceTime: timestamp( 'performance_time' ), // Scheduled time of performance
-    status: text( 'status' ).default( 'confirmed' ), // e.g., 'confirmed', 'tentative', 'cancelled'
-    contractDetails: jsonb( 'contract_details' ), // Contract or agreement details
-    socialLinks: jsonb( 'social_links' ), // Links to social media profiles or website
-    contactFrequency: text( 'contact_frequency' ).default( 'monthly' ), // How often to follow up (e.g., 'weekly', 'monthly')
-    lastContacted: timestamp( 'last_contacted' ), // When was the last contact made
-    nextFollowUp: timestamp( 'next_follow_up' ), // When to follow up next
-    emailGroup: text( 'email_group' ), // Group name for email campaigns
-    notes: text( 'notes' ),
-    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
-    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
-} );
-
-// Event Speaker Table
-export const eventSpeakers = pgTable( 'event_speakers', {
-    id: uuid( 'id' )
-        .primaryKey()
-        .default( sql`uuid_generate_v4()` ),
-    orgId: uuid( 'org_id' )
-        .notNull()
-        .references( () => organizations.id ), // Reference to the organization
-    eventId: uuid( 'event_id' )
-        .notNull()
-        .references( () => events.id ), // Reference to the event
-    name: text( 'name' ).notNull(), // Speaker's name
-    title: text( 'title' ), // Speaker's title or designation
-    email: text( 'email' ).notNull().unique(), // Speaker's email
-    phone: text( 'phone' ), // Speaker's phone number
-    profileImageUrl: text( 'profile_image_url' ), // URL of the speaker's profile image
-    bio: text( 'bio' ), // Speaker's biography
-    talkTitle: text( 'talk_title' ), // Title of the talk or presentation
-    talkDescription: text( 'talk_description' ), // Description of the talk
-    talkTime: timestamp( 'talk_time' ), // Scheduled time of the talk
-    status: text( 'status' ).default( 'confirmed' ), // e.g., 'confirmed', 'tentative', 'cancelled'
-    contractDetails: jsonb( 'contract_details' ), // Contract or agreement details
-    socialLinks: jsonb( 'social_links' ), // Links to social media profiles or website
-    contactFrequency: text( 'contact_frequency' ).default( 'monthly' ), // How often to follow up (e.g., 'weekly', 'monthly')
-    lastContacted: timestamp( 'last_contacted' ), // When was the last contact made
-    nextFollowUp: timestamp( 'next_follow_up' ), // When to follow up next
-    emailGroup: text( 'email_group' ), // Group name for email campaigns
-    notes: text( 'notes' ), // Additional notes about the speaker
-    createdAt: timestamp( 'created_at' ).default( sql`now()` ), // Timestamp for when the record was created
-    updatedAt: timestamp( 'updated_at' ).default( sql`now()` ) // Timestamp for when the record was last updated
-} );
 
 // Event Map Locations Table
 export const festivalMapLocations = pgTable( 'festival_map_locations', {
@@ -767,6 +647,128 @@ export const favoriteEvents = pgTable( 'favorite_events', {
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
 } );
 
+
+// Org Members Table
+export const orgMembers = pgTable( 'org_members', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ),
+    eventId: uuid( 'event_id' )
+        .references( () => events.id ),
+    tags: jsonb( 'tags' ), 
+    name: text( 'name' ).notNull(),
+    email: text( 'email' ).notNull().unique(),
+    role: text( 'role' ).notNull(), // Role within the organization
+    isActive: boolean( 'is_active' ).default( true ), // Indicates if the member is currently active
+    lastLogin: timestamp( 'last_login' ), // Last login time of the member
+    department: text( 'department' ), // Department or team the member belongs to
+    permissions: jsonb( 'permissions' ), // List of permissions or access levels
+    joinedDate: date( 'joined_date' ).notNull(), // Date the member joined the organization
+    profileImageUrl: text( 'profile_image_url' ), // URL of the member's profile image
+    phoneNumber: text( 'phone_number' ), // Member's phone number
+    isVerified: boolean( 'is_verified' ).default( false ), // Indicates if the member's email or profile is verified
+    isAdmin: boolean( 'is_admin' ).default( false ), // Indicates if the member has admin privileges
+    departedAt: timestamp( 'departed_at' ), // Date when the member left the organization
+    notes: text( 'notes' ), // Additional notes or information about the member
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+// Guilds Table
+export const guilds = pgTable( 'guilds', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    name: text( 'name' ).notNull(),
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ),
+    eventId: uuid( 'event_id' )
+        .references( () => events.id ),
+    description: text( 'description' ),
+    tags: jsonb( 'tags' ), 
+    leaderName: text( 'leader_name' ),
+    leaderContact: text( 'leader_contact' ),
+    leaderEmail: text( 'leader_email' ), // Email of the guild leader for communication
+    guildType: text( 'guild_type' ), // e.g., 'performer', 'artisan', 'vendor'
+    website: text( 'website' ),
+    profileImageUrl: text( 'profile_image_url' ), // URL for guild's logo or image
+    status: text( 'status' ).default( 'confirmed' ), // e.g., 'confirmed', 'pending', 'cancelled'
+    contractDetails: jsonb( 'contract_details' ), // JSONB field for contracts or agreements
+    contactFrequency: text( 'contact_frequency' ).default( 'monthly' ), // How often to follow up (e.g., 'weekly', 'monthly')
+    lastContacted: timestamp( 'last_contacted' ), // When was the last contact made
+    nextFollowUp: timestamp( 'next_follow_up' ), // When to follow up next
+    emailGroup: text( 'email_group' ), // Group name for email campaigns
+    notes: text( 'notes' ),
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+// Performers Table
+export const orgPerformers = pgTable( 'org_performers', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ),
+    eventId: uuid( 'event_id' )
+        .references( () => events.id ),
+    name: text( 'name' ).notNull(),
+    stageName: text( 'stage_name' ).notNull(),
+    email: text( 'email' ).notNull().unique(),
+    phone: text( 'phone' ),
+    tags: jsonb( 'tags' ), 
+    profileImageUrl: text( 'profile_image_url' ), // URL of the performer's profile image
+    genre: text( 'genre' ), // Type of performance or genre
+    performanceTime: timestamp( 'performance_time' ), // Scheduled time of performance
+    status: text( 'status' ).default( 'confirmed' ), // e.g., 'confirmed', 'tentative', 'cancelled'
+    contractDetails: jsonb( 'contract_details' ), // Contract or agreement details
+    socialLinks: jsonb( 'social_links' ), // Links to social media profiles or website
+    contactFrequency: text( 'contact_frequency' ).default( 'monthly' ), // How often to follow up (e.g., 'weekly', 'monthly')
+    lastContacted: timestamp( 'last_contacted' ), // When was the last contact made
+    nextFollowUp: timestamp( 'next_follow_up' ), // When to follow up next
+    emailGroup: text( 'email_group' ), // Group name for email campaigns
+    notes: text( 'notes' ),
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+// Event Speaker Table
+export const eventSpeakers = pgTable( 'event_speakers', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ), // Reference to the organization
+    eventId: uuid( 'event_id' )
+        .references( () => events.id ), // Reference to the event
+    name: text( 'name' ).notNull(), // Speaker's name
+    title: text( 'title' ), // Speaker's title or designation
+    email: text( 'email' ).notNull().unique(), // Speaker's email
+    phone: text( 'phone' ), // Speaker's phone number
+    tags: jsonb( 'tags' ), 
+    profileImageUrl: text( 'profile_image_url' ), // URL of the speaker's profile image
+    bio: text( 'bio' ), // Speaker's biography
+    talkTitle: text( 'talk_title' ), // Title of the talk or presentation
+    talkDescription: text( 'talk_description' ), // Description of the talk
+    talkTime: timestamp( 'talk_time' ), // Scheduled time of the talk
+    status: text( 'status' ).default( 'confirmed' ), // e.g., 'confirmed', 'tentative', 'cancelled'
+    contractDetails: jsonb( 'contract_details' ), // Contract or agreement details
+    socialLinks: jsonb( 'social_links' ), // Links to social media profiles or website
+    contactFrequency: text( 'contact_frequency' ).default( 'monthly' ), // How often to follow up (e.g., 'weekly', 'monthly')
+    lastContacted: timestamp( 'last_contacted' ), // When was the last contact made
+    nextFollowUp: timestamp( 'next_follow_up' ), // When to follow up next
+    emailGroup: text( 'email_group' ), // Group name for email campaigns
+    notes: text( 'notes' ), // Additional notes about the speaker
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ), // Timestamp for when the record was created
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` ) // Timestamp for when the record was last updated
+} );
+
 // Vendors Table
 export const orgVendors = pgTable( 'org_vendors', {
     id: uuid( 'id' )
@@ -776,7 +778,6 @@ export const orgVendors = pgTable( 'org_vendors', {
         .notNull()
         .references( () => organizations.id ),
     eventId: uuid( 'event_id' )
-        .notNull()
         .references( () => events.id ),
     name: text( 'name' ).notNull(),
     businessName: text( 'business_name' ).notNull(),
@@ -797,8 +798,22 @@ export const orgVendors = pgTable( 'org_vendors', {
     nextFollowUp: timestamp( 'next_follow_up' ), // When to follow up next
     emailGroup: text( 'email_group' ), // Group name for email campaigns
     notes: text( 'notes' ),
+    tags: jsonb( 'tags' ), 
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+export const participantEvents = pgTable( 'participant_events', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    participantId: uuid( 'participant_id' )
+        .notNull()
+        .references( () => orgPerformers.id ), // or the respective table (guilds or eventSpeakers)
+    eventId: uuid( 'event_id' )
+        .notNull()
+        .references( () => events.id ),
+    eventRole: text( 'event_role' ), // 'vendor', 'performer', 'speaker', etc.
+    status: text( 'status' ).default( 'confirmed' ),
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
 } );
 
 // Invites Table

@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { ConnectAccountManagement, ConnectComponentsProvider } from '@stripe/react-connect-js';
-import { loadConnectAndInitialize } from '@stripe/connect-js';  // Ensure you import this
-import { createAccountSession } from '@/app/actions/createAccountSession'; // Your server action to create account session
+import { createAccountSession } from '@/app/actions/createAccountSession'; // Server action to create account session
 
-export default function AccountManagementPage ( { params }: { params: { org: string } } )
+export default function AccountManagementPage ()
 {
   const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
-  const [ loading, setLoading ] = useState( true );
   const [ clientSecret, setClientSecret ] = useState<string | null>( null );
+  const [ loading, setLoading ] = useState<boolean>( true );
 
   useEffect( () =>
   {
@@ -17,11 +16,11 @@ export default function AccountManagementPage ( { params }: { params: { org: str
     {
       try
       {
-        const secret = await createAccountSession( params.org );
+        const secret = await createAccountSession();
         setClientSecret( secret );
       } catch ( error )
       {
-        console.error( 'Error fetching client secret:', error );
+        console.error( 'Error fetching Stripe client secret:', error );
       } finally
       {
         setLoading( false );
@@ -29,24 +28,15 @@ export default function AccountManagementPage ( { params }: { params: { org: str
     };
 
     fetchClientSecret();
-  }, [ params.org ] );
+  }, [] );
 
   useEffect( () =>
   {
-    if ( clientSecret )
+    if ( clientSecret && typeof window !== 'undefined' && window.Stripe )
     {
-      console.log( 'Client Secret:', clientSecret );  // Log the client_secret to verify it's passed correctly
-
-      const initializeStripe = async () =>
-      {
-        const instance = await loadConnectAndInitialize( {
-          publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
-          fetchClientSecret: () => Promise.resolve( clientSecret ),
-        } );
-        setStripeConnectInstance( instance );
-      };
-
-      initializeStripe();
+      // Initialize the Stripe Connect.js instance when clientSecret is available
+      const stripeConnectInstance = window.Stripe( process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY! );
+      setStripeConnectInstance( stripeConnectInstance );
     }
   }, [ clientSecret ] );
 
@@ -64,7 +54,13 @@ export default function AccountManagementPage ( { params }: { params: { org: str
     <ConnectComponentsProvider connectInstance={ stripeConnectInstance }>
       <div>
         <h1 className="text-3xl font-semibold mb-4">Manage Your Stripe Account</h1>
-        <ConnectAccountManagement />
+        <ConnectAccountManagement
+        // Optional: Customizing the fields and future requirements
+        // collectionOptions={{
+        //   fields: 'eventually_due',
+        //   futureRequirements: 'include',
+        // }}
+        />
       </div>
     </ConnectComponentsProvider>
   );
