@@ -1,36 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use server';
 
-
-import { stripe } from '@/utils/stripe';
 import { redirect } from 'next/navigation';
 import { fetchUserProfile } from '@/app/actions/fetchUserProfile';
+import {eq } from 'drizzle-orm/expressions';
+import { organizations } from '@/db/schema';
+import { db } from '@/db';
+import { stripe } from '@/utils/stripe';
 
-import { getUserProfile } from '@/db/dataAccess/userProfiles';
-
-//export async function updateStripeConnectStatus(userId: string) {
-//    try {
-//        const userProfile = await getUserProfile(userId);
-//        if (!userProfile.stripeConnectedAccountId) {
-//            throw new Error('User does not have a Stripe Connect account');
-//        }
-
-//        const account = await stripe.accounts.retrieve(userProfile.stripeConnectedAccountId);
-
-//        await updateUserStripeConnect(userId, {
-//            stripeConnectedAccountId: account.id,
-//            stripeAccountType: account.type,
-//            stripeAccountStatus: account.details_submitted ? 'active' : 'pending',
-
-//            stripeConnectLinked: true
-//        });
-
-//        return { success: true, status: account.details_submitted ? 'active' : 'pending' };
-//    } catch (error) {
-//        console.error('Error updating Stripe Connect status:', error);
-//        return { success: false, error: 'Failed to update Stripe Connect status' };
-//    }
-//}
 
 export async function initiateStripeConnect(userId: string) {
     try {
@@ -59,7 +36,7 @@ export async function initiateStripeConnect(userId: string) {
 }
 
 export async function CreateStripeAccountLink() {
-    const user = fetchUserProfile();
+ 
     try {
         const account = await stripe.accounts.create({
             type: 'express',
@@ -124,25 +101,72 @@ export async function createStripeAccountLink(account: string, org: string, orig
     }
 }
 
-//export async function CreateStripeAccountLink2() {
-//    const user = await fetchUserProfile();
 
-//    if (!user) {
-//        throw new Error();
-//    }
+/**
+ * Fetches the Stripe client secret for the authenticated user's organization.
+ * @returns The Stripe client secret.
+ * @throws An error if authentication fails or the organization/Stripe account is invalid.
+ */
+export async function fetchStripeClientSecret (): Promise<string>
+{
+    try
+    {
+        const userProfile = await fetchUserProfile(); // Ensure async fetch
 
-//    const accountLink = await stripe.accountLinks.create({
-//        account: user.stripeCustomerId as string,
-//        refresh_url:
-//            process.env.NODE_ENV === 'development'
-//                ? `http://localhost:3000/billing`
-//                : `https://eventjacket.com/billing`,
-//        return_url:
-//            process.env.NODE_ENV === 'development'
-//                ? `http://localhost:3000/return/${user?.stripeConnectedAccountId}`
-//                : `https://eventjacket.com/return/${user?.stripeConnectedAccountId}`,
-//        type: 'account_onboarding'
-//    });
+        if ( !userProfile || !userProfile.orgName )
+        {
+            console.warn( 'Server Action: User not authenticated or orgName missing.' );
+            throw new Error( 'Unauthorized' );
+        }
 
-//    return redirect(accountLink.url);
-//}
+        const { orgName, id: userId } = userProfile; // Extract orgName and userId
+        console.log( `Server Action: Fetching Stripe client secret for orgName: ${ orgName } and userId: ${ userId }` );
+
+        // Fetch the Stripe account ID from the organizations table using orgName
+        const organization = await db
+            .select( { stripeAccountId: organizations.stripeAccountId } )
+            .from( organizations )
+            .where( eq( organizations.name, orgName ) ) // Query by orgName
+            .limit( 1 );
+
+        const stripeAccountId = organization[ 0 ]?.stripeAccountId;
+
+        if ( !stripeAccountId )
+        {
+            console.error( `Server Action: Stripe account not found for organization: ${ orgName }` );
+            throw new Error( 'Stripe account not found for this organization' );
+        }
+
+        // Always create a new session to avoid reuse issues
+        const accountSession = await stripe.accountSessions.create( {
+            account: stripeAccountId,
+            components: {
+                payments: {
+                    enabled: true,
+                    features: {
+                        refund_management: true,
+                        dispute_management: true,
+                        capture_payments: true,
+                    },
+                },
+                payouts: {
+                    enabled: true, // Enable payouts if needed
+                    features: {
+                        instant_payouts: true, // Example feature
+                    },
+                },
+                tax_settings: {
+                    enabled: true, // Enable tax settings if needed
+                },
+            },
+        } );
+
+        console.log( 'Server Action: Stripe account session created:', accountSession );
+
+        return accountSession.client_secret;
+    } catch ( error: any )
+    {
+        console.error( 'Server Action: Error fetching Stripe client secret:', error.message );
+        throw error;
+    }
+}
