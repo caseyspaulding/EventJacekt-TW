@@ -30,33 +30,44 @@ export default function PaymentsPage() {
     }
   };
 
-  useEffect(() => {
-    const initializeStripe = async () => {
-      if (user?.organizationId) {
+  useEffect( () =>
+  {
+    const initializeStripe = async () =>
+    {
+      if ( user?.organizationId && !stripeConnectInstance )
+      { // Only run if not initialized
         const clientSecret = await fetchPaymentSession();
-        if (clientSecret) {
-          const instance = loadConnectAndInitialize({
+        if ( clientSecret )
+        {
+          const instance = loadConnectAndInitialize( {
             publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
-            fetchClientSecret: () => Promise.resolve(clientSecret),
-          });
-          setStripeConnectInstance(instance);
+            fetchClientSecret: () => Promise.resolve( clientSecret ),
+          } );
+          setStripeConnectInstance( instance );
         }
       }
     };
 
     initializeStripe();
-  }, [user?.organizationId]);
+  }, [ user?.organizationId, stripeConnectInstance ] );
 
-  useEffect(() => {
-    if (stripeConnectInstance) {
-      // Create and mount the payments component
-      const paymentsComponent = stripeConnectInstance.create('payments');
-      const container = document.getElementById('payments-container');
-      if (container) {
-        container.appendChild(paymentsComponent);
+  useEffect( () =>
+  {
+    if ( stripeConnectInstance )
+    {
+      const container = document.getElementById( 'payments-container' );
+
+      // Clear the container before appending the new component to avoid duplicates
+      if ( container )
+      {
+        container.innerHTML = ''; // Clear previous component
+
+        // Create and mount the payments component
+        const paymentsComponent = stripeConnectInstance.create( 'payments' );
+        container.appendChild( paymentsComponent );
       }
     }
-  }, [stripeConnectInstance]);
+  }, [ stripeConnectInstance ] );
 
   return (
     <div>
