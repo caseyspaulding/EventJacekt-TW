@@ -1,38 +1,35 @@
-
 import { Button } from '@nextui-org/button';
 import { getEventIdBySlug } from '@/app/actions/getEventIdBySlug';
 import { events, organizations, orgCustomers, orgTicketTypes } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { db } from '@/db';
 import { notFound } from 'next/navigation';
-
 import ConfettiComponent from '@/components/Confetti/Confetti';
 import TicketDisplay from '@/components/TicketViewer';
+
+interface SuccessPageProps
+{
+    params: { eventSlug: string };
+    searchParams: { firstName?: string; lastName?: string };
+}
 
 export default async function SuccessPage ( {
     params,
     searchParams,
-}: {
-    params: { eventSlug: string };
-    searchParams: { firstName?: string; lastName?: string };
-} )
+}: SuccessPageProps )
 {
     const { eventSlug } = params;
     const { firstName, lastName } = searchParams;
-    // If names are passed in the query params, use them
+
     const customerName = `${ firstName ?? '' } ${ lastName ?? '' }`.trim() || '';
 
-
-    
-   
     const eventId = await getEventIdBySlug( eventSlug );
-
     if ( !eventId )
     {
         notFound();
     }
 
-    // Fetch event with organization details
+    // Fetch event and organization details
     const eventWithOrg = await db
         .select( {
             eventId: events.id,
@@ -68,7 +65,7 @@ export default async function SuccessPage ( {
             eventId: orgTicketTypes.eventId,
             orgId: orgTicketTypes.orgId,
             ticketName: orgTicketTypes.name,
-            doorOpenTime: orgTicketTypes.doorOpenTime,    
+            doorOpenTime: orgTicketTypes.doorOpenTime,
             description: orgTicketTypes.description,
             price: orgTicketTypes.price,
             quantity: orgTicketTypes.quantity,
@@ -88,10 +85,8 @@ export default async function SuccessPage ( {
 
     const ticket = ticketsWithCustomer[ 0 ];
 
-   
     const eventDate = ticket.eventDate;
-    const eventLocation1 = `${ eventData.venue || '' } `;
-    const eventLocation = eventLocation1.trim();
+    const eventLocation = `${ eventData.venue || '' }`.trim();
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-gray-200">
@@ -100,24 +95,21 @@ export default async function SuccessPage ( {
                 <div className="absolute inset-0 rounded-2xl "></div>
                 <div className="relative m-3 rounded-2xl bg-white p-8 text-center shadow-2xl">
                     <div className="flex justify-center">
-                        <img src='/images/green-checkmark.png' className="mb-4 h-14"></img>
+                        <img src='/images/green-checkmark.png' className="mb-4 h-14" />
                     </div>
-
                     <h1 className="mb-4 text-2xl">
                         You got ticket(s) to <br /> <span className="font-extrabold">{ eventData.eventName }</span>.
                     </h1>
-
                     {/* Display ticket information */ }
                     <TicketDisplay
                         eventName={ eventData.eventName }
                         eventDate={ eventDate }
-                        eventTime={ ticket.doorOpenTime || '' } // Replace with actual event time
+                        eventTime={ ticket.doorOpenTime || '' }
                         price={ ticket.price.toString() }
                         address={ eventLocation }
                         ticketNumber={ '' }
-                        customerName={ customerName } // Use the fetched customer name
+                        customerName={ customerName }
                     />
-
                     <p className="mb-2 mt-2 text-lg">Your ticket(s) have been sent to the email address you provided during checkout.</p>
                     <div className="mb-4 text-left">
                         <h2 className="text-xl font-semibold mb-2">Event Details</h2>
@@ -125,7 +117,6 @@ export default async function SuccessPage ( {
                         <p><strong>Location:</strong> { eventLocation }</p>
                         <p className="mt-2">Please bring your ticket (email or printed) to the event to be scanned at the door.</p>
                     </div>
-
                     <div className="flex justify-center space-x-4 mt-6">
                         <Button as="a" href={ `/events/${ eventSlug }` } className="text-white bg-orange-500">
                             View Event Details
@@ -134,12 +125,9 @@ export default async function SuccessPage ( {
                             Explore More Events
                         </Button>
                     </div>
-
                     <div className="mt-4 text-sm text-gray-500">
                         <p>If you have any questions, please contact our support team at <a href="mailto:support@eventjacket.com" className="text-blue-600">support@eventjacket.com</a>.</p>
                     </div>
-
-                    
                 </div>
             </div>
         </div>
