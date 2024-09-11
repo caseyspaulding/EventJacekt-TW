@@ -12,7 +12,7 @@ export default function PaymentsPage ()
 
   const fetchClientSecret = async () =>
   {
-    try 
+    try
     {
       const res = await fetch( '/api/stripe/accountsession', {
         method: 'POST',
@@ -25,8 +25,9 @@ export default function PaymentsPage ()
         throw new Error( `Error fetching client secret: ${ res.statusText }` );
       }
 
-      const { client_secret: clientSecret } = await res.json();
-      return clientSecret;
+      const data = await res.json();
+      console.log( "Received client secret data:", data );  // Log entire response
+      return data.client_secret;
     } catch ( error )
     {
       console.error( 'Error fetching client secret:', error );
