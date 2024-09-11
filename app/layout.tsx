@@ -65,6 +65,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
                     } }
                 />
                 <script src="https://accounts.google.com/gsi/client" async></script>
+                <script src="https://connect.stripe.com/connect-js" async></script>
             </Head>
 
             <body className={ twMerge( 'bg-white dark:bg-gray-900' ) }>

@@ -101,72 +101,38 @@ export async function createStripeAccountLink(account: string, org: string, orig
     }
 }
 
-
-/**
- * Fetches the Stripe client secret for the authenticated user's organization.
- * @returns The Stripe client secret.
- * @throws An error if authentication fails or the organization/Stripe account is invalid.
- */
-export async function fetchStripeClientSecret (): Promise<string>
+export async function createPaymentSession ( orgId: string )
 {
     try
     {
-        const userProfile = await fetchUserProfile(); // Ensure async fetch
-
-        if ( !userProfile || !userProfile.orgName )
-        {
-            console.warn( 'Server Action: User not authenticated or orgName missing.' );
-            throw new Error( 'Unauthorized' );
-        }
-
-        const { orgName, id: userId } = userProfile; // Extract orgName and userId
-        console.log( `Server Action: Fetching Stripe client secret for orgName: ${ orgName } and userId: ${ userId }` );
-
-        // Fetch the Stripe account ID from the organizations table using orgName
-        const organization = await db
-            .select( { stripeAccountId: organizations.stripeAccountId } )
+        // Fetch the Stripe account ID for the organization
+        const org = await db
+            .select()
             .from( organizations )
-            .where( eq( organizations.name, orgName ) ) // Query by orgName
+            .where( eq( organizations.id, orgId ) )
             .limit( 1 );
 
-        const stripeAccountId = organization[ 0 ]?.stripeAccountId;
+        const stripeAccountId = org[ 0 ]?.stripeAccountId;
 
         if ( !stripeAccountId )
         {
-            console.error( `Server Action: Stripe account not found for organization: ${ orgName }` );
-            throw new Error( 'Stripe account not found for this organization' );
+            throw new Error( 'Stripe account ID not found' );
         }
 
-        // Always create a new session to avoid reuse issues
+        // Create an account session for Stripe Connect embedded components
         const accountSession = await stripe.accountSessions.create( {
             account: stripeAccountId,
             components: {
                 payments: {
                     enabled: true,
-                    features: {
-                        refund_management: true,
-                        dispute_management: true,
-                        capture_payments: true,
-                    },
-                },
-                payouts: {
-                    enabled: true, // Enable payouts if needed
-                    features: {
-                        instant_payouts: true, // Example feature
-                    },
-                },
-                tax_settings: {
-                    enabled: true, // Enable tax settings if needed
                 },
             },
         } );
 
-        console.log( 'Server Action: Stripe account session created:', accountSession );
-
-        return accountSession.client_secret;
-    } catch ( error: any )
+        return { client_secret: accountSession.client_secret };
+    } catch ( error )
     {
-        console.error( 'Server Action: Error fetching Stripe client secret:', error.message );
+        console.error( 'Error creating account session:', error );
         throw error;
     }
 }

@@ -1,20 +1,70 @@
-// app/payments/page.tsx (Server Component)
-import { fetchStripeClientSecret } from '@/app/actions/stripeActions';
-import PaymentsPageClient from './PaymentsPageClient';
+'use client';
 
+import { useEffect, useState } from 'react';
+import { loadConnectAndInitialize } from '@stripe/connect-js';
+import { useUser } from '@/contexts/UserContext'; // Fetch your user context
 
+export default function PaymentsPage() {
+  const [stripeConnectInstance, setStripeConnectInstance] = useState<any>(null);
+  const { user } = useUser(); // Assuming user has an organization field
 
-const PaymentsPage = async () =>
-{
-  try
-  {
-    const clientSecret = await fetchStripeClientSecret();
-    return <PaymentsPageClient clientSecret={ clientSecret } />;
-  } catch ( error: any )
-  {
-    console.error( 'PaymentsPage: Error fetching client secret:', error.message );
-    return <div>Error fetching payment information.</div>;
-  }
-};
+  const fetchPaymentSession = async () => {
+    try {
+      const res = await fetch('/api/stripe/paymentsession', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orgId: user?.organizationId }),
+      });
 
-export default PaymentsPage;
+      if (!res.ok) {
+        throw new Error(`Error fetching payment session: ${res.statusText}`);
+      }
+
+      const { client_secret: clientSecret } = await res.json();
+      return clientSecret;
+    } catch (error) {
+      console.error('Error fetching payment session:', error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const initializeStripe = async () => {
+      if (user?.organizationId) {
+        const clientSecret = await fetchPaymentSession();
+        if (clientSecret) {
+          const instance = loadConnectAndInitialize({
+            publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+            fetchClientSecret: () => Promise.resolve(clientSecret),
+          });
+          setStripeConnectInstance(instance);
+        }
+      }
+    };
+
+    initializeStripe();
+  }, [user?.organizationId]);
+
+  useEffect(() => {
+    if (stripeConnectInstance) {
+      // Create and mount the payments component
+      const paymentsComponent = stripeConnectInstance.create('payments');
+      const container = document.getElementById('payments-container');
+      if (container) {
+        container.appendChild(paymentsComponent);
+      }
+    }
+  }, [stripeConnectInstance]);
+
+  return (
+    <div>
+      <h1>Payments</h1>
+      <div id="payments-container"></div>
+      <div id="error" hidden>
+        Something went wrong!
+      </div>
+    </div>
+  );
+}
