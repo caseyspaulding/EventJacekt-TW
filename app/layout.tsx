@@ -1,7 +1,7 @@
 // app/layout.tsx
 
 import type { PropsWithChildren } from 'react';
-import { Poppins } from 'next/font/google';
+import { Poppins, Space_Grotesk } from 'next/font/google';  // Import both fonts
 import { twMerge } from 'tailwind-merge';
 import './globals.css';
 import ClientProviders from './ClientProviders';
@@ -20,16 +20,24 @@ export const metadata = {
 };
 
 // Load the fonts with specific weights
-const montserrat = Poppins( {
+const poppins = Poppins( {
     weight: [ '400', '700' ], // Regular and Bold for headings
     subsets: [ 'latin' ],
     display: 'swap',
 } );
 
+
+const spaceGrotesk = Space_Grotesk( {  // Load Space Grotesk font
+    weight: [ '400' ],  // Regular weight
+    subsets: [ 'latin' ],
+    display: 'swap',
+} );
+
+
 export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (
-        <html lang="en" className={ `${ montserrat.className }` }>
+        <html lang="en" className={ `${ spaceGrotesk.className }` }>
             <Head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,6 +52,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 <meta property="og:image:height" content="630" />
                 <meta property="og:image:alt" content="EventJacket - Your Event Management Solution" />
                 <meta property="fb:app_id" content="453279560972900" />
+                
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
                     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
                         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>

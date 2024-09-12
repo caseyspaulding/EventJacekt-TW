@@ -24,15 +24,15 @@ export const metadata: Metadata = {
 
 
 const features = [
-    'Create and manage multiple events with customizable details and schedules.',
-    'Send automated email invitations and reminders to attendees.',
-    'Track RSVPs and manage guest lists in real-time.',
+    'Create and manage multiple events. ',
+    'Customize event pages with your branding and logo.',
+    'Sell tickets online and manage registrations.',
+    'Capture attendee information and send event reminders.',
+    
     'Generate QR codes for easy check-in and attendance tracking.',
-    'Offer tiered ticket pricing and promotional codes for discounts.',
+    'Offer several types of tickets with different pricing',
     'Integrate with payment gateways for secure online ticket sales.',
-    'Provide interactive seating charts for assigned seating events.',
-    'Create custom registration forms to collect attendee information.',
-    'Offer a mobile-responsive event website for each event.',
+
     'Generate detailed reports and analytics on ticket sales and attendance.'
 ];
 

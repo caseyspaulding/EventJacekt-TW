@@ -106,7 +106,48 @@ export default function PaymentsPage({ params }: { params: { org: string } }) {
           stripeConnectInstance={stripeConnectInstance}
           onClose={closePaymentDetails}
         />
-      )}
+      ) }
+      <div className="pt-6">
+        <h2 className="text-2xl font-semibold mb-4">Understanding Payments</h2>
+        <p className="text-gray-700 mb-4">
+          Payments refer to the transactions that occur when attendees purchase tickets for your events, make donations, or pay for any services you offer through EventJacket. Stripe Connect handles the secure processing of these payments, ensuring that the funds are collected and available for payout to your account.
+        </p>
+
+        <h3 className="text-lg font-semibold mb-2">How Payments Work</h3>
+        <ul className="list-disc list-inside mb-4">
+          <li>When an attendee purchases a ticket or makes a donation, a payment is created and processed securely by Stripe.</li>
+          <li>You can view all your recent payments here, including the date, status, and amount of each payment.</li>
+          <li>Each payment is tied to a specific event or donation, allowing you to track your earnings per event.</li>
+        </ul>
+
+        <h3 className="text-lg font-semibold mb-2">Payment Statuses</h3>
+        <p className="text-gray-700 mb-4">
+          Each payment will have one of the following statuses:
+        </p>
+        <ul className="list-disc list-inside mb-4">
+          <li><strong>Paid:</strong> The payment has been successfully processed, and the funds are available for payout.</li>
+          <li><strong>Pending:</strong> The payment is currently being processed and will be completed shortly.</li>
+          <li><strong>Failed:</strong> The payment was not successfully processed. This could be due to issues with the payment method or insufficient funds.</li>
+          <li><strong>Refunded:</strong> The payment has been refunded to the attendee or donor.</li>
+        </ul>
+
+        <h3 className="text-lg font-semibold mb-2">Viewing Payment Details</h3>
+        <ul className="list-disc list-inside mb-4">
+          <li>Click on a specific payment to view more details, including the breakdown of fees, refund options, and customer information.</li>
+          <li>Manage refunds and disputes directly from this page by selecting the payment and following the provided steps.</li>
+        </ul>
+
+        <h3 className="text-lg font-semibold mb-2">Exporting Payment Data</h3>
+        <ul className="list-disc list-inside mb-4">
+          <li>You can export your payment history by clicking the <strong>Export</strong> button. This is useful for tracking earnings and preparing financial reports.</li>
+          <li>Filter your payments by date or status using the <strong>Filters</strong> button to view the specific transactions you need.</li>
+        </ul>
+
+        <h3 className="text-lg font-semibold mb-2">Need Help?</h3>
+        <p className="text-gray-700">
+          If you need assistance with managing your payments or have questions about specific transactions, feel free to reach out to our support team for help.
+        </p>
+      </div>
     </div>
   );
 }
