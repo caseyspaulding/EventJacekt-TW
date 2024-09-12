@@ -42,16 +42,16 @@ export default function NavBarTW ()
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
               <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
-                In Development Now
+                Includes CRM
               </span>
               <h1>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
-                  <span className="block text-gray-900">Event Management Software</span>
-                  <span className="animate__animated animate__rubberBand block text-blue-600">with CRM</span>
+                  <span className="block underline-effect text-gray-900">Save Thousands on</span>
+                  <span className="animate__animated animate__rubberBand block text-blue-600">Event Managment Software.</span>
                 </span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                Manage all your vendors, volunteers, attendees, performers, and sponsors in one unified platform.
+                EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank.
 
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">

@@ -41,16 +41,16 @@ export default function RootLayout ( { children }: PropsWithChildren )
             <Head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <title>EventJacket - Event Management Software</title>
-                <meta name="description" content="Simplify planning, boost ticket sales, and manage everything in one place. For every event, big or small." />
+                <title>EventJacket - Save Thousands!</title>
+                <meta name="description" content="Save Thousands! EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank." />
                 <meta property="og:title" content="EventJacket - Event Management Software" />
-                <meta property="og:description" content="Simplify planning, boost ticket sales, and manage everything in one place. For every event, big or small." />
+                <meta property="og:description" content="Save Thousands! EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank." />
                 <meta property="og:url" content="https://www.eventjacket.com" />
                 <meta property="og:type" content="website" />
                 <meta property="og:image" content="https://www.eventjacket.com/opengraph-image.png" />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
-                <meta property="og:image:alt" content="EventJacket - Your Event Management Solution" />
+                <meta property="og:image:alt" content="EventJacket - Save Thousands!" />
                 <meta property="fb:app_id" content="453279560972900" />
                 
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>

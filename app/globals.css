@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 gmp-map {
@@ -53,6 +55,7 @@ gmp-map {
     opacity: 0.25;
   }
 }
+
 
 /* Bar rotations remain the same */
 .spinner div.bar1 {
