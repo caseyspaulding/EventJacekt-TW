@@ -188,7 +188,7 @@ export default function NavBar1 ()
                           href={ item.href }
                           className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                         >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-gradient-to-r hover:bg-green-500 text-white sm:h-12 sm:w-12">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-blue-700 sm:h-12 sm:w-12">
                             <item.icon aria-hidden="true" className="h-6 w-6" />
                           </div>
                           <div className="ml-4">
@@ -220,7 +220,7 @@ export default function NavBar1 ()
                   <Button
                     as='a'
                     href="/signup"
-                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-base font-medium text-white shadow-sm bg-orange-500 hover:bg-green-500 "
+                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-base font-medium text-white shadow-sm bg-orange-500 hover:bg-orange-600 "
                   >
                     Start Free
                   </Button>
@@ -395,7 +395,7 @@ export default function NavBar1 ()
                         href={ item.href }
                         className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-gradient-to-r hover:bg-green-500 text-white">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md  text-blue-700">
                           <item.icon aria-hidden="true" className="h-6 w-6" />
                         </div>
                         <div className="ml-4 text-base font-medium text-gray-900">{ item.name }</div>
@@ -409,7 +409,7 @@ export default function NavBar1 ()
               <div className="px-5 py-6">
                 <div className="grid grid-cols-2 gap-4">
                   { navigation.map( ( item ) => (
-                    <a key={ item.name } href={ item.href } className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    <a key={ item.name } href={ item.href } className="text-base font-medium text-black hover:text-gray-700">
                       { item.name }
                     </a>
                   ) ) }
