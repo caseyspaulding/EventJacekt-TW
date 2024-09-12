@@ -28,7 +28,7 @@ const features = [
     'Customize event pages with your branding and logo.',
     'Sell tickets online and manage registrations.',
     'Capture attendee information and send event reminders.',
-    
+
     'Generate QR codes for easy check-in and attendance tracking.',
     'Offer several types of tickets with different pricing',
     'Integrate with payment gateways for secure online ticket sales.',
@@ -60,7 +60,7 @@ export default function Example ()
                                 We must be crazy to give you a deal like this! Every feature included in every package, with no long-term commitments required!
                             </p>
                             <p className="mt-5 text-xl text-gray-500">
-                             
+
                             </p>
                         </div>
                         <Button
@@ -130,14 +130,14 @@ export default function Example ()
             {/* Comparison table */ }
 
             <div className=''>
-                <ComparisonTable /> 
+                <ComparisonTable />
             </div>
 
             {/* Branded FAQ */ }
             <div className="bg-blue-600">
                 <div className="mx-auto max-w-7xl px-2 py-4 sm:py-8 lg:px-2">
-                    
-                    <FAQ_2  />
+
+                    <FAQ_2 />
                 </div>
             </div>
 
@@ -146,16 +146,16 @@ export default function Example ()
                 <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
                     <h2 className="text-3xl font-bold tracking-tight text-orange-600 sm:text-4xl">
                         <span className="block">Ready to dive in?</span>
-                        <span className="block text-blue-600">Start your free trial today.</span>
+                        <span className="block text-blue-600">Start free today.</span>
                     </h2>
                     <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
                         <div className="inline-flex rounded-3xl shadow-2xl">
                             <Button
                                 as='a'
                                 href="/signup"
-                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-orange-500 px-5 py-3 text-base font-medium text-white hover:bg-green-600"
+                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-orange-500 px-8 py-6 text-xl font-medium text-white hover:bg-green-600"
                             >
-                                Get started
+                                Get Started
                             </Button>
                         </div>
                     </div>

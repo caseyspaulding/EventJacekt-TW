@@ -10,16 +10,16 @@ export const metadata: Metadata = {
 
 export default function AffiliatePage() {
     return (
-        <div>
+        <div className=''>
             <NavBar1 />
             <HeaderCentered
                 title="Affiliate Program"
                 description="Earn money by referring customers to EventJacket"
             />
 
-            <div className="container mx-auto px-4">
+            <div className=" mx-auto max-w-7xl px-4">
                 <div className="py-20">
-                    <h2 className="text-center text-5xl font-extrabold ">Coming Soon!</h2>
+                    <h2 className="text-center text-5xl mb-8 font-extrabold ">Coming Soon!</h2>
                     <h2 className="text-2xl font-bold">How it works</h2>
                     <p className="mt-4">
                         You will receive a unique link that you can share with your audience. When

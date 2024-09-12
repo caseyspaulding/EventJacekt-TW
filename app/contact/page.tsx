@@ -14,6 +14,10 @@ export default function Contact ()
               <p className="mt-4 leading-7 text-gray-600">
                 We’d love to hear from you! Send us a message using the form below, or email us directly at{' '}
                 <a href="mailto:team@eventjacket.com" className="font-semibold text-blue-600">  team@eventjacket.com </a> 
+                <div className="mt-1">
+                  <dt className="sr-only">Phone number</dt>
+                  <dd>+1 (407) 326-3692</dd>
+                </div>
               </p>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
@@ -29,8 +33,7 @@ export default function Contact ()
                     </dd>
                   </div>
                   <div className="mt-1">
-                    <dt className="sr-only">Phone number</dt>
-                    <dd>+1 (808) 295-8219</dd>
+                   
                   </div>
                 </dl>
               </div>

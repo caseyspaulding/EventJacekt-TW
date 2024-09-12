@@ -8,17 +8,15 @@ const navigation = {
     { name: 'Analytics', href: '/analytics' },
   ],
   support: [
-    { name: 'Help Center', href: '/help' },
+    { name: 'Blog', href: '/blog' }, 
     { name: 'Documentation', href: '/docs' },
     { name: 'Contact', href: '/contact' },
-
-    { name: 'Academy', href: '/blog' },
 
   ],
   company: [
 
     { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
+   
     { name: 'Affiliate', href: '/affiliate' },
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },
@@ -123,6 +121,10 @@ export default function FooterFull ()
                 </p>
                 <br />
                 Kissimmee, FL 34747
+                <div className="mt-1">
+                  <dt className="sr-only">Phone number</dt>
+                  <dd>+1 (407) 326-3692</dd>
+                </div>
               </div>
              
            
@@ -144,7 +146,7 @@ export default function FooterFull ()
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-md font-semibold leading-6 text-zinc-50">Support</h3>
+                <h3 className="text-md font-semibold leading-6 text-zinc-50">Resources</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.support.map( ( item ) => (
                     <li key={ item.name }>
@@ -185,7 +187,7 @@ export default function FooterFull ()
           </div>
         </div>
         <div className="mt-16 border-t border-gray-100/10 pt-8 sm:mt-20 lg:mt-24">
-          <p className="text-xs leading-5 text-white">&copy; { currentYear } EventJacket, Inc. All rights reserved.</p>
+          <p className="text-xs leading-5 text-white">&copy; { currentYear } EventJacket, LLC. All rights reserved.</p>
         </div>
       </div>
     </footer></>

@@ -10,6 +10,7 @@ import EventsListComponent from '@/components/EventListComponent';
 import HowItWorks from '@/components/Features/HowItWorks';
 import FAQ_TW from '@/components/FAQ/FAQ_TW';
 import Head from 'next/head';
+import { Button } from '@nextui-org/button';
 
 
 export const metadata: Metadata = {
@@ -57,6 +58,26 @@ export default async function Index ()
 
             <FAQ_TW />
 
+            {/* CTA section */ }
+            <div className="bg-blue-700 mb-8">
+                <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
+                    <h2 className="text-3xl font-bold tracking-tight text-blue-300 sm:text-4xl">
+                        <span className="block">Ready to dive in?</span>
+                        <span className="block text-white">Start free today.</span>
+                    </h2>
+                    <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+                        <div className="inline-flex rounded-3xl shadow-2xl">
+                            <Button
+                                as='a'
+                                href="/signup"
+                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-orange-500 px-8 py-6 text-xl font-medium text-white hover:bg-orange-600"
+                            >
+                                Get Started
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <h2 className="text-center">
                 <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
                     Just Launched
