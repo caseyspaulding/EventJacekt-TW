@@ -53,11 +53,11 @@ export default function Example ()
                     <div className="pb-16 xl:flex xl:items-center xl:justify-between">
                         <div>
                             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-                                <span className="text-gray-900">Simple no-tricks pricing.</span>
+                                <span className="text-gray-900">An Offer You Can't Refuse! </span>
                                 <span className="ml-2 text-blue-600">$0.00 a month</span>
                             </h1>
                             <p className="mt-5 text-xl text-gray-500">
-                                50 cents per event ticket sold.
+                                We must be crazy to give you a deal like this! Every feature included in every package, with no long-term commitments required!
                             </p>
                             <p className="mt-5 text-xl text-gray-500">
                              
