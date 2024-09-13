@@ -1,6 +1,6 @@
 import type { InputHTMLAttributes } from 'react';
 import React, { forwardRef } from 'react';
-import styles from './InputEJ.module.css';
+import styles from './DateTimeEJ.module.css';
 
 // Define the types for the props
 interface DateTimeFieldProps extends InputHTMLAttributes<HTMLInputElement>
@@ -26,7 +26,7 @@ const DateTimeFieldEJ = forwardRef<HTMLInputElement, DateTimeFieldProps>(
           placeholder={ renderLabel ? ' ' : undefined }
           className={ `${ styles.input } ${ props.className || '' }` }
         />
-        { renderLabel && <label>{ label }</label> }
+        { renderLabel && <label className={ styles.label }>{ label }</label> }
         { variant === 'standard' && <span className={ styles[ 'underline' ] }></span> }
       </div>
     );
