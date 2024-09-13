@@ -54,7 +54,7 @@ const ComparisonTable = () =>
           values: [ 'Yes, with CRM for vendors and performers', 'Basic attendee management', 'No' ],
         },
         {
-          label: 'Mobile App',
+          label: 'Ticket Scanner',
           values: [ 'Yes', 'Yes', 'Yes' ],
         },
         {
