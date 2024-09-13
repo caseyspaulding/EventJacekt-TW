@@ -1,10 +1,13 @@
+import LogoSpinner from '@/components/Loaders/LogoSpinner';
 import React from 'react';
 
 export default function loading ()
 {
   return (
     <div className="flex h-screen items-center justify-center">
-      <div className="spinner">
+      <LogoSpinner    />
+      
+      {/*<div className="spinner">
         <div className="bar1"></div>
         <div className="bar2"></div>
         <div className="bar3"></div>
@@ -17,7 +20,7 @@ export default function loading ()
         <div className="bar10"></div>
         <div className="bar11"></div>
         <div className="bar12"></div>
-      </div>
+      </div>*/}
     </div>
   );
 }

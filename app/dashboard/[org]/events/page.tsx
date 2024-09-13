@@ -7,6 +7,7 @@ import { getEventsForOrg } from '@/app/actions/getEventsForOrg';
 import { deleteEvent } from '@/app/actions/eventActions';
 import BreadcrumbsPageHeader from '../components/BreadcrumbsPageHeading';
 import Loaderios from '@/components/Loaders/LoaderIos';
+import LogoSpinner from '@/components/Loaders/LogoSpinner';
 
 interface Event
 {
@@ -84,7 +85,7 @@ export default function EventsPage ()
 
   if ( loading )
   {
-    return <p> <Loaderios/>  </p>;
+    return <p> <LogoSpinner/>  </p>;
   }
 
   if ( error )
