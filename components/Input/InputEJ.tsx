@@ -18,7 +18,7 @@ const InputFieldEJ = forwardRef<HTMLInputElement, InputFieldProps>(
 
     return (
       <div className={ variant === 'outlined' ? styles[ 'outlined-input' ] : styles[ 'standard-input' ] }>
-        <input ref={ ref } type={ type } { ...props } placeholder={ renderLabel ? " " : undefined } />
+        <input ref={ ref } type={ type } { ...props } placeholder={ renderLabel ? " " : undefined } className={ `${ styles.input } ${ props.className || '' }` } /* Add this class */ />
         { renderLabel && <label>{ label }</label> }
         { variant === 'standard' && <span className={ styles[ 'underline' ] }></span> }
       </div>
