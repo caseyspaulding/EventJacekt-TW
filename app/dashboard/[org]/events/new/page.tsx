@@ -7,7 +7,7 @@ import { generateSlug } from '@/utils/stringUtils';
 import toast from 'react-hot-toast';
 import { createEvent } from '@/app/actions/eventActions';
 import ModalBasic from '@/components/modals/ModalBasic';
-import { Button, CalendarDate, DateInput, Textarea, } from '@nextui-org/react';
+import { Button, CalendarDate, DateInput, Input, Textarea, } from '@nextui-org/react';
 import { FileUploadButton } from './FileUploadButton';
 
 import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
@@ -38,7 +38,10 @@ const CreateEventPage = () =>
     const [ eventStartTime, setEventStartTime ] = useState( '' );
     const [ eventEndTime, setEventEndTime ] = useState( '' );
     const [ organizerContact, setOrganizerContact ] = useState( '' );
-
+    const [ dateRange, setDateRange ] = useState<{ startDate: string; endDate: string }>( {
+        startDate: '',
+        endDate: '',
+    } );
     const [ venue, setVenue ] = useState( '' );
     const [ venueDescription, setVenueDescription ] = useState( '' );
     const [ address, setAddress ] = useState( '' );
@@ -231,7 +234,10 @@ const CreateEventPage = () =>
             toast.error( 'An unexpected error occurred.' );
         }
     };
-
+    const handleDateRangeChange = ( dates: { startDate: string; endDate: string } ) =>
+    {
+        setDateRange( dates );
+    };
     const handleModalClose = () =>
     {
         setIsModalOpen( false );
@@ -312,7 +318,7 @@ const CreateEventPage = () =>
                 <div>
             
                   
-                    <DateTimeFieldEJ
+                    <Input
                         type="date"
                         id="startDate"
                         value={ startDate }
@@ -323,7 +329,7 @@ const CreateEventPage = () =>
                     />
                     </div>
                     <div>
-                    <DateTimeFieldEJ
+                    <Input
                             type="date"
                             id="endDate"
                             value={ endDate }
@@ -336,7 +342,7 @@ const CreateEventPage = () =>
                
                 
                     <div>
-                    <DateTimeFieldEJ
+                    <Input
                             type="time"
                             id="eventStartTime"
                             value={ eventStartTime }
@@ -347,7 +353,7 @@ const CreateEventPage = () =>
                         />
                     </div>
                     <div>
-                    <DateTimeFieldEJ
+                    <Input
                             type="time"
                             id="eventEndTime"
                             value={ eventEndTime }

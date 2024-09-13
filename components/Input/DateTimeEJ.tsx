@@ -1,39 +1,58 @@
-import type { InputHTMLAttributes } from 'react';
-import React, { forwardRef } from 'react';
-import styles from './DateTimeEJ.module.css';
+import React, { useState, ChangeEvent } from 'react';
 
-// Define the types for the props
-interface DateTimeFieldProps extends InputHTMLAttributes<HTMLInputElement>
+interface CustomDateRangePickerProps
 {
-  label: string;
-  variant?: 'outlined' | 'standard';
-  type?: 'date' | 'time'; // Restrict types to 'date' or 'time'
+  startDate: string;
+  endDate: string;
+  onChange: ( dates: { startDate: string; endDate: string } ) => void;
 }
 
-// Use forwardRef to pass the ref to the input element
-const DateTimeFieldEJ = forwardRef<HTMLInputElement, DateTimeFieldProps>(
-  ( { label, variant = 'outlined', type = 'date', ...props }, ref ) =>
+const CustomDateRangePicker: React.FC<CustomDateRangePickerProps> = ( { startDate, endDate, onChange } ) =>
+{
+  // Local state to manage date inputs
+  const [ localStartDate, setLocalStartDate ] = useState<string>( startDate );
+  const [ localEndDate, setLocalEndDate ] = useState<string>( endDate );
+
+  // Handler to handle date input changes
+  const handleDateChange = ( event: ChangeEvent<HTMLInputElement> ) =>
   {
-    // Date and time inputs do not need floating placeholders
-    const renderLabel = type !== 'date' && type !== 'time';
+    const { name, value } = event.target;
 
-    return (
-      <div className={ variant === 'outlined' ? styles[ 'outlined-input' ] : styles[ 'standard-input' ] }>
+    if ( name === 'startDate' )
+    {
+      setLocalStartDate( value );
+      onChange( { startDate: value, endDate: localEndDate } );
+    } else if ( name === 'endDate' )
+    {
+      setLocalEndDate( value );
+      onChange( { startDate: localStartDate, endDate: value } );
+    }
+  };
+
+  return (
+    <div className="date-range-picker">
+      <label>
+        Start Date:
         <input
-          ref={ ref }
-          type={ type }
-          { ...props }
-          placeholder={ renderLabel ? ' ' : undefined }
-          className={ `${ styles.input } ${ props.className || '' }` }
+          type="date"
+          name="startDate"
+          value={ localStartDate }
+          onChange={ handleDateChange }
+          className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
         />
-        { renderLabel && <label className={ styles.label }>{ label }</label> }
-        { variant === 'standard' && <span className={ styles[ 'underline' ] }></span> }
-      </div>
-    );
-  }
-);
+      </label>
+      <label>
+        End Date:
+        <input
+          type="date"
+          name="endDate"
+          value={ localEndDate }
+          onChange={ handleDateChange }
+          className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+        />
+      </label>
+    </div>
+  );
+};
 
-// Set displayName for better debugging experience in React DevTools
-DateTimeFieldEJ.displayName = 'DateTimeFieldEJ';
-
-export default DateTimeFieldEJ;
+export default CustomDateRangePicker;
