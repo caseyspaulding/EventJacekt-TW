@@ -17,6 +17,7 @@ import { ImageUploadVenue } from './ImageUploadVenue';
 
 import dynamic from 'next/dynamic';
 import InputFieldEJ from '@/components/Input/InputEJ';
+import DateTimeFieldEJ from '@/components/Input/DateTimeEJ';
 
 const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
     ssr: false, // This prevents server-side rendering of the component
@@ -311,7 +312,7 @@ const CreateEventPage = () =>
                 <div>
             
                   
-                    <InputFieldEJ
+                    <DateTimeFieldEJ
                         type="date"
                         id="startDate"
                         value={ startDate }
@@ -322,7 +323,7 @@ const CreateEventPage = () =>
                     />
                     </div>
                     <div>
-                        <InputFieldEJ
+                    <DateTimeFieldEJ
                             type="date"
                             id="endDate"
                             value={ endDate }
@@ -335,7 +336,7 @@ const CreateEventPage = () =>
                
                 
                     <div>
-                    <InputFieldEJ
+                    <DateTimeFieldEJ
                             type="time"
                             id="eventStartTime"
                             value={ eventStartTime }
@@ -346,7 +347,7 @@ const CreateEventPage = () =>
                         />
                     </div>
                     <div>
-                    <InputFieldEJ
+                    <DateTimeFieldEJ
                             type="time"
                             id="eventEndTime"
                             value={ eventEndTime }
