@@ -7,7 +7,7 @@ import { generateSlug } from '@/utils/stringUtils';
 import toast from 'react-hot-toast';
 import { createEvent } from '@/app/actions/eventActions';
 import ModalBasic from '@/components/modals/ModalBasic';
-import { Button, Textarea, } from '@nextui-org/react';
+import { Button, CalendarDate, DateInput, Textarea, } from '@nextui-org/react';
 import { FileUploadButton } from './FileUploadButton';
 
 import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
@@ -17,10 +17,6 @@ import { ImageUploadVenue } from './ImageUploadVenue';
 
 import dynamic from 'next/dynamic';
 import InputFieldEJ from '@/components/Input/InputEJ';
-
-
-
-
 
 const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
     ssr: false, // This prevents server-side rendering of the component
@@ -251,7 +247,7 @@ const CreateEventPage = () =>
     //    // Handle the place details here
     //};
 
-
+    
 
     const mapAddress = `${ address }, ${ city }, ${ state }, ${ zipCode }` || '';
 
@@ -312,7 +308,9 @@ const CreateEventPage = () =>
 
 
            
-                    <div>
+                <div>
+            
+                  
                     <InputFieldEJ
                         type="date"
                         id="startDate"
@@ -337,7 +335,7 @@ const CreateEventPage = () =>
                
                 
                     <div>
-                        <InputFieldEJ
+                    <InputFieldEJ
                             type="time"
                             id="eventStartTime"
                             value={ eventStartTime }
@@ -348,7 +346,7 @@ const CreateEventPage = () =>
                         />
                     </div>
                     <div>
-                        <InputFieldEJ
+                    <InputFieldEJ
                             type="time"
                             id="eventEndTime"
                             value={ eventEndTime }

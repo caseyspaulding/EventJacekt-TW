@@ -109,3 +109,23 @@
 .standard-input input:focus ~ label {
     color: var(--input-focus-color) !important; /* Focus color for label */
 }
+
+/* Remove the default padding for date/time inputs on iOS */
+input[type="date"],
+input[type="time"] {
+  appearance: none;
+  -webkit-appearance: none; /* For Safari */
+  padding: 0; /* Reset padding */
+  margin: 0; /* Reset margin */
+  border: none; /* Remove default borders */
+  background-color: transparent; /* Make background transparent to match your style */
+  font-family: inherit; /* Inherit the font to maintain consistency */
+  font-size: inherit; /* Inherit font size */
+}
+
+/* Optional: Add custom padding if needed */
+input[type="date"]:focus,
+input[type="time"]:focus {
+  outline: none; /* Remove the outline when focusing */
+  box-shadow: none; /* Remove any focus-related shadows */
+}

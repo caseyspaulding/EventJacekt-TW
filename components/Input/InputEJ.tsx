@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes} from 'react';
+import type { InputHTMLAttributes } from 'react';
 import React, { forwardRef } from 'react';
 import styles from './InputEJ.module.css';
 
@@ -11,12 +11,15 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement>
 
 // Use forwardRef to pass the ref to the input element
 const InputFieldEJ = forwardRef<HTMLInputElement, InputFieldProps>(
-  ( { label, variant = 'outlined', ...props }, ref ) =>
+  ( { label, variant = 'outlined', type = 'text', ...props }, ref ) =>
   {
+    // Conditionally render label for 'date' type (since 'date' inputs don't need floating placeholders)
+    const renderLabel = type !== 'date';
+
     return (
       <div className={ variant === 'outlined' ? styles[ 'outlined-input' ] : styles[ 'standard-input' ] }>
-        <input ref={ ref } { ...props } placeholder=" " />
-        <label>{ label }</label>
+        <input ref={ ref } type={ type } { ...props } placeholder={ renderLabel ? " " : undefined } />
+        { renderLabel && <label>{ label }</label> }
         { variant === 'standard' && <span className={ styles[ 'underline' ] }></span> }
       </div>
     );
