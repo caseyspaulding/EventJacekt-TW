@@ -213,7 +213,7 @@ export async function sendTicketEmail (
     <div class="container">
       <!-- Header Section -->
       <div class="header">
-        <img src="https://www.eventjacket.com/images/ticketsemail.png" class='logo' alt="EventJacket Logo">
+        <img src="https://www.eventjacket.com/images/logo-icon-white.png" class='logo' alt="EventJacket Logo">
 
 
       </div>
@@ -225,7 +225,7 @@ export async function sendTicketEmail (
           <h2 style='font-size: 36px;' class="first-name">${ buyer.firstName },</h2>
           <h2 style="font-size: 28px;">you've got <span
               style="background-color: #fe8522; color: #000; padding: 2px 5px;">Tickets!</span></h2>
-          <img src="https://www.eventjacket.com/images/tickets.png" alt="Ticket Icon" class="icon"
+          <img src="https://www.eventjacket.com/images/ticketsemail.png" alt="Ticket Icon" class="icon"
             style="max-width: 200px;">
         </div>
 

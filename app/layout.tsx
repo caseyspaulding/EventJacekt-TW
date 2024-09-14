@@ -41,8 +41,8 @@ export default function RootLayout ( { children }: PropsWithChildren )
             <Head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <title>EventJacket - Save Thousands!</title>
-                <meta name="description" content="Save Thousands! EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank." />
+                <title>EventJacket - Nonprofit CRM</title>
+                <meta name="description" content="EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank." />
                 <meta property="og:title" content="EventJacket - Event Management Software" />
                 <meta property="og:description" content="Save Thousands! EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank." />
                 <meta property="og:url" content="https://www.eventjacket.com" />
