@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic';
 
 export async function POST ( request: NextRequest )
 {
-  const sig = request.headers.get( 'stripe-signature' );
+  const sig = request.headers.get( 'Stripe-Signature' );
 
   if ( !sig )
   {
@@ -28,8 +28,10 @@ export async function POST ( request: NextRequest )
 
   try
   {
-    const text = await request.text();
-    const event = stripe.webhooks.constructEvent( text, sig, endpointSecret );
+    const rawBody = await request.clone().text();
+
+    // Construct the event with the raw body and signature
+    const event = stripe.webhooks.constructEvent( rawBody, sig, endpointSecret );
 
     switch ( event.type )
     {
