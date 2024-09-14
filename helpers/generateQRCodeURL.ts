@@ -52,10 +52,10 @@ export async function sendTicketEmail (
     .map(
       ( faq ) => `
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Q:</strong> ${ faq.question }</td>
+          <td style="padding: 8px; border: 0px;"><strong>Q:</strong> ${ faq.question }</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>A:</strong> ${ faq.answer }</td>
+          <td style="padding: 8px; border: 0px;"><strong>A:</strong> ${ faq.answer }</td>
         </tr>
       `
     )
@@ -94,7 +94,7 @@ export async function sendTicketEmail (
         text-align: center;
         padding: 20px 0;
         border-radius: 12px;
-        background-color: #1d4ed8;
+        background-color: #ffffff;
         color: white;
       }
 
