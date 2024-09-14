@@ -19,9 +19,9 @@ export async function generateQRCodeDataURL ( value: string ): Promise<string>
 }
 
 export async function sendTicketEmail (
-  
+
   buyer: {
-    
+
     email: string;
     firstName: string;
   },
@@ -213,7 +213,7 @@ export async function sendTicketEmail (
     <div class="container">
       <!-- Header Section -->
       <div class="header">
-        <img src="https://www.eventjacket.com/images/logo.svg" class='logo' alt="EventJacket Logo">
+        <img src="https://www.eventjacket.com/images/ticketsemail.png" class='logo' alt="EventJacket Logo">
 
 
       </div>
