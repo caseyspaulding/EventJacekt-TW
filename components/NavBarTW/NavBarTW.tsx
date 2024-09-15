@@ -39,7 +39,7 @@ export default function NavBarTW ()
               <div className="relative block w-full overflow-hidden rounded-2xl bg-white">
                 <VideoFacade
                   videoUrl="https://www.youtube.com/embed/r1U0VLkQsfo?si=n-okKXCW-O_cxD-i"
-                  thumbnailUrl="/images/video-thumbnail.jpg"
+                  thumbnailUrl=""
                 />
               </div>
             </div>

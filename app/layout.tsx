@@ -1,10 +1,11 @@
 // app/layout.tsx
 import type { PropsWithChildren } from 'react';
-import { Poppins, Space_Grotesk } from 'next/font/google';  // Import both fonts
+import { Space_Grotesk } from 'next/font/google';  // Import both fonts
 import { twMerge } from 'tailwind-merge';
 import './globals.css';
 import ClientProviders from './ClientProviders';
 import Script from 'next/script'; // Import Script from next/script
+import debounce from 'lodash/debounce';
 
 export const metadata = {
     title: 'EventJacket - Nonprofit CRM',
@@ -52,7 +53,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
             </head>
             <body className={ twMerge( 'bg-white dark:bg-gray-900' ) }>
                 {/* Include Google Analytics Script */ }
-                <Script async src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"></Script>
+                <Script src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" strategy="afterInteractive" />
                 <Script id="google-analytics">
                     { `
             window.dataLayer = window.dataLayer || [];
