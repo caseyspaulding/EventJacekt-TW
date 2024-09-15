@@ -1,85 +1,52 @@
 // app/layout.tsx
 import type { PropsWithChildren } from 'react';
-import { Space_Grotesk } from 'next/font/google';  // Import both fonts
+import { Space_Grotesk } from 'next/font/google';
 import { twMerge } from 'tailwind-merge';
 import './globals.css';
 import ClientProviders from './ClientProviders';
-import Script from 'next/script'; // Import Script from next/script
-import debounce from 'lodash/debounce';
+import Script from 'next/script';
+import { ThemeProvider } from './ThemeProvider'; // New import
 
 export const metadata = {
-    title: 'EventJacket - Nonprofit CRM',
-    description: 'EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank.',
-    openGraph: {
-        title: 'EventJacket - Event Management Software',
-        description: 'Save Thousands! EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank.',
-        url: 'https://www.eventjacket.com',
-        type: 'website',
-        images: [
-            {
-                url: 'https://www.eventjacket.com/opengraph-image.png',
-                width: 1200,
-                height: 630,
-                alt: 'EventJacket - Save Thousands!',
-            },
-        ],
-    },
-    themeColor: '#ffffff',
-    other: {
-        'msapplication-TileColor': '#da532c',
-    },
+    // ... (keep your existing metadata)
 };
 
-
 const spaceGrotesk = Space_Grotesk( {
-    weight: [ '400' ], // Regular weight
+    weight: [ '400' ],
     subsets: [ 'latin' ],
     display: 'swap',
+    variable: '--font-space-grotesk', // Add this line
 } );
 
 export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (
-        <html lang="en" className={ `${ spaceGrotesk.className }` }>
+        <html lang="en" className={ `${ spaceGrotesk.variable }` }>
             <head>
-                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-                <link rel="manifest" href="/site.webmanifest" />
-                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-                <link rel="canonical" href="https://www.eventjacket.com" />
-            
-                <link rel="preload" href="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" as="script"/>
+                {/* Keep your existing link tags */ }
+                <link rel="preconnect" href="https://www.googletagmanager.com" />
+                <link rel="preconnect" href="https://accounts.google.com" />
+                <link rel="preconnect" href="https://connect.stripe.com" />
             </head>
-            <body className={ twMerge( 'bg-white dark:bg-gray-900' ) }>
-                {/* Include Google Analytics Script */ }
+            <body className={ twMerge( 'bg-white dark:bg-gray-900', spaceGrotesk.className ) }>
                 <Script src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" strategy="afterInteractive" />
-                <Script id="google-analytics">
+                <Script id="google-analytics" strategy="afterInteractive">
                     { `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-M6F4XVZM25');
-        `}
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-M6F4XVZM25');
+                    `}
                 </Script>
 
-                {/* Include additional scripts */ }
-                <Script src="https://accounts.google.com/gsi/client" defer></Script>
-                <Script src="https://connect.stripe.com/connect-js" defer></Script>
+                <Script src="https://accounts.google.com/gsi/client" strategy="lazyOnload" />
+                <Script src="https://connect.stripe.com/connect-js" strategy="lazyOnload" />
 
-                {/* Theme handler script */ }
-                <Script id="theme-handler" dangerouslySetInnerHTML={ {
-                    __html: `
-            (function() {
-                const theme = localStorage.getItem('theme') || 'light';
-                document.documentElement.classList.add(theme);
-            })();
-        `
-                } } />
-
-                <ClientProviders>
-                    { children }
-                </ClientProviders>
+                <ThemeProvider>
+                    <ClientProviders>
+                        { children }
+                    </ClientProviders>
+                </ThemeProvider>
             </body>
         </html>
     );
