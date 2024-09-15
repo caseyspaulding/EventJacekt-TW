@@ -176,14 +176,7 @@ export default function NavBar1 ()
                   className="h-8 w-auto sm:h-8"
                 />
               </Link>
-              <Link
-                aria-label="EventJacket"
-
-                href="https://www.eventjacket.com">
-                <p className="ml-2 font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-700">
-                  <span></span>
-                </p>
-              </Link>
+             
             </div>
             <div className="-my-2 -mr-2 md:hidden">
               <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-700 hover:bg-blue-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset">
