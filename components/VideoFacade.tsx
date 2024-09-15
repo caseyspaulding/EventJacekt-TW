@@ -19,7 +19,7 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl }: VideoFacadePro
   };
 
   return (
-    <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+    <div className="relative mx-auto w-full rounded-2xl shadow-lg lg:max-w-md">
       { !isVideoLoaded ? (
         <button
           type="button"
@@ -27,8 +27,8 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl }: VideoFacadePro
           className="relative block w-full overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           <Image
-            width={ 300 }
-            height={ 300 }
+            width={ 500 }
+            height={ 500 }
             priority
             src={ thumbnailUrl }
             alt="Video thumbnail"

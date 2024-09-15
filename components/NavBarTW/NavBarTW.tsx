@@ -82,12 +82,12 @@ export default function NavBarTW ()
 
                 <div
 
-                  className="relative block w-full shadow-2xl overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  className="relative block w-full shadow-xl overflow-hidden rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
 
                   <VideoFacade
-                    videoUrl="https://player.vimeo.com/video/964426661?h=21b1f36f9b"
-                    thumbnailUrl="/images/screenshot-payments.png"
+                    videoUrl="https://www.youtube.com/embed/r1U0VLkQsfo?si=n-okKXCW-O_cxD-i"
+                    thumbnailUrl="/images/video-thumbnail.png"
 
                   />
 
