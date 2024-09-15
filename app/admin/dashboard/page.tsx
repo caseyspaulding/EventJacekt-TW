@@ -34,7 +34,7 @@ const AdminDashboard = () => {
                 data: { user }
             } = await supabase.auth.getUser();
 
-            if (user?.email !== 'casey.spaulding@outlook.com') {
+            if (user?.email !== 'casey.spaulding@gmail.com') {
                 router.push('/login'); // redirect to login if not admin
                 return;
             }

@@ -848,8 +848,11 @@ export const blogPosts = pgTable( 'blog_posts', {
     createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
     updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
     publishedAt: timestamp( 'published_at' ),
-    tags: text( 'tags' ).array(),
-    featuredImage: varchar( 'featured_image', { length: 255 } )
+    tags: text( 'tags' ).array(), // SEO: Use tags for topic clustering
+    featuredImage: varchar( 'featured_image', { length: 255 } ),
+    metaTitle: varchar( 'meta_title', { length: 255 } ), // SEO: Meta title for better search engine targeting
+    metaDescription: text( 'meta_description' ), // SEO: Meta description
+    isPublished: boolean( 'is_published' ).default( false ) // Control published status
 } );
 
 // Ticket Sales Pages Table

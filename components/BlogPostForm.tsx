@@ -2,12 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import RichTextEditor from './RichTextEditor';
-import { Button } from 'flowbite-react';
+
 import { createBlogPost } from '../app/actions/blogActions';
 import { createClient } from '@/utils/supabase/client';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js'; // Import the User type
+import { Button } from '@nextui-org/button';
 
 const BlogPostForm: React.FC = () =>
 {
@@ -147,7 +148,7 @@ const BlogPostForm: React.FC = () =>
             value={ title }
             onChange={ ( e ) => setTitle( e.target.value ) }
             placeholder="Post Title"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             required
           />
         </div>
@@ -159,7 +160,7 @@ const BlogPostForm: React.FC = () =>
             type="file"
             accept="image/*"
             onChange={ ( e ) => setFeaturedImage( e.target.files?.[ 0 ] || null ) }
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
         <div>
@@ -172,7 +173,7 @@ const BlogPostForm: React.FC = () =>
             value={ slug }
             onChange={ ( e ) => setSlug( e.target.value ) }
             placeholder="URL Slug"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
 
@@ -185,7 +186,7 @@ const BlogPostForm: React.FC = () =>
             value={ excerpt }
             onChange={ ( e ) => setExcerpt( e.target.value ) }
             placeholder="Excerpt"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
 
@@ -207,7 +208,7 @@ const BlogPostForm: React.FC = () =>
             value={ author }
             onChange={ ( e ) => setAuthor( e.target.value ) }
             placeholder="Author"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             required
           />
         </div>
@@ -222,12 +223,12 @@ const BlogPostForm: React.FC = () =>
             value={ tags }
             onChange={ ( e ) => setTags( e.target.value ) }
             placeholder="Tags (comma-separated)"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
 
         <div>
-          <Button type="submit" className="w-full bg-indigo-600 text-white hover:bg-indigo-700">
+          <Button type="submit" className="w-full bg-blue-600 text-white hover:bg-blue-700">
             Create Post
           </Button>
         </div>
