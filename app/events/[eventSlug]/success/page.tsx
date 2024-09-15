@@ -22,10 +22,15 @@ export default async function SuccessPage ( {
     const { firstName, lastName } = searchParams;
 
     const customerName = `${ firstName ?? '' } ${ lastName ?? '' }`.trim() || '';
+    console.log( 'Received eventSlug:', eventSlug );
+    console.log( 'Received customerName:', customerName );
 
+    // Fetch the event ID by slug
     const eventId = await getEventIdBySlug( eventSlug );
+    console.log( 'Fetched event ID:', eventId );
     if ( !eventId )
     {
+        console.error( 'Event ID not found, triggering 404' );
         notFound();
     }
 
@@ -50,11 +55,12 @@ export default async function SuccessPage ( {
         .innerJoin( organizations, eq( events.orgId, organizations.id ) )
         .where( eq( events.id, eventId ) )
         .limit( 1 );
+    console.log( 'Fetched event data:', eventWithOrg );
 
     const eventData = eventWithOrg[ 0 ];
-
     if ( !eventData )
     {
+        console.error( 'Event data not found, triggering 404' );
         notFound();
     }
 
@@ -77,14 +83,15 @@ export default async function SuccessPage ( {
         .from( orgTicketTypes )
         .innerJoin( orgCustomers, eq( orgTicketTypes.orgId, orgCustomers.orgId ) )
         .where( eq( orgTicketTypes.eventId, eventId ) );
+    console.log( 'Fetched ticket data:', ticketsWithCustomer );
 
     if ( !ticketsWithCustomer.length )
     {
+        console.error( 'No tickets found, triggering 404' );
         notFound();
     }
 
     const ticket = ticketsWithCustomer[ 0 ];
-
     const eventDate = ticket.eventDate;
     const eventLocation = `${ eventData.venue || '' }`.trim();
 
