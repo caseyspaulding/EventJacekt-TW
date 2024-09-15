@@ -27,7 +27,7 @@ export default async function Index ()
     return (
         <>
             <Head>
-               
+
                 <meta property="og:title" content="EventJacket - Event Management Software" />
                 <meta
                     property="og:description"
@@ -41,13 +41,13 @@ export default async function Index ()
                 <meta property="og:image:alt" content="EventJacket - Your Event Management Solution" />
 
                 {/* Optional - Facebook App ID */ }
-                <meta property="fb:app_id" content="453279560972900" /> 
+                <meta property="fb:app_id" content="453279560972900" />
             </Head>
             <SvgBackgroundReversed />
             <NavBar1 />
             <NavBarTW />
 
-          
+
 
             <HowItWorks />
             <SlantedDividerSolid color="#f1f5f9" height="81px" zIndex={ 2 } />
@@ -70,7 +70,7 @@ export default async function Index ()
                             <Button
                                 as='a'
                                 href="/signup"
-                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-blue-200 px-8 py-6 text-xl font-medium text-gray-900 hover:bg-blue-300"
+                                className="inline-flex items-center px-6 py-3 text-xl font-medium text-white bg-blue-900 hover:bg-blue-800"
                             >
                                 Get Started
                             </Button>
