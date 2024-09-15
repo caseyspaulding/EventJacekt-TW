@@ -87,7 +87,7 @@ export default function NavBarTW ()
 
                   <VideoFacade
                     videoUrl="https://player.vimeo.com/video/964426661?h=21b1f36f9b"
-                    thumbnailUrl="/images/icons/166.png"
+                    thumbnailUrl="/images/screenshot-payments.png"
 
                   />
 
