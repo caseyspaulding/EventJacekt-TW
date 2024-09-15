@@ -68,7 +68,7 @@ export default function HowItWorks ()
         <div className="mt-12 text-center">
           <a
             href="/signup"
-            className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-orange-500 border border-transparent rounded-3xl shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="inline-flex items-center px-6 py-3 text-xl font-medium text-white bg-orange-500 border border-transparent rounded-3xl shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Get Started
             <svg className="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

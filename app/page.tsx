@@ -70,7 +70,7 @@ export default async function Index ()
                             <Button
                                 as='a'
                                 href="/signup"
-                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-orange-500 px-8 py-6 text-xl font-medium text-white hover:bg-orange-600"
+                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-orange-500 px-8 py-6 text-xl font-medium text-white hover:bg-blue-500"
                             >
                                 Get Started
                             </Button>
