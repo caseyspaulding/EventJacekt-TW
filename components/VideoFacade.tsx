@@ -18,14 +18,14 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl }: VideoFacadePro
   };
 
   return (
-    <div className="relative mx-auto w-full rounded-2xl shadow-lg lg:max-w-full">
+    <div className="relative mx-auto w-full rounded-2xl  lg:max-w-full">
       { !isVideoLoaded ? (
         <button
           type="button"
           onClick={ handleClick }
           className="relative block w-full overflow-hidden rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          <div className="relative w-full h-[342px]"> {/* Set the container size */ }
+          <div className="relative w-full h-[215px] sm:h-[320px] md:h-[400px] lg:h-[342px]"> {/* Responsive height */ }
             <Image
               src={ thumbnailUrl }
               alt="Video thumbnail"
@@ -50,7 +50,7 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl }: VideoFacadePro
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="w-full h-[450px] rounded-2xl"
+          className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[450px] rounded-2xl" // Responsive height
         ></iframe>
       ) }
     </div>

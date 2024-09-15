@@ -74,11 +74,11 @@ export default function NavBarTW ()
               </div>
             </div>
             <div className="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-2xl lg:items-center"> {/* Increased the max-width */ }
-              <div className="relative mx-auto w-full rounded-2xl shadow-lg"> {/* Removed lg:max-w-md for full-width */ }
+              <div className="relative mx-auto w-full rounded-2xl "> {/* Removed lg:max-w-md for full-width */ }
                 <div className="text-center text-gray-400">
                 </div>
 
-                <div className="relative block w-full shadow-xl overflow-hidden rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <div className="relative block w-full  overflow-hidden rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                   <VideoFacade
                     videoUrl="https://www.youtube.com/embed/r1U0VLkQsfo?si=n-okKXCW-O_cxD-i"
                     thumbnailUrl="/images/video-thumbnail.png"
