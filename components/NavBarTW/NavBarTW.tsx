@@ -8,7 +8,7 @@ export default function NavBarTW ()
 {
   return (
     <>
-      <div className="relative overflow-hidden pb-36">
+      <div className="relative overflow-hidden pb-26">
         <main className="mx-auto mt-16 max-w-7xl px-4 sm:mt-24 lg:mt-32">
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
