@@ -28,7 +28,7 @@ export default function NavBarTW ()
                 <Button
                   href="/signup"
                   as="a"
-                  className="relative z-10 py-2 bg-orange-600 hover:bg-blue-700 text-white font-medium text-2xl rounded-3xl w-full sm:w-auto px-4 sm:px-52"
+                  className="relative z-10 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-2xl rounded-3xl w-full sm:w-auto px-4 sm:px-52"
                 >
                   Free Account
                 </Button>

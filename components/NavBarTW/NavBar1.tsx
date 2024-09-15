@@ -88,7 +88,26 @@ export default function NavBar1 ()
   {
     try
     {
-      const response = await fetch( '/api/fetchUserProfile', { method: 'GET' } );
+      // Get the auth token from Supabase
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
+
+      // Check if the user is authenticated
+      if ( !token )
+      {
+        setUser( null );
+        setIsAuthenticated( false );
+        return null;
+      }
+
+      // Make the API call with the authorization header
+      const response = await fetch( '/api/fetchUserProfile', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${ token }`
+        }
+      } );
+
       if ( response.ok )
       {
         const userProfile = await response.json();
@@ -220,7 +239,7 @@ export default function NavBar1 ()
                   <Button
                     as='a'
                     href="/signup"
-                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-xl font-medium text-white shadow-sm bg-orange-600 hover:bg-blue-700 "
+                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-xl font-medium text-white shadow-sm bg-blue-600 hover:bg-blue-700 "
                   >
                     Start Free
                   </Button>
@@ -370,7 +389,7 @@ export default function NavBar1 ()
                     <Button
                       as='a'
                       href="/signup"
-                      className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-orange-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-orange-600"
+                      className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600"
                     >
                       Create Account
                     </Button>
@@ -379,7 +398,7 @@ export default function NavBar1 ()
                       <Button
                         as='a'
                         href="/login"
-                        className="ml-2 rounded-3xl  text-white bg-orange-700 hover:bg-orange-500">
+                        className="ml-2 rounded-3xl  text-white bg-blue-700 hover:bg-blue-500">
                         Sign in
                       </Button>
                     </p>
