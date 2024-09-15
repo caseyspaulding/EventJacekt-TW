@@ -18,7 +18,7 @@ export default function NavBarTW ()
               <h1>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
                   <span className="block underline-effect text-gray-900">Save Thousands on</span>
-                  <span className="block text-blue-600 animate-bounce">Event Management Software.</span>
+                  <span className="block text-blue-600 animate-bounce-once">Event Management Software.</span>
                 </span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
@@ -28,7 +28,7 @@ export default function NavBarTW ()
                 <Button
                   href="/signup"
                   as="a"
-                  className="relative z-10 py-2 bg-orange-500 hover:bg-orange-600 text-white text-xl rounded-3xl w-full sm:w-auto px-4 sm:px-52"
+                  className="relative z-10 py-2 bg-orange-600 hover:bg-orange-700 text-white font-medium text-2xl rounded-3xl w-full sm:w-auto px-4 sm:px-52"
                 >
                   Free Account
                 </Button>
