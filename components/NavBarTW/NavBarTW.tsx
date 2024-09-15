@@ -61,7 +61,7 @@ export default function NavBarTW ()
                   <Button
                     href="/signup"
                     as="a"
-                    className="relative z-10 py-2 bg-orange-500  hover:bg-green-600 text-white text-xl rounded-3xl 
+                    className="relative z-10 py-2 bg-orange-500  hover:bg-orange-600 text-white text-xl rounded-3xl 
                  w-full sm:w-auto px-4 sm:px-52"
                   >
                     Free Account <svg className="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
