@@ -164,7 +164,9 @@ export default function NavBar1 ()
         <Popover className="relative ">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 md:justify-start md:space-x-10 lg:px-4">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <Link href="https://www.eventjacket.com">
+              <Link
+                aria-details="EventJacket"
+                href="https://www.eventjacket.com">
                 <span className="sr-only">EventJacket</span>
                 <img
                   alt="Evenjacket logo"
@@ -174,7 +176,10 @@ export default function NavBar1 ()
                   className="h-8 w-auto sm:h-8"
                 />
               </Link>
-              <Link href="https://www.eventjacket.com">
+              <Link
+                aria-details="EventJacket link"
+
+                href="https://www.eventjacket.com">
                 <p className="ml-2 font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-700">
                   <span></span>
                 </p>
