@@ -47,30 +47,33 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 <link rel="manifest" href="/site.webmanifest" />
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
                 <link rel="canonical" href="https://www.eventjacket.com" />
+            
+                <link rel="preload" href="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" as="script"/>
             </head>
             <body className={ twMerge( 'bg-white dark:bg-gray-900' ) }>
                 {/* Include Google Analytics Script */ }
                 <Script async src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"></Script>
                 <Script id="google-analytics">
                     { `
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
-                        gtag('config', 'G-M6F4XVZM25');
-                    `}
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-M6F4XVZM25');
+        `}
                 </Script>
 
                 {/* Include additional scripts */ }
                 <Script src="https://accounts.google.com/gsi/client" defer></Script>
                 <Script src="https://connect.stripe.com/connect-js" defer></Script>
+
                 {/* Theme handler script */ }
                 <Script id="theme-handler" dangerouslySetInnerHTML={ {
                     __html: `
-                        (function() {
-                            const theme = localStorage.getItem('theme') || 'light';
-                            document.documentElement.classList.add(theme);
-                        })();
-                    `
+            (function() {
+                const theme = localStorage.getItem('theme') || 'light';
+                document.documentElement.classList.add(theme);
+            })();
+        `
                 } } />
 
                 <ClientProviders>
