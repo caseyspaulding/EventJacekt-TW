@@ -55,7 +55,7 @@ const EventsListComponent: React.FC<EventsListComponentProps> = ( { eventList } 
                 </div>
               </Link>
               <div className="px-6 py-4 bg-gray-100">
-                <p className="text-xs text-gray-500">
+                <p className="text-lg text-gray-800">
                   By { event.organizationName } on { event.createdAt ? new Date( event.createdAt ).toLocaleDateString() : 'N/A' }
                 </p>
               </div>
