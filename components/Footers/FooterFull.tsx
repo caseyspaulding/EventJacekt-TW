@@ -104,7 +104,7 @@ export default function FooterFull ()
             </p>
             <div className="flex space-x-6">
               { navigation.social.map( ( item ) => (
-                <a key={ item.name } href={ item.href } className=" text-zinc-50 hover:text-blue-400">
+                <a key={ item.name } href={ item.href } className=" text-zinc-50 hover:to-blue-300">
                   <span className="sr-only">{ item.name }</span>
                   <item.icon aria-hidden="true" className="h-6 w-6" />
                 </a>
@@ -125,7 +125,7 @@ export default function FooterFull ()
                     <dl>
                       <dt className="sr-only">Phone number</dt>
                       <dd>
-                        <a href="tel:+14073263692" className="text-blue-600 hover:underline">
+                        <a href="tel:+14073263692" className="text-white hover:underline">
                           +1 (407) 326-3692
                         </a>
                       </dd>

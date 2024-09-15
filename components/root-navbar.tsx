@@ -12,7 +12,7 @@ import Link from "next/link";
 export function RootNavbar() {
   return (
     <Navbar fluid rounded>
-      <NavbarBrand as={Link} href="/">
+      <NavbarBrand as={ Link } href="https://www.eventjacket.com">
         <img
           alt=""
           src="https://flowbite.com/docs/images/logo.svg"

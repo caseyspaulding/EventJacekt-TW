@@ -37,7 +37,7 @@ export default function Example() {
     return (
         <div className="bg-white">
             <main className="mx-auto w-full max-w-7xl px-6 pb-8 pt-10 sm:pb-14 lg:px-2">
-                <Link href="/">
+                <Link href="https://www.eventjacket.com">
                     <Image
                         height={40}
                         width={40}

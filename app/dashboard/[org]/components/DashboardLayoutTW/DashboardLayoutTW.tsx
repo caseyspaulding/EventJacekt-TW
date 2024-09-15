@@ -155,14 +155,14 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                 </div>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                   <div className="flex-shrink-0 flex items-center  px-4">
-                    <Link href="/">
+                    <Link href="https://www.eventjacket.com">
                       <img
                         className="h-8 w-auto"
                         src="/images/logo-icon-white.png"
                         alt="EventJacket"
                       />
                     </Link>
-                    <Link href="/">
+                    <Link href="https://www.eventjacket.com">
                       <span className="pl-2 font-medium text-white">
                         { orgName }
                       </span>
@@ -239,14 +239,14 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       <div className="hidden bg-gray-50  lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
         <div className="flex flex-col flex-grow bg-gradient-to-tr from-blue-800 via-blue-700 to-blue-600 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
-            <Link href="/">
+            <Link href="https://www.eventjacket.com">
               <img
                 className="h-8 w-auto"
                 src="/images/logo-icon-white.png"
                 alt="EventJacket"
               />
             </Link>
-            <Link href="/">
+            <Link href="https://www.eventjacket.com">
               <span className="pl-2 font-normal text-white">
                 { orgName }
               </span>
