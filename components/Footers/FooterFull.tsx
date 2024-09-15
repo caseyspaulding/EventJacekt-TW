@@ -111,20 +111,27 @@ export default function FooterFull ()
               ) ) }
             </div>
             <div className="text-sm text-white mt-4 md:mt-0 inline-flex items-center">
-              <div> 
+              <div>
                 <p>Proud Veteran-Owned Business <br />
                   <img
                     src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
-                    className="h-4 w-6 "
-                    alt="US Flag"
+                    className="h-4 w-6"
+                    alt="Flag of the United States"
                   />
                 </p>
-                <br />
-                Kissimmee, FL 34747
-                <div className="mt-1">
-                  <dt className="sr-only">Phone number</dt>
-                  <dd>+1 (407) 326-3692</dd>
-                </div>
+                <address className="not-italic mt-2">
+                  Kissimmee, FL 34747
+                  <div className="mt-1">
+                    <dl>
+                      <dt className="sr-only">Phone number</dt>
+                      <dd>
+                        <a href="tel:+14073263692" className="text-blue-600 hover:underline">
+                          +1 (407) 326-3692
+                        </a>
+                      </dd>
+                    </dl>
+                  </div>
+                </address>
               </div>
              
            
