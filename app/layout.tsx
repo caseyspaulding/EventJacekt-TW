@@ -29,12 +29,6 @@ export const metadata = {
     },
 };
 
-// Load the fonts with specific weights
-const poppins = Poppins( {
-    weight: [ '400', '700' ], // Regular and Bold for headings
-    subsets: [ 'latin' ],
-    display: 'swap',
-} );
 
 const spaceGrotesk = Space_Grotesk( {
     weight: [ '400' ], // Regular weight
@@ -67,9 +61,8 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 </Script>
 
                 {/* Include additional scripts */ }
-                <Script src="https://accounts.google.com/gsi/client" async></Script>
-                <Script src="https://connect.stripe.com/connect-js" async></Script>
-
+                <Script src="https://accounts.google.com/gsi/client" defer></Script>
+                <Script src="https://connect.stripe.com/connect-js" defer></Script>
                 {/* Theme handler script */ }
                 <Script id="theme-handler" dangerouslySetInnerHTML={ {
                     __html: `
