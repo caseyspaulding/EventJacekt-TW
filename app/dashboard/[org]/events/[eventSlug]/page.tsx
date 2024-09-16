@@ -4,6 +4,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { getEventIdBySlug } from '../../../../actions/getEventIdBySlug';
 import { useUser } from '@/contexts/UserContext';
+import LogoSpinner from '@/components/Loaders/LogoSpinner';
 
 const CreateTicketsPage = () =>
 {
@@ -36,7 +37,7 @@ const CreateTicketsPage = () =>
 
     if ( loading )
     {
-        return <p className="text-gray-600">Loading...</p>;
+        return <p className="text-gray-600"><LogoSpinner/></p>;
     }
 
     if ( error )

@@ -85,7 +85,16 @@ export default function EventsPage ()
 
   if ( loading )
   {
-    return <p> <LogoSpinner/>  </p>;
+    return (
+      <div style={ {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh' // Makes the spinner vertically centered
+      } }>
+        <LogoSpinner />
+      </div>
+    );
   }
 
   if ( error )
