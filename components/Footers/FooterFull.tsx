@@ -1,5 +1,6 @@
 
 import type { JSX, SVGProps } from "react"
+import Image from "next/image"  
 
 const navigation = {
   solutions: [
@@ -95,11 +96,12 @@ export default function FooterFull ()
 
             <img
               alt="EventJacket"
+            
 
-              src="/images/logo-full.png"
-              className="h-8" />
+              src="/images/logo-full-white.svg"
+              className="h-14" />
 
-            <p className="text-sm leading-6 text-slate-100">
+            <p className=" pl-1 text-sm leading-6 text-slate-100">
               All in one event management software
             </p>
             <div className="flex space-x-6">
