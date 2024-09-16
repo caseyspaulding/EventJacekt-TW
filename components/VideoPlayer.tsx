@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type VideoPlayerProps = {
   videoUrl: string; // URL of the video in the Supabase bucket
@@ -11,11 +11,24 @@ type VideoPlayerProps = {
 export default function VideoPlayer ( { videoUrl, thumbnailUrl }: VideoPlayerProps )
 {
   const [ isVideoLoaded, setIsVideoLoaded ] = useState( false );
+  const [ videoPreloaded, setVideoPreloaded ] = useState( false );
 
   const handleClick = () =>
   {
     setIsVideoLoaded( true );
   };
+
+  // Preload the video in the background
+  useEffect( () =>
+  {
+    if ( !isVideoLoaded )
+    {
+      const video = document.createElement( 'video' );
+      video.src = videoUrl;
+      video.preload = 'auto';
+      video.oncanplaythrough = () => setVideoPreloaded( true );
+    }
+  }, [ isVideoLoaded, videoUrl ] );
 
   return (
     <div className="relative w-full rounded-2xl" style={ { aspectRatio: '16/9' } }>
@@ -36,11 +49,10 @@ export default function VideoPlayer ( { videoUrl, thumbnailUrl }: VideoPlayerPro
           />
           <span aria-hidden="true" className="absolute inset-0 flex h-full w-full items-center justify-center">
             <svg viewBox="0 0 84 84" className="h-20 w-20">
-              <circle r={ 42 } cx={ 42 } cy={ 42 } className="text-blue-500" fill="currentColor" opacity="0.9" />
+              <circle r={ 42 } cx={ 42 } cy={ 42 } fill="blue" opacity="0.9" />
               <path
                 d="M55.5039 40.3359L37.1094 28.0729C35.7803 27.1869 34 28.1396 34 29.737V54.263C34 55.8604 35.7803 56.8131 37.1094 55.9271L55.5038 43.6641C56.6913 42.8725 56.6913 41.1275 55.5039 40.3359Z"
-                className="text-white"
-                fill="currentColor"
+                fill="white"
               />
             </svg>
           </span>
