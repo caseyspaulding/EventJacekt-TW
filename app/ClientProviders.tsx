@@ -11,6 +11,7 @@ const DynamicProgressBar = dynamic(
   { ssr: false }
 );
 
+import { UserProvider } from '@/contexts/UserContext';
 
 export default function ClientProviders ( { children }: { children: React.ReactNode } )
 {
@@ -18,9 +19,9 @@ export default function ClientProviders ( { children }: { children: React.ReactN
     <NextUIProvider>
       <DynamicToaster />
      
-      
+        <UserProvider initialUser={ null }>
           { children }
-    
+        </UserProvider>
    
       <DynamicProgressBar
         height="3px"
