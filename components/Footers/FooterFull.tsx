@@ -85,7 +85,7 @@ export default function FooterFull ()
 {
   const currentYear = new Date().getFullYear(); // Get the current year
   return (
-    <><footer className='bg-[#1b2341] ' aria-labelledby="footer-heading" >
+    <><footer className='bg-[#1e3a8a] ' aria-labelledby="footer-heading" >
 
       <h2 id="footer-heading" className="sr-only">
         Footer
