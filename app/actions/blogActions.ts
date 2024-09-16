@@ -7,17 +7,35 @@ import { eq } from 'drizzle-orm';
 import { createClient } from '../../utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 
-export async function getBlogPostBySlug(slug: string) {
-    try {
+export async function getBlogPostBySlug ( slug: string )
+{
+    try
+    {
         // Decode the slug and replace %20 with hyphens
-        const decodedSlug = decodeURIComponent(slug).replace(/%20/g, '-');
-        console.log('Fetching blog post with processed slug:', decodedSlug);
+        const decodedSlug = decodeURIComponent( slug ).replace( /%20/g, '-' );
+        console.log( 'Fetching blog post with processed slug:', decodedSlug );
 
-        const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, decodedSlug));
-        console.log('Fetched post:', post);
+        const [ post ] = await db
+            .select( {
+                title: blogPosts.title,
+                content: blogPosts.content,
+                excerpt: blogPosts.excerpt,
+                author: blogPosts.author,
+                createdAt: blogPosts.createdAt,
+                tags: blogPosts.tags,
+                metaTitle: blogPosts.metaTitle,
+                metaDescription: blogPosts.metaDescription,
+                featuredImage: blogPosts.featuredImage,
+                isPublished: blogPosts.isPublished
+            } )
+            .from( blogPosts )
+            .where( eq( blogPosts.slug, decodedSlug ) );
+
+        console.log( 'Fetched post:', post );
         return post;
-    } catch (error) {
-        console.error('Error fetching blog post:', error);
+    } catch ( error )
+    {
+        console.error( 'Error fetching blog post:', error );
         return null;
     }
 }
