@@ -52,10 +52,11 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
     return (
         <>
             <NavBar1 />
+            <div className='bg-gray-100'>
             <article className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
                 {/* Featured Image */ }
                 { post.featuredImage && (
-                    <div className="mb-8 w-full rounded-lg overflow-hidden">
+                    <div className="mb-8 w-full rounded-2xl overflow-hidden">
                         <img
                             src={ post.featuredImage }
                             alt={ post.title }
@@ -63,21 +64,39 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                         />
                     </div>
                 ) }
-                <h1 className="mb-4 text-4xl font-bold text-gray-800">{ post.title }</h1>
-                <p className="mb-8 text-sm text-gray-500">
-                    By { post.author } on { new Date( post.createdAt ).toLocaleDateString() }
-                </p>
-                <div
-                    className="prose prose-lg max-w-none"
-                    dangerouslySetInnerHTML={ { __html: sanitizedContent } }
-                />
-                <div className="mt-8">
-                    <p className="text-sm text-gray-500">
-                        Tags: { post.tags ? post.tags.join( ', ' ) : 'No tags' }
-                    </p>
+
+                {/* Content and Sidebar Container */ }
+      
+                <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 bg-white rounded-2xl p-4 ">
+                    {/* Main Content */ }
+                    <div className="xl:col-span-3">
+                        <h1 className="mb-4 text-4xl font-bold text-gray-800">{ post.title }</h1>
+                        <p className="mb-8 text-sm text-gray-500">
+                            By { post.author } on { new Date( post.createdAt ).toLocaleDateString() }
+                        </p>
+                        <div
+                            className="prose prose-lg max-w-none"
+                            dangerouslySetInnerHTML={ { __html: sanitizedContent } }
+                        />
+                        <div className="mt-8">
+                            <p className="text-sm text-gray-500">
+                                Tags: { post.tags ? post.tags.join( ', ' ) : 'No tags' }
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Sticky Aside */ }
+                    <aside className="hidden xl:block xl:col-span-1 space-y-6 xl:space-y-10">
+                        <div className="sticky top-20">
+                           
+                          <p>Aside is here</p>
+                        </div>
+                    </aside>
                 </div>
             </article>
+        
             <FooterFull />
+        </div >
         </>
     );
 }
