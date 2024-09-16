@@ -85,13 +85,27 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                         </div>
                     </div>
 
-                    {/* Sticky Aside */ }
-                    <aside className="hidden xl:block xl:col-span-1 space-y-6 xl:space-y-10">
-                        <div className="sticky top-20">
-                           
-                          <p>Aside is here</p>
-                        </div>
-                    </aside>
+                        {/* Sticky Aside */ }
+                        <aside className="hidden xl:block xl:col-span-1 space-y-6 xl:space-y-10">
+                            <div className="sticky top-20 space-y-6">
+                                {/* Small Ad */ }
+                                <div className="p-6 bg-blue-100 rounded-lg shadow-md text-center">
+                                    <h3 className="text-lg font-bold text-blue-900 mb-2">Create an Account for Free!</h3>
+                                    <p className="text-sm text-gray-700 mb-4">Join now and get access to exclusive content, updates, and more.</p>
+                                    <a
+                                        href="/signup" // Replace this with your signup page URL
+                                        className="inline-block px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                                    >
+                                        Sign Up Now
+                                    </a>
+                                </div>
+
+                                {/* Your existing aside content */ }
+                                <div>
+                                    
+                                </div>
+                            </div>
+                        </aside>
                 </div>
             </article>
         
