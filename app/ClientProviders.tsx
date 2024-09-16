@@ -5,6 +5,7 @@ import { NextUIProvider } from '@nextui-org/react';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 
+// Dynamically import components for better performance
 const DynamicToaster = dynamic( () => import( 'react-hot-toast' ).then( ( mod ) => mod.Toaster ), { ssr: false } );
 const DynamicProgressBar = dynamic( () => import( 'next-nprogress-bar' ).then( ( mod ) => mod.AppProgressBar ), { ssr: false } );
 
@@ -14,22 +15,24 @@ export default function ClientProviders ( { children }: { children: React.ReactN
 {
   return (
     <NextUIProvider>
-      {/* Google Analytics Script */ }
-      <Script id="google-analytics" strategy="afterInteractive">
+      {/* Google Analytics Script - Optimized */ }
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics-inline" strategy="afterInteractive">
         { `
-                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25';f.parentNode.insertBefore(j,f);
-                    })(window,document,'script','dataLayer','G-M6F4XVZM25');
-                    
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'G-M6F4XVZM25');
-                `}
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-M6F4XVZM25', {
+            'anonymize_ip': true, // Optional: anonymizes user IP for privacy
+            'send_page_view': false // Optional: control when to send page views
+          });
+        `}
       </Script>
 
+      {/* Load third-party components after page is interactive */ }
       <DynamicToaster />
       <UserProvider initialUser={ null }>
         { children }

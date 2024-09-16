@@ -4,7 +4,6 @@ import './globals.css';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-
 // Dynamically import ClientProviders to reduce main thread work
 const ClientProviders = dynamic( () => import( './ClientProviders' ), {
     ssr: false,
@@ -50,11 +49,19 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 <link rel="manifest" href="/site.webmanifest" />
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
                 <link rel="canonical" href="https://www.eventjacket.com" />
-     
+
+                {/* Preconnect to important external resources */ }
+                <link rel="preconnect" href="https://www.googletagmanager.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com"  />
+
+                {/* Preload critical fonts */ }
+                <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional" as="style" />
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional" />
+
+                {/* Preload above-the-fold image */ }
+                <link rel="preload" as="image" href="/images/video-thumbnail.jpg" />
             </Head>
             <body>
-                {/* Include Google Analytics Script with lazy loading */ }
-             
                 <ClientProviders>
                     { children }
                 </ClientProviders>
