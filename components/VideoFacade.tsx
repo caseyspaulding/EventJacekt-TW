@@ -18,23 +18,22 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl }: VideoFacadePro
   };
 
   return (
-    <div className="relative mx-auto w-full rounded-2xl  lg:max-w-full">
+    <div className="relative w-full rounded-2xl" style={ { aspectRatio: '16/9' } }>
       { !isVideoLoaded ? (
         <button
           type="button"
           onClick={ handleClick }
-          className="relative block w-full overflow-hidden rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="relative block w-full h-full overflow-hidden rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          <div className="relative w-full h-[215px] sm:h-[320px] md:h-[400px] lg:h-[342px]"> {/* Responsive height */ }
-            <Image
-              src={ thumbnailUrl }
-              alt="Video thumbnail"
-              layout="fill" // Makes the image fill the container
-              objectFit="contain" // Ensure the entire image fits within the container
-              className="rounded-2xl"
-              priority
-            />
-          </div>
+          <Image
+            src={ thumbnailUrl }
+            alt="Video thumbnail"
+            layout="fill"
+            objectFit="cover"
+            className="rounded-2xl"
+            priority
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+          />
           <span aria-hidden="true" className="absolute inset-0 flex h-full w-full items-center justify-center">
             <svg fill="currentColor" viewBox="0 0 84 84" className="h-20 w-20 text-blue-500">
               <circle r={ 42 } cx={ 42 } cy={ 42 } fill="white" opacity="0.9" />
@@ -44,14 +43,13 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl }: VideoFacadePro
         </button>
       ) : (
         <iframe
-          width="100%"
-          height="450px"
+          className="absolute top-0 left-0 w-full h-full rounded-2xl"
           src={ videoUrl }
           title="Video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[450px] rounded-2xl" // Responsive height
+          loading="lazy"
         ></iframe>
       ) }
     </div>
