@@ -1,8 +1,12 @@
 import { Button } from '@nextui-org/button';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 
-const VideoFacade = dynamic( () => import( '../VideoFacade' ), { ssr: false } );
+const VideoFacade = dynamic( () => import( '../VideoFacade' ), {
+  ssr: false,
+  loading: () => <div className="spinner">Loading...</div>,
+} );
 
 export default function NavBarTW ()
 {
@@ -18,20 +22,21 @@ export default function NavBarTW ()
               <h1>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
                   <span className="block underline-effect text-gray-900">Save Thousands on</span>
-                  <span className="block text-blue-600 animate-bounce-once">Event Management Software.</span>
+                  <span className="block text-blue-600">Event Management Software.</span>
                 </span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                 EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank.
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
-                <Button
-                  href="/signup"
-                  as="a"
-                  className="relative z-10 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-2xl rounded-3xl w-full sm:w-auto px-4 sm:px-52"
-                >
-                  Free Account
-                </Button>
+                <Link href="/signup" passHref>
+                  <button
+                    type="button"
+                    className="relative z-10 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-2xl rounded-3xl w-full sm:w-auto px-8 sm:px-12 lg:px-44 flex justify-center items-center"
+                  >
+                    Free Account
+                  </button>
+                </Link>
                 <p className="mt-4 text-sm text-gray-500">No credit card required. Start today!</p>
               </div>
             </div>
