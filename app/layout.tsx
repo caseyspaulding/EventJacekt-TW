@@ -1,11 +1,14 @@
-// app/layout.tsx
 import type { PropsWithChildren } from 'react';
-import { Space_Grotesk } from 'next/font/google';  // Import both fonts
-
+import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
-import ClientProviders from './ClientProviders';
-import Script from 'next/script'; // Import Script from next/script
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import Script from 'next/script';
 
+// Dynamically import ClientProviders to reduce main thread work
+const ClientProviders = dynamic( () => import( './ClientProviders' ), {
+    ssr: false,
+} );
 
 export const metadata = {
     title: 'EventJacket - Nonprofit CRM',
@@ -30,43 +33,37 @@ export const metadata = {
     },
 };
 
-
 const spaceGrotesk = Space_Grotesk( {
-    weight: [ '400' ], // Regular weight
+    weight: [ '400' ],
     subsets: [ 'latin' ],
-    display: 'swap',
+    display: 'optional', // Optimized font loading
 } );
 
 export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (
-        <html lang="en" className={ `${ spaceGrotesk.className }` }>
-            <head>
+        <html lang="en" className={ spaceGrotesk.className }>
+            <Head>
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
                 <link rel="manifest" href="/site.webmanifest" />
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
                 <link rel="canonical" href="https://www.eventjacket.com" />
-            
-                <link rel="preload" href="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" as="script"/>
-            </head>
+                <link rel="preconnect" href="https://www.googletagmanager.com" />
+                <link rel="preload" href="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" as="script" />
+            </Head>
             <body>
-                {/* Include Google Analytics Script */ }
-                <Script src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" strategy="afterInteractive" />
-                <Script id="google-analytics">
+                {/* Include Google Analytics Script with lazy loading */ }
+                <Script src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" strategy="lazyOnload" />
+                <Script id="google-analytics" strategy="lazyOnload">
                     { `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-M6F4XVZM25');
-        `}
+          `}
                 </Script>
-
-              
-
-              
-              
                 <ClientProviders>
                     { children }
                 </ClientProviders>
