@@ -18,6 +18,8 @@ import { ImageUploadVenue } from './ImageUploadVenue';
 import dynamic from 'next/dynamic';
 import InputFieldEJ from '@/components/Input/InputEJ';
 import DateTimeFieldEJ from '@/components/Input/DateTimeEJ';
+import Head from 'next/head';
+import Script from 'next/script';
 
 const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
     ssr: false, // This prevents server-side rendering of the component
@@ -258,7 +260,13 @@ const CreateEventPage = () =>
 
     const mapAddress = `${ address }, ${ city }, ${ state }, ${ zipCode }` || '';
 
-    return (
+    return ( <>
+        <Head>
+            <title>Create Event | Dashboard | EventJacket</title>
+            <meta name="description" content="Create a new event on EventJacket" />
+            <Script src="https://accounts.google.com/gsi/client" defer></Script>
+            <Script src="https://connect.stripe.com/connect-js" defer></Script>
+        </Head>
         <div className="my-4 max-w-5xl p-6 rounded-2xl bg-white shadow-md">
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
 
@@ -640,6 +648,7 @@ const CreateEventPage = () =>
                 slug={ slug as string }
             />
         </div>
+    </>
     );
 };
 

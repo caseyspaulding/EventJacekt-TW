@@ -15,6 +15,8 @@ import StickyFooterBuyTickets from "@/components/EventHomeOne/StickeyFooterBuyTi
 import EventDetails from "@/components/EventHomeOne/EventDetails";
 import '@/styles/gradientHeader.css';
 import FooterTW from "@/components/Footers/FooterTW";
+import Script from "next/script";
+import Head from "next/head";
 
 interface Params
 {
@@ -191,7 +193,9 @@ export default async function EventPage ( { params }: { params: Params } )
     const imageUrl = absoluteUrl( eventData.featuredImage || '/images/event-default.jpg' );
 
     return (
-        <>
+        <><Head>
+            <Script src="https://accounts.google.com/gsi/client" defer></Script>
+        </Head >
             <JsonLd<SchemaEvent>
                 item={ {
                     "@context": "https://schema.org",

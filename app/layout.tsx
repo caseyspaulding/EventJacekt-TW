@@ -63,20 +63,10 @@ export default function RootLayout ( { children }: PropsWithChildren )
         `}
                 </Script>
 
-                {/* Include additional scripts */ }
-             
-                <Script src="https://connect.stripe.com/connect-js" defer></Script>
+              
 
-                {/* Theme handler script */ }
-                <Script id="theme-handler" dangerouslySetInnerHTML={ {
-                    __html: `
-            (function() {
-                const theme = localStorage.getItem('theme') || 'light';
-                document.documentElement.classList.add(theme);
-            })();
-        `
-                } } />
-
+              
+              
                 <ClientProviders>
                     { children }
                 </ClientProviders>
