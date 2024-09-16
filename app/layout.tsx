@@ -1,16 +1,13 @@
+// app/layout.tsx
 import type { PropsWithChildren } from 'react';
-import { Space_Grotesk } from 'next/font/google';
+import { Space_Grotesk } from 'next/font/google';  // Import both fonts
+import { twMerge } from 'tailwind-merge';
 import './globals.css';
-import dynamic from 'next/dynamic';
-import Head from 'next/head';
-import Script from 'next/script';
-
-const ClientProviders = dynamic( () => import( './ClientProviders' ), {
-    ssr: false,
-} );
+import ClientProviders from './ClientProviders';
+import Script from 'next/script'; // Import Script from next/script
 
 export const metadata = {
-    title: 'EventJacket - Event Management CRM',
+    title: 'EventJacket - Nonprofit CRM',
     description: 'EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank.',
     openGraph: {
         title: 'EventJacket - Event Management Software',
@@ -32,64 +29,57 @@ export const metadata = {
     },
 };
 
+
 const spaceGrotesk = Space_Grotesk( {
-    weight: [ '400' ],
+    weight: [ '400' ], // Regular weight
     subsets: [ 'latin' ],
-    display: 'optional',
+    display: 'swap',
 } );
 
-export default function RootLayout({ children }: PropsWithChildren) {
-  return (
-    <html lang="en" className={spaceGrotesk.className}>
-          <Head>
-              <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-              <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-              <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-              <link rel="manifest" href="/site.webmanifest" />
-              <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-              <link rel="canonical" href="https://www.eventjacket.com" />
-
-              {/* Preload critical assets */ }
-              <link rel="preload" href="/images/video-thumbnail.webp" as="image" />
-
-              {/* Preconnect to external resources */ }
-              <link rel="preconnect" href="https://www.googletagmanager.com" />
-              <link rel="preconnect" href="https://fonts.gstatic.com" />
-
-              {/* Preload and load fonts asynchronously */ }
-              <link
-                  rel="preload"
-                  href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=swap"
-                  as="style"
-                  
-              />
-              <noscript>
-                  <link
-                      rel="stylesheet"
-                      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=swap"
-                  />
-              </noscript>
-          </Head>
-      <body>
-        <ClientProviders>{children}</ClientProviders>
-
-        {/* Non-essential Scripts: Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"
-          strategy="lazyOnload"
-        />
-        <Script id="google-analytics-inline" strategy="lazyOnload">
-          {`
+export default function RootLayout ( { children }: PropsWithChildren )
+{
+    return (
+        <html lang="en" className={ `${ spaceGrotesk.className }` }>
+            <head>
+                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+                <link rel="manifest" href="/site.webmanifest" />
+                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+                <link rel="canonical" href="https://www.eventjacket.com" />
+            
+                <link rel="preload" href="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" as="script"/>
+            </head>
+            <body className={ twMerge( 'bg-white dark:bg-gray-900' ) }>
+                {/* Include Google Analytics Script */ }
+                <Script src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" strategy="afterInteractive" />
+                <Script id="google-analytics">
+                    { `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-M6F4XVZM25', {
-              'anonymize_ip': true,
-              'send_page_view': false
-            });
-          `}
-        </Script>
-      </body>
-    </html>
-  );
+            gtag('config', 'G-M6F4XVZM25');
+        `}
+                </Script>
+
+                {/* Include additional scripts */ }
+                <Script src="https://accounts.google.com/gsi/client" defer></Script>
+                <Script src="https://connect.stripe.com/connect-js" defer></Script>
+
+                {/* Theme handler script */ }
+                <Script id="theme-handler" dangerouslySetInnerHTML={ {
+                    __html: `
+            (function() {
+                const theme = localStorage.getItem('theme') || 'light';
+                document.documentElement.classList.add(theme);
+            })();
+        `
+                } } />
+
+                <ClientProviders>
+                    { children }
+                </ClientProviders>
+            </body>
+        </html>
+    );
 }
