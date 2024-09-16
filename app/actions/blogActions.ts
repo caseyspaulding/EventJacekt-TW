@@ -91,32 +91,40 @@ function generateSlug(title: string): string {
         .substring(0, 255); // Limit slug length to 255 characters
 }
 
-export async function updateBlogPost(id: string, formData: FormData) {
+export async function updateBlogPost ( id: string, formData: FormData )
+{
     const supabase = createClient();
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, error } = await supabase
-        .from('blog_posts')
-        .update({
-            title: formData.get('title'),
-            content: formData.get('content'),
-            excerpt: formData.get('excerpt'),
-            author: formData.get('author'),
+        .from( 'blog_posts' )
+        .update( {
+            title: formData.get( 'title' ),
+            content: formData.get( 'content' ),
+            excerpt: formData.get( 'excerpt' ),
+            author: formData.get( 'author' ),
             tags: formData
-                .get('tags')
+                .get( 'tags' )
                 ?.toString()
-                .split(',')
-                .map((tag) => tag.trim()),
-            slug: formData.get('slug'),
-            updated_at: new Date().toISOString()
-        })
-        .eq('id', id);
+                .split( ',' )
+                .map( ( tag ) => tag.trim() ),
+            slug: formData.get( 'slug' ),
+            meta_title: formData.get( 'metaTitle' ),
+            meta_description: formData.get( 'metaDescription' ),
+            is_published: formData.get( 'isPublished' ) === 'true',
+            featured_image: formData.get( 'featuredImage' ),
+            updated_at: new Date().toISOString(),
+        } )
+        .eq( 'id', id );
 
-    if (error) {
+    if ( error )
+    {
         return { success: false, message: 'Failed to update the blog post' };
     }
 
     return { success: true, message: 'Blog post updated successfully' };
 }
+
 
 export async function deletePost(postId: number) {
     const supabase = createClient();

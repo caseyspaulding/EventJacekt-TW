@@ -2,38 +2,41 @@
 
 import React, { useEffect, useState } from 'react';
 import RichTextEditor from './RichTextEditor';
-
 import { createBlogPost } from '../app/actions/blogActions';
 import { createClient } from '@/utils/supabase/client';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import type { User } from '@supabase/supabase-js'; // Import the User type
+import type { User } from '@supabase/supabase-js';
 import { Button } from '@nextui-org/button';
 
 const BlogPostForm: React.FC = () =>
 {
   const router = useRouter();
   const supabase = createClient();
-  const [ user, setUser ] = useState<User | null>( null ); // Allow both User and null types
+  const [ user, setUser ] = useState<User | null>( null );
   const [ title, setTitle ] = useState( '' );
   const [ content, setContent ] = useState( '' );
   const [ excerpt, setExcerpt ] = useState( '' );
   const [ author, setAuthor ] = useState( '' );
   const [ tags, setTags ] = useState( '' );
   const [ slug, setSlug ] = useState( '' );
+  const [ metaTitle, setMetaTitle ] = useState( '' );
+  const [ metaDescription, setMetaDescription ] = useState( '' );
+  const [ isPublished, setIsPublished ] = useState( false );
   const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
+
   useEffect( () =>
   {
     const checkUser = async () =>
     {
       const supabase = createClient();
       const {
-        data: { user }
+        data: { user },
       } = await supabase.auth.getUser();
 
       // Authorization check
       if ( user?.email !== 'casey.spaulding@gmail.com' )
-      { // Replace with your email
+      {
         toast.error( 'You do not have access to this page.' );
         router.push( '/' );
         return;
@@ -45,10 +48,6 @@ const BlogPostForm: React.FC = () =>
     checkUser();
   }, [ router, supabase ] );
 
-
- 
-
-
   const handleImageUpload = async ( file: File | null ) =>
   {
     if ( !file )
@@ -57,8 +56,9 @@ const BlogPostForm: React.FC = () =>
       return null;
     }
 
-    const { error } = await createClient().storage
-      .from( 'blogimages' ) // Replace with your bucket name
+    const { error } = await createClient()
+      .storage
+      .from( 'blogimages' )
       .upload( `public/${ file.name }`, file, {
         cacheControl: '3600',
         upsert: false,
@@ -70,26 +70,24 @@ const BlogPostForm: React.FC = () =>
       return null;
     }
 
-    const { data: publicUrlData } = createClient().storage
+    const { data: publicUrlData } = createClient()
+      .storage
       .from( 'blogimages' )
       .getPublicUrl( `public/${ file.name }` );
 
     return publicUrlData?.publicUrl || '';
   };
 
-
   const handleSubmit = async ( e: React.FormEvent ) =>
   {
     e.preventDefault();
 
-    // Check if a file is selected
     if ( !featuredImage )
     {
       toast.error( 'Please select a featured image.' );
       return;
     }
 
-    // Proceed with uploading the image and creating the blog post
     const imageUrl = await handleImageUpload( featuredImage );
     if ( !imageUrl )
     {
@@ -97,7 +95,6 @@ const BlogPostForm: React.FC = () =>
       return;
     }
 
-    // Create a FormData object
     const formData = new FormData();
     formData.append( 'title', title );
     formData.append( 'content', content );
@@ -105,37 +102,41 @@ const BlogPostForm: React.FC = () =>
     formData.append( 'author', author );
     formData.append( 'tags', tags );
     formData.append( 'slug', slug );
-    formData.append( 'featuredImage', imageUrl ); // Include the image URL
+    formData.append( 'metaTitle', metaTitle );
+    formData.append( 'metaDescription', metaDescription );
+    formData.append( 'isPublished', isPublished.toString() );
+    formData.append( 'featuredImage', imageUrl );
 
     const response = await createBlogPost( formData );
 
     if ( response.success )
     {
-      // Show success toast notification
       toast.success( response.message );
-
-      // Clear the form after successful submission
       setTitle( '' );
       setContent( '' );
       setExcerpt( '' );
       setAuthor( '' );
       setTags( '' );
       setSlug( '' );
+      setMetaTitle( '' );
+      setMetaDescription( '' );
+      setIsPublished( false );
       setFeaturedImage( null );
     } else
     {
-      // Show error toast notification
       toast.error( response.message );
     }
   };
 
   if ( !user )
   {
-    return <div>Loading...</div>; // Show a loading state while checking user
+    return <div>Loading...</div>;
   }
 
+
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className=" bg-gray-100 rounded-2xl p-5">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 p-5 py-12 bg-white rounded-2xl">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Create New Blog Post</h1>
       <form onSubmit={ handleSubmit } className="space-y-6">
         <div>
@@ -176,7 +177,41 @@ const BlogPostForm: React.FC = () =>
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
+        {/* New Fields */ }
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Meta Title</label>
+          <input
+            name="metaTitle"
+            type="text"
+            value={ metaTitle }
+            onChange={ ( e ) => setMetaTitle( e.target.value ) }
+            placeholder="Meta Title"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
 
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Meta Description</label>
+          <textarea
+            name="metaDescription"
+            value={ metaDescription }
+            onChange={ ( e ) => setMetaDescription( e.target.value ) }
+            placeholder="Meta Description"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+
+       
+        <div className="flex items-center">
+          <input
+            name="isPublished"
+            type="checkbox"
+            checked={ isPublished }
+            onChange={ ( e ) => setIsPublished( e.target.checked ) }
+            className="h-4 w-4 text-blue-600 border-gray-300 rounded"
+          />
+          <label className="ml-2 block text-sm text-gray-700">Publish</label>
+        </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Excerpt
@@ -233,7 +268,8 @@ const BlogPostForm: React.FC = () =>
           </Button>
         </div>
       </form>
-    </div>
+      </div>
+      </div>
   );
 };
 

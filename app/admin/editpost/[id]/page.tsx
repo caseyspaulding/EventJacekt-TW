@@ -119,7 +119,8 @@ export default function EditPostPage() {
     }
 
     return (
-        <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className=" bg-gray-100 rounded-2xl p-5">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 p-5 py-12 bg-white rounded-2xl">
             <h1 className="mb-8 text-3xl font-bold text-gray-800">Edit Blog Post</h1>
             <form onSubmit={handleUpdate} className="space-y-6">
                 <div>
@@ -246,6 +247,7 @@ export default function EditPostPage() {
                     </Button>
                 </div>
             </form>
-        </div>
+            </div>
+            </div>
     );
 }
