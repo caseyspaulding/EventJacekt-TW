@@ -3,7 +3,6 @@ import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Script from 'next/script';
 
 const ClientProviders = dynamic( () => import( './ClientProviders' ), {
     ssr: false,
@@ -49,38 +48,33 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 <link rel="manifest" href="/site.webmanifest" />
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
                 <link rel="canonical" href="https://www.eventjacket.com" />
-                <link rel="preload" href="images/video-thumbnail.webp" as="image" />
+
+                {/* Preconnect to important external resources */ }
                 <link rel="preconnect" href="https://www.googletagmanager.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+                {/* Preload critical fonts */ }
                 <link
                     rel="preload"
                     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
                     as="style"
+                    onLoad={ ( e ) =>
+                    {
+                        ( e.target as HTMLLinkElement ).rel = 'stylesheet';
+                    } }
                 />
-                <link
-                    rel="stylesheet"
-                    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
-                />
+                <noscript>
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
+                        rel="stylesheet"
+                    />
+                </noscript>
+
+                {/* Preload above-the-fold image */ }
+                <link rel="preload" as="image" href="/images/video-thumbnail.webp" />
             </Head>
             <body>
                 <ClientProviders>{ children }</ClientProviders>
-
-                {/* Non-essential Scripts: Google Analytics */ }
-                <Script
-                    src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"
-                    strategy="lazyOnload"
-                />
-                <Script id="google-analytics-inline" strategy="lazyOnload">
-                    { `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-M6F4XVZM25', {
-              'anonymize_ip': true,
-              'send_page_view': false
-            });
-          `}
-                </Script>
             </body>
         </html>
     );

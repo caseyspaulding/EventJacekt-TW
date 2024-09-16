@@ -16,7 +16,7 @@ export default function ClientProviders ( { children }: { children: React.ReactN
     <DynamicNextUIProvider>
       {/* Google Analytics Script - Optimized */ }
       <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"
+        async src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"
         strategy="lazyOnload"
       />
       <Script id="google-analytics-inline" strategy="lazyOnload">
