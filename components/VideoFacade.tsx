@@ -32,6 +32,7 @@ export default function VideoFacade ( { videoUrl, thumbnailUrl }: VideoFacadePro
               layout="fill" // Makes the image fill the container
               objectFit="contain" // Ensure the entire image fits within the container
               className="rounded-2xl"
+              priority
             />
           </div>
           <span aria-hidden="true" className="absolute inset-0 flex h-full w-full items-center justify-center">

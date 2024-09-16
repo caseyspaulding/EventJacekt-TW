@@ -6,8 +6,10 @@ export default {
     content: [
         './app/**/*.{ts,tsx,mdx}',
         './components/**/*.{ts,tsx,mdx}',
+        './pages/**/*.{ts,tsx,mdx}', // Include pages folder if exists
         './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
-        flowbite.content(),
+        './node_modules/flowbite-react/**/*.{js,ts,jsx,tsx}', // Include Flowbite
+        flowbite.content(), // Flowbite's content paths
     ],
     theme: {
         extend: {
@@ -33,6 +35,9 @@ export default {
             },
         },
     },
-    plugins: [ nextui() ],
+    plugins: [
+        nextui(),
+       
+    ],
     darkMode: 'class', // Set dark mode
 } satisfies Config;
