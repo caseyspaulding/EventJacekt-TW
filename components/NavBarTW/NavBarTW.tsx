@@ -1,10 +1,8 @@
-import { Button } from '@nextui-org/button';
+
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import VideoPlayer from '../VideoPlayer';
 
-
-const VideoFacade = dynamic( () => import( '../VideoFacade' ), {
+const VideoPlayer = dynamic( () => import( '../VideoFacade' ), {
   ssr: false,
   loading: () => <div className="spinner">Loading...</div>,
 } );
