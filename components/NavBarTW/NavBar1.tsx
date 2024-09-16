@@ -131,7 +131,7 @@ export default function NavBar1 ()
                   alt="Evenjacket logo"
                   height={ 30 }
                   width={ 30 }
-                  src="/images/logo-full.png"
+                  src="/images/logo-full-blue.webp"
                   className="h-8 w-auto sm:h-8"
                 />
               </Link>
