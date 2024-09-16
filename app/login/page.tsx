@@ -10,6 +10,7 @@ import { verifyAndRedirect } from "./signin";
 import { createClient } from "@/utils/supabase/client";
 import FooterFull from "@/components/Footers/FooterFull";
 import MyButton from "./submit-button";
+import Script from "next/script";
 
 declare global
 {
@@ -22,7 +23,7 @@ declare global
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function LoginComponent ( { searchParams }: { searchParams: any } )
 {
- 
+
     const [ email, setEmail ] = useState( "" );
     const [ password, setPassword ] = useState( "" );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -67,7 +68,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                             setErrorMessage( 'Error fetching organization. Please try again.' );
                         } else if ( org )
                         {
-                           
+
                             router.push( '/dashboard' ); // Only redirect after all checks are successful
                         } else
                         {
@@ -112,17 +113,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
             }
         };
 
-        // Load Google Sign-In script
-        const script = document.createElement( "script" );
-        script.src = "https://accounts.google.com/gsi/client";
-        script.async = true;
-        script.defer = true;
-        document.body.appendChild( script );
 
-        return () =>
-        {
-            document.body.removeChild( script );
-        };
     }, [ supabase, router ] );
 
     const handleLogin = async ( e: React.FormEvent<HTMLFormElement> ) =>
@@ -161,6 +152,17 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                 <meta name="description" content="Login to your EventJacket account to manage your events." />
                 <meta name="robots" content="noindex, nofollow" />
             </Head>
+            {/* Google Sign-In Script */ }
+            <Script
+                src="https://accounts.google.com/gsi/client"
+                async
+                defer
+                onLoad={ () =>
+                {
+                    console.log( 'Google Sign-In script loaded' );
+                } }
+            />
+
 
             <div className="relative flex min-h-screen items-center justify-center bg-cover bg-center" style={ { backgroundImage: "url('/images/festival-4.png')" } }>
                 <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
@@ -265,7 +267,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                                 isLoading={ isLoading }
                                 spinnerDelay={ 1000 } // 1 second delay before hiding spinner
                                 loadingMessage="Signing In..."
-                               
+
                             >
                                 Log In
                             </MyButton>
