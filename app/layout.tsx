@@ -3,6 +3,7 @@ import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Script from 'next/script';
 
 const ClientProviders = dynamic( () => import( './ClientProviders' ), {
     ssr: false,
@@ -37,45 +38,49 @@ const spaceGrotesk = Space_Grotesk( {
     display: 'optional',
 } );
 
-export default function RootLayout ( { children }: PropsWithChildren )
-{
-    return (
-        <html lang="en" className={ spaceGrotesk.className }>
-            <Head>
-                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-                <link rel="manifest" href="/site.webmanifest" />
-                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-                <link rel="canonical" href="https://www.eventjacket.com" />
+export default function RootLayout({ children }: PropsWithChildren) {
+  return (
+    <html lang="en" className={spaceGrotesk.className}>
+      <Head>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+        <link rel="canonical" href="https://www.eventjacket.com" />
+        <link rel="preload" href="images/video-thumbnail.webp" as="image" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
+          as="style"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
+        />
+      </Head>
+      <body>
+        <ClientProviders>{children}</ClientProviders>
 
-                {/* Preconnect to important external resources */ }
-                <link rel="preconnect" href="https://www.googletagmanager.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" />
-
-                {/* Preload critical fonts */ }
-                <link
-                    rel="preload"
-                    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
-                    as="style"
-                    onLoad={ ( e ) =>
-                    {
-                        ( e.target as HTMLLinkElement ).rel = 'stylesheet';
-                    } }
-                />
-                <noscript>
-                    <link
-                        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
-                        rel="stylesheet"
-                    />
-                </noscript>
-
-                {/* Preload above-the-fold image */ }
-                <link rel="preload" as="image" href="/images/video-thumbnail.webp" />
-            </Head>
-            <body>
-                <ClientProviders>{ children }</ClientProviders>
-            </body>
-        </html>
-    );
+        {/* Non-essential Scripts: Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"
+          strategy="lazyOnload"
+        />
+        <Script id="google-analytics-inline" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-M6F4XVZM25', {
+              'anonymize_ip': true,
+              'send_page_view': false
+            });
+          `}
+        </Script>
+      </body>
+    </html>
+  );
 }
