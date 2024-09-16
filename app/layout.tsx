@@ -41,26 +41,35 @@ const spaceGrotesk = Space_Grotesk( {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" className={spaceGrotesk.className}>
-      <Head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-        <link rel="canonical" href="https://www.eventjacket.com" />
-        <link rel="preload" href="images/video-thumbnail.webp" as="image" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
-          as="style"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
-        />
-      </Head>
+          <Head>
+              <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+              <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+              <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+              <link rel="manifest" href="/site.webmanifest" />
+              <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+              <link rel="canonical" href="https://www.eventjacket.com" />
+
+              {/* Preload critical assets */ }
+              <link rel="preload" href="/images/video-thumbnail.webp" as="image" />
+
+              {/* Preconnect to external resources */ }
+              <link rel="preconnect" href="https://www.googletagmanager.com" />
+              <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+              {/* Preload and load fonts asynchronously */ }
+              <link
+                  rel="preload"
+                  href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=swap"
+                  as="style"
+                  
+              />
+              <noscript>
+                  <link
+                      rel="stylesheet"
+                      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=swap"
+                  />
+              </noscript>
+          </Head>
       <body>
         <ClientProviders>{children}</ClientProviders>
 
