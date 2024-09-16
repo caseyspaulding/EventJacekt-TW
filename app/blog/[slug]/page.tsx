@@ -52,14 +52,16 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
     return (
         <>
             <NavBar1 />
-            <article className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+            <article className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
                 {/* Featured Image */ }
                 { post.featuredImage && (
-                    <img
-                        src={ post.featuredImage }
-                        alt={ post.title }
-                        className="mb-8 w-full h-64 object-cover rounded-lg"
-                    />
+                    <div className="mb-8 w-full rounded-lg overflow-hidden">
+                        <img
+                            src={ post.featuredImage }
+                            alt={ post.title }
+                            className="w-full h-auto object-cover md:aspect-[2240/750] aspect-[2240/750]"
+                        />
+                    </div>
                 ) }
                 <h1 className="mb-4 text-4xl font-bold text-gray-800">{ post.title }</h1>
                 <p className="mb-8 text-sm text-gray-500">
