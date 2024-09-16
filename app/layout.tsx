@@ -3,7 +3,7 @@ import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Script from 'next/script';
+
 
 // Dynamically import ClientProviders to reduce main thread work
 const ClientProviders = dynamic( () => import( './ClientProviders' ), {
@@ -50,20 +50,11 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 <link rel="manifest" href="/site.webmanifest" />
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
                 <link rel="canonical" href="https://www.eventjacket.com" />
-                <link rel="preconnect" href="https://www.googletagmanager.com" />
-                <link rel="preload" href="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" as="script" />
+     
             </Head>
             <body>
                 {/* Include Google Analytics Script with lazy loading */ }
-                <Script src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" strategy="lazyOnload" />
-                <Script id="google-analytics" strategy="lazyOnload">
-                    { `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-M6F4XVZM25');
-          `}
-                </Script>
+             
                 <ClientProviders>
                     { children }
                 </ClientProviders>
