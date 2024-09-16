@@ -94,12 +94,13 @@ export default function FooterFull ()
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
 
-            <img
+            <Image
               alt="EventJacket"
-            
-
-              src="/images/logo-full-white.svg"
-              className="h-14" />
+              height={ 20 } 
+              width={ 200 }
+          
+              src="/images/logo-full-white.webp"
+               />
 
             <p className=" pl-1 text-sm leading-6 text-slate-100">
               All in one event management software
