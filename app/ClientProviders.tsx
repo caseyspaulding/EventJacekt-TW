@@ -1,49 +1,33 @@
 'use client';
 
 import React from 'react';
+import { Flowbite } from 'flowbite-react';
 import { NextUIProvider } from '@nextui-org/react';
-import dynamic from 'next/dynamic';
-import Script from 'next/script';
-
-// Dynamically import components for better performance
-const DynamicToaster = dynamic( () => import( 'react-hot-toast' ).then( ( mod ) => mod.Toaster ), { ssr: false } );
-const DynamicProgressBar = dynamic( () => import( 'next-nprogress-bar' ).then( ( mod ) => mod.AppProgressBar ), { ssr: false } );
-
-import { UserProvider } from '@/contexts/UserContext';
+import { Toaster } from 'react-hot-toast';
+import { customTheme } from './theme';
+import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+import { UserProvider } from '@/contexts/UserContext'; // SWR version of UserProvider
+import { APIProvider } from '@vis.gl/react-google-maps';
 
 export default function ClientProviders ( { children }: { children: React.ReactNode } )
 {
   return (
     <NextUIProvider>
-      {/* Google Analytics Script - Optimized */ }
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"
-        strategy="lazyOnload"
-        async
-      />
-      <Script id="google-analytics-inline" strategy="lazyOnload" async>
-        { `
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-M6F4XVZM25', {
-      'anonymize_ip': true,
-      'send_page_view': false
-    });
-  `}
-      </Script>
-
-      {/* Load third-party components after page is interactive */ }
-      <DynamicToaster />
-      <UserProvider initialUser={ null }>
-        { children }
-      </UserProvider>
-      <DynamicProgressBar
-        height="3px"
-        color="#0053df"
-        options={ { showSpinner: false } }
-        shallowRouting
-      />
+      <Flowbite theme={ { theme: customTheme } }>
+        <Toaster />
+        <APIProvider apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' }>
+        {/* Initialize UserProvider without needing to pass user state manually */ }
+        <UserProvider initialUser={ null }>
+          { children }
+          </UserProvider>
+        </APIProvider>
+        <ProgressBar
+          height="3px"
+          color="#0053df"
+          options={ { showSpinner: false } }
+          shallowRouting
+        />
+      </Flowbite>
     </NextUIProvider>
   );
 }
