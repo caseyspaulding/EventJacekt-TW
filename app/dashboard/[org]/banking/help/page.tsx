@@ -65,14 +65,13 @@ export default function BankingHelpPage ()
         <ul className="list-disc list-inside mt-4 text-gray-600">
           <li>Visit the <strong>Help Center</strong> in your dashboard for FAQs and guides.</li>
           <li>Contact our support team via email or chat for additional assistance.</li>
+          <li>Call Us: +1 (407) 326-3692</li>
+          <li>Email Us: team@eventjacket.com </li>
+
         </ul>
       </div>
 
-      <div className="text-center">
-        <button className="bg-blue-600 text-white py-2 px-6 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition">
-          Go to Banking Settings
-        </button>
-      </div>
+
     </div>
   );
 }
