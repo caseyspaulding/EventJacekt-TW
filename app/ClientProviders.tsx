@@ -19,17 +19,18 @@ export default function ClientProviders ( { children }: { children: React.ReactN
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25"
         strategy="lazyOnload"
+        async
       />
-      <Script id="google-analytics-inline" strategy="lazyOnload">
+      <Script id="google-analytics-inline" strategy="lazyOnload" async>
         { `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-M6F4XVZM25', {
-            'anonymize_ip': true, // Optional: anonymizes user IP for privacy
-            'send_page_view': false // Optional: control when to send page views
-          });
-        `}
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M6F4XVZM25', {
+      'anonymize_ip': true,
+      'send_page_view': false
+    });
+  `}
       </Script>
 
       {/* Load third-party components after page is interactive */ }
