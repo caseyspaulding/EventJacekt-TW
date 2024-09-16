@@ -15,7 +15,7 @@ type UserContextType = {
 
 type UserProviderProps = {
     children: ReactNode;
-    initialUser: UserType | null;
+    initialUser: UserType | null; // Ensure this is the correct prop name
 };
 
 const UserContext = createContext<UserContextType | undefined>( undefined );
@@ -28,28 +28,12 @@ export function UserProvider ( { children, initialUser }: UserProviderProps )
         '/api/fetchUserProfile',
         async ( url ) =>
         {
-            // Get the auth token from Supabase
-            const { data: { session } } = await supabase.auth.getSession();
-
-            // If no session, skip fetching the user profile
-            if ( !session )
-            {
-                return null;
-            }
-
-            const token = session.access_token;
-
-            const response = await fetch( url, {
-                headers: {
-                    Authorization: `Bearer ${ token }`,
-                },
-            } );
-
+            const response = await fetch( url );
             if ( !response.ok ) throw new Error( 'Failed to fetch user profile' );
             return response.json();
         },
         {
-            fallbackData: initialUser,
+            fallbackData: initialUser, // Correctly use initialUser here
             revalidateOnFocus: false,
             revalidateOnReconnect: false,
         }
@@ -88,7 +72,7 @@ export function UserProvider ( { children, initialUser }: UserProviderProps )
                     return;
                 }
 
-                mutate(); // Revalidate the user data after sign-in
+                mutate();
             } catch ( error )
             {
                 console.error( 'Unexpected error during Google sign-in:', error );
