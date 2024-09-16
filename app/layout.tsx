@@ -49,7 +49,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 <link rel="manifest" href="/site.webmanifest" />
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
                 <link rel="canonical" href="https://www.eventjacket.com" />
-
+                <link rel="preload" href="images/video-thumbnail.jpg" as="image" />
                 {/* Preconnect to important external resources */ }
                 <link rel="preconnect" href="https://www.googletagmanager.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com"  />
