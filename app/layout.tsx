@@ -64,7 +64,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 </Script>
 
                 {/* Include additional scripts */ }
-                <Script src="https://accounts.google.com/gsi/client" defer></Script>
+             
                 <Script src="https://connect.stripe.com/connect-js" defer></Script>
 
                 {/* Theme handler script */ }
