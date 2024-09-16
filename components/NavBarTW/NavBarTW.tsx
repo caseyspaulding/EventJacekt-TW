@@ -1,6 +1,7 @@
 import { Button } from '@nextui-org/button';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import VideoPlayer from '../VideoPlayer';
 
 
 const VideoFacade = dynamic( () => import( '../VideoFacade' ), {
@@ -42,8 +43,8 @@ export default function NavBarTW ()
             </div>
             <div className="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-2xl lg:items-center">
               <div className="relative block w-full overflow-hidden rounded-2xl bg-white">
-                <VideoFacade
-                  videoUrl="https://www.youtube.com/embed/r1U0VLkQsfo?si=n-okKXCW-O_cxD-i"
+                <VideoPlayer
+                  videoUrl="https://app.eventjacket.com/storage/v1/object/public/videos/eventjacket-promo.mp4?t=2024-09-16T13%3A38%3A58.909Z"
                   thumbnailUrl="/images/video-thumbnail.jpg"
                 />
               </div>
