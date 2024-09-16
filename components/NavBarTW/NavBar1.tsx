@@ -81,55 +81,14 @@ export default function NavBar1 ()
 {
   const [ isSticky, setIsSticky ] = useState( false );
   const [ isAuthenticated, setIsAuthenticated ] = useState( false );
-  const [ user, setUser ] = useState<User | null>( null );
+  const { user } = useUser();
   const supabase = createClient();
 
-  const fetchUserProfile = async () =>
-  {
-    try
-    {
-      // Get the auth token from Supabase
-      const { data: { session } } = await supabase.auth.getSession();
-      const token = session?.access_token;
-
-      // Check if the user is authenticated
-      if ( !token )
-      {
-        setUser( null );
-        setIsAuthenticated( false );
-        return null;
-      }
-
-      // Make the API call with the authorization header
-      const response = await fetch( '/api/fetchUserProfile', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${ token }`
-        }
-      } );
-
-      if ( response.ok )
-      {
-        const userProfile = await response.json();
-        setUser( userProfile );
-        setIsAuthenticated( true );
-        return userProfile;
-      } else
-      {
-        setUser( null );
-        setIsAuthenticated( false );
-        return null;
-      }
-    } catch ( error )
-    {
-      console.error( 'Error fetching user profile:', error );
-      return null;
-    }
-  };
+  
 
   useEffect( () =>
   {
-    fetchUserProfile();
+   
     const handleScroll = () => setIsSticky( window.scrollY > 0 );
     window.addEventListener( 'scroll', handleScroll );
     return () => window.removeEventListener( 'scroll', handleScroll );
@@ -143,7 +102,7 @@ export default function NavBar1 ()
       const { error } = await supabase.auth.signOut();
       if ( error ) throw error;
       setIsAuthenticated( false );
-      setUser( null );
+     
     } catch ( error )
     {
       console.error( 'Sign out error:', error );
