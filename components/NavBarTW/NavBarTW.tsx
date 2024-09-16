@@ -42,7 +42,7 @@ export default function NavBarTW ()
             <div className="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-2xl lg:items-center">
               <div className="relative block w-full overflow-hidden rounded-2xl bg-white">
                 <VideoPlayer
-                  videoUrl="https://app.eventjacket.com/storage/v1/object/public/videos/eventjacket-promo-2.mp4"
+                  videoUrl="https://app.eventjacket.com/storage/v1/object/public/videos/eventjacket-promo-1.mp4"
                   thumbnailUrl="/images/video-thumbnail.webp"
                 />
               </div>
