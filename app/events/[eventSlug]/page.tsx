@@ -18,6 +18,7 @@ import FooterTW from "@/components/Footers/FooterTW";
 import Script from "next/script";
 import Head from "next/head";
 
+
 interface Params
 {
     eventSlug: string;
