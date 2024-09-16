@@ -138,13 +138,13 @@ const CreateEventPage = () =>
         const orgId = user.organizationId;
 
         // Try uploading images, but don't block if no image is uploaded
-       // Upload featured image to "eventFeaturedImages" bucket
+        // Upload featured image to "eventFeaturedImages" bucket
         const featuredImageUrl = featuredImage ? await handleImageUpload( featuredImage, user.orgName, 'eventFeaturedImages' ) : '';
 
         // Upload venue image to "venueImages" bucket
         const venueImageUrl = venueImage ? await handleImageUpload( venueImage, user.orgName, 'venueImages' ) : '';
 
-      
+
         const generatedSlug = generateSlug( name );
         setSlug( generatedSlug );
 
@@ -256,7 +256,7 @@ const CreateEventPage = () =>
     //    // Handle the place details here
     //};
 
-    
+
 
     const mapAddress = `${ address }, ${ city }, ${ state }, ${ zipCode }` || '';
 
@@ -265,7 +265,7 @@ const CreateEventPage = () =>
             <title>Create Event | Dashboard | EventJacket</title>
             <meta name="description" content="Create a new event on EventJacket" />
             <Script src="https://accounts.google.com/gsi/client" defer></Script>
-            <Script src="https://connect.stripe.com/connect-js" defer></Script>
+
         </Head>
         <div className="my-4 max-w-5xl p-6 rounded-2xl bg-white shadow-md">
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
@@ -280,12 +280,12 @@ const CreateEventPage = () =>
                         previewImage={ previewImage }
                         setPreviewImage={ setPreviewImage }
                         label=""
-                        orgName={ user?.orgName || ''  } />
+                        orgName={ user?.orgName || '' } />
 
 
                 </div>
                 <div>
-                    
+
                     <InputFieldEJ
                         type="text"
                         id="name"
@@ -294,18 +294,18 @@ const CreateEventPage = () =>
                         onChange={ ( e ) => setName( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         placeholder="Event Name"
-                        required label={ 'Event Title' }                    />
+                        required label={ 'Event Title' } />
                 </div>
 
                 <div>
-                    
+
                     <InputFieldEJ
                         id="description"
                         value={ description }
                         onChange={ ( e ) => setDescription( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                         placeholder="Description"
-                        required label={ 'Description' }                    />
+                        required label={ 'Description' } />
                 </div>
 
                 <div>
@@ -322,10 +322,10 @@ const CreateEventPage = () =>
                 </div>
 
 
-           
+
                 <div>
-            
-                  
+
+
                     <Input
                         type="date"
                         id="startDate"
@@ -335,45 +335,45 @@ const CreateEventPage = () =>
                         required
                         label="Start Date"
                     />
-                    </div>
-                    <div>
-                    <Input
-                            type="date"
-                            id="endDate"
-                            value={ endDate }
-                            onChange={ ( e ) => setEndDate( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            required
-                            label="End Date"
-                        />
-                    </div>
-               
-                
-                    <div>
-                    <Input
-                            type="time"
-                            id="eventStartTime"
-                            value={ eventStartTime }
-                            onChange={ ( e ) => setEventStartTime( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            required
-                            label="Event Start Time"
-                        />
-                    </div>
-                    <div>
-                    <Input
-                            type="time"
-                            id="eventEndTime"
-                            value={ eventEndTime }
-                            onChange={ ( e ) => setEventEndTime( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            required
-                            label="Event End Time"
-                        />
-                    </div>
-               
+                </div>
                 <div>
-                  
+                    <Input
+                        type="date"
+                        id="endDate"
+                        value={ endDate }
+                        onChange={ ( e ) => setEndDate( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        required
+                        label="End Date"
+                    />
+                </div>
+
+
+                <div>
+                    <Input
+                        type="time"
+                        id="eventStartTime"
+                        value={ eventStartTime }
+                        onChange={ ( e ) => setEventStartTime( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        required
+                        label="Event Start Time"
+                    />
+                </div>
+                <div>
+                    <Input
+                        type="time"
+                        id="eventEndTime"
+                        value={ eventEndTime }
+                        onChange={ ( e ) => setEventEndTime( e.target.value ) }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        required
+                        label="Event End Time"
+                    />
+                </div>
+
+                <div>
+
 
                     <InputFieldEJ
                         type="text"
@@ -390,54 +390,54 @@ const CreateEventPage = () =>
                     setPreviewImage={ setVenueImagePreview }
                     label=""
                 />
-               <div>
-    <Textarea
-        id="venueDescription"
-        value={ venueDescription }
-        onChange={ ( e ) => setVenueDescription( e.target.value ) }
-        label="Venue Description"
-        placeholder="Describe the venue"
-        rows={4} // Adjust the number of visible rows
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-    />
-</div>
-            
+                <div>
+                    <Textarea
+                        id="venueDescription"
+                        value={ venueDescription }
+                        onChange={ ( e ) => setVenueDescription( e.target.value ) }
+                        label="Venue Description"
+                        placeholder="Describe the venue"
+                        rows={ 4 } // Adjust the number of visible rows
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                </div>
+
 
                 <div>
 
-                  
+
                     <InputFieldEJ
                         type="text"
                         id="address"
                         value={ address }
                         onChange={ ( e ) => setAddress( e.target.value ) }
                         className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Address" label={ '  Venue Street Address' }                    />
+                        placeholder="Address" label={ '  Venue Street Address' } />
 
 
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
-                       
+
                         <InputFieldEJ
                             type="text"
                             id="city"
                             value={ city }
                             onChange={ ( e ) => setCity( e.target.value ) }
                             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="City" label={ 'City' }                        />
+                            placeholder="City" label={ 'City' } />
                     </div>
 
                     <div>
-                        
+
                         <InputFieldEJ
                             type="text"
                             id="state"
                             value={ state }
                             onChange={ ( e ) => setState( e.target.value ) }
                             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="State" label={ 'State' }                        />
+                            placeholder="State" label={ 'State' } />
                     </div>
                 </div>
 
@@ -445,14 +445,14 @@ const CreateEventPage = () =>
 
 
                     <div>
-                       
+
                         <InputFieldEJ
                             type="text"
                             id="zipCode"
                             value={ zipCode }
                             onChange={ ( e ) => setZipCode( e.target.value ) }
                             className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Zip Code" label={ 'Zip Code' }                        />
+                            placeholder="Zip Code" label={ 'Zip Code' } />
                     </div>
 
                 </div>
@@ -467,7 +467,7 @@ const CreateEventPage = () =>
                         value={ notes }
                         onChange={ ( e ) => setNotes( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Notes" label={ 'Notes' }                    />
+                        placeholder="Notes" label={ 'Notes' } />
                 </div>
 
                 <div>
@@ -479,7 +479,7 @@ const CreateEventPage = () =>
                         value={ scheduleDetails }
                         onChange={ ( e ) => setScheduleDetails( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Details about the schedule, agenda, etc." label={ '' }                    />
+                        placeholder="Details about the schedule, agenda, etc." label={ '' } />
                 </div>
 
                 <div>
@@ -496,7 +496,7 @@ const CreateEventPage = () =>
                 </div>
 
                 <div>
-                   
+
                     <InputFieldEJ
                         type="text"
                         id="timezone"
@@ -508,7 +508,7 @@ const CreateEventPage = () =>
                 </div>
 
                 <div>
-                    
+
                     <InputFieldEJ
                         type="text"
                         id="tags"
@@ -618,7 +618,7 @@ const CreateEventPage = () =>
 
 
                 <div>
-                    
+
                     <InputFieldEJ
                         type="number"
                         id="maxAttendees"
@@ -637,7 +637,7 @@ const CreateEventPage = () =>
                         radius="sm"
                         className="px-6 py-2 bg-orange-500 text-white text-xl rounded-3xl"
                     >
-                        Save Event 
+                        Save Event
                     </Button>
                 </div>
             </form>

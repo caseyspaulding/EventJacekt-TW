@@ -3,6 +3,8 @@ import { fetchUserProfile } from '../../actions/fetchUserProfile';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import DashboardLayoutClient from './DashboardLayoutClient'; // Import the client component wrapper
+import Head from 'next/head';
+import Script from 'next/script';
 
 export default async function DashboardLayout ( { children }: React.PropsWithChildren<unknown> )
 {
@@ -47,5 +49,16 @@ export default async function DashboardLayout ( { children }: React.PropsWithChi
     }
 
     // Pass the user data down to the client component
-    return <DashboardLayoutClient user={ user }>{ children }</DashboardLayoutClient>;
+    return ( <>
+        <Head>
+            <title>{ user.orgName } Dashboard</title>
+            <Script src="https://connect.stripe.com/connect-js" defer></Script>
+        
+        </Head>
+
+    <DashboardLayoutClient user={ user }>
+        { children }
+        </DashboardLayoutClient>
+    </>
+    )
 }
