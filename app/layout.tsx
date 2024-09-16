@@ -4,13 +4,12 @@ import './globals.css';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-// Dynamically import ClientProviders to reduce main thread work
 const ClientProviders = dynamic( () => import( './ClientProviders' ), {
     ssr: false,
 } );
 
 export const metadata = {
-    title: 'EventJacket - Nonprofit CRM',
+    title: 'EventJacket - Event Management CRM',
     description: 'EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank.',
     openGraph: {
         title: 'EventJacket - Event Management Software',
@@ -35,7 +34,7 @@ export const metadata = {
 const spaceGrotesk = Space_Grotesk( {
     weight: [ '400' ],
     subsets: [ 'latin' ],
-    display: 'optional', // Optimized font loading
+    display: 'optional',
 } );
 
 export default function RootLayout ( { children }: PropsWithChildren )
@@ -49,22 +48,33 @@ export default function RootLayout ( { children }: PropsWithChildren )
                 <link rel="manifest" href="/site.webmanifest" />
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
                 <link rel="canonical" href="https://www.eventjacket.com" />
-                <link rel="preload" href="images/video-thumbnail.jpg" as="image" />
+
                 {/* Preconnect to important external resources */ }
                 <link rel="preconnect" href="https://www.googletagmanager.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com"  />
+                <link rel="preconnect" href="https://fonts.gstatic.com" />
 
                 {/* Preload critical fonts */ }
-                <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional" as="style" />
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional" />
+                <link
+                    rel="preload"
+                    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
+                    as="style"
+                    onLoad={ ( e ) =>
+                    {
+                        ( e.target as HTMLLinkElement ).rel = 'stylesheet';
+                    } }
+                />
+                <noscript>
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=optional"
+                        rel="stylesheet"
+                    />
+                </noscript>
 
                 {/* Preload above-the-fold image */ }
-                <link rel="preload" as="image" href="/images/video-thumbnail.jpg" />
+                <link rel="preload" as="image" href="/images/video-thumbnail.webp" />
             </Head>
             <body>
-                <ClientProviders>
-                    { children }
-                </ClientProviders>
+                <ClientProviders>{ children }</ClientProviders>
             </body>
         </html>
     );
