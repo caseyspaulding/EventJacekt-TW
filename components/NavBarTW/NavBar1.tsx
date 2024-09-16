@@ -81,14 +81,36 @@ export default function NavBar1 ()
 {
   const [ isSticky, setIsSticky ] = useState( false );
   const [ isAuthenticated, setIsAuthenticated ] = useState( false );
-  const { user } = useUser();
+  const [ user, setUser ] = useState<User | null>( null );
   const supabase = createClient();
 
-  
+  const fetchUserProfile = async () =>
+  {
+    try
+    {
+      const response = await fetch( '/api/fetchUserProfile', { method: 'GET' } );
+      if ( response.ok )
+      {
+        const userProfile = await response.json();
+        setUser( userProfile );
+        setIsAuthenticated( true );
+        return userProfile;
+      } else
+      {
+        setUser( null );
+        setIsAuthenticated( false );
+        return null;
+      }
+    } catch ( error )
+    {
+      console.error( 'Error fetching user profile:', error );
+      return null;
+    }
+  };
 
   useEffect( () =>
   {
-   
+    fetchUserProfile();
     const handleScroll = () => setIsSticky( window.scrollY > 0 );
     window.addEventListener( 'scroll', handleScroll );
     return () => window.removeEventListener( 'scroll', handleScroll );
@@ -102,7 +124,7 @@ export default function NavBar1 ()
       const { error } = await supabase.auth.signOut();
       if ( error ) throw error;
       setIsAuthenticated( false );
-     
+      setUser( null );
     } catch ( error )
     {
       console.error( 'Sign out error:', error );
@@ -123,19 +145,21 @@ export default function NavBar1 ()
         <Popover className="relative ">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 md:justify-start md:space-x-10 lg:px-4">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <Link
-                aria-label="EventJacket"
-                href="https://www.eventjacket.com">
+              <Link href="/">
                 <span className="sr-only">EventJacket</span>
                 <img
                   alt="Evenjacket logo"
                   height={ 30 }
                   width={ 30 }
-                  src="/images/logo-full-blue.webp"
+                  src="/images/logo-full.png"
                   className="h-8 w-auto sm:h-8"
                 />
               </Link>
-             
+              <Link href="/">
+                <p className="ml-2 font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-700">
+                  <span></span>
+                </p>
+              </Link>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
               <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-700 hover:bg-blue-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset">
@@ -196,7 +220,7 @@ export default function NavBar1 ()
                   <Button
                     as='a'
                     href="/signup"
-                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-xl font-medium text-white shadow-sm bg-blue-600 hover:bg-blue-700 "
+                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-base font-medium text-white shadow-sm bg-orange-500 hover:bg-orange-600 "
                   >
                     Start Free
                   </Button>
@@ -271,7 +295,7 @@ export default function NavBar1 ()
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <img aria-label="EventJacket" height={ 40 } width={ 40 } src="/images/logo-full.png" className="h-8 w-auto" />
+                    <img alt="EventJacket" height={ 40 } width={ 40 } src="/images/logo-full.png" className="h-8 w-auto" />
                   </div>
                   <div className="-mr-2">
                     <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-500 focus:outline-none  ">
@@ -346,7 +370,7 @@ export default function NavBar1 ()
                     <Button
                       as='a'
                       href="/signup"
-                      className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600"
+                      className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-orange-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-600"
                     >
                       Create Account
                     </Button>
@@ -355,7 +379,7 @@ export default function NavBar1 ()
                       <Button
                         as='a'
                         href="/login"
-                        className="ml-2 rounded-3xl  text-white bg-blue-700 hover:bg-blue-500">
+                        className="ml-2 rounded-3xl  text-white bg-orange-500 hover:bg-green-500">
                         Sign in
                       </Button>
                     </p>
