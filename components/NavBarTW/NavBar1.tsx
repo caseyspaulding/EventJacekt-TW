@@ -176,7 +176,7 @@ export default function NavBar1 ()
                   <span>Solutions</span>
                   <ChevronDownIcon
                     aria-hidden="true"
-                    className="ml-2 h-5 w-5 text-gray-100  group-hover:text-gray-200 group-data-[open]:text-gray-300 group-data-[open]:group-hover:text-gray-300"
+                    className="ml-2 h-5 w-5 text-gray-100  group-hover:text-gray-200 group-data-[open]:text-blue-400 group-data-[open]:group-hover:text-gray-300"
                   />
                 </PopoverButton>
 
@@ -337,7 +337,7 @@ export default function NavBar1 ()
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-blue-700 ring-1 ring-white ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute right-0 mt-2 w-48 rounded-md shadow-2xl py-1 bg-blue-600 ring-1 ring-white ring-opacity-5 focus:outline-none">
                           { userNavigation.map( ( item ) => (
                             <Menu.Item key={ item.name }>
                               { ( { active } ) =>
@@ -345,7 +345,7 @@ export default function NavBar1 ()
                                   <form onSubmit={ handleSignOut } method="post" className="w-full">
                                     <button
                                       type="submit"
-                                      className={ `${ active ? 'bg-blue-100' : ''
+                                      className={ `${ active ? 'bg-blue-500' : ''
                                         } w-full text-left px-4 py-2 text-sm text-gray-100` }
                                     >
                                       { item.name }
@@ -354,7 +354,7 @@ export default function NavBar1 ()
                                 ) : (
                                   <a
                                     href={ item.href }
-                                    className={ `${ active ? 'bg-blue-100' : ''
+                                    className={ `${ active ? 'bg-blue-500' : ''
                                       } block w-full px-4 py-2 text-sm text-gray-100` }
                                   >
                                     { item.name }
