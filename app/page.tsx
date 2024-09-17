@@ -61,7 +61,7 @@ export default async function Index ()
             {/* CTA section */ }
             <div className="bg-blue-700 mb-8">
                 <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
-                    <h2 className="text-3xl font-bold tracking-tight text-blue-300 sm:text-4xl">
+                    <h2 className="text-3xl font-bold tracking-tight text-yellow-400 sm:text-4xl">
                         <span className="block">Ready to dive in?</span>
                         <span className="block text-white">Start free today.</span>
                     </h2>

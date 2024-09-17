@@ -85,7 +85,7 @@ export default function FooterFull ()
 {
   const currentYear = new Date().getFullYear(); // Get the current year
   return (
-    <><footer className='bg-[#1e3a8a] ' aria-labelledby="footer-heading" >
+    <><footer className='bg-gray-200' aria-labelledby="footer-heading" >
 
       <h2 id="footer-heading" className="sr-only">
         Footer
@@ -99,21 +99,21 @@ export default function FooterFull ()
               height={ 20 } 
               width={ 200 }
           
-              src="/images/logo-full-white.webp"
+              src="/images/logo-full7.png"
                />
 
-            <p className=" pl-1 text-sm leading-6 text-slate-100">
+            <p className=" pl-1 text-sm leading-6 text-blue-700">
               All in one event management software
             </p>
             <div className="flex space-x-6">
               { navigation.social.map( ( item ) => (
-                <a key={ item.name } href={ item.href } className=" text-zinc-50 hover:to-blue-300">
+                <a key={ item.name } href={ item.href } className=" text-blue-700 hover:to-blue-300">
                   <span className="sr-only">{ item.name }</span>
                   <item.icon aria-hidden="true" className="h-6 w-6" />
                 </a>
               ) ) }
             </div>
-            <div className="text-sm text-white mt-4 md:mt-0 inline-flex items-center">
+            <div className="text-sm text-blue-700 mt-4 md:mt-0 inline-flex items-center">
               <div>
                 <p>Proud Veteran-Owned Business <br />
                   <img
@@ -128,7 +128,7 @@ export default function FooterFull ()
                     <dl>
                       <dt className="sr-only">Phone number</dt>
                       <dd>
-                        <a href="tel:+14073263692" className="text-white hover:underline">
+                        <a href="tel:+14073263692" className="text-blue-700 hover:underline">
                           +1 (407) 326-3692
                         </a>
                       </dd>
@@ -144,11 +144,11 @@ export default function FooterFull ()
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-md font-semibold leading-6 text-zinc-50">Solutions</h3>
+                <h3 className="text-md font-semibold leading-6 text-blue-700">Solutions</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.solutions.map( ( item ) => (
                     <li key={ item.name }>
-                      <a href={ item.href } className="text-sm leading-6  text-zinc-50 hover:text-blue-400">
+                      <a href={ item.href } className="text-sm leading-6  text-blue-700 hover:text-blue-600 hover:underline ">
                         { item.name }
                       </a>
                     </li>
@@ -156,11 +156,11 @@ export default function FooterFull ()
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-md font-semibold leading-6 text-zinc-50">Resources</h3>
+                <h3 className="text-md font-semibold leading-6 text-blue-700">Resources</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.support.map( ( item ) => (
                     <li key={ item.name }>
-                      <a href={ item.href } className="text-sm leading-6  text-zinc-50 hover:text-blue-400">
+                      <a href={ item.href } className="text-sm leading-6  text-blue-700 hover:text-blue-600 hover:underline ">
                         { item.name }
                       </a>
                     </li>
@@ -170,11 +170,11 @@ export default function FooterFull ()
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-md font-semibold leading-6 text-zinc-50">Company</h3>
+                <h3 className="text-md font-semibold leading-6 text-blue-700">Company</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.company.map( ( item ) => (
                     <li key={ item.name }>
-                      <a href={ item.href } className="text-sm leading-6  text-zinc-50 hover:text-blue-400 ">
+                      <a href={ item.href } className="text-sm leading-6  text-blue-700 hover:text-blue-600 hover:underline  ">
                         { item.name }
                       </a>
                     </li>
@@ -182,11 +182,11 @@ export default function FooterFull ()
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-md font-semibold leading-6 text-zinc-50">Free Tools</h3>
+                <h3 className="text-md font-semibold leading-6 text-blue-700">Free Tools</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   { navigation.free.map( ( item ) => (
                     <li key={ item.name }>
-                      <a href={ item.href } className="text-sm leading-6 text-zinc-50 hover:text-blue-400">
+                      <a href={ item.href } className="text-sm leading-6 text-blue-700 hover:text-blue-600 hover:underline ">
                         { item.name }
                       </a>
                     </li>
@@ -197,7 +197,7 @@ export default function FooterFull ()
           </div>
         </div>
         <div className="mt-16 border-t border-gray-100/10 pt-8 sm:mt-20 lg:mt-24">
-          <p className="text-xs leading-5 text-white">&copy; { currentYear } EventJacket, LLC. All rights reserved.</p>
+          <p className="text-xs leading-5 text-blue-700">&copy; { currentYear } EventJacket, LLC. All rights reserved.</p>
         </div>
       </div>
     </footer></>

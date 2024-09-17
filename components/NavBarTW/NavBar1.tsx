@@ -139,20 +139,23 @@ export default function NavBar1 ()
   const user2 = useUser()   // Get the current user
   return (
     <div
-      className={ `sticky top-0 z-50  shadow-sm  ${ isSticky ? 'bg-white ' : 'bg-white/60 backdrop-blur-none' }` }
+      className={ `sticky top-0 z-50 w-full  shadow-sm ${ isSticky ? 'bg-blue-700' : 'bg-white/60 backdrop-blur-none' }` }
     >
       <header>
-        <Popover className="relative ">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:justify-start md:space-x-10 lg:px-5">
-            <div className="flex justify-start lg:w-0 lg:flex-1">
+        <Popover className="relative">
+          {/* Outer container spans full width */ }
+          <div className="w-full bg-blue-700">
+            {/* Inner container limits width and adds gutters */ }
+            <div className="max-w-7xl mx-auto px-4 flex items-center justify-between py-3 md:justify-start md:space-x-10 lg:px-3">
+              <div className="flex justify-start lg:w-0 lg:flex-1">
               <Link href="/">
                 <span className="sr-only">EventJacket</span>
                 <img
                   alt="Evenjacket logo"
-                  height={ 30 }
-                  width={ 30 }
-                  src="/images/logo-full.png"
-                  className="h-8 w-auto sm:h-8"
+                  height={ 50 }
+                  width={ 50 }
+                  src="/images/logo-full-white1.png"
+                  className="h-11 w-auto sm:h-12"
                 />
               </Link>
               <Link href="/">
@@ -162,7 +165,7 @@ export default function NavBar1 ()
               </Link>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
-              <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-700 hover:bg-blue-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset">
+              <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-100 hover:bg-blue-100 hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset">
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open menu</span>
                 <Bars3CenterLeftIcon aria-hidden="true" className="h-6 w-6" />
@@ -171,29 +174,29 @@ export default function NavBar1 ()
             <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
               {/* Solutions Popover */ }
               <Popover className="relative">
-                <PopoverButton className="group inline-flex items-center rounded-md text-base font-medium text-gray-900 hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-white  data-[open]:text-gray-900">
+                <PopoverButton className="group inline-flex items-center rounded-md text-lg font-medium text-gray-100 hover:text-yellow-400 focus:outline-none focus:ring-1 focus:ring-yellow-500  data-[open]:text-gray-200">
                   <span>Solutions</span>
                   <ChevronDownIcon
                     aria-hidden="true"
-                    className="ml-2 h-5 w-5 text-gray-800  group-hover:text-gray-500 group-data-[open]:text-gray-600 group-data-[open]:group-hover:text-gray-500"
+                    className="ml-2 h-5 w-5 text-gray-100  group-hover:text-gray-200 group-data-[open]:text-gray-300 group-data-[open]:group-hover:text-gray-300"
                   />
                 </PopoverButton>
 
                 <PopoverPanel className="absolute z-10 -ml-4 mt-3 w-screen bg-blur max-w-md transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in lg:left-1/2 lg:ml-0 lg:max-w-2xl lg:-translate-x-1/2">
-                  <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
+                  <div className="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white ring-opacity-5">
+                    <div className="relative grid gap-6 bg-blue-700 px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
                       { solutions.map( ( item ) => (
                         <a
                           key={ item.name }
                           href={ item.href }
-                          className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
+                          className="-m-3 flex items-start rounded-lg p-3 hover:bg-blue-800"
                         >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-blue-700 sm:h-12 sm:w-12">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-yellow-400 sm:h-12 sm:w-12">
                             <item.icon aria-hidden="true" className="h-6 w-6" />
                           </div>
                           <div className="ml-4">
-                            <p className="text-base font-medium text-gray-900">{ item.name }</p>
-                            <p className="mt-1 text-sm text-gray-500">{ item.description }</p>
+                            <p className="text-lg font-medium text-white">{ item.name }</p>
+                            <p className="mt-1 text-base text-gray-50">{ item.description }</p>
                           </div>
                         </a>
                       ) ) }
@@ -204,7 +207,7 @@ export default function NavBar1 ()
 
               {/* Navigation Links */ }
               { navigation.map( ( item ) => (
-                <a key={ item.name } href={ item.href } className="text-base font-medium text-gray-800 hover:text-blue-700">
+                <a key={ item.name } href={ item.href } className="text-lg font-medium text-gray-100 hover:text-yellow-400">
                   { item.name }
                 </a>
               ) ) }
@@ -214,21 +217,21 @@ export default function NavBar1 ()
             <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
               { !isAuthenticated ? (
                 <>
-                  <a href="/login" className="whitespace-nowrap text-base font-medium text-gray-700 hover:text-gray-900">
+                  <a href="/login" className="whitespace-nowrap text-lg font-medium text-gray-100 hover:text-gray-200">
                     Sign in
                   </a>
                   <Button
                     as='a'
                     href="/signup"
-                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-base font-medium text-white shadow-sm bg-orange-500 hover:bg-orange-600 "
+                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-lg font-medium text-white shadow-sm bg-blue-600 hover:bg-blue-600 "
                   >
                     Start Free
                   </Button>
                 </>
               ) : (
-                <Menu as="div" className="ml-3 relative bg-white/90 backdrop-blur-lg">
+                <Menu as="div" className="ml-3 relative bg-blue-700/90 backdrop-blur-lg">
                   <div>
-                    <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <Menu.Button className="max-w-xs bg-blue-700 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       <span className="sr-only">Open user menu</span>
                       <div className="flex items-center space-x-4">
                         <img
@@ -255,7 +258,7 @@ export default function NavBar1 ()
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-blue-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
                       { userNavigation.map( ( item ) => (
                         <Menu.Item key={ item.name }>
                           { ( { active } ) =>
@@ -286,19 +289,20 @@ export default function NavBar1 ()
                 </Menu>
               ) }
             </div>
-          </div>
+            </div>
+            </div>
 
 
           {/* Mobile menu */ }
           <PopoverPanel className="absolute inset-x-0 top-0 z-30 origin-top-right p-2 transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-100 data-[enter]:ease-out data-[leave]:ease-in md:hidden">
-            <div className="divide-y-2 divide-gray-50 rounded-lg h-screen bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+            <div className="divide-y-2 divide-yellow-50 rounded-lg h-screen bg-blue-700 shadow-lg ring-1 ring-yellow-400 ring-opacity-5">
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <img alt="EventJacket" height={ 40 } width={ 40 } src="/images/logo-full.png" className="h-8 w-auto" />
+                    <img alt="EventJacket" height={ 40 } width={ 40 } src="/images/logo-full-white1.png" className="h-8 w-auto" />
                   </div>
                   <div className="-mr-2">
-                    <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-500 focus:outline-none  ">
+                    <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-blue-700 p-2 text-white hover:bg-gray-100 hover:text-gray-500 focus:outline-none  ">
                       <span className="absolute -inset-0.5" />
                       <span className="sr-only">Close menu</span>
                       <XMarkIcon aria-hidden="true" className="h-6 w-6" />
@@ -321,7 +325,7 @@ export default function NavBar1 ()
                             width={ 32 }
                           />
                           <div className="ml-2 flex flex-col items-start">
-                            <span className="font-medium text-gray-900">{ user?.orgName || 'User' }</span>
+                            <span className="font-medium text-gray-100">{ user?.orgName || 'User' }</span>
                             <p className="text-xs text-gray-500">{ user2.user?.name || user?.email }</p>
                           </div>
                         </Menu.Button>
@@ -335,7 +339,7 @@ export default function NavBar1 ()
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-blue-700 ring-1 ring-white ring-opacity-5 focus:outline-none">
                           { userNavigation.map( ( item ) => (
                             <Menu.Item key={ item.name }>
                               { ( { active } ) =>
@@ -343,8 +347,8 @@ export default function NavBar1 ()
                                   <form onSubmit={ handleSignOut } method="post" className="w-full">
                                     <button
                                       type="submit"
-                                      className={ `${ active ? 'bg-gray-100' : ''
-                                        } w-full text-left px-4 py-2 text-sm text-gray-700` }
+                                      className={ `${ active ? 'bg-blue-100' : ''
+                                        } w-full text-left px-4 py-2 text-sm text-gray-100` }
                                     >
                                       { item.name }
                                     </button>
@@ -352,8 +356,8 @@ export default function NavBar1 ()
                                 ) : (
                                   <a
                                     href={ item.href }
-                                    className={ `${ active ? 'bg-gray-100' : ''
-                                      } block w-full px-4 py-2 text-sm text-gray-700` }
+                                    className={ `${ active ? 'bg-blue-100' : ''
+                                      } block w-full px-4 py-2 text-sm text-gray-100` }
                                   >
                                     { item.name }
                                   </a>
@@ -370,16 +374,16 @@ export default function NavBar1 ()
                     <Button
                       as='a'
                       href="/signup"
-                      className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-orange-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-600"
+                      className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600"
                     >
                       Create Account
                     </Button>
-                    <p className="mt-6 mr-2 text-center text-base font-medium text-gray-500">
+                    <p className="mt-6 mr-2 text-center text-base font-medium text-gray-100">
                       Existing customer?
                       <Button
                         as='a'
                         href="/login"
-                        className="ml-2 rounded-3xl  text-white bg-orange-500 hover:bg-green-500">
+                        className="ml-2 rounded-3xl  text-white bg-blue-500 hover:bg-blue-500">
                         Sign in
                       </Button>
                     </p>
@@ -393,12 +397,12 @@ export default function NavBar1 ()
                       <a
                         key={ item.name }
                         href={ item.href }
-                        className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
+                        className="-m-3 flex items-center rounded-lg p-3 hover:bg-blue-500 hover:text-gray-900"
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md  text-blue-700">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md  text-yellow-400 hover:text-yellow-400">
                           <item.icon aria-hidden="true" className="h-6 w-6" />
                         </div>
-                        <div className="ml-4 text-base font-medium text-gray-900">{ item.name }</div>
+                        <div className="ml-4 text-base font-medium text-gray-100">{ item.name }</div>
                       </a>
                     ) ) }
                   </nav>
@@ -409,7 +413,7 @@ export default function NavBar1 ()
               <div className="px-5 py-6">
                 <div className="grid grid-cols-2 gap-4">
                   { navigation.map( ( item ) => (
-                    <a key={ item.name } href={ item.href } className="text-base font-medium text-black hover:text-gray-700">
+                    <a key={ item.name } href={ item.href } className="text-base font-medium text-white hover:text-yellow-300">
                       { item.name }
                     </a>
                   ) ) }
@@ -421,7 +425,8 @@ export default function NavBar1 ()
         </Popover>
       </header>
 
-
-    </div>
+</div>
+    
+    
   );
 }

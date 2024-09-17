@@ -31,12 +31,12 @@ export default function NavBarTW ()
                 <Link href="/signup" passHref>
                   <button
                     type="button"
-                    className="relative z-10 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-2xl rounded-3xl w-full sm:w-auto px-8 sm:px-12 lg:px-44 flex justify-center items-center"
+                    className="relative z-10 py-2 bg-yellow-400 hover:bg-yellow-500 text-blue-700 font-semibold text-2xl rounded-3xl w-full sm:w-auto px-8 sm:px-12 lg:px-44 flex justify-center items-center"
                   >
                     Free Account
                   </button>
                 </Link>
-                <p className="mt-4 text-sm text-gray-500">No credit card required. Start today!</p>
+                <p className="mt-4 ml-3 text-sm text-gray-500">No credit card required. Start today!</p>
               </div>
             </div>
             <div className="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-2xl lg:items-center">
