@@ -1,6 +1,6 @@
 'use client';
 
-import { UserProvider } from '@/contexts/UserContext';
+import  UserProvider  from '@/contexts/UserContext';
 import DashboardLayoutTW from './components/DashboardLayoutTW/DashboardLayoutTW';
 import type { UserType } from '@/types/UserType';
 import React from 'react';
