@@ -7,7 +7,8 @@ interface HeaderCenteredProps
 export default function HeaderCentered ( { title, description }: HeaderCenteredProps )
 {
   return (
-    <div className="relative max-w-7xl mx-auto mt-4 isolate overflow-hidden bg-blue-700 px-6 py-8 sm:py-22 lg:px-8 rounded-2xl">
+    <div className = "relative max-w-7xl mx-auto   isolate overflow-hidden  px-2 py-2 sm:py-22 lg:px-8 rounded-2xl" >
+    <div className="relative max-w-7xl mx-auto  isolate overflow-hidden bg-blue-700 px-6 py-8 sm:py-22 lg:px-8 rounded-2xl">
       <img
         alt=""
         src="/images/festival-4.webp"
@@ -41,6 +42,7 @@ export default function HeaderCentered ( { title, description }: HeaderCenteredP
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">{ title }</h1>
         <p className="mt-6 text-lg leading-8 text-gray-100">{ description }</p>
       </div>
-    </div>
+      </div>
+      </div>
   );
 }
