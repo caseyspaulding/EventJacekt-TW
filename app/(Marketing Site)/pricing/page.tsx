@@ -66,7 +66,7 @@ export default function Example ()
                         <Button
                             as='a'
                             href="/signup"
-                            className="mt-8 shadow-2xl inline-flex rounded-3xl w-full items-center justify-center bg-orange-500 hover:bg-green-500  px-5 py-3 text-base font-medium text-white  sm:mt-10 sm:w-auto xl:mt-0"
+                            className="mt-8 shadow-2xl inline-flex rounded-3xl w-full items-center justify-center bg-yellow-500 hover:bg-yellow-500  px-8 py-3 text-lg font-medium text-white  sm:mt-10 sm:w-auto xl:mt-0"
                         >
                             Get Started
                         </Button>
@@ -93,7 +93,7 @@ export default function Example ()
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
-                                            className="h-8 w-8 font-bold flex-shrink-0 text-green-500"
+                                            className="h-8 w-8 font-bold flex-shrink-0 text-yellow-500"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
                                             { feature }
@@ -115,7 +115,7 @@ export default function Example ()
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
-                                            className="h-8 w-8 flex-shrink-0 text-green-500"
+                                            className="h-8 w-8 flex-shrink-0 text-yellow-500"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
                                             { feature }
@@ -144,7 +144,7 @@ export default function Example ()
             {/* CTA section */ }
             <div className="bg-white">
                 <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
-                    <h2 className="text-3xl font-bold tracking-tight text-orange-600 sm:text-4xl">
+                    <h2 className="text-3xl font-bold tracking-tight text-yellow-500 sm:text-4xl">
                         <span className="block">Ready to dive in?</span>
                         <span className="block text-blue-600">Start free today.</span>
                     </h2>
@@ -153,7 +153,7 @@ export default function Example ()
                             <Button
                                 as='a'
                                 href="/signup"
-                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-orange-500 px-8 py-6 text-xl font-medium text-white hover:bg-green-600"
+                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-yellow-500 px-8 py-6 text-xl font-medium text-white hover:bg-green-600"
                             >
                                 Get Started
                             </Button>

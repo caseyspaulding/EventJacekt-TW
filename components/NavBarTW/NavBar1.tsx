@@ -165,7 +165,7 @@ export default function NavBar1 ()
               </Link>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
-              <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-100 hover:bg-blue-100 hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset">
+              <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-100 hover:bg-blue-600 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-inset">
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open menu</span>
                 <Bars3CenterLeftIcon aria-hidden="true" className="h-6 w-6" />
@@ -302,7 +302,7 @@ export default function NavBar1 ()
                     <img alt="EventJacket" height={ 40 } width={ 40 } src="/images/logo-full-white1.png" className="h-8 w-auto" />
                   </div>
                   <div className="-mr-2">
-                    <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-blue-700 p-2 text-white hover:bg-gray-100 hover:text-gray-500 focus:outline-none  ">
+                    <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-blue-700 p-2 text-white hover:bg-blue-600 hover:text-white focus:outline-none  ">
                       <span className="absolute -inset-0.5" />
                       <span className="sr-only">Close menu</span>
                       <XMarkIcon aria-hidden="true" className="h-6 w-6" />
@@ -380,13 +380,14 @@ export default function NavBar1 ()
                     </Button>
                     <p className="mt-6 mr-2 text-center text-base font-medium text-gray-100">
                       Existing customer?
+                     
+                      </p>
                       <Button
                         as='a'
                         href="/login"
-                        className="ml-2 rounded-3xl  text-white bg-blue-500 hover:bg-blue-500">
+                        className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600">
                         Sign in
                       </Button>
-                    </p>
                   </div>
                 ) }
 

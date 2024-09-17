@@ -6,7 +6,7 @@ const ComparisonTable = () =>
   const products = [
     {
       name: 'EventJacket',
-      logo: 'https://www.eventjacket.com/images/logo.svg',
+      logo: 'https://www.eventjacket.com/images/logo_Icon.png',
     },
     {
       name: 'EventBrite',
