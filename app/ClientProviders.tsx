@@ -19,7 +19,7 @@ export default function ClientProviders ( { children }: { children: React.ReactN
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" strategy="lazyOnload" />
      
       {/* Include additional scripts */ }
-      <Script src="https://accounts.google.com/gsi/client" strategy="lazyOnload" defer />
+      
       <Script src="https://connect.stripe.com/connect-js" strategy="lazyOnload" defer />
 
       <NextUIProvider>
