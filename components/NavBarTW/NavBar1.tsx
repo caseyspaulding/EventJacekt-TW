@@ -151,18 +151,16 @@ export default function NavBar1 ()
               <Link href="/">
                 <span className="sr-only">EventJacket</span>
                 <img
-                  alt="Evenjacket logo"
+                  alt="EventJacket Logo"
+                    
                   height={ 50 }
                   width={ 50 }
                   src="/images/logo-full-white1.webp"
-                  className="h-11 w-auto sm:h-12"
+                    className="h-11 w-auto sm:h-12"
+                    
                 />
               </Link>
-              <Link href="/">
-                <p className="ml-2 font-extrabold lg:mt-1 sm:mt-1 text-xl text-blue-700">
-                  <span></span>
-                </p>
-              </Link>
+             
             </div>
             <div className="-my-2 -mr-2 md:hidden">
               <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-100 hover:bg-blue-600 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-inset">
