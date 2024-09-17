@@ -39,13 +39,13 @@ const faqs = [
   }
 ];
 
-export default function Example ()
+export default function FAQ_TW ()
 {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
         <div className="mx-auto max-w-4xl divide-y divide-gray-900/10">
-          <h2 className="text-4xl font-bold leading-10 tracking-tight text-gray-900">Frequently asked questions</h2>
+          <h2 className="text-5xl font-bold leading-10 tracking-tight text-yellow-500">Frequently asked questions</h2>
           <dl className="mt-10 space-y-6 divide-y divide-gray-900/10">
             { faqs.map( ( faq ) => (
               <Disclosure key={ faq.question } as="div" className="pt-6">

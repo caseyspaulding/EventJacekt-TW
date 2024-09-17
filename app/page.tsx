@@ -61,7 +61,7 @@ export default async function Index ()
             {/* CTA section */ }
             <div className="bg-blue-700 ">
                 <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
-                    <h2 className="text-3xl font-bold tracking-tight text-yellow-400 sm:text-4xl">
+                    <h2 className="text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-yellow-500 to-yellow-300 sm:text-4xl">
                         <span className="block">Ready to dive in?</span>
                         <span className="block text-white">Start free today.</span>
                     </h2>
@@ -70,7 +70,7 @@ export default async function Index ()
                             <Button
                                 as='a'
                                 href="/signup"
-                                className="inline-flex items-center px-6 py-3 text-xl font-semibold text-blue-800 bg-yellow-500 hover:bg-blue-800"
+                                className="inline-flex items-center px-6 py-3 text-xl font-semibold text-blue-800 bg-yellow-500 hover:bg-yellow-400"
                             >
                                 Get Started
                             </Button>
