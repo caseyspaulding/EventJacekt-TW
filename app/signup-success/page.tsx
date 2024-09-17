@@ -30,7 +30,7 @@ export default function SignUpSuccess() {
                             <span className="sr-only">EventJacket</span>
                             <img
                                 alt="EventJacket Logo"
-                                src="/images/logo.svg"
+                                src="/images/Logo_Icon.webp"
                                 className="h-16 w-auto"
                             />
                         </a>
@@ -48,7 +48,7 @@ export default function SignUpSuccess() {
                         <Button
                             href="/"
                             as="a"
-                            className="w-full text-white bg-orange-500"
+                            className="w-full text-lg text-white bg-blue-600"
                             
                         >
                              Home

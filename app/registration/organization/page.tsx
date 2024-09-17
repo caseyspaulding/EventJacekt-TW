@@ -83,11 +83,11 @@ const RegisterOrganizationPage = () =>
       style={ { backgroundImage: 'url(/images/illustrations/background-3.jpg)' } }>
       <div className="bg-white p-8 rounded-3xl shadow-lg w-full max-w-md">
         <div className="mb-4 text-center">
-          <img src="/images/logo.svg" alt="EventJacket" className="h-12 w-auto mx-auto" />
+          <img src="/images/Logo_Icon.webp" alt="EventJacket" className="h-14 w-auto mx-auto" />
           <h2 className="mt-4 text-2xl font-semibold leading-7 text-gray-900">
             Organization Registration
           </h2>
-          <p className="mt-2 text-sm leading-6 text-gray-600">
+          <p className="mt-2 text-lg leading-6 text-gray-600">
             Please provide the details of your organization to complete the registration.
           </p>
         </div>
@@ -165,7 +165,7 @@ const RegisterOrganizationPage = () =>
           <div className="flex items-center justify-center">
             <LoadingButton  
               type="submit"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-green-600"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-blue-600 hover:bg-blue-600"
               disabled={ loading }
             >
               { loading ? 'Registering...' : 'Register Organization' }

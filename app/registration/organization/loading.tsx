@@ -17,7 +17,7 @@ export default function Loading ()
       {/* Overlay Content */ }
       <div className="absolute inset-0 flex items-center justify-center">
         <img
-          src="/images/logo.svg"
+          src="/images/Logo_Icon.webp"
           alt="Logo"
           className="h-16 w-auto"
 

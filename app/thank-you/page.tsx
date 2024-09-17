@@ -4,14 +4,14 @@ export default function ThankYouPage ()
 {
   return (
     <>
-      <div className="flex h-screen min-h-screen flex-col items-center justify-center bg-gray-100 px-4">
+      <div className="flex h-screen min-h-screen flex-col items-center justify-center bg-blue-700 px-4">
         <main className="flex w-full max-w-7xl flex-grow flex-col justify-center px-4 lg:px-8">
           <div className="flex flex-shrink-0 justify-center mb-8">
             <a href="#" className="inline-flex">
               <span className="sr-only">EventJacket</span>
               <img
                 alt="EventJacket Logo"
-                src="/images/logo.svg"
+                src="/images/Logo_Icon.webp"
                 className="h-16 w-auto"
               />
             </a>
@@ -21,7 +21,7 @@ export default function ThankYouPage ()
               <div className="flex flex-col rounded-2xl items-center p-8 space-y-6 bg-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="text-green-400 w-24 h-24 sm:w-28 sm:h-28"
+                  className="text-green-500 w-24 h-24 sm:w-28 sm:h-28"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -41,7 +41,7 @@ export default function ThankYouPage ()
                   creating events!
                 </p>
                 <Link href="/login" passHref>
-                  <div className="mt-3 inline-flex items-center px-6 py-3 text-white bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-400">
+                  <div className="mt-3 inline-flex items-center text-lg px-6 py-3 text-white bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-400">
                     Get Started
                   </div>
                 </Link>
