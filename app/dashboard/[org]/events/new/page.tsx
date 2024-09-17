@@ -560,7 +560,7 @@ const CreateEventPage = () =>
                             <button
                                 type="button"
                                 onClick={ () => removeFaq( index ) }
-                                className="mt-2 text-red-500 hover:text-red-700 text-sm"
+                                className="mt-2 text-red-500 hover:text-red-700 text-md"
                             >
                                 Remove FAQ
                             </button>
@@ -569,7 +569,7 @@ const CreateEventPage = () =>
                     <button
                         type="button"
                         onClick={ addFaq }
-                        className="mt-2 text-blue-500 hover:text-blue-700 text-sm"
+                        className="mt-2 text-green-600 hover:text-green-700 text-md"
                     >
                         + Add question
                     </button>
@@ -635,7 +635,7 @@ const CreateEventPage = () =>
                     <Button
                         type="submit"
                         radius="sm"
-                        className="px-6 py-2 bg-orange-500 text-white text-xl rounded-3xl"
+                        className="px-6 py-2 bg-yellow-500 text-white font-medium text-xl rounded-3xl"
                     >
                         Save Event
                     </Button>

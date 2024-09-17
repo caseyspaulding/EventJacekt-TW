@@ -158,7 +158,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                     <Link href="https://www.eventjacket.com">
                       <img
                         className="h-8 w-auto"
-                        src="/images/logo-icon-white.png"
+                        src="/images/Logo_Icon.webp"
                         alt="EventJacket"
                       />
                     </Link>
@@ -242,7 +242,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
             <Link href="https://www.eventjacket.com">
               <img
                 className="h-8 w-auto"
-                src="/images/logo-icon-white.png"
+                src="/images/Logo_Icon.webp"
                 alt="EventJacket"
               />
             </Link>
