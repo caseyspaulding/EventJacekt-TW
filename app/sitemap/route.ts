@@ -11,66 +11,75 @@ export default async function sitemap (): Promise<MetadataRoute.Sitemap>
   }
 
   const blogPosts = blogResult.data;
+  const baseUrl = `https://${ process.env.NEXT_PUBLIC_SITE_URL?.replace( /^https?:\/\//, '' ) }`; // Ensure baseUrl uses https
 
   // Generate sitemap URLs for dynamic blog posts
   const blogSitemapUrls = blogPosts.map( ( post ) => ( {
-    url: `${ process.env.NEXT_PUBLIC_SITE_URL }/blog/${ post.slug }`,
+    url: `${ baseUrl }/blog/${ post.slug }`,
     lastModified: new Date( post.updatedAt ).toISOString(),
   } ) );
 
   // Manually add static pages
-  // Manually add static pages
   const staticUrls = [
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/`,
+      url: `${ baseUrl }/`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/about`,
+      url: `${ baseUrl }/about`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/crm`,
+      url: `${ baseUrl }/crm`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/pricing`,
+      url: `${ baseUrl }/pricing`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/faqs`,
+      url: `${ baseUrl }/faqs`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/ticketing`,
+      url: `${ baseUrl }/ticketing`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/marketing`,
+      url: `${ baseUrl }/marketing`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/analytics`,
+      url: `${ baseUrl }/analytics`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/qrcode`,
+      url: `${ baseUrl }/qrcode`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/blog`,
+      url: `${ baseUrl }/blog`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/privacy`,
+      url: `${ baseUrl }/privacy`,
       lastModified: new Date().toISOString(),
     },
     {
-      url: `${ process.env.NEXT_PUBLIC_SITE_URL }/terms`,
+      url: `${ baseUrl }/terms`,
+      lastModified: new Date().toISOString(),
+    },
+    {
+      url: `${ baseUrl }/contact`,
+      lastModified: new Date().toISOString(),
+    },
+    {
+      url: `${ baseUrl }/docs`,
       lastModified: new Date().toISOString(),
     },
     // Add more static pages here as needed...
   ];
+
   // Combine both dynamic and static URLs
   return [ ...blogSitemapUrls, ...staticUrls ];
 }
