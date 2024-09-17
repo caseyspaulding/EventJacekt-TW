@@ -7,7 +7,7 @@ interface HeaderCenteredProps
 export default function HeaderCentered ( { title, description }: HeaderCenteredProps )
 {
   return (
-    <div className="relative isolate overflow-hidden bg-blue-800 px-6 py-8 sm:py-22 lg:px-8">
+    <div className="relative max-w-7xl mx-auto mt-4 isolate overflow-hidden bg-blue-700 px-6 py-8 sm:py-22 lg:px-8 rounded-2xl">
       <img
         alt=""
         src="/images/festival-4.webp"
