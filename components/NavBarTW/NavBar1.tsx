@@ -5,7 +5,7 @@ import { ChevronDownIcon, QrCodeIcon, XMarkIcon } from "@heroicons/react/20/soli
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
-import { Bars3CenterLeftIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
+import { Bars3CenterLeftIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon, TicketIcon } from "@heroicons/react/24/outline";
 import { createClient } from "@/utils/supabase/client";
 import React from "react";
 import type { Json } from "@/database.types";
@@ -39,16 +39,16 @@ export interface User
 
 const solutions = [
   {
-    name: "Ticketing",
-    description: "Get a better understanding of where your traffic is coming from.",
-    href: "/ticketing",
+    name: "Pricing",
+    description: "Unbeatable pricing for all your needs.",
+    href: "/pricing",
     icon: BuildingStorefrontIcon,
   },
   {
-    name: "CRM",
-    description: "Build and Maintain your relationships.",
-    href: "/crm",
-    icon: HeartIcon,
+    name: "Ticketing",
+    description: "Sell tickets for your events without breaking the bank.",
+    href: "/ticketing",
+    icon: TicketIcon,
   },
   {
     name: "Marketing",
@@ -57,13 +57,13 @@ const solutions = [
     icon: MegaphoneIcon,
   },
   {
-    name: "Analytics",
-    description: "Data you need to make the right decisions.",
-    href: "/analytics",
+    name: "CRM",
+    description: "Coming Soon",
+    href: "/crm",
     icon: ChartBarIcon,
   },
   {
-    name: "QR Code Generator",
+    name: "Free QR Code Generator",
     description: "Free Custom QR Code Generator.",
     href: "/qrcode",
     icon: QrCodeIcon,
@@ -292,12 +292,12 @@ export default function NavBar1 ()
 
 
           {/* Mobile menu */ }
-          <PopoverPanel className="absolute inset-x-0 top-0 z-30 origin-top-right p-2 transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-100 data-[enter]:ease-out data-[leave]:ease-in md:hidden">
+          <PopoverPanel className="absolute inset-x-0 top-0 z-30 origin-top-right transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-100 data-[enter]:ease-out data-[leave]:ease-in md:hidden">
             <div className="divide-y-2 divide-yellow-50 rounded-lg h-screen bg-blue-700 shadow-lg ring-1 ring-yellow-400 ring-opacity-5">
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <img alt="EventJacket" height={ 40 } width={ 40 } src="/images/logo-full-white1.png" className="h-8 w-auto" />
+                    <img alt="EventJacket" height={ 40 } width={ 40 } src="/images/logo-full-white1.png" className="h-12 w-auto" />
                   </div>
                   <div className="-mr-2">
                     <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-blue-700 p-2 text-white hover:bg-blue-600 hover:text-white focus:outline-none  ">
@@ -376,7 +376,7 @@ export default function NavBar1 ()
                     >
                       Create Account
                     </Button>
-                    <p className="mt-6 mr-2 text-center text-base font-medium text-gray-100">
+                    <p className="mt-6 mr-2 mb-2 text-center text-base font-medium text-gray-100">
                       Existing customer?
                      
                       </p>
@@ -408,16 +408,7 @@ export default function NavBar1 ()
                 </div>
               </div>
 
-              {/* Navigation Links */ }
-              <div className="px-5 py-6">
-                <div className="grid grid-cols-2 gap-4">
-                  { navigation.map( ( item ) => (
-                    <a key={ item.name } href={ item.href } className="text-base font-medium text-white hover:text-yellow-300">
-                      { item.name }
-                    </a>
-                  ) ) }
-                </div>
-              </div>
+              
             </div>
           </PopoverPanel>
 
