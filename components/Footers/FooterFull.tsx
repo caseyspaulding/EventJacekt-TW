@@ -99,7 +99,7 @@ export default function FooterFull ()
               height={ 20 } 
               width={ 200 }
           
-              src="/images/logo-full7.png"
+              src="/images/logo-full.png"
                />
 
             <p className=" pl-1 text-sm leading-6 text-blue-700">
