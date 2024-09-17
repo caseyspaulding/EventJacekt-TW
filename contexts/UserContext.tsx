@@ -20,7 +20,7 @@ type UserProviderProps = {
 
 const UserContext = createContext<UserContextType | undefined>( undefined );
 
-export function UserProvider ( { children, initialUser }: UserProviderProps )
+export default function UserProvider ( { children, initialUser }: UserProviderProps )
 {
     const supabase = createClient();
 
