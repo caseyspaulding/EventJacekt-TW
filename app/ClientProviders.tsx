@@ -8,7 +8,6 @@ import Script from 'next/script';
 
 // Lazy load non-essential components
 const UserProvider = React.lazy( () => import( '@/contexts/UserContext' ) );
-const APIProvider = React.lazy( () => import( '@vis.gl/react-google-maps' ).then( module => ( { default: module.APIProvider } ) ) );
 
 
 export default function ClientProviders ( { children }: { children: React.ReactNode } )
@@ -26,11 +25,11 @@ export default function ClientProviders ( { children }: { children: React.ReactN
        
           <Toaster />
           <Suspense fallback={ <div>Loading...</div> }>
-            <APIProvider apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' }>
+           
               <UserProvider initialUser={ null }>
                 { children }
               </UserProvider>
-            </APIProvider>
+            
           </Suspense>
           <ProgressBar
             height="3px"
