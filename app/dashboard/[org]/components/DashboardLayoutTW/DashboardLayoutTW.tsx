@@ -316,7 +316,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       </div>
 
       <div className="flex flex-col flex-1 lg:pl-64">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-10 bg-gradient-to-l from-blue-500 via-blue-700 to-blue-900 sm:bg-none lg:bg-white max-w-8xl">
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-4 bg-gradient-to-l from-blue-500 via-blue-700 to-blue-900 sm:bg-none lg:bg-white max-w-8xl">
 
           <button
             type="button"
@@ -358,7 +358,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-3 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     { userNavigation.map( ( item ) => (
                       <Menu.Item key={ item.name }>
                         { ( { active } ) =>

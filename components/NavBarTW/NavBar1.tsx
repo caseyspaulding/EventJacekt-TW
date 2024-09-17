@@ -229,7 +229,7 @@ export default function NavBar1 ()
               ) : (
                 <Menu as="div" className="ml-3 relative bg-blue-700/90 backdrop-blur-lg">
                   <div>
-                    <Menu.Button className="max-w-xs bg-blue-700 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <Menu.Button className="max-w-xs bg-blue-700 flex items-center text-sm rounded-full focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-500">
                       <span className="sr-only">Open user menu</span>
                       <div className="flex items-center space-x-4">
                         <img
@@ -241,8 +241,8 @@ export default function NavBar1 ()
                         />
                         {/* Container to stack the orgName and email vertically */ }
                         <div className="flex flex-col items-start">
-                          <p className="text-base font-medium text-gray-900">{ user?.orgName }</p>
-                          <p className="text-xs text-gray-500">{ user2.user?.name || user?.email }</p>
+                          <p className="text-base font-medium text-gray-100">{ user?.orgName }</p>
+                          <p className="text-xs text-gray-100">{ user2.user?.name || user?.email }</p>
                         </div>
                       </div>
                     </Menu.Button>
@@ -264,8 +264,8 @@ export default function NavBar1 ()
                               <form onSubmit={ handleSignOut } method="post" className="w-full">
                                 <button
                                   type="submit"
-                                  className={ `${ active ? 'bg-gray-100' : ''
-                                    } w-full text-left px-4 py-2 text-sm text-gray-700` }
+                                  className={ `${ active ? 'bg-blue-600' : ''
+                                    } w-full text-left px-4 py-2 text-sm text-gray-100` }
                                 >
                                   { item.name }
                                 </button>
@@ -273,8 +273,8 @@ export default function NavBar1 ()
                             ) : (
                               <a
                                 href={ item.href }
-                                className={ `${ active ? 'bg-gray-100' : ''
-                                  } block w-full px-4 py-2 text-sm text-gray-700` }
+                                className={ `${ active ? 'bg-blue-600' : ''
+                                  } block w-full px-4 py-2 text-sm text-gray-100` }
                               >
                                 { item.name }
                               </a>
@@ -324,7 +324,7 @@ export default function NavBar1 ()
                           />
                           <div className="ml-2 flex flex-col items-start">
                             <span className="font-medium text-gray-100">{ user?.orgName || 'User' }</span>
-                            <p className="text-xs text-gray-500">{ user2.user?.name || user?.email }</p>
+                            <p className="text-xs text-gray-100">{ user2.user?.name || user?.email }</p>
                           </div>
                         </Menu.Button>
                       </div>
