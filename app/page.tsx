@@ -6,7 +6,7 @@ import FooterFull from '@/components/Footers/FooterFull';
 import NavBarTW from '@/components/NavBarTW/NavBarTW';
 import type { Metadata } from 'next';
 import { getEvents } from './actions/getEvents'; // Server action or server-side fetching function
-import EventsListComponent from '@/components/EventListComponent';
+
 import HowItWorks from '@/components/Features/HowItWorks';
 import FAQ_TW from '@/components/FAQ/FAQ_TW';
 import Head from 'next/head';
@@ -59,7 +59,7 @@ export default async function Index ()
             <FAQ_TW />
 
             {/* CTA section */ }
-            <div className="bg-blue-700 mb-8">
+            <div className="bg-blue-700 ">
                 <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
                     <h2 className="text-3xl font-bold tracking-tight text-yellow-400 sm:text-4xl">
                         <span className="block">Ready to dive in?</span>
@@ -70,7 +70,7 @@ export default async function Index ()
                             <Button
                                 as='a'
                                 href="/signup"
-                                className="inline-flex items-center px-6 py-3 text-xl font-medium text-white bg-blue-900 hover:bg-blue-800"
+                                className="inline-flex items-center px-6 py-3 text-xl font-semibold text-blue-800 bg-yellow-500 hover:bg-blue-800"
                             >
                                 Get Started
                             </Button>
@@ -78,16 +78,8 @@ export default async function Index ()
                     </div>
                 </div>
             </div>
-            <h2 className="text-center">
-                <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
-                    Just Launched
-                </span>
-                <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
-                    <span className="block text-gray-900">Events on </span>
-                    <span className="animate__animated animate__rubberBand block text-blue-600">EventJacket</span>
-                </span>
-            </h2>
-            <EventsListComponent eventList={ eventList } />
+           
+          
 
             <FooterFull />
         </>

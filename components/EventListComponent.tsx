@@ -23,7 +23,17 @@ interface EventsListComponentProps
 const EventsListComponent: React.FC<EventsListComponentProps> = ( { eventList } ) =>
 {
   return (
+
     <section className="py-16 mt-5 mx-auto max-w-7xl ">
+      <h2 className="text-center">
+        <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
+          Just Launched
+        </span>
+        <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
+          <span className="block text-gray-900">Events on </span>
+          <span className="animate__animated animate__rubberBand block text-blue-600">EventJacket</span>
+        </span>
+      </h2>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
