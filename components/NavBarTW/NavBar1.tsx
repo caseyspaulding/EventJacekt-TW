@@ -1,11 +1,11 @@
 'use client';
 
 import { Menu, Popover, PopoverButton, PopoverGroup, PopoverPanel, Transition } from "@headlessui/react";
-import { ChevronDownIcon, QrCodeIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { BookOpenIcon, ChevronDownIcon, QrCodeIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
-import { Bars3CenterLeftIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon, TicketIcon } from "@heroicons/react/24/outline";
+import { Bars3CenterLeftIcon, BookmarkIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon, TicketIcon } from "@heroicons/react/24/outline";
 import { createClient } from "@/utils/supabase/client";
 import React from "react";
 import type { Json } from "@/database.types";
@@ -68,11 +68,17 @@ const solutions = [
     href: "/qrcode",
     icon: QrCodeIcon,
   },
+  {
+    name: "Articles",
+    description: "Read our latest articles.",
+    href: "/blog",
+    icon: BookOpenIcon,
+  },
 ];
 const navigation = [
   { name: "Pricing", href: "/pricing" },
 
-  { name: "Blog", href: "/blog" },
+  { name: "Articles", href: "/blog" },
 
 ];
 
