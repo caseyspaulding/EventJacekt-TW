@@ -59,26 +59,23 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
     return (
         <>
             <NavBar1 />
-            <div className="">
-                <article className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-2">
-                   {/* Header Section */ }
+            <div className="font-space-grotesk"> {/* Apply the font family to the entire blog post */ }
+                <article className="mx-auto max-w-7xl px-2 py-12 sm:px-4 lg:px-4">
+                    {/* Header Section */ }
                     <div className="relative mb-8 flex flex-col md:flex-row items-center md:items-stretch">
                         {/* Left Column: Title, Author, Date, and Read Time */ }
-                        
-                        <div className="md:w-2/3 flex flex-col justify-center p-2 bg-white rounded-tl-xl rounded-bl-xl ">
-                            <p className="text-sm text-gray-500 mb-6">
-                               { post.tags ? post.tags.join( ', ' ) : '' }
+                        <div className="md:w-2/3 flex flex-col justify-center p-4 bg-white rounded-tl-xl rounded-bl-xl">
+                            <p className="text-base text-gray-500 mb-4 leading-relaxed"> {/* Adjust font size and line height */ }
+                                { post.tags ? post.tags.join( ', ' ) : '' }
                             </p>
-                            <h1 className="text-4xl font-bold text-gray-800 mb-4">{ post.title }</h1>
-                            <p className="text-sm text-gray-500 mb-4">
+                            <h1 className="text-4xl font-bold text-gray-800 mb-4 leading-tight">{ post.title }</h1> {/* Tight line height for title */ }
+                            <p className="text-base text-gray-500 mb-4 leading-relaxed"> {/* Use `text-base` for better readability */ }
                                 { new Date( post.createdAt ).toLocaleDateString() } • { readTime }
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-base text-gray-500 leading-relaxed"> {/* Adjust line height for better readability */ }
                                 By { post.author }
                             </p>
-                            
                         </div>
-                       
 
                         {/* Right Column: Featured Image */ }
                         { post.featuredImage && (
@@ -86,21 +83,20 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                                 <img
                                     src={ post.featuredImage }
                                     alt={ post.title }
-                                    className="w-full h-full object-cover rounded-xl md:rounded-tl-xl" // Rounded on mobile, not on medium and larger
+                                    className="w-full h-full object-cover rounded-xl md:rounded-tl-xl"
                                 />
                             </div>
                         ) }
                     </div>
 
                     {/* Content and Sidebar Container */ }
-                    <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 bg-white rounded-2xl p-2">
+                    <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 bg-white rounded-2xl p-4">
                         {/* Main Content */ }
                         <div className="xl:col-span-3">
                             <div
-                                className="prose prose-lg max-w-none"
+                                className="prose prose-lg max-w-none leading-relaxed text-base" // Adjust line height and font size
                                 dangerouslySetInnerHTML={ { __html: sanitizedContent } }
                             />
-                            
                         </div>
 
                         {/* Sticky Aside */ }
@@ -109,7 +105,7 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                                 {/* Small Ad */ }
                                 <div className="p-6 bg-blue-100 rounded-lg shadow-md text-center">
                                     <h3 className="text-lg font-bold text-blue-900 mb-2">Create an Account for Free!</h3>
-                                    <p className="text-sm text-gray-700 mb-4">
+                                    <p className="text-base text-gray-700 mb-4 leading-relaxed">
                                         Join now and get access to exclusive content, updates, and more.
                                     </p>
                                     <a
