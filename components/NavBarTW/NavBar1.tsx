@@ -52,7 +52,7 @@ const solutions = [
   },
   {
     name: "Marketing",
-    description: "Get the word out.",
+    description: "Coming Soon",
     href: "/marketing",
     icon: MegaphoneIcon,
   },
@@ -154,147 +154,147 @@ export default function NavBar1 ()
             {/* Inner container limits width and adds gutters */ }
             <div className="max-w-7xl mx-auto px-4 flex items-center justify-between py-3 md:justify-start md:space-x-10 lg:px-3">
               <div className="flex justify-start lg:w-0 lg:flex-1">
-              <Link href="/">
-                <span className="sr-only">EventJacket</span>
-                <img
-                  alt="EventJacket Logo"
-                    
-                  height={ 50 }
-                  width={ 50 }
-                  src="/images/logo-full-white1.webp"
+                <Link href="/">
+                  <span className="sr-only">EventJacket</span>
+                  <img
+                    alt="EventJacket Logo"
+
+                    height={ 50 }
+                    width={ 50 }
+                    src="/images/logo-full-white1.webp"
                     className="h-11 w-auto sm:h-12"
-                    
-                />
-              </Link>
-             
-            </div>
-            <div className="-my-2 -mr-2 md:hidden">
-              <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-100 hover:bg-blue-600 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-inset">
-                <span className="absolute -inset-0.5" />
-                <span className="sr-only">Open menu</span>
-                <Bars3CenterLeftIcon aria-hidden="true" className="h-6 w-6" />
-              </PopoverButton>
-            </div>
-            <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
-              {/* Solutions Popover */ }
-              <Popover className="relative">
-                <PopoverButton className="group inline-flex items-center rounded-md text-lg font-medium text-gray-100 hover:text-yellow-400 focus:outline-none focus:ring-1 focus:ring-yellow-500  data-[open]:text-gray-200">
-                  <span>Solutions</span>
-                  <ChevronDownIcon
-                    aria-hidden="true"
-                    className="ml-2 h-5 w-5 text-gray-100  group-hover:text-gray-200 group-data-[open]:text-blue-400 group-data-[open]:group-hover:text-gray-300"
+
                   />
+                </Link>
+
+              </div>
+              <div className="-my-2 -mr-2 md:hidden">
+                <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-100 hover:bg-blue-600 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-inset">
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Open menu</span>
+                  <Bars3CenterLeftIcon aria-hidden="true" className="h-6 w-6" />
                 </PopoverButton>
+              </div>
+              <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
+                {/* Solutions Popover */ }
+                <Popover className="relative">
+                  <PopoverButton className="group inline-flex items-center rounded-md text-lg font-medium text-gray-100 hover:text-yellow-400 focus:outline-none focus:ring-1 focus:ring-yellow-500  data-[open]:text-gray-200">
+                    <span>Solutions</span>
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="ml-2 h-5 w-5 text-gray-100  group-hover:text-gray-200 group-data-[open]:text-blue-400 group-data-[open]:group-hover:text-gray-300"
+                    />
+                  </PopoverButton>
 
-                <PopoverPanel className="absolute z-10 -ml-4 mt-3 w-screen bg-blur max-w-md transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in lg:left-1/2 lg:ml-0 lg:max-w-2xl lg:-translate-x-1/2">
-                  <div className="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white ring-opacity-5">
-                    <div className="relative grid gap-6 bg-blue-700 px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
-                      { solutions.map( ( item ) => (
-                        <a
-                          key={ item.name }
-                          href={ item.href }
-                          className="-m-3 flex items-start rounded-lg p-3 hover:bg-blue-800"
-                        >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-yellow-400 sm:h-12 sm:w-12">
-                            <item.icon aria-hidden="true" className="h-6 w-6" />
-                          </div>
-                          <div className="ml-4">
-                            <p className="text-lg font-medium text-white">{ item.name }</p>
-                            <p className="mt-1 text-base text-gray-50">{ item.description }</p>
-                          </div>
-                        </a>
-                      ) ) }
-                    </div>
-                  </div>
-                </PopoverPanel>
-              </Popover>
-
-              {/* Navigation Links */ }
-              { navigation.map( ( item ) => (
-                <a key={ item.name } href={ item.href } className="text-lg font-medium text-gray-100 hover:text-yellow-400">
-                  { item.name }
-                </a>
-              ) ) }
-            </PopoverGroup>
-
-            {/* User Profile or Sign in/Sign up */ }
-            <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-              { !isAuthenticated ? (
-                <>
-                  <a href="/login" className="whitespace-nowrap text-lg font-medium text-gray-100 hover:text-gray-200">
-                    Sign in
-                  </a>
-                  <Button
-                    as='a'
-                    href="/signup"
-                    className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-lg font-medium text-white shadow-sm bg-blue-600 hover:bg-blue-600 "
-                  >
-                    Start Free
-                  </Button>
-                </>
-              ) : (
-                <Menu as="div" className="ml-3 relative bg-blue-700/90 backdrop-blur-lg">
-                  <div>
-                    <Menu.Button className="max-w-xs bg-blue-700 flex items-center text-sm rounded-full focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-500">
-                      <span className="sr-only">Open user menu</span>
-                      <div className="flex items-center space-x-4">
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src={ user2?.user?.avatar || '/images/avatars/user_avatar_default.png' }
-                          alt="Profile image"
-                          height={ 32 }
-                          width={ 32 }
-                        />
-                        {/* Container to stack the orgName and email vertically */ }
-                        <div className="flex flex-col items-start">
-                          <p className="text-base font-medium text-gray-100">{ user?.orgName }</p>
-                          <p className="text-xs text-gray-100">{ user2.user?.name || user?.email }</p>
-                        </div>
+                  <PopoverPanel className="absolute z-10 -ml-4 mt-3 w-screen bg-blur max-w-md transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in lg:left-1/2 lg:ml-0 lg:max-w-2xl lg:-translate-x-1/2">
+                    <div className="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white ring-opacity-5">
+                      <div className="relative grid gap-6 bg-blue-700 px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
+                        { solutions.map( ( item ) => (
+                          <a
+                            key={ item.name }
+                            href={ item.href }
+                            className="-m-3 flex items-start rounded-lg p-3 hover:bg-blue-800"
+                          >
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-yellow-400 sm:h-12 sm:w-12">
+                              <item.icon aria-hidden="true" className="h-6 w-6" />
+                            </div>
+                            <div className="ml-4">
+                              <p className="text-lg font-medium text-white">{ item.name }</p>
+                              <p className="mt-1 text-base text-gray-50">{ item.description }</p>
+                            </div>
+                          </a>
+                        ) ) }
                       </div>
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={ React.Fragment }
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-blue-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      { userNavigation.map( ( item ) => (
-                        <Menu.Item key={ item.name }>
-                          { ( { active } ) =>
-                            item.name === 'Sign out' ? (
-                              <form onSubmit={ handleSignOut } method="post" className="w-full">
-                                <button
-                                  type="submit"
+                    </div>
+                  </PopoverPanel>
+                </Popover>
+
+                {/* Navigation Links */ }
+                { navigation.map( ( item ) => (
+                  <a key={ item.name } href={ item.href } className="text-lg font-medium text-gray-100 hover:text-yellow-400">
+                    { item.name }
+                  </a>
+                ) ) }
+              </PopoverGroup>
+
+              {/* User Profile or Sign in/Sign up */ }
+              <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+                { !isAuthenticated ? (
+                  <>
+                    <a href="/login" className="whitespace-nowrap text-lg font-medium text-gray-100 hover:text-gray-200">
+                      Sign in
+                    </a>
+                    <Button
+                      as='a'
+                      href="/signup"
+                      className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-lg font-medium text-white shadow-sm bg-blue-600 hover:bg-blue-600 "
+                    >
+                      Start Free
+                    </Button>
+                  </>
+                ) : (
+                  <Menu as="div" className="ml-3 relative bg-blue-700/90 backdrop-blur-lg">
+                    <div>
+                      <Menu.Button className="max-w-xs bg-blue-700 flex items-center text-sm rounded-full focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-500">
+                        <span className="sr-only">Open user menu</span>
+                        <div className="flex items-center space-x-4">
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src={ user2?.user?.avatar || '/images/avatars/user_avatar_default.png' }
+                            alt="Profile image"
+                            height={ 32 }
+                            width={ 32 }
+                          />
+                          {/* Container to stack the orgName and email vertically */ }
+                          <div className="flex flex-col items-start">
+                            <p className="text-base font-medium text-gray-100">{ user?.orgName }</p>
+                            <p className="text-xs text-gray-100">{ user2.user?.name || user?.email }</p>
+                          </div>
+                        </div>
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={ React.Fragment }
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-blue-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        { userNavigation.map( ( item ) => (
+                          <Menu.Item key={ item.name }>
+                            { ( { active } ) =>
+                              item.name === 'Sign out' ? (
+                                <form onSubmit={ handleSignOut } method="post" className="w-full">
+                                  <button
+                                    type="submit"
+                                    className={ `${ active ? 'bg-blue-600' : ''
+                                      } w-full text-left px-4 py-2 text-sm text-gray-100` }
+                                  >
+                                    { item.name }
+                                  </button>
+                                </form>
+                              ) : (
+                                <a
+                                  href={ item.href }
                                   className={ `${ active ? 'bg-blue-600' : ''
-                                    } w-full text-left px-4 py-2 text-sm text-gray-100` }
+                                    } block w-full px-4 py-2 text-sm text-gray-100` }
                                 >
                                   { item.name }
-                                </button>
-                              </form>
-                            ) : (
-                              <a
-                                href={ item.href }
-                                className={ `${ active ? 'bg-blue-600' : ''
-                                  } block w-full px-4 py-2 text-sm text-gray-100` }
-                              >
-                                { item.name }
-                              </a>
-                            )
-                          }
-                        </Menu.Item>
-                      ) ) }
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              ) }
+                                </a>
+                              )
+                            }
+                          </Menu.Item>
+                        ) ) }
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                ) }
+              </div>
             </div>
-            </div>
-            </div>
+          </div>
 
 
           {/* Mobile menu */ }
@@ -384,14 +384,14 @@ export default function NavBar1 ()
                     </Button>
                     <p className="mt-6 mr-2 mb-2 text-center text-base font-medium text-gray-100">
                       Existing customer?
-                     
-                      </p>
-                      <Button
-                        as='a'
-                        href="/login"
-                        className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600">
-                        Sign in
-                      </Button>
+
+                    </p>
+                    <Button
+                      as='a'
+                      href="/login"
+                      className="flex w-full items-center rounded-3xl justify-center border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600">
+                      Sign in
+                    </Button>
                   </div>
                 ) }
 
@@ -414,15 +414,15 @@ export default function NavBar1 ()
                 </div>
               </div>
 
-              
+
             </div>
           </PopoverPanel>
 
         </Popover>
       </header>
 
-</div>
-    
-    
+    </div>
+
+
   );
 }
