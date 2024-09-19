@@ -131,7 +131,7 @@ export default function EventsPage ()
     {
       handleDelete( selectedEventId );
     }
-    onOpenChange( false ); // Close the modal
+    onOpenChange(  ); // Close the modal
   };
 
   return (<>
