@@ -1,3 +1,4 @@
+ 
 import React from "react";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
@@ -177,6 +178,7 @@ export default async function BuyTickets ( { params }: { params: Params } )
           }
           tickets={ tickets as [] } // Pass the array of tickets
           eventSlug={ eventSlug }
+          featuredImage={ eventData.featuredImage || "" } // Pass the featured image
         />
       </div>
 <FooterTW />  

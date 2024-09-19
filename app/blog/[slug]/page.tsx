@@ -68,7 +68,7 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                             <p className="text-base text-gray-500 mb-4 leading-relaxed"> {/* Adjust font size and line height */ }
                                 { post.tags ? post.tags.join( ', ' ) : '' }
                             </p>
-                            <h1 className="text-4xl font-bold text-gray-800 mb-4 leading-tight">{ post.title }</h1> {/* Tight line height for title */ }
+                            <h1 className="text-4xl font-extrabold text-gray-800 mb-4 leading-tight">{ post.title }</h1> {/* Tight line height for title */ }
                             <p className="text-base text-gray-500 mb-4 leading-relaxed"> {/* Use `text-base` for better readability */ }
                                 { new Date( post.createdAt ).toLocaleDateString() } • { readTime }
                             </p>
@@ -94,7 +94,7 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                         {/* Main Content */ }
                         <div className="xl:col-span-3">
                             <div
-                                className="prose prose-lg max-w-none leading-relaxed text-base" // Adjust line height and font size
+                                className="prose prose-lg max-w-none leading-relaxed text-lg" // Adjust line height and font size
                                 dangerouslySetInnerHTML={ { __html: sanitizedContent } }
                             />
                         </div>
@@ -103,16 +103,16 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                         <aside className="hidden xl:block xl:col-span-1 space-y-6 xl:space-y-10">
                             <div className="sticky top-20 space-y-6">
                                 {/* Small Ad */ }
-                                <div className="p-6 bg-blue-100 rounded-lg shadow-md text-center">
+                                <div className="p-6 bg-gray-50 rounded-2xl shadow-md text-center">
                                     <h3 className="text-lg font-bold text-blue-900 mb-2">Create an Account for Free!</h3>
                                     <p className="text-base text-gray-700 mb-4 leading-relaxed">
-                                        Join now and get access to exclusive content, updates, and more.
+                                        Get started with our free plan and enjoy all the features.
                                     </p>
                                     <a
                                         href="/signup"
-                                        className="inline-block px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                                        className="inline-block px-4 py-2 text-black bg-yellow-400 rounded-3xl hover:bg-yellow-500"
                                     >
-                                        Sign Up Now
+                                        Create Free Account
                                     </a>
                                 </div>
                             </div>
