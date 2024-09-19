@@ -48,7 +48,7 @@ export default function HowItWorks ()
                   }` }
               >
                 <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-yellow-400 text-white">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-b from-yellow-400 to-yellow-500 text-white">
                     <span className="text-xl font-bold">{ step.number }</span>
                   </div>
                 </div>
