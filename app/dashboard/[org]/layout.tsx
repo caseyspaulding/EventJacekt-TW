@@ -6,8 +6,11 @@ import DashboardLayoutClient from './DashboardLayoutClient'; // Import the clien
 import Head from 'next/head';
 import Script from 'next/script';
 
+
 export default async function DashboardLayout ( { children }: React.PropsWithChildren<unknown> )
 {
+    
+    const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
     const supabase = createClient();
     const {
         data: { session }
@@ -56,9 +59,14 @@ export default async function DashboardLayout ( { children }: React.PropsWithChi
         
         </Head>
 
-    <DashboardLayoutClient user={ user }>
-        { children }
+        <DashboardLayoutClient user={ user } stripePublishableKey={ stripePublishableKey ||
+            ''
+         }>
+          
+                { children }
+       
         </DashboardLayoutClient>
+        
     </>
     )
 }

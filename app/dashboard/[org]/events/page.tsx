@@ -143,29 +143,43 @@ export default function EventsPage ()
                     events.map( ( event ) => (
                       <tr key={ event.id } className="block md:table-row md:border-none md:shadow-none mb-4 md:mb-0">
                         <td className="block md:table-cell px-3 py-2">
-                          <strong className="md:hidden">Event Title: </strong> { event.name }
+                          <strong className="md:hidden">Event Title: </strong>
+                          { event.name }
                         </td>
                         <td className="block md:table-cell px-3 py-2">
-                          <strong className="md:hidden">Start Date: </strong> { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'No start date' }
+                          <strong className="md:hidden">Start Date: </strong>
+                          { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'No start date' }
                         </td>
                         <td className="block md:table-cell px-3 py-2">
-                          <strong className="md:hidden">End Date: </strong> { event.endDate ? new Date( event.endDate ).toLocaleDateString() : 'No end date' }
+                          <strong className="md:hidden">End Date: </strong>
+                          { event.endDate ? new Date( event.endDate ).toLocaleDateString() : 'No end date' }
                         </td>
                         <td className="block md:table-cell px-3 py-2">
+                          {/* Link to edit event */ }
                           <Link href={ `/dashboard/${ user?.orgName }/events/${ event.slug }/edit` }>
                             <div className="text-blue-600 hover:text-blue-900 cursor-pointer">
                               Edit<span className="sr-only">, { event.name }</span>
                             </div>
                           </Link>
+
+                          {/* Link to the public event page */ }
+                          <Link href={ `/events/${ event.slug }` }>
+                            <div className="text-blue-600 hover:text-blue-900 cursor-pointer mt-2">
+                              View Public Page<span className="sr-only">, { event.name }</span>
+                            </div>
+                          </Link>
+
+                          {/* Button to delete event */ }
                           <button
                             onClick={ () => handleDelete( event.id ) }
-                            className="text-blue-600 hover:text-blue-900 cursor-pointer"
+                            className="text-blue-600 hover:text-blue-900 cursor-pointer mt-2"
                           >
                             Delete<span className="sr-only">, { event.name }</span>
                           </button>
-                          {/* Add a button/link to create tickets for the event */ }
+
+                          {/* Link to create tickets for the event */ }
                           <Link href={ `/dashboard/${ user?.orgName }/events/${ event.slug }/create-tickets` }>
-                            <div className="text-blue-600 hover:text-blue-900 cursor-pointer">
+                            <div className="text-blue-600 hover:text-blue-900 cursor-pointer mt-2">
                               Create Tickets<span className="sr-only">, { event.name }</span>
                             </div>
                           </Link>

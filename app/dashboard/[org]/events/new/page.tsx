@@ -7,7 +7,7 @@ import { generateSlug } from '@/utils/stringUtils';
 import toast from 'react-hot-toast';
 import { createEvent } from '@/app/actions/eventActions';
 import ModalBasic from '@/components/modals/ModalBasic';
-import { Button, CalendarDate, DateInput, Input, Textarea, } from '@nextui-org/react';
+import { Button, Input, Textarea, } from '@nextui-org/react';
 import { FileUploadButton } from './FileUploadButton';
 
 import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
@@ -17,9 +17,10 @@ import { ImageUploadVenue } from './ImageUploadVenue';
 
 import dynamic from 'next/dynamic';
 import InputFieldEJ from '@/components/Input/InputEJ';
-import DateTimeFieldEJ from '@/components/Input/DateTimeEJ';
+
 import Head from 'next/head';
 import Script from 'next/script';
+import { APIProvider } from '@vis.gl/react-google-maps';
 
 const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
     ssr: false, // This prevents server-side rendering of the component
@@ -40,10 +41,7 @@ const CreateEventPage = () =>
     const [ eventStartTime, setEventStartTime ] = useState( '' );
     const [ eventEndTime, setEventEndTime ] = useState( '' );
     const [ organizerContact, setOrganizerContact ] = useState( '' );
-    const [ dateRange, setDateRange ] = useState<{ startDate: string; endDate: string }>( {
-        startDate: '',
-        endDate: '',
-    } );
+
     const [ venue, setVenue ] = useState( '' );
     const [ venueDescription, setVenueDescription ] = useState( '' );
     const [ address, setAddress ] = useState( '' );
@@ -198,7 +196,14 @@ const CreateEventPage = () =>
 
             if ( response.success )
             {
-                toast.success( 'Event created successfully!' );
+                toast.success(
+                    <>
+                        Event created successfully!{ ' ' }
+                        <a href={ `/events/${ generatedSlug }` } target="_blank" rel="noopener noreferrer">
+                            View Event Page
+                        </a>
+                    </>
+                );
                 setIsModalOpen( true );
                 // Clear form
                 setName( '' );
@@ -236,10 +241,7 @@ const CreateEventPage = () =>
             toast.error( 'An unexpected error occurred.' );
         }
     };
-    const handleDateRangeChange = ( dates: { startDate: string; endDate: string } ) =>
-    {
-        setDateRange( dates );
-    };
+
     const handleModalClose = () =>
     {
         setIsModalOpen( false );
@@ -456,7 +458,9 @@ const CreateEventPage = () =>
                     </div>
 
                 </div>
-                <VenueMap apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' } address={ mapAddress || '' } />
+                <APIProvider apiKey={ process.env.GOOGLE_MAPS_API_KEY || '' }>
+                    <VenueMap apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' } address={ mapAddress || '' } />
+                </APIProvider>
 
                 <div>
                     <label htmlFor="notes" className="block text-sm font-medium text-gray-700">

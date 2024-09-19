@@ -7,6 +7,7 @@ import { Disclosure } from '@headlessui/react';
 import { ArrowUpCircleIcon } from '@heroicons/react/20/solid';
 import { ArrowDownCircleIcon } from '@heroicons/react/24/outline';
 import EventImage from './Hero/EventImage';
+import { APIProvider } from '@vis.gl/react-google-maps';
 
 interface FAQ
 {
@@ -135,11 +136,14 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
       
           { address && (<>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Venue Map</h2>
+            <APIProvider apiKey={ process.env.GOOGLE_MAPS_API_KEY || '' }>
             <VenueMap
               apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' }
               address={ address }
         
-            /></>
+              />
+            </APIProvider>
+            </>
           ) }
         </section>
       </section>

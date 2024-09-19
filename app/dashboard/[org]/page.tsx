@@ -12,6 +12,7 @@ import { Suspense } from 'react';
 import { sql } from 'drizzle-orm';
 import Link from 'next/link';
 
+
 interface DashboardPageProps
 {
     params: { org: string };
@@ -171,7 +172,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                 <div className="bg-white max-w-6xl">
                     <DashboardCardGrid cards={ cards } />
                     <div>
-
+                      
 
                     </div>
                 </div>
