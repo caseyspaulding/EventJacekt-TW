@@ -23,10 +23,13 @@ export const metadata = {
             },
         ],
     },
-    themeColor: '#ffffff',
     other: {
         'msapplication-TileColor': '#da532c',
     },
+};
+
+export const viewport = {
+    themeColor: '#ffffff', // Move themeColor here
 };
 
 
