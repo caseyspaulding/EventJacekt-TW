@@ -89,6 +89,10 @@ export async function generateMetadata ( { params }: { params: Params } )
                 content: '453279560972900',
             },
         ],
+        // Moved themeColor to viewport
+        viewport: {
+            themeColor: '#FFD700', // Example color
+        },
     };
 }
 
