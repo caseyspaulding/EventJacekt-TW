@@ -236,7 +236,7 @@ export default async function EventPage ( { params }: { params: Params } )
             <main className="">
                 <div className="relative z-20 max-w-screen-xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 xl:p-9">
                     <EventImage
-                        imageUrl={ eventData.featuredImage || '' }
+                        imageUrl={ eventData.featuredImage || '/images/eventjacket-banner.png' }
                         alt={ `${ eventData.eventName } image` }
                         overlayColor=""
                     />
