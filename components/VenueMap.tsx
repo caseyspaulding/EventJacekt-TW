@@ -2,7 +2,7 @@
 
 import { AdvancedMarker, APIProvider, Map, Pin } from '@vis.gl/react-google-maps';
 import useGeolocation from '@/hooks/useGeoLocation';
-import Script from 'next/script'; // Import Script component
+import Script from 'next/script'; 
 
 interface VenueMapProps
 {

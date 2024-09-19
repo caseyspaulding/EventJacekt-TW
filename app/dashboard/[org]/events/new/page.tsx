@@ -20,7 +20,7 @@ import InputFieldEJ from '@/components/Input/InputEJ';
 
 import Head from 'next/head';
 import Script from 'next/script';
-import { APIProvider } from '@vis.gl/react-google-maps';
+
 
 const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
     ssr: false, // This prevents server-side rendering of the component
@@ -458,10 +458,11 @@ const CreateEventPage = () =>
                     </div>
 
                 </div>
-                <APIProvider apiKey={ process.env.GOOGLE_MAPS_API_KEY || '' }>
-                    <VenueMap apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' } address={ mapAddress || '' } />
-                </APIProvider>
 
+
+               
+                    <VenueMap address={ mapAddress || '' } />
+              
                 <div>
                     <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
                         Notes
