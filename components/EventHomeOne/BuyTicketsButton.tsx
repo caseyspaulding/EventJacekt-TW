@@ -25,7 +25,7 @@ const BuyTicketsButton: React.FC<BuyTicketsButtonProps> = ( { eventSlug, priceRa
           <Button
             as='a'
             href={ `/events/${ eventSlug }/tickets` }
-            className="w-full py-3  rounded-3xl bg-gradient-orange-to-r hover:bg-gradient-orange-hover-to-r px-4 text-base font-medium text-white shadow-sm "
+            className="w-full py-3 rounded-3xl bg-gradient-to-t from-yellow-600 to-yellow-400 px-4 text-lg font-medium text-white shadow-sm "
           >
             Get Tickets
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
