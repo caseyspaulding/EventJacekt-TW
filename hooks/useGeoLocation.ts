@@ -82,9 +82,9 @@ function useGeolocation ( address: string )
         } else
         {
           console.error( 'Geocode error:', status );
-          setCoordinates( defaultCoordinates );
+          setCoordinates( null ); // Do not set default coordinates; let the component handle this
           setLoading( false );
-          setError( `Geocode error: ${ status }` );
+          setError( `Unable to find location for the provided address.` );
         }
       } );
     };
@@ -98,7 +98,7 @@ function useGeolocation ( address: string )
       .catch( ( err ) =>
       {
         console.error( err );
-        setCoordinates( defaultCoordinates );
+        setCoordinates( null );
         setLoading( false );
         setError( 'Failed to load Google Maps API.' );
       } );

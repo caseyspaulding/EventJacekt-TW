@@ -2,12 +2,16 @@
 
 import React from 'react';
 import { formatDate, formatTime } from '@/utils/dateFormatter';
-import VenueMap from '../VenueMap';
 import { Disclosure } from '@headlessui/react';
 import { ArrowUpCircleIcon } from '@heroicons/react/20/solid';
 import { ArrowDownCircleIcon } from '@heroicons/react/24/outline';
 import EventImage from './Hero/EventImage';
-import { APIProvider } from '@vis.gl/react-google-maps';
+import dynamic from 'next/dynamic';
+
+
+const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
+  ssr: false, // This prevents server-side rendering of the component
+} );
 
 interface FAQ
 {
@@ -133,21 +137,20 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
         </section>
 
 
-        {/* Show the map only if address exists */ }
-        <section className="my-4 ">
-      
-          { address && (<>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Venue Map</h2>
-           
-            <VenueMap
-              apiKey={ process.env.GOOGLE_MAPS_API_KEY || '' }
-              address={ address }
-        
-              />
-          
+        {/* Show the map and handle loading/error states */ }
+        <section className="my-4">
+          { address ? (
+            <>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Venue Map</h2>
+
+              {/* Use the useGeolocation hook to get coordinates */ }
+              <VenueMap address={ address } />
             </>
+          ) : (
+            <p className="text-gray-700">Location not specified.</p>
           ) }
         </section>
+
       </section>
 
       {/* Refund Policy */ }
