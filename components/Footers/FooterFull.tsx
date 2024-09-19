@@ -10,7 +10,7 @@ const navigation = {
   ],
   support: [
     { name: 'Blog', href: '/blog' }, 
-    { name: 'Documentation', href: '/docs' },
+  
     { name: 'Contact', href: '/contact' },
     { name: 'Site Map', href: '/sitemap' },
 
