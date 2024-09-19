@@ -72,9 +72,11 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
   venueImage, // Add venueImage to props
 } ) =>
 {
-  // Ensure faqs is parsed correctly
-  const parsedFaqs: FAQ[] =
-    typeof faqs === 'string' ? JSON.parse( faqs ) : Array.isArray( faqs ) ? faqs : [];
+  // Ensure FAQs are parsed correctly and filter out empty questions/answers
+  const parsedFaqs: FAQ[] = typeof faqs === 'string' ? JSON.parse( faqs ) : Array.isArray( faqs ) ? faqs : [];
+
+  // Filter FAQs to exclude those with empty questions or answers
+  const filteredFaqs = parsedFaqs.filter( faq => faq.question.trim() !== '' && faq.answer.trim() !== '' );
 
   return (
     <div className="max-w-6xl mt-4 pb-16 mx-auto bg-white">
@@ -136,13 +138,13 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
       
           { address && (<>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Venue Map</h2>
-            <APIProvider apiKey={ process.env.GOOGLE_MAPS_API_KEY || '' }>
+           
             <VenueMap
-              apiKey={ process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' }
+              apiKey={ process.env.GOOGLE_MAPS_API_KEY || '' }
               address={ address }
         
               />
-            </APIProvider>
+          
             </>
           ) }
         </section>
@@ -181,35 +183,41 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
       </section>
 
       
+      
+      
+
       {/* FAQ */ }
-      <section className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
-        <div className="">
-          { parsedFaqs.map( ( faq, index ) => (
-            <Disclosure key={ index } as="div" className="pt-6 first:pt-0">
-              <dt>
-                <Disclosure.Button className="group flex w-full items-start justify-between text-left text-gray-900">
-                  <span className="text-lg font-semibold leading-7">{ faq.question }</span>
-                  <span className="ml-6 flex h-7 items-center">
-                    <ArrowDownCircleIcon
-                      aria-hidden="true"
-                      className="h-6 w-6 group-data-[open]:hidden text-gray-500"
-                    />
-                    <ArrowUpCircleIcon
-                      aria-hidden="true"
-                      className="h-6 w-6 [.group:not([data-open])_&]:hidden text-gray-500"
-                    />
-                  </span>
-                </Disclosure.Button>
-              </dt>
-              <Disclosure.Panel as="dd" className="mt-2 bg-gray-50 rounded-md p-4">
-                <p className="text-base leading-7 text-gray-700">{ faq.answer }</p>
-              </Disclosure.Panel>
-              <hr />
-            </Disclosure>
-          ) ) }
-        </div>
-      </section>
+      { filteredFaqs.length > 0 ? (
+        <section className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+          <div>
+            { filteredFaqs.map( ( faq, index ) => (
+              <Disclosure key={ index } as="div" className="pt-6 first:pt-0">
+                <dt>
+                  <Disclosure.Button className="group flex w-full items-start justify-between text-left text-gray-900">
+                    <span className="text-lg font-semibold leading-7">{ faq.question }</span>
+                    <span className="ml-6 flex h-7 items-center">
+                      <ArrowDownCircleIcon
+                        aria-hidden="true"
+                        className="h-6 w-6 group-data-[open]:hidden text-gray-500"
+                      />
+                      <ArrowUpCircleIcon
+                        aria-hidden="true"
+                        className="h-6 w-6 [.group:not([data-open])_&]:hidden text-gray-500"
+                      />
+                    </span>
+                  </Disclosure.Button>
+                </dt>
+                <Disclosure.Panel as="dd" className="mt-2 bg-gray-50 rounded-md p-4">
+                  <p className="text-base leading-7 text-gray-700">{ faq.answer }</p>
+                </Disclosure.Panel>
+                <hr />
+              </Disclosure>
+            ) ) }
+          </div>
+        </section>
+      ) : null }
+   
     </div>
   );
 };

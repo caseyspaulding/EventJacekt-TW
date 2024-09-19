@@ -42,7 +42,7 @@ export default function Example() {
                         height={40}
                         width={40}
                         alt="EventJacket logo"
-                        src="/images/logo.svg"
+                        src="/images/Logo_Icon.webp"
                         className="mx-auto h-10 w-auto sm:h-12"
                     />
                 </Link>
