@@ -6,8 +6,18 @@ import { useUser } from '@/contexts/UserContext';
 import { getEventsForOrg } from '@/app/actions/getEventsForOrg';
 import { deleteEvent } from '@/app/actions/eventActions';
 import BreadcrumbsPageHeader from '../components/BreadcrumbsPageHeading';
-import Loaderios from '@/components/Loaders/LoaderIos';
 import LogoSpinner from '@/components/Loaders/LogoSpinner';
+import {Button, } from '@nextui-org/react'; // Import NextUI components
+import
+  {
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    useDisclosure
+} from "@nextui-org/modal";
+  
 
 interface Event
 {
@@ -30,6 +40,9 @@ export default function EventsPage ()
   const [ events, setEvents ] = useState<Event[]>( [] );
   const [ loading, setLoading ] = useState( true );
   const [ error, setError ] = useState<string | null>( null );
+  // State for controlling the modal visibility and the event to delete
+  const [ selectedEventId, setSelectedEventId ] = useState<string | null>( null );
+  const { isOpen, onOpen, onOpenChange } = useDisclosure(); // Use NextUI's useDisclosure hook
 
   useEffect( () =>
   {
@@ -106,8 +119,22 @@ export default function EventsPage ()
     { name: 'Dashboard', href: '/' },
     { name: 'All Events', href: '/events', current: true },
   ];
+  const openModal = ( eventId: string ) =>
+  {
+    setSelectedEventId( eventId );
+    onOpen();
+  };
 
-  return (
+  const confirmDelete = () =>
+  {
+    if ( selectedEventId )
+    {
+      handleDelete( selectedEventId );
+    }
+    onOpenChange( false ); // Close the modal
+  };
+
+  return (<>
     <div className="sm:px-6 p-6 rounded-2xl bg-white">
       <BreadcrumbsPageHeader title="All Events" breadcrumbs={ breadcrumbs } />
       <div className="sm:flex sm:items-center">
@@ -169,10 +196,10 @@ export default function EventsPage ()
                             </div>
                           </Link>
 
-                          {/* Button to delete event */ }
+                          {/* Delete button with modal */ }
                           <button
-                            onClick={ () => handleDelete( event.id ) }
-                            className="text-blue-600 hover:text-blue-900 cursor-pointer mt-2"
+                            onClick={ () => openModal( event.id ) }
+                            className="text-red-600 hover:text-red-900 cursor-pointer mt-2"
                           >
                             Delete<span className="sr-only">, { event.name }</span>
                           </button>
@@ -200,5 +227,27 @@ export default function EventsPage ()
         </div>
       </div>
     </div>
+    {/* Modal for delete confirmation */ }
+    <Modal isOpen={ isOpen } onOpenChange={ onOpenChange }>
+      <ModalContent>
+        { ( onClose ) => (
+          <>
+            <ModalHeader>Confirm Deletion</ModalHeader>
+            <ModalBody>
+              <p>Are you sure you want to delete this event? This action cannot be undone.</p>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="light" onPress={ confirmDelete }>
+                Yes, Delete
+              </Button>
+              <Button color="primary" onPress={ onClose }>
+                Cancel
+              </Button>
+            </ModalFooter>
+          </>
+        ) }
+      </ModalContent>
+    </Modal>
+  </>
   );
 }
