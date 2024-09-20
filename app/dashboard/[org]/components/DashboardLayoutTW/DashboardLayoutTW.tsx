@@ -9,11 +9,16 @@ import
 {
   BanknotesIcon,
   Bars3CenterLeftIcon,
+  BuildingOfficeIcon,
+  CalculatorIcon,
+  CalendarDateRangeIcon,
   ChevronRightIcon,
   ClipboardDocumentIcon,
   FolderIcon,
   HeartIcon,
   HomeIcon,
+  RectangleGroupIcon,
+  ShareIcon,
   UserGroupIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
@@ -23,7 +28,11 @@ import { Button } from '@nextui-org/button';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { fetchClientSecret } from './fetchClientSecret';
 import { GiTheaterCurtains } from 'react-icons/gi';
-import { BuildingStorefrontIcon } from '@heroicons/react/20/solid';
+import { BuildingLibraryIcon, BuildingOffice2Icon, BuildingStorefrontIcon, UsersIcon } from '@heroicons/react/20/solid';
+import { FaHotel } from 'react-icons/fa';
+import { HiOutlineLibrary } from 'react-icons/hi';
+import { MdOutlineStorefront } from 'react-icons/md';
+import { AvatarGroup } from '@nextui-org/react';
 
 
 
@@ -41,28 +50,32 @@ const navigation = [
       { name: 'Event Analytics', href: '/events/analytics' },
     ],
   },
+  
+  
   {
-    name: 'Banking',
-    icon: BanknotesIcon,
+    name: 'Team',
+    icon: UserGroupIcon,
     current: false,
     children: [
-      { name: 'Connect Account', href: '/banking' },
-      { name: 'Payments', href: '/banking/payments' },
-      { name: 'Pay outs', href: '/banking/payouts' },
-      { name: 'Account Settings', href: '/banking/account-settings' },
-      { name: 'Help', href: '/banking/help' },
+      { name: 'Committees', href: '/team/committees' },
+      { name: 'Members', href: '/team/members' },
+      { name: 'Volunteers', href: '/team/volunteers' },
+      { name: 'Chat', href: '/team/chat' },
+      { name: 'Posts', href: '/team/posts' },
+
+     
     ],
   },
   {
     name: 'Contacts',
-    icon: UserGroupIcon,
+    icon: UsersIcon,
     current: false,
     children: [
-      { name: 'Volunteer Directory', href: '/volunteers' },
-      { name: 'Vendor Directory', href: '/vendors' },
-      { name: 'Performer Directory', href: '/performers' },
-      { name: 'Attendee Directory', href: '/Attendees' },
-      { name: 'Sponsor Directory', href: '/sponsors' },
+      { name: 'Volunteers', href: '/volunteers' },
+      { name: 'Vendors', href: '/vendors' },
+      { name: 'Performers', href: '/performers' },
+      { name: 'Attendees', href: '/Attendees' },
+      { name: 'Sponsors', href: '/sponsors' },
 
 
 
@@ -73,14 +86,53 @@ const navigation = [
     icon: ClipboardDocumentIcon,
     current: false,
     children: [
-      { name: 'Sign Up Forms', href: 'forms/signups' },
-      { name: 'Vendor Forms', href: 'forms/vendors' },
-      { name: 'Performer Forms', href: 'forms/performers' },
-      { name: 'Attendee Forms', href: 'forms/Attendees' },
-      { name: 'Sponsor Forms', href: 'forms/sponsors' },
+      { name: 'Sign Up', href: '/forms/signups' },
+      { name: 'Volunteer', href: '/forms/sponsors' },
+      { name: 'Vendor', href: '/forms/vendors' },
+      { name: 'Performer', href: '/forms/performers' },
+      { name: 'Attendee', href: '/forms/Attendees' },
+      { name: 'Sponsor', href: '/forms/sponsors' },
 
 
 
+    ],
+  },
+  {
+    name: 'Planning Tools',
+    icon: CalendarDateRangeIcon,
+    current: false,
+    children: [
+      { name: 'Event Agenda Builder', href: '/team-management/committees' },
+      { name: 'Map Designer', href: '/team-management/members' },
+      { name: 'Map Venue Guide', href: '/team-management/volunteers' },
+    
+
+
+    ],
+  },
+  {
+    name: 'Venue Management',
+    icon: MdOutlineStorefront,
+    current: false,
+    children: [
+      { name: 'Attendee Map Views', href: '/venue-management/attendee-maps' },
+      { name: 'Create Attendee Map', href: '/venue-management/create-venue-maps' },
+      { name: 'Vendor Placement Map', href: '/venue-management/vendor-placement-planning' },
+      
+
+
+    ],
+  },
+  {
+    name: 'Banking',
+    icon: HiOutlineLibrary,
+    current: false,
+    children: [
+      { name: 'Connect Account', href: '/banking' },
+      { name: 'Payments', href: '/banking/payments' },
+      { name: 'Pay outs', href: '/banking/payouts' },
+      { name: 'Account Settings', href: '/banking/account-settings' },
+      { name: 'Help', href: '/banking/help' },
     ],
   },
 
