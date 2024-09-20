@@ -10,8 +10,11 @@ import
   BanknotesIcon,
   Bars3CenterLeftIcon,
   ChevronRightIcon,
+  ClipboardDocumentIcon,
   FolderIcon,
+  HeartIcon,
   HomeIcon,
+  UserGroupIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -19,6 +22,8 @@ import { signOut } from '@/app/actions/SignOut';
 import { Button } from '@nextui-org/button';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { fetchClientSecret } from './fetchClientSecret';
+import { GiTheaterCurtains } from 'react-icons/gi';
+import { BuildingStorefrontIcon } from '@heroicons/react/20/solid';
 
 
 
@@ -48,6 +53,65 @@ const navigation = [
       { name: 'Help', href: '/banking/help' },
     ],
   },
+  {
+    name: 'Volunteers',
+    icon: UserGroupIcon,
+    current: false,
+    children: [
+      { name: 'Volunteer Directory', href: '/volunteers' },
+      { name: 'Volunteer Hours', href: '/volunteers/payments' },
+      { name: 'Communication', href: '/volunteers/communication' },
+      
+     
+    ],
+  },
+  {
+    name: 'Vendors',
+    icon: BuildingStorefrontIcon,
+    current: false,
+    children: [
+      { name: 'Vendor Directory', href: '/vendors' },
+      { name: 'Payments', href: '/vendors/payments' },
+      { name: 'Invoices', href: '/vendors/invoices' },
+      { name: 'Contracts', href: '/vendors/contracts' },
+      { name: 'Communication', href: '/vendors/communication' },
+     
+    ],
+  },
+  {
+    name: 'Performers',
+    icon: GiTheaterCurtains,
+    current: false,
+    children: [
+      { name: 'Performer Directory', href: '/performers' },
+      { name: 'Performer Schedule', href: '/performers/payments' },
+      { name: 'Contracts', href: '/performers/payouts' },
+      { name: 'Communication', href: '/performers/communication' },
+    ],
+  },
+  {
+    name: 'Attendees',
+    icon: UserGroupIcon,
+    current: false,
+    children: [
+      { name: 'Attendee Directory', href: '/Attendees' },
+      { name: 'Attendee Payments', href: '/Attendees/payments' },
+      { name: 'Attendee Communication', href: '/Attendees/communication' },
+     
+    ],
+  },
+  {
+    name: 'Sponsors',
+    icon: HeartIcon,
+    current: false,
+    children: [
+      { name: 'Sponsor Directory', href: '/sponsors' },
+      { name: 'Donations', href: '/sponsors/donations' },
+      { name: 'Sponsor Communication', href: '/sponsors/communication' },
+
+    ],
+  },
+  { name: 'Custom Forms', href: '/', icon: ClipboardDocumentIcon, current: false },
 ];
 
 const userNavigation = [
