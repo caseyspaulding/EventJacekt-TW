@@ -837,22 +837,35 @@ export const orgInvites = pgTable( 'org_invites', {
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
 
-// EventJacket Blog Table
+//  Blog Table
 export const blogPosts = pgTable( 'blog_posts', {
     id: serial( 'id' ).primaryKey(),
     slug: varchar( 'slug', { length: 255 } ).notNull().unique(),
     title: text( 'title' ).notNull(),
     content: text( 'content' ).notNull(),
     excerpt: text( 'excerpt' ),
-    author: varchar( 'author', { length: 100 } ).notNull(),
+    authorId: serial( 'author_id' )
+        .notNull()
+        .references( () => authors.id ), // Foreign key to authors table
     createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
     updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
     publishedAt: timestamp( 'published_at' ),
-    tags: text( 'tags' ).array(), // SEO: Use tags for topic clustering
+    tags: text( 'tags' ).array(),
     featuredImage: varchar( 'featured_image', { length: 255 } ),
-    metaTitle: varchar( 'meta_title', { length: 255 } ), // SEO: Meta title for better search engine targeting
-    metaDescription: text( 'meta_description' ), // SEO: Meta description
-    isPublished: boolean( 'is_published' ).default( false ) // Control published status
+    metaTitle: varchar( 'meta_title', { length: 255 } ),
+    metaDescription: text( 'meta_description' ),
+    isPublished: boolean( 'is_published' ).default( false ),
+} );
+
+// Authors Table
+export const authors = pgTable( 'authors', {
+    id: serial( 'id' ).primaryKey(),
+    slug: varchar( 'slug', { length: 255 } ).notNull().unique(),
+    name: varchar( 'name', { length: 100 } ).notNull(),
+    bio: text( 'bio' ),
+    avatarUrl: varchar( 'avatar_url', { length: 255 } ),
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
 } );
 
 // Ticket Sales Pages Table
@@ -1192,6 +1205,8 @@ export const volunteers = pgTable( 'volunteers', {
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
+
+
 
 // Donors Table
 export const donors = pgTable( 'donors', {

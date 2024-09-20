@@ -9,15 +9,30 @@ import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
 import { Button } from '@nextui-org/button';
 
+interface Author
+{
+  id: number;
+  name: string;
+}
+
+interface CreateBlogPostResponse
+{
+  success: boolean;
+  message: string;
+}
+
 const BlogPostForm: React.FC = () =>
 {
   const router = useRouter();
   const supabase = createClient();
   const [ user, setUser ] = useState<User | null>( null );
+
+  // State variables
   const [ title, setTitle ] = useState( '' );
   const [ content, setContent ] = useState( '' );
   const [ excerpt, setExcerpt ] = useState( '' );
-  const [ author, setAuthor ] = useState( '' );
+  const [ authorId, setAuthorId ] = useState( '' );
+  const [ authorsList, setAuthorsList ] = useState<Author[]>( [] );
   const [ tags, setTags ] = useState( '' );
   const [ slug, setSlug ] = useState( '' );
   const [ metaTitle, setMetaTitle ] = useState( '' );
@@ -30,7 +45,6 @@ const BlogPostForm: React.FC = () =>
   {
     const checkUser = async () =>
     {
-      const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
 
       if ( user?.email !== 'casey.spaulding@gmail.com' )
@@ -43,7 +57,21 @@ const BlogPostForm: React.FC = () =>
       setUser( user );
     };
 
+    const fetchAuthors = async () =>
+    {
+      const { data: authors, error } = await supabase.from( 'authors' ).select( 'id, name' );
+
+      if ( error )
+      {
+        toast.error( 'Error fetching authors' );
+      } else
+      {
+        setAuthorsList( authors || [] );
+      }
+    };
+
     checkUser();
+    fetchAuthors();
   }, [ router, supabase ] );
 
   const handleImageUpload = async ( file: File | null ) =>
@@ -70,15 +98,14 @@ const BlogPostForm: React.FC = () =>
       return null;
     }
 
-    const { publicUrl } = supabase.storage
+    const { data: { publicUrl } } = supabase.storage
       .from( 'blogimages' )
-      .getPublicUrl( `public/${ fileName }` )
-      .data;
+      .getPublicUrl( `public/${ fileName }` );
 
     return publicUrl || '';
   };
 
-  // Handle uploading the blog post image and inserting it into the Quill editor
+  // Handle uploading the blog post image and inserting it into the RichTextEditor
   const handleBlogPostImageUpload = async () =>
   {
     if ( !postImage )
@@ -94,14 +121,10 @@ const BlogPostForm: React.FC = () =>
       return;
     }
 
-    // Insert the image URL into the Quill editor
-    const quill = document.querySelector( '.ql-editor' ) as HTMLElement;
-    if ( quill )
-    {
-      quill.innerHTML += `<img src="${ imageUrl }" alt="Uploaded Image" />`;
-      setPostImage( null ); // Clear the selected image
-      toast.success( 'Image uploaded and inserted into the content.' );
-    }
+    // Insert the image URL into the content
+    setContent( ( prevContent ) => `${ prevContent }<img src="${ imageUrl }" alt="Uploaded Image" />` );
+    setPostImage( null ); // Clear the selected image
+    toast.success( 'Image uploaded and inserted into the content.' );
   };
 
   const handleSubmit = async ( e: React.FormEvent ) =>
@@ -114,6 +137,12 @@ const BlogPostForm: React.FC = () =>
       return;
     }
 
+    if ( !authorId )
+    {
+      toast.error( 'Please select an author.' );
+      return;
+    }
+
     const imageUrl = await handleImageUpload( featuredImage );
     if ( !imageUrl )
     {
@@ -121,27 +150,30 @@ const BlogPostForm: React.FC = () =>
       return;
     }
 
+    const tagsArray = tags.split( ',' ).map( ( tag ) => tag.trim() );
+
     const formData = new FormData();
     formData.append( 'title', title );
     formData.append( 'content', content );
     formData.append( 'excerpt', excerpt );
-    formData.append( 'author', author );
-    formData.append( 'tags', tags );
+    formData.append( 'authorId', authorId );
+    formData.append( 'tags', JSON.stringify( tagsArray ) );
     formData.append( 'slug', slug );
     formData.append( 'metaTitle', metaTitle );
     formData.append( 'metaDescription', metaDescription );
     formData.append( 'isPublished', isPublished.toString() );
     formData.append( 'featuredImage', imageUrl );
 
-    const response = await createBlogPost( formData );
+    const response: CreateBlogPostResponse = await createBlogPost( formData );
 
     if ( response.success )
     {
       toast.success( response.message );
+      // Reset form fields
       setTitle( '' );
       setContent( '' );
       setExcerpt( '' );
-      setAuthor( '' );
+      setAuthorId( '' );
       setTags( '' );
       setSlug( '' );
       setMetaTitle( '' );
@@ -159,12 +191,12 @@ const BlogPostForm: React.FC = () =>
     return <div>Loading...</div>;
   }
 
-
   return (
     <div className=" bg-gray-100 rounded-2xl p-5">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 p-5 py-12 bg-white rounded-2xl">
         <h1 className="text-3xl font-bold text-gray-800 mb-8">Create New Blog Post</h1>
         <form onSubmit={ handleSubmit } className="space-y-6">
+          {/* Post Title */ }
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Post Title
@@ -175,10 +207,13 @@ const BlogPostForm: React.FC = () =>
               value={ title }
               onChange={ ( e ) => setTitle( e.target.value ) }
               placeholder="Post Title"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+              shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               required
             />
           </div>
+
+          {/* Featured Image */ }
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Featured Image
@@ -187,24 +222,27 @@ const BlogPostForm: React.FC = () =>
               type="file"
               accept="image/*"
               onChange={ ( e ) => setFeaturedImage( e.target.files?.[ 0 ] || null ) }
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+              shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
 
-          {/* New Blog Post Image Input */ }
+          {/* Blog Post Image Input */ }
           <div>
             <label className="block text-sm font-medium text-gray-700">Blog Post Image</label>
             <input
               type="file"
               accept="image/*"
               onChange={ ( e ) => setPostImage( e.target.files?.[ 0 ] || null ) }
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+              shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
             <Button onClick={ handleBlogPostImageUpload } className="mt-2 bg-blue-600 text-white">
               Upload and Insert Image
             </Button>
           </div>
 
+          {/* URL Slug */ }
           <div>
             <label className="block text-sm font-medium text-gray-700">
               URL Slug
@@ -215,10 +253,12 @@ const BlogPostForm: React.FC = () =>
               value={ slug }
               onChange={ ( e ) => setSlug( e.target.value ) }
               placeholder="URL Slug"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+              shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
-          {/* New Fields */ }
+
+          {/* Meta Title */ }
           <div>
             <label className="block text-sm font-medium text-gray-700">Meta Title</label>
             <input
@@ -227,10 +267,12 @@ const BlogPostForm: React.FC = () =>
               value={ metaTitle }
               onChange={ ( e ) => setMetaTitle( e.target.value ) }
               placeholder="Meta Title"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+              shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
 
+          {/* Meta Description */ }
           <div>
             <label className="block text-sm font-medium text-gray-700">Meta Description</label>
             <textarea
@@ -238,57 +280,51 @@ const BlogPostForm: React.FC = () =>
               value={ metaDescription }
               onChange={ ( e ) => setMetaDescription( e.target.value ) }
               placeholder="Meta Description"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+              shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
 
-
-          <div className="flex items-center">
-            <input
-              name="isPublished"
-              type="checkbox"
-              checked={ isPublished }
-              onChange={ ( e ) => setIsPublished( e.target.checked ) }
-              className="h-4 w-4 text-blue-600 border-gray-300 rounded"
-            />
-            <label className="ml-2 block text-sm text-gray-700">Publish</label>
-          </div>
+          {/* Excerpt */ }
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Excerpt
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Excerpt</label>
             <textarea
               name="excerpt"
               value={ excerpt }
               onChange={ ( e ) => setExcerpt( e.target.value ) }
               placeholder="Excerpt"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+              shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
 
+          {/* Content */ }
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Content
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Content</label>
             <RichTextEditor value={ content } onChange={ setContent } />
-            <input type="hidden" name="content" value={ content } />
           </div>
 
+          {/* Author Select Dropdown */ }
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Author
-            </label>
-            <input
-              name="author"
-              type="text"
-              value={ author }
-              onChange={ ( e ) => setAuthor( e.target.value ) }
-              placeholder="Author"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            <label className="block text-sm font-medium text-gray-700">Author</label>
+            <select
+              name="authorId"
+              value={ authorId }
+              onChange={ ( e ) => setAuthorId( e.target.value ) }
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md
+              shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               required
-            />
+            >
+              <option value="">Select an author</option>
+              { authorsList.map( ( author ) => (
+                <option key={ author.id } value={ author.id }>
+                  { author.name }
+                </option>
+              ) ) }
+            </select>
           </div>
 
+          {/* Tags */ }
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Tags (comma-separated)
@@ -299,12 +335,29 @@ const BlogPostForm: React.FC = () =>
               value={ tags }
               onChange={ ( e ) => setTags( e.target.value ) }
               placeholder="Tags (comma-separated)"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+              shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
 
+          {/* Published Checkbox */ }
+          <div className="flex items-center">
+            <input
+              name="isPublished"
+              type="checkbox"
+              checked={ isPublished }
+              onChange={ ( e ) => setIsPublished( e.target.checked ) }
+              className="h-4 w-4 text-blue-600 border-gray-300 rounded"
+            />
+            <label className="ml-2 block text-sm text-gray-700">Published</label>
+          </div>
+
+          {/* Submit Button */ }
           <div>
-            <Button type="submit" className="w-full bg-blue-600 text-white hover:bg-blue-700">
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 text-white hover:bg-blue-700"
+            >
               Create Post
             </Button>
           </div>

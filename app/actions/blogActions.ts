@@ -2,10 +2,97 @@
 'use server';
 
 import { db } from '@/db';
-import { blogPosts } from '@/db/schema';
+import { authors, blogPosts } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { createClient } from '../../utils/supabase/server';
 import { revalidatePath } from 'next/cache';
+
+interface Author
+{
+    id: number;
+    name: string;
+    slug: string;
+    bio?: string | null;
+    avatarUrl?: string | null;
+}
+
+interface BlogPost
+{
+    id: number;
+    title: string;
+    slug: string;
+    content: string;
+    excerpt?: string | null;
+    authorId: number;
+    tags?: string[] | null;
+    featuredImage?: string | null;
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    isPublished: boolean | null;
+    createdAt: Date;
+    updatedAt: Date;
+}
+export async function getPostsByAuthorId ( authorId: number ): Promise<BlogPost[]>
+{
+    try
+    {
+        const posts = await db
+            .select( {
+                id: blogPosts.id,
+                title: blogPosts.title,
+                slug: blogPosts.slug,
+                content: blogPosts.content,
+                excerpt: blogPosts.excerpt,
+                authorId: blogPosts.authorId,
+                tags: blogPosts.tags,
+                featuredImage: blogPosts.featuredImage,
+                metaTitle: blogPosts.metaTitle,
+                metaDescription: blogPosts.metaDescription,
+                isPublished: blogPosts.isPublished,
+                createdAt: blogPosts.createdAt,
+                updatedAt: blogPosts.updatedAt,
+            } )
+            .from( blogPosts )
+            .where( eq( blogPosts.authorId, authorId ) );
+
+        // Map database fields to interface fields if necessary
+        const formattedPosts = posts.map( ( post ) => ( {
+            ...post,
+            metaTitle: post.metaTitle,
+            metaDescription: post.metaDescription,
+            featuredImage: post.featuredImage,
+            // Ensure any transformations if needed
+        } ) );
+
+        return formattedPosts;
+    } catch ( error )
+    {
+        console.error( 'Error fetching posts by author ID:', error );
+        return [];
+    }
+}
+
+export async function getAuthorBySlug ( slug: string ): Promise<Author | null>
+{
+    try
+    {
+        const [ author ] = await db
+            .select( {
+                id: authors.id,
+                name: authors.name,
+                slug: authors.slug,
+                bio: authors.bio,
+                avatarUrl: authors.avatarUrl,
+            } )
+            .from( authors )
+            .where( eq( authors.slug, slug ) );
+
+        return author || null;
+    } catch ( error )
+    {
+        console.error( 'Error fetching author by slug:', error );
+        return null;
+    }
+}
 
 export async function getBlogPostBySlug ( slug: string )
 {
@@ -15,21 +102,43 @@ export async function getBlogPostBySlug ( slug: string )
         const decodedSlug = decodeURIComponent( slug ).replace( /%20/g, '-' );
         console.log( 'Fetching blog post with processed slug:', decodedSlug );
 
-        const [ post ] = await db
+        const [ result ] = await db
             .select( {
-                title: blogPosts.title,
-                content: blogPosts.content,
-                excerpt: blogPosts.excerpt,
-                author: blogPosts.author,
-                createdAt: blogPosts.createdAt,
-                tags: blogPosts.tags,
-                metaTitle: blogPosts.metaTitle,
-                metaDescription: blogPosts.metaDescription,
-                featuredImage: blogPosts.featuredImage,
-                isPublished: blogPosts.isPublished
+                post: {
+                    id: blogPosts.id,
+                    title: blogPosts.title,
+                    content: blogPosts.content,
+                    excerpt: blogPosts.excerpt,
+                    createdAt: blogPosts.createdAt,
+                    updatedAt: blogPosts.updatedAt,
+                    tags: blogPosts.tags,
+                    metaTitle: blogPosts.metaTitle,
+                    metaDescription: blogPosts.metaDescription,
+                    featuredImage: blogPosts.featuredImage,
+                    isPublished: blogPosts.isPublished,
+                },
+                author: {
+                    id: authors.id,
+                    name: authors.name,
+                    slug: authors.slug,
+                    bio: authors.bio,
+                    avatarUrl: authors.avatarUrl,
+                },
             } )
             .from( blogPosts )
+            .leftJoin( authors, eq( blogPosts.authorId, authors.id ) )
             .where( eq( blogPosts.slug, decodedSlug ) );
+
+        if ( !result )
+        {
+            console.log( 'Post not found' );
+            return null;
+        }
+
+        const post = {
+            ...result.post,
+            author: result.author,
+        };
 
         console.log( 'Fetched post:', post );
         return post;
@@ -39,119 +148,189 @@ export async function getBlogPostBySlug ( slug: string )
         return null;
     }
 }
+export async function getAllBlogPosts ()
+{
+    try
+    {
+        const results = await db
+            .select( {
+                post: {
+                    id: blogPosts.id,
+                    slug: blogPosts.slug,
+                    title: blogPosts.title,
+                    excerpt: blogPosts.excerpt,
+                    createdAt: blogPosts.createdAt,
+                    updatedAt: blogPosts.updatedAt,
+                    featuredImage: blogPosts.featuredImage,
+                    isPublished: blogPosts.isPublished,
+                },
+                author: {
+                    id: authors.id,
+                    name: authors.name,
+                    slug: authors.slug,
+                },
+            } )
+            .from( blogPosts )
+            .leftJoin( authors, eq( blogPosts.authorId, authors.id ) );
 
-export async function getAllBlogPosts() {
-    try {
-        const posts = await db.select().from(blogPosts).then(); // Execute the query and get the results
+        const posts = results.map( ( result ) => ( {
+            ...result.post,
+            author: result.author,
+        } ) );
+
         return { success: true, data: posts };
-    } catch (error) {
-        console.error('Error fetching blog posts:', error);
+    } catch ( error )
+    {
+        console.error( 'Error fetching blog posts:', error );
         return { success: false, data: [] };
     }
 }
 
-export async function createBlogPost(formData: FormData) {
-    const title = formData.get('title') as string;
-    const content = formData.get('content') as string;
-    const excerpt = (formData.get('excerpt') as string) || '';
-    const author = formData.get('author') as string;
-    const tags = (formData.get('tags') as string).split(',').map((tag) => tag.trim());
-    let slug = formData.get('slug') as string;
-    const featuredImage = formData.get('featuredImage') as string; // Get the featured image URL
+export async function createBlogPost ( formData: FormData )
+{
+    const title = formData.get( 'title' ) as string;
+    const content = formData.get( 'content' ) as string;
+    const excerpt = ( formData.get( 'excerpt' ) as string ) || '';
+    const authorSlug = formData.get( 'author' ) as string; // Assuming author is provided as slug
+    const tags = ( formData.get( 'tags' ) as string )?.split( ',' ).map( ( tag ) => tag.trim() ) || [];
+    let slug = formData.get( 'slug' ) as string;
+    const featuredImage = formData.get( 'featuredImage' ) as string;
+    const metaTitle = formData.get( 'metaTitle' ) as string;
+    const metaDescription = formData.get( 'metaDescription' ) as string;
+    const isPublished = formData.get( 'isPublished' ) === 'true';
 
-    if (!slug) {
-        slug = generateSlug(title);
+    if ( !slug )
+    {
+        slug = generateSlug( title );
     }
 
-    try {
+    try
+    {
         // Check if the post with the same slug already exists
-        const existingPosts = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
-        if (existingPosts.length > 0) {
+        const existingPosts = await db.select().from( blogPosts ).where( eq( blogPosts.slug, slug ) );
+        if ( existingPosts.length > 0 )
+        {
             return { success: false, message: 'A post with this slug already exists.' };
         }
 
+        // Fetch the author ID based on the provided slug
+        const [ author ] = await db.select().from( authors ).where( eq( authors.slug, authorSlug ) );
+        if ( !author )
+        {
+            return { success: false, message: 'Author not found.' };
+        }
+
         // Insert the new blog post into the database
-        await db.insert(blogPosts).values({
+        await db.insert( blogPosts ).values( {
             title,
             content,
             excerpt,
-            author,
+            authorId: author.id,
             tags,
             slug,
-            featuredImage, // Include the featured image URL
+            featuredImage,
+            metaTitle,
+            metaDescription,
+            isPublished,
             createdAt: new Date(),
-            updatedAt: new Date()
-        });
+            updatedAt: new Date(),
+        } );
 
         // Revalidate the blog path to update the page
-        revalidatePath('/blog');
+        revalidatePath( '/blog' );
 
         return { success: true, message: 'Post created successfully!' };
-    } catch (error) {
-        console.error('Error inserting blog post:', error);
+    } catch ( error )
+    {
+        console.error( 'Error inserting blog post:', error );
         return { success: false, message: 'Failed to create blog post. Please try again.' };
     }
 }
 
-export async function getAllBlogSlugs() {
-    // Assuming you're using Supabase with Drizzle ORM
-    const slugs = await db.select({ slug: blogPosts.slug }).from(blogPosts);
-    return slugs.map((post) => post.slug);
+export async function getAllBlogSlugs ()
+{
+    const slugs = await db
+        .select( { slug: blogPosts.slug } )
+        .from( blogPosts )
+        .then( ( rows ) => rows.map( ( row ) => row.slug ) );
+    return slugs;
 }
+
+
 // Helper function to generate a slug from a title
-function generateSlug(title: string): string {
+function generateSlug ( title: string ): string
+{
     return title
         .toLowerCase()
         .trim()
-        .replace(/[^\w\s-]/g, '') // Remove invalid characters
-        .replace(/\s+/g, '-') // Replace spaces with hyphens
-        .replace(/--+/g, '-') // Replace multiple hyphens with a single hyphen
-        .substring(0, 255); // Limit slug length to 255 characters
+        .replace( /[^\w\s-]/g, '' ) // Remove invalid characters
+        .replace( /\s+/g, '-' ) // Replace spaces with hyphens
+        .replace( /--+/g, '-' ) // Replace multiple hyphens with a single hyphen
+        .substring( 0, 255 ); // Limit slug length to 255 characters
 }
 
-export async function updateBlogPost ( id: string, formData: FormData )
+export async function updateBlogPost ( id: number, formData: FormData )
 {
-    const supabase = createClient();
+    const title = formData.get( 'title' ) as string;
+    const content = formData.get( 'content' ) as string;
+    const excerpt = ( formData.get( 'excerpt' ) as string ) || '';
+    const authorSlug = formData.get( 'author' ) as string;
+    const tags = ( formData.get( 'tags' ) as string )?.split( ',' ).map( ( tag ) => tag.trim() ) || [];
+    let slug = formData.get( 'slug' ) as string;
+    const featuredImage = formData.get( 'featuredImage' ) as string;
+    const metaTitle = formData.get( 'metaTitle' ) as string;
+    const metaDescription = formData.get( 'metaDescription' ) as string;
+    const isPublished = formData.get( 'isPublished' ) === 'true';
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { data, error } = await supabase
-        .from( 'blog_posts' )
-        .update( {
-            title: formData.get( 'title' ),
-            content: formData.get( 'content' ),
-            excerpt: formData.get( 'excerpt' ),
-            author: formData.get( 'author' ),
-            tags: formData
-                .get( 'tags' )
-                ?.toString()
-                .split( ',' )
-                .map( ( tag ) => tag.trim() ),
-            slug: formData.get( 'slug' ),
-            meta_title: formData.get( 'metaTitle' ),
-            meta_description: formData.get( 'metaDescription' ),
-            is_published: formData.get( 'isPublished' ) === 'true',
-            featured_image: formData.get( 'featuredImage' ),
-            updated_at: new Date().toISOString(),
-        } )
-        .eq( 'id', id );
-
-    if ( error )
+    if ( !slug )
     {
-        return { success: false, message: 'Failed to update the blog post' };
+        slug = generateSlug( title );
     }
 
-    return { success: true, message: 'Blog post updated successfully' };
+    try
+    {
+        // Fetch the author ID based on the provided slug
+        const [ author ] = await db.select().from( authors ).where( eq( authors.slug, authorSlug ) );
+        if ( !author )
+        {
+            return { success: false, message: 'Author not found.' };
+        }
+
+        // Update the blog post in the database
+        await db
+            .update( blogPosts )
+            .set( {
+                title,
+                content,
+                excerpt,
+                authorId: author.id,
+                tags,
+                slug,
+                featuredImage,
+                metaTitle,
+                metaDescription,
+                isPublished,
+                updatedAt: new Date(),
+            } )
+            .where( eq( blogPosts.id, id ) );
+
+        return { success: true, message: 'Blog post updated successfully' };
+    } catch ( error )
+    {
+        console.error( 'Error updating blog post:', error );
+        return { success: false, message: 'Failed to update the blog post. Please try again.' };
+    }
 }
 
-
-export async function deletePost(postId: number) {
-    const supabase = createClient();
-    const { error } = await supabase.from('blog_posts').delete().eq('id', postId);
-
-    if (error) {
-        console.error('Error deleting post:', error.message);
-        return { success: false, error: error.message };
+export async function deletePost ( postId: number )
+{
+    try
+    {
+        await db.delete( blogPosts ).where( eq( blogPosts.id, postId ) );
+        return { success: true };
+    } catch ( error )
+    {
+        console.error( 'Error deleting post:', error );
+        return { success: false, error };
     }
-
-    return { success: true };
 }
