@@ -16,10 +16,10 @@ export default function ClientProviders ( { children }: { children: React.ReactN
       {/* Include Google Analytics Script */ }
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" strategy="lazyOnload" />
 
-      {/* Include additional scripts */ }
-      <Script src="https://connect.stripe.com/connect-js" strategy="lazyOnload" defer />
+    
+     
 
-      {/* Remove NextUIProvider if not needed */ }
+  
       <Toaster />
       <Suspense fallback={ <div>Loading...</div> }>
         <UserProvider initialUser={ null }>

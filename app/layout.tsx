@@ -1,13 +1,11 @@
-// app/layout.tsx
 import type { PropsWithChildren } from 'react';
-import { Space_Grotesk } from 'next/font/google';  // Import both fonts
-
+import { Space_Grotesk } from 'next/font/google';  // Import font
 import './globals.css';
 import ClientProviders from './ClientProviders';
 
-
+// Metadata for SEO and OpenGraph
 export const metadata = {
-    title: 'EventJacket - Nonprofit CRM',
+    title: 'EventJacket - Event Management Software for Nonprofits',
     description: 'EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank.',
     openGraph: {
         title: 'EventJacket - Event Management Software',
@@ -23,40 +21,40 @@ export const metadata = {
             },
         ],
     },
+    icons: {
+        icon: [
+            { rel: 'icon', type: 'image/png', sizes: '32x32', url: '/favicon-32x32.png' },
+            { rel: 'icon', type: 'image/png', sizes: '16x16', url: '/favicon-16x16.png' }
+        ],
+        appleTouchIcon: '/apple-touch-icon.png',
+        manifest: '/site.webmanifest',
+        maskIcon: {
+            url: '/safari-pinned-tab.svg',
+            color: '#5bbad5',
+        },
+    },
+    themeColor: '#ffffff',
+    viewport: {
+        width: 'device-width',
+        initialScale: 1,
+    },
     other: {
         'msapplication-TileColor': '#da532c',
     },
 };
 
-export const viewport = {
-    themeColor: '#ffffff', // Move themeColor here
-};
-
-
+// Google Font Configuration
 const spaceGrotesk = Space_Grotesk( {
     weight: [ '400' ], // Regular weight
     subsets: [ 'latin' ],
-    display: 'swap',
+    display: 'swap', // Fallback for font loading
 } );
 
 export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (
         <html lang="en" className={ `${ spaceGrotesk.className }` }>
-            <head>
-                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-                <link rel="manifest" href="/site.webmanifest" />
-                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-
-                <link rel="canonical" href="https://www.eventjacket.com" />
-
-
-            </head>
-            <body >
-
-
+            <body>
                 <ClientProviders>
                     { children }
                 </ClientProviders>
