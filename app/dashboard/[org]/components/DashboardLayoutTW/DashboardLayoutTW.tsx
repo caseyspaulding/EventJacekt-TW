@@ -54,64 +54,37 @@ const navigation = [
     ],
   },
   {
-    name: 'Volunteers',
+    name: 'Contacts',
     icon: UserGroupIcon,
     current: false,
     children: [
       { name: 'Volunteer Directory', href: '/volunteers' },
-      { name: 'Volunteer Hours', href: '/volunteers/payments' },
-      { name: 'Communication', href: '/volunteers/communication' },
-      
-     
-    ],
-  },
-  {
-    name: 'Vendors',
-    icon: BuildingStorefrontIcon,
-    current: false,
-    children: [
       { name: 'Vendor Directory', href: '/vendors' },
-      { name: 'Payments', href: '/vendors/payments' },
-      { name: 'Invoices', href: '/vendors/invoices' },
-      { name: 'Contracts', href: '/vendors/contracts' },
-      { name: 'Communication', href: '/vendors/communication' },
-     
-    ],
-  },
-  {
-    name: 'Performers',
-    icon: GiTheaterCurtains,
-    current: false,
-    children: [
       { name: 'Performer Directory', href: '/performers' },
-      { name: 'Performer Schedule', href: '/performers/payments' },
-      { name: 'Contracts', href: '/performers/payouts' },
-      { name: 'Communication', href: '/performers/communication' },
-    ],
-  },
-  {
-    name: 'Attendees',
-    icon: UserGroupIcon,
-    current: false,
-    children: [
       { name: 'Attendee Directory', href: '/Attendees' },
-      { name: 'Attendee Payments', href: '/Attendees/payments' },
-      { name: 'Attendee Communication', href: '/Attendees/communication' },
-     
-    ],
-  },
-  {
-    name: 'Sponsors',
-    icon: HeartIcon,
-    current: false,
-    children: [
       { name: 'Sponsor Directory', href: '/sponsors' },
-      { name: 'Donations', href: '/sponsors/donations' },
-      { name: 'Sponsor Communication', href: '/sponsors/communication' },
+
+
 
     ],
   },
-  { name: 'Custom Forms', href: '/', icon: ClipboardDocumentIcon, current: false },
+  {
+    name: 'Forms',
+    icon: ClipboardDocumentIcon,
+    current: false,
+    children: [
+      { name: 'Sign Up Forms', href: 'forms/signups' },
+      { name: 'Vendor Forms', href: 'forms/vendors' },
+      { name: 'Performer Forms', href: 'forms/performers' },
+      { name: 'Attendee Forms', href: 'forms/Attendees' },
+      { name: 'Sponsor Forms', href: 'forms/sponsors' },
+
+
+
+    ],
+  },
+
+
 ];
 
 const userNavigation = [
@@ -139,7 +112,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
   // Initialize Stripe Connect
   const initializeStripeConnect = async () =>
   {
-    const clientSecret = await fetchClientSecret(user?.organizationId ||''); // Fetch the client secret from your server-side
+    const clientSecret = await fetchClientSecret( user?.organizationId || '' ); // Fetch the client secret from your server-side
     if ( clientSecret )
     {
       const instance = loadConnectAndInitialize( {
@@ -176,7 +149,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       console.error( "Error during logout:", error );
     }
   };
-  
+
   const generateHref = ( href: string ) => ( orgName ? `/dashboard/${ orgName }${ href }` : href );
 
   return (
