@@ -326,7 +326,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
 
       {/* Desktop Sidebar */ }
       <div className="hidden bg-gray-50  lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
-        <div className="flex flex-col flex-grow bg-gradient-to-tr from-blue-800 via-blue-700 to-blue-600 pt-5 pb-4 overflow-y-auto">
+        <div className="flex flex-col flex-grow bg-gradient-to-tr from-blue-800 via-blue-700 to-blue-700 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
             <Link href="https://www.eventjacket.com">
               <img
@@ -405,23 +405,21 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       </div>
 
       <div className="flex flex-col flex-1 lg:pl-64">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-4 bg-gradient-to-l from-blue-500 via-blue-700 to-blue-900 sm:bg-none lg:bg-white max-w-8xl">
-
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-4 bg-gradient-to-l from-blue-700 via-blue-600 to-blue-800 sm:bg-none lg:bg-white max-w-8xl">
           <button
             type="button"
-            className="px-4   text-gray-100 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 lg:hidden"
+            className="px-4 text-yellow-300 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 lg:hidden"
             onClick={ () => setSidebarOpen( true ) }
           >
             <span className="sr-only">Open sidebar</span>
-            <Bars3CenterLeftIcon className="h-6 w-6" aria-hidden="true" />
+            <Bars3CenterLeftIcon className="h-8 w-8" aria-hidden="true" />
           </button>
           <div className="flex-1 px-4 flex justify-between">
             <div className="flex-1 flex">
               <div className="w-full flex md:ml-0">
-                <div className="relative w-full text-white focus-within:text-blue-600">
-                  <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none  lg:hidden">
-                    { orgName }
-                  </div>
+                {/* Center the orgName here */ }
+                <div className="relative w-full flex justify-center items-center text-white focus-within:text-blue-600">
+                  { orgName }
                 </div>
               </div>
             </div>
@@ -429,7 +427,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
               {/* Profile dropdown */ }
               <Menu as="div" className="ml-3 relative">
                 <div>
-                  <Menu.Button className="max-w-xs z-50 bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <Menu.Button className="max-w-xs z-50 bg-blue-400 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
@@ -452,10 +450,9 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                       <Menu.Item key={ item.name }>
                         { ( { active } ) =>
                           item.name === 'Sign out' ? (
-                            // Use a form to trigger the signOut server action
                             <form action={ signOut } method="post" className="w-full">
                               <button
-                                onClick={ handleLogout } // Refactored to use the handleLogout function
+                                onClick={ handleLogout }
                                 className={ classNames(
                                   active ? 'bg-gray-100' : '',
                                   'w-full text-left px-4 py-2 text-sm text-gray-700'
@@ -492,6 +489,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
           </div>
         </main>
       </div>
+
     </>
   );
 }
