@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Suspense } from 'react';
- // Direct import of the Button component
+// Direct import of the Button component
 import { Toaster } from 'react-hot-toast';
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 import Script from 'next/script';
@@ -28,7 +28,7 @@ export default function ClientProviders ( { children }: { children: React.ReactN
       </Suspense>
       <ProgressBar
         height="3px"
-        color="#0053df"
+        color="#ffe145"
         options={ { showSpinner: false } }
         shallowRouting
       />
