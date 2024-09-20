@@ -50,8 +50,8 @@ const navigation = [
       { name: 'Event Analytics', href: '/events/analytics' },
     ],
   },
-  
-  
+
+
   {
     name: 'Team',
     icon: UserGroupIcon,
@@ -63,7 +63,7 @@ const navigation = [
       { name: 'Chat', href: '/team/chat' },
       { name: 'Posts', href: '/team/posts' },
 
-     
+
     ],
   },
   {
@@ -105,7 +105,7 @@ const navigation = [
       { name: 'Event Agenda Builder', href: '/team-management/committees' },
       { name: 'Map Designer', href: '/team-management/members' },
       { name: 'Map Venue Guide', href: '/team-management/volunteers' },
-    
+
 
 
     ],
@@ -118,7 +118,7 @@ const navigation = [
       { name: 'Attendee Map Views', href: '/venue-management/attendee-maps' },
       { name: 'Create Attendee Map', href: '/venue-management/create-venue-maps' },
       { name: 'Vendor Placement Map', href: '/venue-management/vendor-placement-planning' },
-      
+
 
 
     ],
@@ -231,7 +231,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative flex-1 flex flex-col max-w-xs w-full bg-blue-800">
+              <Dialog.Panel className="relative flex-1 flex flex-col max-w-xs w-full bg-gradient-to-tl from-blue-800 via-blue-700 to-blue-800">
                 <div className="absolute top-0 right-0 -mr-12 pt-2">
                   <Button
                     type="button"
@@ -482,8 +482,8 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
           </div>
         </div>
 
-        <main className="bg-gray-100 min-h-screen">
-          <div className="max-w-7xl h-fit px-4 py-8 sm:px-6 lg:px-8">
+        <main className="bg-gray-50 min-h-screen">
+          <div className="max-w-7xl h-fit px-1 py-1 sm:px-4 lg:px-3">
             { children }
             {/* Render children here */ }
           </div>
