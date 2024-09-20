@@ -28,7 +28,16 @@ export async function generateMetadata ( { params }: { params: { slug: string } 
         title: post.metaTitle || post.title,
         description: post.metaDescription || post.excerpt || post.content.slice( 0, 160 ),
         openGraph: {
-            images: post.featuredImage ? [ post.featuredImage ] : [],
+            title: post.metaTitle || post.title,
+            description: post.metaDescription || post.excerpt || post.content.slice( 0, 160 ),
+            url: `https://eventjacket.com/blog/${ params.slug }`, // Update to your website URL
+            images: post.featuredImage ? [ { url: post.featuredImage, alt: post.title } ] : [],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.metaTitle || post.title,
+            description: post.metaDescription || post.excerpt || post.content.slice( 0, 160 ),
+            images: post.featuredImage ? [ { url: post.featuredImage, alt: post.title } ] : [],
         },
     };
 }
