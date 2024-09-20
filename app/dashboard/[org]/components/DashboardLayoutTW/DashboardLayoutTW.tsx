@@ -160,7 +160,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
   const { user } = useUser(); // Fetch user data from context
   const orgName = user?.orgName;
   const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
-
+  const [ isCollapsed, setIsCollapsed ] = useState( true );
   // Initialize Stripe Connect
   const initializeStripeConnect = async () =>
   {
