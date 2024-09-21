@@ -7,18 +7,20 @@ import type { ReactNode } from 'react';
 import React from 'react';
 import
 {
-  BanknotesIcon,
+
   Bars3CenterLeftIcon,
-  BuildingOfficeIcon,
-  CalculatorIcon,
-  CalendarDateRangeIcon,
+
   ChevronRightIcon,
   ClipboardDocumentIcon,
+  Cog8ToothIcon,
+ 
+  CurrencyDollarIcon,
+ 
   FolderIcon,
-  HeartIcon,
+
   HomeIcon,
-  RectangleGroupIcon,
-  ShareIcon,
+  MegaphoneIcon,
+
   UserGroupIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
@@ -27,12 +29,11 @@ import { signOut } from '@/app/actions/SignOut';
 import { Button } from '@nextui-org/button';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { fetchClientSecret } from './fetchClientSecret';
-import { GiTheaterCurtains } from 'react-icons/gi';
-import { BuildingLibraryIcon, BuildingOffice2Icon, BuildingStorefrontIcon, UsersIcon } from '@heroicons/react/20/solid';
-import { FaHotel } from 'react-icons/fa';
+
+import { DocumentCurrencyDollarIcon, UsersIcon } from '@heroicons/react/20/solid';
+
 import { HiOutlineLibrary } from 'react-icons/hi';
-import { MdOutlineStorefront } from 'react-icons/md';
-import { AvatarGroup } from '@nextui-org/react';
+
 
 
 
@@ -67,7 +68,7 @@ const navigation = [
     ],
   },
   {
-    name: 'Contacts',
+    name: 'CRM',
     icon: UsersIcon,
     current: false,
     children: [
@@ -98,31 +99,30 @@ const navigation = [
     ],
   },
   {
-    name: 'Planning Tools',
-    icon: CalendarDateRangeIcon,
+    name: 'Fundraising',
+    icon: DocumentCurrencyDollarIcon,
     current: false,
     children: [
-      { name: 'Event Agenda Builder', href: '/team-management/committees' },
-      { name: 'Map Designer', href: '/team-management/members' },
-      { name: 'Map Venue Guide', href: '/team-management/volunteers' },
-
-
+      { name: 'Campaigns', href: '/team-management/committees' },
+      { name: 'Donations', href: '/team-management/members' },
+      { name: 'Donar Engagement', href: '/team-management/volunteers' },
+      { name: 'Reports', href: '/venue-management/attendee-maps' },
 
     ],
   },
   {
-    name: 'Venue Management',
-    icon: MdOutlineStorefront,
+    name: 'Marketing',
+    icon: MegaphoneIcon,
     current: false,
     children: [
-      { name: 'Attendee Map Views', href: '/venue-management/attendee-maps' },
-      { name: 'Create Attendee Map', href: '/venue-management/create-venue-maps' },
-      { name: 'Vendor Placement Map', href: '/venue-management/vendor-placement-planning' },
-
-
+      { name: 'Email Campaigns', href: '/team-management/committees' },
+      { name: 'Social Media', href: '/team-management/members' },
+      { name: 'SMS Campaigns', href: '/team-management/volunteers' },
+      { name: 'Reports', href: '/venue-management/attendee-maps' },
 
     ],
   },
+
   {
     name: 'Banking',
     icon: HiOutlineLibrary,
@@ -135,7 +135,16 @@ const navigation = [
       { name: 'Help', href: '/banking/help' },
     ],
   },
-
+  {
+    name: 'Settings',
+    icon: Cog8ToothIcon,
+    current: false,
+    children: [
+      { name: 'Account', href: '/banking' },
+      { name: 'Organization', href: '/banking/payments' },
+     
+    ],
+  },
 
 ];
 
@@ -325,8 +334,8 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       </Transition.Root>
 
       {/* Desktop Sidebar */ }
-      <div className="hidden bg-gray-50  lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
-        <div className="flex flex-col flex-grow bg-gradient-to-tr from-blue-800 via-blue-700 to-blue-700 pt-5 pb-4 overflow-y-auto">
+      <div className="hidden bg-gray-50  lg:flex lg:w-56 lg:flex-col lg:fixed lg:inset-y-0">
+        <div className="flex flex-col flex-grow bg-gradient-to-tr from-blue-800 via-blue-700 to-blue-800 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
             <Link href="https://www.eventjacket.com">
               <img
@@ -404,8 +413,8 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 lg:pl-64">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-4 bg-gradient-to-l from-blue-700 via-blue-600 to-blue-800 sm:bg-none lg:bg-white max-w-8xl">
+      <div className="flex flex-col flex-1 lg:pl-56">
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-2 bg-gradient-to-l from-blue-800 via-blue-700 to-blue-800 sm:bg-none lg:bg-blue-800 max-w-8xl">
           <button
             type="button"
             className="px-4 text-yellow-300 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-blue-500 lg:hidden"
@@ -418,7 +427,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
             <div className="flex-1 flex">
               <div className="w-full flex md:ml-0">
                 {/* Center the orgName here */ }
-                <div className="relative w-full flex justify-center items-center text-white focus-within:text-blue-600">
+                <div className="relative w-full flex justify-center items-center lg:hidden text-white focus-within:text-blue-600">
                   { orgName }
                 </div>
               </div>
@@ -450,8 +459,9 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                       <Menu.Item key={ item.name }>
                         { ( { active } ) =>
                           item.name === 'Sign out' ? (
-                            <form action={ signOut } method="post" className="w-full">
+                            <form method="post" className="w-full">
                               <button
+                                type="button"
                                 onClick={ handleLogout }
                                 className={ classNames(
                                   active ? 'bg-gray-100' : '',
@@ -483,7 +493,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
         </div>
 
         <main className="bg-gray-50 min-h-screen">
-          <div className="max-w-7xl h-fit px-1 py-1 sm:px-4 lg:px-3">
+          <div className="max-w-7xl rounded-tr-lg h-fit ">
             { children }
             {/* Render children here */ }
           </div>
