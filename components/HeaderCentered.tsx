@@ -7,8 +7,8 @@ interface HeaderCenteredProps
 export default function HeaderCentered ( { title, description }: HeaderCenteredProps )
 {
   return (
-    <div className = "relative max-w-7xl mx-auto   isolate overflow-hidden  px-2 py-2 sm:py-22 lg:px-8 rounded-2xl" >
-    <div className="relative max-w-7xl mx-auto  isolate overflow-hidden bg-blue-700 px-6 py-8 sm:py-22 lg:px-8 rounded-2xl">
+    <div className = "relative  mx-auto   isolate overflow-hidden   " >
+    <div className="relative mx-auto  isolate overflow-hidden   ">
       <img
         alt=""
         src="/images/festival-4.webp"
@@ -38,9 +38,9 @@ export default function HeaderCentered ( { title, description }: HeaderCenteredP
           className="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#8dc4ff] to-[#155ce9] opacity-30"
         />
       </div>
-      <div className="mx-auto max-w-2xl text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">{ title }</h1>
-        <p className="mt-6 text-lg leading-8 text-gray-100">{ description }</p>
+      <div className="mx-auto  text-center py-20">
+        <h1 className="text-4xl font-bold tracking-tight text-blue-800 sm:text-6xl">{ title }</h1>
+        <p className="mt-6 text-lg leading-8 text-blue-900">{ description }</p>
       </div>
       </div>
       </div>
