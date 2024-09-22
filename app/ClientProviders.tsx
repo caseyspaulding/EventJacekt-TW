@@ -16,10 +16,10 @@ export default function ClientProviders ( { children }: { children: React.ReactN
       {/* Include Google Analytics Script */ }
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-M6F4XVZM25" strategy="lazyOnload" />
 
-    
-     
 
-  
+
+
+
       <Toaster />
       <Suspense fallback={ <div>Loading...</div> }>
         <UserProvider initialUser={ null }>
@@ -28,7 +28,7 @@ export default function ClientProviders ( { children }: { children: React.ReactN
       </Suspense>
       <ProgressBar
         height="3px"
-        color="#ffe145"
+        color="#1d63e8"
         options={ { showSpinner: false } }
         shallowRouting
       />
