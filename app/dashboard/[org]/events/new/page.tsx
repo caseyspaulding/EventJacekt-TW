@@ -269,10 +269,10 @@ const CreateEventPage = () =>
             <Script src="https://accounts.google.com/gsi/client" defer></Script>
 
         </Head>
-        <div className=" max-w-5xl rounded-2xl lg:px-3 lg:py-4 sm:py-1 sm:px-2 bg-white ">
+        <div className=" p-1 lg:px-3 lg:py-4 sm:py-1 sm:px-2 bg-white ">
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
 
-            <form onSubmit={ handleSubmit } className="space-y-6 pb-24">
+            <form onSubmit={ handleSubmit } className="space-y-6 pb-24 max-w-3xl">
                 <div>
                     <label className="block text-sm mb-3 font-medium text-gray-700">
                         Event Featured Image

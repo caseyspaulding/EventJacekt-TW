@@ -13,9 +13,9 @@ import
   ChevronRightIcon,
   ClipboardDocumentIcon,
   Cog8ToothIcon,
- 
+
   CurrencyDollarIcon,
- 
+
   FolderIcon,
 
   HomeIcon,
@@ -142,7 +142,7 @@ const navigation = [
     children: [
       { name: 'Account', href: '/banking' },
       { name: 'Organization', href: '/banking/payments' },
-     
+
     ],
   },
 
@@ -296,7 +296,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                                 <div className="flex items-center gap-x-3">
                                   <item.icon
                                     aria-hidden="true"
-                                      className="h-6 w-6 text-blue-900"
+                                    className="h-6 w-6 text-blue-900"
                                   />
                                   { item.name }
                                 </div>
@@ -380,7 +380,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                         <div className="flex items-center gap-x-3">
                           <item.icon
                             aria-hidden="true"
-                              className="h-6 w-6 text-gray-900"
+                            className="h-6 w-6 text-gray-900"
                           />
                           { item.name }
                         </div>
@@ -413,8 +413,10 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 lg:pl-56">
+      <div className="flex flex-col flex-1 lg:pl-56 bg-gray-100">
+
         <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-2 bg-gradient-to-l from-gray-100 via-gray-50 to-gray-100 sm:bg-none lg:bg-gray-100 max-w-8xl">
+
           <button
             type="button"
             className="px-4 text-blue-900 focus:outline-none  lg:hidden"
@@ -488,12 +490,15 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                   </Menu.Items>
                 </Transition>
               </Menu>
+
             </div>
           </div>
-        </div>
 
-        <main className="bg-gray-100 ">
-          <div className="min-h-screen">
+        </div>
+      
+
+        <main className=" bg-white ">
+          <div className="p-4">
             { children }
             {/* Render children here */ }
           </div>

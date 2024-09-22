@@ -119,8 +119,10 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
 
 
         return (
-            <div className="bg-white rounded-2xl p-5">
-                <div>
+        
+                <div className=" ">
+                <div className='sticky top-4 rounded-tl-2xl z-10 py-4 bg-white '></div>
+                <div className='bg-white'>
                     <div>
                         {/* Back Navigation for Small Screens */ }
                         <nav aria-label="Back" className="sm:hidden">
@@ -128,11 +130,11 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                         </nav>
 
                         {/* Breadcrumbs for Larger Screens */ }
-                        <nav aria-label="Breadcrumb" className="hidden sm:flex">
-                            <ol role="list" className="flex items-center space-x-4">
+                        <nav aria-label="Breadcrumb" className="hidden sm:flex bg-white">
+                            <ol role="list" className="flex items-center space-x-4 bg-white">
                                 { breadcrumbs.map( ( breadcrumb, index ) => (
                                     <li key={ breadcrumb.name }>
-                                        <div className="flex items-center">
+                                        <div className="flex items-center bg-white">
                                             { index > 0 && (
                                                 <ChevronRightIcon
                                                     aria-hidden="true"
@@ -141,7 +143,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                                             ) }
                                             <Link href='/' >
                                                 <div
-                                                    className={ ` text-sm  font-medium text-gray-500 hover:text-gray-700 ${ breadcrumb ? 'text-gray-700' : ''
+                                                    className={ ` text-sm bg-white font-medium text-gray-500 hover:text-gray-700 ${ breadcrumb ? 'text-gray-700' : ''
                                                         }` }
                                                     aria-current={ breadcrumb ? 'page' : undefined }
                                                 >
@@ -169,7 +171,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                         />
                     </Suspense>
                 </header>
-                <div className="my-8">
+                <div className="my-8 bg-white">
                     <h1 className="text-2xl font-bold mb-4">Your Events</h1>
                     { events.length > 0 ? (
                         <div className="overflow-x-auto">
@@ -238,7 +240,8 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
 
                     </div>
                 </div>
-            </div>
+                </div>
+           
         );
     } catch ( error )
     {
