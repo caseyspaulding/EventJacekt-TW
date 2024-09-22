@@ -80,6 +80,89 @@ export const userProfiles = pgTable( 'user_profiles', {
 
 } );
 
+// Grants Table
+export const grants = pgTable( 'grants', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ), // Linking the grant to an organization
+    grantName: text( 'grant_name' ).notNull(),
+    applicantOrganization: text( 'applicant_organization' ).notNull(), // Organization applying for the grant
+    applicationDate: timestamp( 'application_date' ).notNull(), // Date of application
+    status: text( 'status' ).notNull().default( 'submitted' ), // e.g., 'submitted', 'in review', 'approved', 'rejected'
+    amountRequested: numeric( 'amount_requested', { precision: 15, scale: 2 } ), // Requested amount
+    amountApproved: numeric( 'amount_approved', { precision: 15, scale: 2 } ), // Approved amount
+    deadline: timestamp( 'deadline' ).notNull(), // Deadline for submitting deliverables or reports
+    deliverables: text( 'deliverables' ), // Summary of deliverables required if the grant is approved
+    notes: text( 'notes' ), // Additional notes related to the grant
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+// Grant Reviews Table
+export const grantReviews = pgTable( 'grant_reviews', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    grantId: uuid( 'grant_id' )
+        .notNull()
+        .references( () => grants.id ), // Link to the grant being reviewed
+    reviewerId: uuid( 'reviewer_id' )
+        .notNull()
+        .references( () => userProfiles.id ), // Reviewer’s user profile
+    reviewDate: timestamp( 'review_date' ).notNull().default( sql`now()` ),
+    comments: text( 'comments' ), // Reviewer's comments on the grant application
+    rating: integer( 'rating' ), // Rating or score assigned by the reviewer
+    statusChange: text( 'status_change' ), // Status after the review (e.g., 'approved', 'rejected')
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+// Grant Reports Table
+export const grantReports = pgTable( 'grant_reports', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    grantId: uuid( 'grant_id' )
+        .notNull()
+        .references( () => grants.id ), // Link to the grant being reported on
+    reportDate: timestamp( 'report_date' ).notNull().default( sql`now()` ), // Date the report was submitted
+    reportDetails: text( 'report_details' ), // Detailed progress report on the grant
+    attachments: jsonb( 'attachments' ), // JSON field to store file URLs or references (if any attachments)
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+// Grant Reminders Table
+export const grantReminders = pgTable( 'grant_reminders', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    grantId: uuid( 'grant_id' )
+        .notNull()
+        .references( () => grants.id ), // Link to the relevant grant
+    reminderDate: timestamp( 'reminder_date' ).notNull(), // Date for the reminder
+    message: text( 'message' ).notNull(), // Reminder message
+    emailSent: boolean( 'email_sent' ).default( false ), // Whether the reminder email was sent
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+// Grant Touchpoints Table
+export const grantTouchpoints = pgTable( 'grant_touchpoints', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    grantId: uuid( 'grant_id' )
+        .notNull()
+        .references( () => grants.id ), // Link to the grant
+    contactPerson: text( 'contact_person' ), // Name of the person contacted
+    date: timestamp( 'date' ).notNull(), // Date of the meeting or touchpoint
+    notes: text( 'notes' ), // Notes from the meeting
+    nextTouchpointDate: timestamp( 'next_touchpoint_date' ), // When the next meeting or follow-up should occur
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
 export const userEventReminders = pgTable( 'user_event_reminders', {
     id: uuid( 'id' )
         .primaryKey()

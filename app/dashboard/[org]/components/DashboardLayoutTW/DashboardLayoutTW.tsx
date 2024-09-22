@@ -58,8 +58,8 @@ const navigation = [
     icon: UserGroupIcon,
     current: false,
     children: [
-      { name: 'Committees', href: '/team/committees' },
       { name: 'Members', href: '/team/members' },
+      { name: 'Committees', href: '/team/committees' },
       { name: 'Volunteers', href: '/team/volunteers' },
       { name: 'Chat', href: '/team/chat' },
       { name: 'Posts', href: '/team/posts' },
@@ -77,7 +77,7 @@ const navigation = [
       { name: 'Performers', href: '/performers' },
       { name: 'Attendees', href: '/Attendees' },
       { name: 'Sponsors', href: '/sponsors' },
-
+      { name: 'Partners', href: '/partners' },
 
 
     ],
@@ -87,13 +87,11 @@ const navigation = [
     icon: ClipboardDocumentIcon,
     current: false,
     children: [
-      { name: 'Sign Up', href: '/forms/signups' },
-      { name: 'Volunteer', href: '/forms/sponsors' },
-      { name: 'Vendor', href: '/forms/vendors' },
-      { name: 'Performer', href: '/forms/performers' },
-      { name: 'Attendee', href: '/forms/Attendees' },
-      { name: 'Sponsor', href: '/forms/sponsors' },
+      { name: 'Create Form', href: '/forms/signups' },
+      { name: 'Your Forms', href: '/forms/sponsors' },
+      { name: 'Create Sign-Up Form', href: '/forms/sponsors' },
 
+    
 
 
     ],
@@ -106,6 +104,10 @@ const navigation = [
       { name: 'Campaigns', href: '/team-management/committees' },
       { name: 'Donations', href: '/team-management/members' },
       { name: 'Donar Engagement', href: '/team-management/volunteers' },
+      { name: 'Grants', href: '/grants' },
+      { name: 'Reports', href: '/venue-management/attendee-maps' },
+      { name: 'Recurring Donations', href: '/venue-management/attendee-maps' },
+      { name: 'Acknowledgement Letters', href: '/venue-management/attendee-maps' },
       { name: 'Reports', href: '/venue-management/attendee-maps' },
 
     ],
@@ -118,10 +120,12 @@ const navigation = [
       { name: 'Email Campaigns', href: '/team-management/committees' },
       { name: 'Social Media', href: '/team-management/members' },
       { name: 'SMS Campaigns', href: '/team-management/volunteers' },
+      { name: 'Media Mentions', href: '/team-management/volunteers' },
       { name: 'Reports', href: '/venue-management/attendee-maps' },
 
     ],
   },
+  
 
   {
     name: 'Banking',

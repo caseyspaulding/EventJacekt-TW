@@ -72,42 +72,43 @@ export const registerOrganization = async ( formData: FormData ) =>
     }
 
     // Use a transaction for organization and user profile creation
-    try
+    await db.transaction( async ( trx ) =>
     {
-      await db.transaction( async ( trx ) =>
+      const [ org ] = await trx
+        .insert( organizations )
+        .values( { name: orgName, website, logoUrl } )
+        .returning( { id: organizations.id } );
+
+      if ( !org )
       {
-        const [ org ] = await trx
-          .insert( organizations )
-          .values( { name: orgName, website, logoUrl } )
-          .returning( { id: organizations.id } );
+        console.log( 'Organization is not set' );
+        throw new Error( 'Could not create organization' );
+      }
 
-        if ( !org )
-        {
-          console.log( 'Organization is not set' );
-          throw new Error( 'Could not create organization' );
-        }
-
-        await trx.insert( userProfiles ).values( {
-          userId,
-          orgId: org.id,
-          organizationName: orgName,
-        } );
+      // Insert the user profile with the 'admin' role
+      await trx.insert( userProfiles ).values( {
+        userId,
+        orgId: org.id,
+        organizationName: orgName,
+        role: 'admin', // Mark the first registered user as an admin
       } );
 
-      console.log( 'Organization registered successfully.' );
+      // Update the user's role in auth.users table
+      const { error: roleError } = await supabase.from( 'auth.users' )
+        .update( { role: 'admin' } )
+        .eq( 'id', userId );
 
-      // Introduce a delay before returning success
-      await new Promise( ( resolve ) => setTimeout( resolve, 2000 ) ); // Delay for 1 second
+      if ( roleError )
+      {
+        throw new Error( 'Could not update user role: ' + roleError.message );
+      }
+    } );
 
-      return { success: true, orgName: orgName };
-    } catch ( error )
-    {
-      console.log( 'Error during registration transaction:', error );
-      return { success: false, message: 'Could not complete registration' };
-    }
+    console.log( 'Organization registered successfully.' );
+    return { success: true, orgName: orgName };
   } catch ( error )
   {
     console.log( 'Error during registration:', error );
-    return { success: false, message: 'Could not complete registration' };
+    return { success: false, message: error || 'Could not complete registration' };
   }
 };
