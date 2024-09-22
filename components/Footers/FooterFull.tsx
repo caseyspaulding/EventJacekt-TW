@@ -10,9 +10,9 @@ const navigation = {
   ],
   support: [
     { name: 'Blog', href: '/blog' }, 
-  
     { name: 'Contact', href: '/contact' },
     { name: 'Site Map', href: '/sitemap' },
+    { name: 'Events', href: '/events' },
 
   ],
   company: [
