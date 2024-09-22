@@ -121,7 +121,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
         return (
         
                 <div className=" ">
-                <div className='sticky top-4 rounded-tl-2xl z-10 py-4 bg-white '></div>
+           
                 <div className='bg-white'>
                     <div>
                         {/* Back Navigation for Small Screens */ }
