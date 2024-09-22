@@ -80,7 +80,7 @@ const RegisterOrganizationPage = () =>
 
  
     <div className="flex min-h-screen items-center justify-center bg-gray-100"
-      style={ { backgroundImage: 'url(/images/illustrations/background-3.jpg)' } }>
+      style={ { backgroundImage: 'url(/images/background-clouds-action.jpg)' } }>
       <div className="bg-white p-8 rounded-3xl shadow-lg w-full max-w-md">
         <div className="mb-4 text-center">
           <img src="/images/Logo_Icon.webp" alt="EventJacket" className="h-14 w-auto mx-auto" />

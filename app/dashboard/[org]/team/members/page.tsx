@@ -10,6 +10,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure
 import { getMembersByOrg, deleteMember, inviteMember } from '@/app/actions/memberActions';
 import { getUserAndOrgId } from '@/utils/getUserAndOrgId';
 import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
+import { fetchUserProfile } from '@/app/actions/fetchUserProfile';
 
 interface Member
 {
@@ -129,10 +130,12 @@ export default function MembersPage ()
     setSelectedMemberId( memberId );
     openInviteModal();
   };
+
+  
   const handleInvite = async () =>
   {
     setLoading( true );
-    const result = await inviteMember( email );
+    const result = await inviteMember( email, user?.organizationId || '' );
     setFeedback( result ); // Show success or error feedback
     setLoading( false );
   };
