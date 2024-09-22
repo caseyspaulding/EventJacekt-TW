@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@nextui-org/react';
 import { createClient } from '@/utils/supabase/client';
 import LoadingButton from '@/components/LoadingButton/LoadingButton';
-import { LoadingScreen } from '@/components/Loaders/Loading';  
+import { LoadingScreen } from '@/components/Loaders/Loading';
 
 const RegisterOrganizationPage = () =>
 {
@@ -78,9 +78,9 @@ const RegisterOrganizationPage = () =>
     <LoadingScreen />
   ) : (
 
- 
+
     <div className="flex min-h-screen items-center justify-center bg-gray-100"
-      style={ { backgroundImage: 'url(/images/background-clouds-action.jpg)' } }>
+      style={ { backgroundImage: 'url(/images/illustrations/background-3.jpg)' } }>
       <div className="bg-white p-8 rounded-3xl shadow-lg w-full max-w-md">
         <div className="mb-4 text-center">
           <img src="/images/Logo_Icon.webp" alt="EventJacket" className="h-14 w-auto mx-auto" />
@@ -163,7 +163,7 @@ const RegisterOrganizationPage = () =>
             </div>
           </div>
           <div className="flex items-center justify-center">
-            <LoadingButton  
+            <LoadingButton
               type="submit"
               className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-blue-600 hover:bg-blue-600"
               disabled={ loading }
