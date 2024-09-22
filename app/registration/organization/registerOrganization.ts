@@ -4,7 +4,12 @@ import { db } from '@/db';
 import { organizations, userProfiles } from '@/db/schema';
 import { createClient } from '@/utils/supabase/server';
 import { eq } from 'drizzle-orm';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 
+const supabaseAdmin = createAdminClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+);
 
 export const registerOrganization = async ( formData: FormData ) =>
 {
@@ -26,6 +31,20 @@ export const registerOrganization = async ( formData: FormData ) =>
   }
 
   const userId = user.id;
+
+  // Update user's app_metadata to include role: 'admin'
+  const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById( user.id, {
+    app_metadata: {
+      ...user.app_metadata, // Preserve existing app_metadata
+      role: 'admin',
+    },
+  } );
+
+  if ( updateError )
+  {
+    console.error( 'Error updating user role in app_metadata:', updateError.message );
+    return { success: false, message: 'Error updating user role' };
+  }
 
   try
   {
@@ -98,7 +117,7 @@ export const registerOrganization = async ( formData: FormData ) =>
       console.log( 'Organization registered successfully.' );
 
       // Introduce a delay before returning success
-      await new Promise( ( resolve ) => setTimeout( resolve, 2000 ) ); // Delay for 1 second
+      await new Promise( ( resolve ) => setTimeout( resolve, 2000 ) ); // Delay for 2 seconds
 
       return { success: true, orgName: orgName };
     } catch ( error )
