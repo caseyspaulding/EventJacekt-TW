@@ -1,8 +1,9 @@
 'use server';
 import { db } from "@/db";
 import { orgMembers, userProfiles } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from 'drizzle-orm';
 import {createClient } from '@/utils/supabase/server';
+import { createAdminClient } from "@/utils/supabase/createAdminClient";
 
 const supabase = createClient();
 
@@ -57,10 +58,11 @@ export const updateMember = async ( memberId: string, data: FormData ) =>
   return { success: true, message: 'Member updated successfully' };
 };
 
-
-export const inviteMember = async ( email: string ) =>
+// Invite a member to an organization
+export const inviteMember = async ( email: string, orgId: string ) =>
 {
   const supabase = createClient();
+  const supabaseAdmin = createAdminClient();
 
   try
   {
@@ -78,26 +80,49 @@ export const inviteMember = async ( email: string ) =>
 
     const userId = user.id;
 
-    // Retrieve the user's profile and check if they are admin for their organization
+    // Check if the user is an admin of the specified organization
+
     const [ profile ] = await db
       .select()
       .from( userProfiles )
-      .where( eq( userProfiles.userId, userId ) )
-      .limit( 1 );  // Assume there's only one profile per user
+      .where(
+        and(
+          eq( userProfiles.userId, userId ),
+          eq( userProfiles.orgId, orgId )
+        )
+      )
+      .limit( 1 );
 
     if ( !profile || profile.role !== 'admin' )
     {
-      return { success: false, message: 'Only admins can invite members.' };
+      return {
+        success: false,
+        message: 'Only admins can invite members to this organization.',
+      };
     }
 
     // Proceed to invite the member
-    const { data, error } = await supabase.auth.admin.inviteUserByEmail( email );
+    const { data, error } = await supabaseAdmin.auth.admin.inviteUserByEmail( email );
 
     if ( error )
     {
       console.error( 'Error inviting member:', error );
       return { success: false, message: error.message };
     }
+
+    // Prepare the joined date
+    const joinedDate = new Date().toISOString().split( 'T' )[ 0 ]; // Format as 'YYYY-MM-DD'
+
+    // Insert the new member into orgMembers
+    await db.insert( orgMembers ).values( {
+      orgId,
+      name: '',            // Use an empty string or actual name if known
+      email,
+      role: 'member',
+      isActive: false,
+      joinedDate,
+      // Include other fields as necessary, providing default values if needed
+    } );
 
     return { success: true, message: 'Invitation sent successfully!' };
   } catch ( error: any )
@@ -106,6 +131,7 @@ export const inviteMember = async ( email: string ) =>
     return { success: false, message: 'Failed to send invitation' };
   }
 };
+
 
 export const deleteMember = async ( memberId: string ) =>
 {
