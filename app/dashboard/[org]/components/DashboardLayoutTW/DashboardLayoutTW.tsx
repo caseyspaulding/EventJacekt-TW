@@ -334,8 +334,8 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
       </Transition.Root>
 
       {/* Desktop Sidebar */ }
-      <div className="hidden bg-gray-50  lg:flex lg:w-56 lg:flex-col lg:fixed lg:inset-y-0">
-        <div className="flex flex-col flex-grow bg-gradient-to-tr from-gray-100 via-gray-50 to-gray-100 pt-5 pb-4 overflow-y-auto">
+      <div className="hidden bg-gray-50 lg:flex lg:w-56 lg:flex-col lg:fixed lg:inset-y-0">
+        <div className="flex flex-col  flex-grow bg-gradient-to-tr  from-gray-100 via-gray-50 to-gray-100 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
             <Link href="https://www.eventjacket.com">
               <img
@@ -492,8 +492,8 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
           </div>
         </div>
 
-        <main className="bg-gray-100 min-h-screen">
-          <div className="max-w-7xl  h-fit ">
+        <main className="bg-gray-100 ">
+          <div className="min-h-screen">
             { children }
             {/* Render children here */ }
           </div>
