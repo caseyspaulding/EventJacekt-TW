@@ -33,14 +33,7 @@ export const metadata = {
             color: '#5bbad5',
         },
     },
-    themeColor: '#ffffff',
-    viewport: {
-        width: 'device-width',
-        initialScale: 1,
-    },
-    other: {
-        'msapplication-TileColor': '#da532c',
-    },
+
 };
 
 // Google Font Configuration

@@ -91,6 +91,7 @@ export const registerOrganization = async ( formData: FormData ) =>
           userId,
           orgId: org.id,
           organizationName: orgName,
+          role: 'admin',
         } );
       } );
 

@@ -63,7 +63,7 @@ export async function fetchUserProfile (): Promise<UserType | null>
             email: supabaseUser.email!,
             orgName: userProfile.organizationName,
             organizationId: userProfile.organizationId,
-            role: userProfile.role || supabaseUser.user_metadata?.role || 'User',
+            role: userProfile.role || supabaseUser.user_metadata?.role || 'admin',
             avatar: userProfile.profileImageUrl || supabaseUser.user_metadata?.avatar_url || '/images/avatars/user_avatar_default.png',
             contactNumber: userProfile.contactNumber || undefined,
             bio: userProfile.bio || undefined,

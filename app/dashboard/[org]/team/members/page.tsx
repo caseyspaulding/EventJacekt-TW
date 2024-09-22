@@ -10,7 +10,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure
 import { getMembersByOrg, deleteMember, inviteMember } from '@/app/actions/memberActions';
 import { getUserAndOrgId } from '@/utils/getUserAndOrgId';
 import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
-import { fetchUserProfile } from '@/app/actions/fetchUserProfile';
+
 
 interface Member
 {

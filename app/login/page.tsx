@@ -56,9 +56,12 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                     if ( user )
                     {
                         const userId = user.id;
+
+                        console.log( "Fetching organization for user ID: ", userId );
+
                         const { data: org, error } = await supabase
                             .from( 'organizations' )
-                            .select( 'id' )
+                            .select( 'id, slug' )
                             .eq( 'user_id', userId )
                             .single();
 
@@ -66,17 +69,15 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                         {
                             console.error( 'Error fetching organization:', error );
                             setErrorMessage( 'Error fetching organization. Please try again.' );
-                        } else if ( org )
+                        } else if ( !org )
                         {
-
-                            router.push( '/dashboard' ); // Only redirect after all checks are successful
+                            console.error( "No organization found for this user." );
+                            setErrorMessage( 'You do not have an associated organization. Please contact support.' );
                         } else
                         {
-                            setErrorMessage( 'You do not have an associated organization. Please contact support or create an organization.' );
+                            console.log( "Organization found:", org );
+                            router.push( `/dashboard/${ org.slug }` );
                         }
-                    } else
-                    {
-                        setErrorMessage( 'Unable to retrieve user information. Please try logging in again.' );
                     }
                 }
             } catch ( error )
@@ -87,34 +88,8 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
         };
 
         checkAuthStatus();
+    }, [ router ] );
 
-        window.handleSignInWithGoogle = async ( response ) =>
-        {
-            try
-            {
-                console.log( "Google Sign-In Response:", response );
-                const token = response.credential;
-                const result = await verifyAndRedirect( token );
-                console.log( "Verification result:", result );
-
-                if ( result.success )
-                {
-                    console.log( 'Google Sign-In successful, redirecting to', result.redirectTo );
-                    router.push( result.redirectTo as string );
-                } else
-                {
-                    setErrorMessage( result.message || "Google sign-in failed" );
-                    console.error( result.message );
-                }
-            } catch ( error )
-            {
-                console.error( 'Error during Google Sign-In:', error );
-                setErrorMessage( 'Google sign-in failed. Please try again.' );
-            }
-        };
-
-
-    }, [ supabase, router ] );
 
     const handleLogin = async ( e: React.FormEvent<HTMLFormElement> ) =>
     {

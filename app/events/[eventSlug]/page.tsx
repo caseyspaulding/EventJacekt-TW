@@ -90,9 +90,7 @@ export async function generateMetadata ( { params }: { params: Params } )
             },
         ],
         // Moved themeColor to viewport
-        viewport: {
-            themeColor: '#FFD700', // Example color
-        },
+       
     };
 }
 
