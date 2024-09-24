@@ -61,7 +61,7 @@ export function FileUploadButton ( {
         {/* Upload Button */ }
         <Button
           as="label"
-          className="bg-yellow-500 text-white px-5 py-6 text-xl rounded-md cursor-pointer"
+          className="bg-blue-700 text-white px-5 py-6 text-xl rounded-md cursor-pointer"
           radius="sm"
         >
           <svg

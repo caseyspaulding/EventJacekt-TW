@@ -636,7 +636,7 @@ const CreateEventPage = () =>
                     <Button
                         type="submit"
                         radius="sm"
-                        className="px-6 py-2 bg-yellow-500 text-white font-medium text-xl rounded-3xl"
+                        className="px-6 py-2 bg-blue-700 text-white font-medium text-xl rounded-3xl"
                     >
                         Save Event
                     </Button>

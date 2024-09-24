@@ -159,7 +159,7 @@ export default function VolunteersPage ()
                     </div>
                     <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                         <Link href={ `/dashboard/${ user?.orgName }/volunteers/new` }>
-                            <div className="block rounded-3xl bg-yellow-500 px-3 py-2 text-center text-lg font-semibold text-white shadow-sm hover:bg-yellow-400">
+                            <div className="block rounded-3xl bg-blue-500 px-3 py-2 text-center text-lg font-semibold text-white shadow-sm hover:bg-blue-400">
                                 Add New Volunteer
                             </div>
                         </Link>

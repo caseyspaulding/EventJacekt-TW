@@ -53,7 +53,7 @@ const navigation = [
       { name: 'Manage Events', href: '/events' },
       { name: 'Create Event', href: '/events/new' },
       { name: 'Scan Tickets', href: '/events/scan-tickets' },
-      { name: 'Event Analytics', href: '/events/analytics' },
+     
     ],
   },
 
@@ -88,7 +88,7 @@ const navigation = [
   },
   {
 
-    
+
     name: 'Forms',
     icon: ClipboardDocumentIcon,
     current: false,
