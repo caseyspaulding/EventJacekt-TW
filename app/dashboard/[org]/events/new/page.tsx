@@ -275,7 +275,7 @@ const CreateEventPage = () =>
             <form onSubmit={ handleSubmit } className="space-y-6 pb-24 ">
                 <div>
                     <label className="block text-sm mb-3 font-medium text-gray-700">
-                        Event Featured Image
+                        Add an event featured image
                     </label>
                     <FileUploadButton
                         setImage={ setFeaturedImage }
