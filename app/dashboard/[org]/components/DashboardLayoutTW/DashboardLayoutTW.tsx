@@ -10,6 +10,10 @@ import
 
   Bars3CenterLeftIcon,
 
+  ChatBubbleBottomCenterTextIcon,
+
+  ChatBubbleLeftIcon,
+
   ChevronRightIcon,
   ClipboardDocumentIcon,
   Cog8ToothIcon,
@@ -22,6 +26,7 @@ import
   MegaphoneIcon,
 
   UserGroupIcon,
+  UserPlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -30,7 +35,7 @@ import { Button } from '@nextui-org/button';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { fetchClientSecret } from './fetchClientSecret';
 
-import { DocumentCurrencyDollarIcon, UsersIcon } from '@heroicons/react/20/solid';
+import { ChatBubbleBottomCenterIcon, DocumentCurrencyDollarIcon, UsersIcon } from '@heroicons/react/20/solid';
 
 import { HiOutlineLibrary } from 'react-icons/hi';
 
@@ -61,15 +66,14 @@ const navigation = [
       { name: 'Members', href: '/team/members' },
       { name: 'Committees', href: '/team/committees' },
       { name: 'Volunteers', href: '/team/volunteers' },
-      { name: 'Chat', href: '/team/chat' },
-      { name: 'Posts', href: '/team/posts' },
+     
 
 
     ],
   },
   {
     name: 'CRM',
-    icon: UsersIcon,
+    icon: ChatBubbleBottomCenterTextIcon,
     current: false,
     children: [
       { name: 'Volunteers', href: '/volunteers' },
@@ -96,35 +100,8 @@ const navigation = [
 
     ],
   },
-  {
-    name: 'Fundraising',
-    icon: DocumentCurrencyDollarIcon,
-    current: false,
-    children: [
-      { name: 'Campaigns', href: '/team-management/committees' },
-      { name: 'Donations', href: '/team-management/members' },
-      { name: 'Donar Engagement', href: '/team-management/volunteers' },
-      { name: 'Grants', href: '/grants' },
-      { name: 'Reports', href: '/venue-management/attendee-maps' },
-      { name: 'Recurring Donations', href: '/venue-management/attendee-maps' },
-      { name: 'Acknowledgement Letters', href: '/venue-management/attendee-maps' },
-      { name: 'Reports', href: '/venue-management/attendee-maps' },
-
-    ],
-  },
-  {
-    name: 'Marketing',
-    icon: MegaphoneIcon,
-    current: false,
-    children: [
-      { name: 'Email Campaigns', href: '/team-management/committees' },
-      { name: 'Social Media', href: '/team-management/members' },
-      { name: 'SMS Campaigns', href: '/team-management/volunteers' },
-      { name: 'Media Mentions', href: '/team-management/volunteers' },
-      { name: 'Reports', href: '/venue-management/attendee-maps' },
-
-    ],
-  },
+ 
+ 
   
 
   {
@@ -139,16 +116,7 @@ const navigation = [
       { name: 'Help', href: '/banking/help' },
     ],
   },
-  {
-    name: 'Settings',
-    icon: Cog8ToothIcon,
-    current: false,
-    children: [
-      { name: 'Account', href: '/banking' },
-      { name: 'Organization', href: '/banking/payments' },
-
-    ],
-  },
+  
 
 ];
 
