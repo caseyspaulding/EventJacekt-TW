@@ -42,7 +42,7 @@ const UserProfileHeaderDashboard: React.FC<UserProfileHeaderProps> = ( {
 
   return (
     <div className="bg-white">
-      <div className="lg:max-w-6xl">
+      <div className="">
         <div className="py-6 md:flex md:items-center md:justify-between">
           <div className="min-w-0 flex-1">
             {/* Profile */ }

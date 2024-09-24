@@ -233,7 +233,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                         <p>No events found for your organization.</p>
                     ) }
                 </div>
-                <div className="bg-white max-w-6xl">
+                <div className="bg-white ">
                     <DashboardCardGrid cards={ cards } />
                     <div>
 

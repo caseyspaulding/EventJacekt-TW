@@ -17,7 +17,7 @@ const DashboardCardGrid: React.FC<DashboardCardGridProps> = ( { cards } ) =>
 {
   return (
     <div className="my-5">
-      <div className=" max-w-6xl ">
+      <div className="  ">
         <h2 className="text-lg font-medium leading-6 text-gray-900">Overview</h2>
         <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {/* Render each card dynamically */ }

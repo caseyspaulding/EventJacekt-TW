@@ -272,7 +272,7 @@ const CreateEventPage = () =>
         <div className=" p-1 lg:px-3 lg:py-4 sm:py-1 sm:px-2 bg-white ">
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
 
-            <form onSubmit={ handleSubmit } className="space-y-6 pb-24 max-w-3xl">
+            <form onSubmit={ handleSubmit } className="space-y-6 pb-24 ">
                 <div>
                     <label className="block text-sm mb-3 font-medium text-gray-700">
                         Event Featured Image
@@ -286,92 +286,88 @@ const CreateEventPage = () =>
 
 
                 </div>
-                <div>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                        <InputFieldEJ
+                            type="text"
+                            id="name"
+                            value={ name }
+                            onChange={ ( e ) => setName( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            placeholder="Event Name"
+                            required label={ 'Event Title' } />
+                    </div>
 
-                    <InputFieldEJ
-                        type="text"
-                        id="name"
+                    <div>
+                        <InputFieldEJ
+                            id="description"
+                            value={ description }
+                            onChange={ ( e ) => setDescription( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            placeholder="Description"
+                            required label={ 'Description' } />
+                    </div>
 
-                        value={ name }
-                        onChange={ ( e ) => setName( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Event Name"
-                        required label={ 'Event Title' } />
-                </div>
+                    <div>
+                        <InputFieldEJ
+                            type="text"
+                            id="organizerContact"
+                            value={ organizerContact }
+                            onChange={ ( e ) => setOrganizerContact( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            placeholder="Organizer Contact Information"
+                            label={ 'Organizer Contact' }
+                            required
+                        />
+                    </div>
 
-                <div>
+                    <div>
+                        <Input
+                            type="date"
+                            id="startDate"
+                            value={ startDate }
+                            onChange={ ( e ) => setStartDate( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm "
+                            required
+                            label="Start Date"
+                        />
+                    </div>
 
-                    <InputFieldEJ
-                        id="description"
-                        value={ description }
-                        onChange={ ( e ) => setDescription( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Description"
-                        required label={ 'Description' } />
-                </div>
+                    <div>
+                        <Input
+                            type="date"
+                            id="endDate"
+                            value={ endDate }
+                            onChange={ ( e ) => setEndDate( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            required
+                            label="End Date"
+                        />
+                    </div>
 
-                <div>
-                    <InputFieldEJ
-                        type="text"
-                        id="organizerContact"
-                        value={ organizerContact }
-                        onChange={ ( e ) => setOrganizerContact( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Organizer Contact Information"
-                        label={ 'Organizer Contact' }
-                        required
-                    />
-                </div>
+                    <div>
+                        <Input
+                            type="time"
+                            id="eventStartTime"
+                            value={ eventStartTime }
+                            onChange={ ( e ) => setEventStartTime( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            required
+                            label="Event Start Time"
+                        />
+                    </div>
 
-
-
-                <div>
-
-
-                    <Input
-                        type="date"
-                        id="startDate"
-                        value={ startDate }
-                        onChange={ ( e ) => setStartDate( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm "
-                        required
-                        label="Start Date"
-                    />
-                </div>
-                <div>
-                    <Input
-                        type="date"
-                        id="endDate"
-                        value={ endDate }
-                        onChange={ ( e ) => setEndDate( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        required
-                        label="End Date"
-                    />
-                </div>
-
-
-                <div>
-                    <Input
-                        type="time"
-                        id="eventStartTime"
-                        value={ eventStartTime }
-                        onChange={ ( e ) => setEventStartTime( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        required
-                        label="Event Start Time"
-                    />
-                </div>
-                <div>
-                    <Input
-                        type="time"
-                        id="eventEndTime"
-                        value={ eventEndTime }
-                        onChange={ ( e ) => setEventEndTime( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        required
-                        label="Event End Time"
-                    />
+                    <div>
+                        <Input
+                            type="time"
+                            id="eventEndTime"
+                            value={ eventEndTime }
+                            onChange={ ( e) => setEventEndTime( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            required
+                            label="Event End Time"
+                        />
+                    </div>
                 </div>
 
                 <div>
