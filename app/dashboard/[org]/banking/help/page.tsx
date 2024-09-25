@@ -3,7 +3,7 @@
 export default function BankingHelpPage ()
 {
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-md ">
+    <div className="bg-white p-8 rounded-2xl  ">
       <h1 className="text-4xl font-bold mb-6">How to Set Up Your Payments on EventJacket</h1>
       <p className="text-lg text-gray-700 mb-6">
         EventJacket makes it easy for you to collect payments from ticket sales, donations, and more. Follow the steps below to get set up and start receiving funds in your account.

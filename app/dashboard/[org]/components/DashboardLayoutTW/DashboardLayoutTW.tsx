@@ -7,26 +7,16 @@ import type { ReactNode } from 'react';
 import React from 'react';
 import
 {
-
   Bars3CenterLeftIcon,
-
   ChatBubbleBottomCenterTextIcon,
-
-  ChatBubbleLeftIcon,
-
   ChevronRightIcon,
   ClipboardDocumentIcon,
-  Cog8ToothIcon,
-
-  CurrencyDollarIcon,
 
   FolderIcon,
-
   HomeIcon,
-  MegaphoneIcon,
 
   UserGroupIcon,
-  UserPlusIcon,
+
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -35,7 +25,6 @@ import { Button } from '@nextui-org/button';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { fetchClientSecret } from './fetchClientSecret';
 
-import { ChatBubbleBottomCenterIcon, DocumentCurrencyDollarIcon, UsersIcon } from '@heroicons/react/20/solid';
 
 import { HiOutlineLibrary } from 'react-icons/hi';
 
@@ -53,7 +42,7 @@ const navigation = [
       { name: 'Manage Events', href: '/events' },
       { name: 'Create Event', href: '/events/new' },
       { name: 'Scan Tickets', href: '/events/scan-tickets' },
-     
+      { name: 'Event Analytics', href: '/events/analytics' },
     ],
   },
 
@@ -66,7 +55,7 @@ const navigation = [
       { name: 'Members', href: '/team/members' },
       { name: 'Committees', href: '/team/committees' },
       { name: 'Volunteers', href: '/team/volunteers' },
-     
+
 
 
     ],
@@ -97,14 +86,14 @@ const navigation = [
       { name: 'Your Forms', href: '/forms/sponsors' },
       { name: 'Create Sign-Up Form', href: '/forms/sponsors' },
 
-    
+
 
 
     ],
   },
- 
- 
-  
+
+
+
 
   {
     name: 'Banking',
@@ -118,7 +107,7 @@ const navigation = [
       { name: 'Help', href: '/banking/help' },
     ],
   },
-  
+
 
 ];
 
@@ -214,7 +203,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative flex-1 flex flex-col max-w-xs w-full bg-gradient-to-tl from-gray-50 via-gray-100 to-gray-50">
+              <Dialog.Panel className="relative flex-1 flex flex-col max-w-xs w-full bg-gradient-to-tl from-blue-50 via-blue-100 to-blue-50">
                 <div className="absolute top-0 right-0 -mr-12 pt-2">
                   <Button
                     type="button"
@@ -309,7 +298,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
 
       {/* Desktop Sidebar */ }
       <div className="hidden bg-gray-50 lg:flex lg:w-56 lg:flex-col lg:fixed lg:inset-y-0">
-        <div className="flex flex-col  flex-grow bg-gradient-to-tr  from-gray-100 via-gray-50 to-gray-100 pt-5 pb-4 overflow-y-auto">
+        <div className="flex flex-col  flex-grow bg-gradient-to-tr  from-blue-100 via-blue-50 to-blue-100 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
             <Link href="https://www.eventjacket.com">
               <img
@@ -389,7 +378,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
 
       <div className="flex flex-col flex-1 lg:pl-56 bg-gray-100">
 
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-2 bg-gradient-to-l from-gray-100 via-gray-50 to-gray-100 sm:bg-none lg:bg-gray-100 max-w-8xl">
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-2 bg-gradient-to-l from-blue-100 via-blue-50 to-blue-100 sm:bg-none lg:bg-white max-w-8xl">
 
           <button
             type="button"
@@ -469,7 +458,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
           </div>
 
         </div>
-      
+
 
         <main className=" bg-white ">
           <div className="p-4">
