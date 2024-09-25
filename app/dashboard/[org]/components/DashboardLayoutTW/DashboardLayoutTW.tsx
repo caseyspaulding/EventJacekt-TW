@@ -42,7 +42,7 @@ const navigation = [
       { name: 'Manage Events', href: '/events' },
       { name: 'Create Event', href: '/events/new' },
       { name: 'Scan Tickets', href: '/events/scan-tickets' },
-      { name: 'Event Analytics', href: '/events/analytics' },
+     
     ],
   },
 
@@ -60,37 +60,37 @@ const navigation = [
 
     ],
   },
-  {
-    name: 'CRM',
-    icon: ChatBubbleBottomCenterTextIcon,
-    current: false,
-    children: [
-      { name: 'Volunteers', href: '/volunteers' },
-      { name: 'Vendors', href: '/vendors' },
-      { name: 'Performers', href: '/performers' },
-      { name: 'Attendees', href: '/Attendees' },
-      { name: 'Sponsors', href: '/sponsors' },
-      { name: 'Partners', href: '/partners' },
+  //{
+  //  name: 'CRM',
+  //  icon: ChatBubbleBottomCenterTextIcon,
+  //  current: false,
+  //  children: [
+  //    { name: 'Volunteers', href: '/volunteers' },
+  //    { name: 'Vendors', href: '/vendors' },
+  //    { name: 'Performers', href: '/performers' },
+  //    { name: 'Attendees', href: '/Attendees' },
+  //    { name: 'Sponsors', href: '/sponsors' },
+  //    { name: 'Partners', href: '/partners' },
 
 
-    ],
-  },
-  {
+  //  ],
+  //},
+  //{
 
 
-    name: 'Forms',
-    icon: ClipboardDocumentIcon,
-    current: false,
-    children: [
-      { name: 'Create Form', href: '/forms/signups' },
-      { name: 'Your Forms', href: '/forms/sponsors' },
-      { name: 'Create Sign-Up Form', href: '/forms/sponsors' },
+  //  name: 'Forms',
+  //  icon: ClipboardDocumentIcon,
+  //  current: false,
+  //  children: [
+  //    { name: 'Create Form', href: '/forms/signups' },
+  //    { name: 'Your Forms', href: '/forms/sponsors' },
+  //    { name: 'Create Sign-Up Form', href: '/forms/sponsors' },
 
 
 
 
-    ],
-  },
+  //  ],
+  //},
 
 
 
