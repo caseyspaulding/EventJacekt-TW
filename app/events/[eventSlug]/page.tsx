@@ -7,7 +7,7 @@ import { JsonLd } from 'react-schemaorg';
 import type { Event as SchemaEvent } from 'schema-dts'
 import { events, organizations, orgTicketTypes } from "@/db/schema";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
-import { absoluteUrl } from "@/lib/utils";
+
 import EventImage from "@/components/EventHomeOne/Hero/EventImage";
 import Countdown from "@/components/Countdown/Countdown";
 import BuyTicketsButton from "@/components/EventHomeOne/BuyTicketsButton";
@@ -17,6 +17,7 @@ import '@/styles/gradientHeader.css';
 import FooterTW from "@/components/Footers/FooterTW";
 import Script from "next/script";
 import Head from "next/head";
+import { absoluteUrl } from "@/utils/absoluteUrl";
 
 
 interface Params

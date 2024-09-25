@@ -1,16 +1,16 @@
- 
+
 import React from "react";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
 import { events, orgTicketTypes, organizations } from "@/db/schema";
 import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
 import { eq } from "drizzle-orm/expressions";
-
-import { absoluteUrl } from "@/lib/utils";
+import { absoluteUrl } from "@/utils/absoluteUrl";
 import type { Metadata } from "next/types";
 import BuyTicketsComp from "@/components/EventHomeOne/Hero/BuyTicketsComp";
 import FooterTW from "@/components/Footers/FooterTW";
 import Script from "next/script";
+
 
 
 export async function generateMetadata ( { params }: { params: Params } ): Promise<Metadata>
@@ -157,14 +157,14 @@ export default async function BuyTickets ( { params }: { params: Params } )
     } )
     .from( orgTicketTypes )
     .where( eq( orgTicketTypes.eventId, eventId ) );
-  
-  
+
+
 
   return (
     <>
       {/* Load Stripe Script here for payment functionality */ }
       <Script src="https://connect.stripe.com/connect-js" strategy="lazyOnload" defer />
-      
+
       <div className="bg-white flex justify-center items-center min-h-screen">
         <BuyTicketsComp
           eventName={ eventData.eventName }
@@ -185,8 +185,8 @@ export default async function BuyTickets ( { params }: { params: Params } )
           featuredImage={ eventData.featuredImage || "" } // Pass the featured image
         />
       </div>
-<FooterTW />  
-      
+      <FooterTW />
+
     </>
   );
 }
