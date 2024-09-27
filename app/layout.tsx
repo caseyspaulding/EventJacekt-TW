@@ -3,18 +3,22 @@ import { Space_Grotesk } from 'next/font/google';  // Import font
 import './globals.css';
 import ClientProviders from './ClientProviders';
 import { ThemeProvider } from "@/providers/theme-provider";
+
+import Head from 'next/head';
+import { useRouter } from 'next/navigation';
 // Metadata for SEO and OpenGraph
 export const metadata = {
     title: 'EventJacket - Event Management Software for Nonprofits',
     description: 'EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank.',
+    canonical: 'https://eventjacket.com',  // Added Canonical URL
     openGraph: {
         title: 'EventJacket - Event Management Software',
         description: 'Save Thousands! EventJacket empowers nonprofits to manage vendors, volunteers, attendees, performers, and sponsors in one platform without breaking the bank.',
-        url: 'https://www.eventjacket.com',
+        url: 'https://eventjacket.com',  // Updated to preferred domain
         type: 'website',
         images: [
             {
-                url: 'https://www.eventjacket.com/opengraph-image.png',
+                url: 'https://eventjacket.com/opengraph-image.png',  // Updated to preferred domain
                 width: 1200,
                 height: 630,
                 alt: 'EventJacket - Save Thousands!',
@@ -33,7 +37,6 @@ export const metadata = {
             color: '#5bbad5',
         },
     },
-
 };
 
 // Google Font Configuration
@@ -45,14 +48,16 @@ const spaceGrotesk = Space_Grotesk( {
 
 export default function RootLayout ( { children }: PropsWithChildren )
 {
+   
+   
     return (
         <html lang="en" className={ `${ spaceGrotesk.className }` }>
+          
             <body>
                 <ThemeProvider attribute="class" defaultTheme="light">
-                <ClientProviders>
-                    { children }
-              
-                </ClientProviders>
+                    <ClientProviders>
+                        { children }
+                    </ClientProviders>
                 </ThemeProvider>
             </body>
         </html>
