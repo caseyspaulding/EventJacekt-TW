@@ -48,11 +48,11 @@ const spaceGrotesk = Space_Grotesk( {
 
 export default function RootLayout ( { children }: PropsWithChildren )
 {
-   
-   
+
+
     return (
         <html lang="en" className={ `${ spaceGrotesk.className }` }>
-          
+
             <body>
                 <ThemeProvider attribute="class" defaultTheme="light">
                     <ClientProviders>
