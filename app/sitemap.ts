@@ -11,7 +11,7 @@ export default async function sitemap (): Promise<MetadataRoute.Sitemap>
     }
 
     const blogPosts = blogResult.data;
-    const baseUrl = `https://${ process.env.NEXT_PUBLIC_SITE_URL?.replace( /^https?:\/\//, '' ) }`; // Ensure baseUrl uses https
+    const baseUrl = `${ process.env.NEXT_PUBLIC_SITE_URL}`; 
 
     // Generate sitemap URLs for dynamic blog posts
     const blogSitemapUrls = blogPosts.map( ( post ) => ( {
