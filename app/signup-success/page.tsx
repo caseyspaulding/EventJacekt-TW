@@ -3,7 +3,14 @@
 import Confetti from 'react-confetti';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { Button } from '@nextui-org/button';
+import { Metadata } from 'next';
 
+
+export const metadata: Metadata = {
+    title: 'Sign Up Successful - EventJacket',
+    description:
+        'Welcome to EventJacket! Check your email for a verification link to activate your account.',
+};
 export default function SignUpSuccess() {
     const { width, height } = useWindowSize();
 

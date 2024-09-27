@@ -14,7 +14,7 @@ import { Button } from '@nextui-org/button';
 
 
 export const metadata: Metadata = {
-    title: 'EventJacket - Sell Tickets Online',
+    title: 'EventJacket - Homepage',
     description:
         'Boost ticket sales,simplify planning and manage everything in one place. For every event, big or small.',
 };
@@ -26,23 +26,7 @@ export default async function Index ()
 
     return (
         <>
-            <Head>
 
-                <meta property="og:title" content="EventJacket - Event Management Software" />
-                <meta
-                    property="og:description"
-                    content="Simplify planning, boost ticket sales, and manage everything in one place. For every event, big or small"
-                />
-                <meta property="og:url" content="https://www.eventjacket.com" />
-                <meta property="og:type" content="website" />
-                <meta property="og:image" content="https://www.eventjacket.com/opengraph-image.png" />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:image:alt" content="EventJacket - Sell Tickets Online" />
-
-                {/* Optional - Facebook App ID */ }
-                <meta property="fb:app_id" content="453279560972900" />
-            </Head>
             <SvgBackgroundReversed />
             <NavBar1 />
             <NavBarTW />
@@ -78,8 +62,8 @@ export default async function Index ()
                     </div>
                 </div>
             </div>
-           
-          
+
+
 
             <FooterFull />
         </>

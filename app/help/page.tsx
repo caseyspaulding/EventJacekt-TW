@@ -1,10 +1,16 @@
 import FooterFull from "@/components/Footers/FooterFull";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: 'Help Center - EventJacket',
+  description:
+    'Need help? You’ve come to the right place! Explore our resources below or reach out to our support team for assistance.',
+};
 export default function HelpCenter ()
 {
-  return (<>
-    <NavBar1 /> 
+  return ( <>
+    <NavBar1 />
     <div className="max-w-screen-md mx-auto py-10 px-5">
       <h1 className="text-3xl font-bold text-center mb-8">Welcome to the EventJacket Help Center</h1>
 
@@ -20,7 +26,7 @@ export default function HelpCenter ()
           <h3 className="text-lg font-semibold mb-2">How do I create an event?</h3>
           <p className="mb-4">Creating an event is simple. Navigate to your dashboard and click on 'Create Event' to get started.</p>
 
-          
+
 
           {/* Add more FAQs */ }
         </div>
@@ -49,10 +55,10 @@ export default function HelpCenter ()
           <li>Live Chat: Available during business hours</li>
           <li>Call us:  +1 (407) 326-3692</li>
         </ul>
-      
+
       </section>
     </div>
-    <FooterFull />  
+    <FooterFull />
   </>
   );
 }

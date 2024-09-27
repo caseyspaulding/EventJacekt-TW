@@ -1,5 +1,12 @@
+import { Metadata } from "next";
 import Link from "next/link";
 
+
+export const metadata: Metadata = {
+  title: 'Thank You - EventJacket',
+  description:
+    'Thank you for confirming your email! You are all set to start creating events!',
+};
 export default function ThankYouPage ()
 {
   return (

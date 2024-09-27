@@ -10,8 +10,14 @@ import { signUp } from "./signup";
 import toast from "react-hot-toast";
 import FooterFull from "@/components/Footers/FooterFull";
 import MyButton from "../login/submit-button";
+import { Metadata } from "next";
 
 
+export const metadata: Metadata = {
+    title: 'Get Started',
+    description:
+        'Get started with EventJacket to manage your events.',
+};
 declare global
 {
     interface Window

@@ -1,7 +1,13 @@
 import { Button, Card, Checkbox, Label, TextInput } from 'flowbite-react';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
+export const metadata: Metadata = {
+    title: 'Forgot Password - EventJacket',
+    description:
+        'Forgot your password? No worries! Just type in your email and we will send you a code to reset your password!',
+};
 export default function ForgotPasswordPage() {
     return (
         <div className="mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">

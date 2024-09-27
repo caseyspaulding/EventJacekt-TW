@@ -4,7 +4,14 @@ import React from 'react';
 import Link from 'next/link';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
+import { Metadata } from 'next';
 
+
+export const metadata: Metadata = {
+  title: 'Site Map - EventJacket',
+  description:
+    'Find your way around the EventJacket website with our site map.',
+};
 const Sitemap = () =>
 {
   return ( <>
@@ -19,7 +26,7 @@ const Sitemap = () =>
             <ul>
               <li><Link href="/"><p className="text-blue-600 hover:underline">Home</p></Link></li>
               <li><Link href="/pbout"><p className="text-blue-600 hover:underline">About Us</p></Link></li>
-           
+
               <li><Link href="/pricing"><p className="text-blue-600 hover:underline">Fees</p></Link></li>
               <li><Link href="/contact"><p className="text-blue-600 hover:underline">Contact Us</p></Link></li>
               <li><Link href="/terms"><p className="text-blue-600 hover:underline">Terms of Service</p></Link></li>
@@ -46,7 +53,7 @@ const Sitemap = () =>
             <h3 className="font-bold text-xl mb-4">Attending Events</h3>
             <ul>
               <li><Link href="/events"><p className="text-blue-600 hover:underline">Browse Events</p></Link></li>
-             
+
             </ul>
           </div>
 
@@ -57,7 +64,7 @@ const Sitemap = () =>
               <li><Link href="/nonprofits"><p className="text-blue-600 hover:underline">Nonprofit Event Ticketing</p></Link></li>
               <li><Link href="/workshop-ticketing"><p className="text-blue-600 hover:underline">Workshop Ticketing</p></Link></li>
               <li><Link href="/ren-faire-ticketing"><p className="text-blue-600 hover:underline">Ren Faire Ticketing</p></Link></li>
-             
+
               {/* Add more categories as needed */ }
             </ul>
           </div>

@@ -1,6 +1,13 @@
 import FooterFull from "@/components/Footers/FooterFull";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+  title: 'Contact Us - EventJacket',
+  description:
+    'Get in touch with the EventJacket team. We’d love to hear from you! Send us a message using the form below, or email us directly at',
+};
 export default function Contact ()
 {
   return (<>

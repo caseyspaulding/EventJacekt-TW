@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Marketing Events - EventJacket',
-    description: 'Get the word out about your event.'
+    description: 'Get the word out about your event.',
 };
 
 export default function MarketingPage() {

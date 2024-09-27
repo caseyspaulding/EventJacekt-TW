@@ -8,7 +8,14 @@ import { Input } from '@nextui-org/react';
 import { createClient } from '@/utils/supabase/client';
 import LoadingButton from '@/components/LoadingButton/LoadingButton';
 import { LoadingScreen } from '@/components/Loaders/Loading';
+import { Metadata } from 'next';
 
+
+export const metadata: Metadata = {
+  title: 'Register Organization - EventJacket',
+  description:
+    'Register your organization to start using EventJacket.',
+};
 const RegisterOrganizationPage = () =>
 {
   const router = useRouter();

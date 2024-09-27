@@ -58,7 +58,7 @@ const CaseyAuthorPage = () =>
         <title>About Casey Spaulding | EventJacket</title>
         <meta
           name="description"
-          content="Learn more about Casey Spaulding, the founder of EventJacket, a SaaS platform for non-profits."
+          content="Learn more about Casey Spaulding, the founder of EventJacket, a event management software for non-profits."
         />
         <script
           type="application/ld+json"

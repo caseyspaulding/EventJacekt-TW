@@ -3,7 +3,14 @@
 import React, { useState } from 'react';
 import { Input, Button } from '@nextui-org/react';
 import { createClient } from '@/utils/supabase/client';
+import { Metadata } from 'next';
 
+
+export const metadata: Metadata = {
+  title: 'Reset Password - EventJacket',
+  description:
+    'Reset your password to access your EventJacket account.',
+};
 export default function ResetPassword ()
 {
   const [ email, setEmail ] = useState( '' );
