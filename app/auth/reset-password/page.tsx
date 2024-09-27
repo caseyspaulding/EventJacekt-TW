@@ -3,14 +3,8 @@
 import React, { useState } from 'react';
 import { Input, Button } from '@nextui-org/react';
 import { createClient } from '@/utils/supabase/client';
-import { Metadata } from 'next';
+import { Head } from 'next/document';
 
-
-export const metadata: Metadata = {
-  title: 'Reset Password - EventJacket',
-  description:
-    'Reset your password to access your EventJacket account.',
-};
 export default function ResetPassword ()
 {
   const [ email, setEmail ] = useState( '' );
@@ -33,21 +27,27 @@ export default function ResetPassword ()
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h2>Reset Password</h2>
-      <Input
-        label="Email Address"
-        name="email"
-        placeholder="Enter your email"
-        type="email"
-        value={ email }
-        onChange={ ( e ) => setEmail( e.target.value ) }
-        required
-      />
-      <Button onClick={ handleResetPassword } className="mt-4">
-        Send Reset Email
-      </Button>
-      { message && <p className="mt-4 text-center">{ message }</p> }
-    </div>
+    <><Head>
+      <title>Reset Password - EventJacket</title>
+      <meta
+        name="description"
+        content="Reset your password for your EventJacket account." />
+      <meta name="robots" content="noindex, nofollow" />
+
+    </Head><div className="flex flex-col items-center justify-center min-h-screen">
+        <h2>Reset Password</h2>
+        <Input
+          label="Email Address"
+          name="email"
+          placeholder="Enter your email"
+          type="email"
+          value={ email }
+          onChange={ ( e ) => setEmail( e.target.value ) }
+          required />
+        <Button onClick={ handleResetPassword } className="mt-4">
+          Send Reset Email
+        </Button>
+        { message && <p className="mt-4 text-center">{ message }</p> }
+      </div></>
   );
 }

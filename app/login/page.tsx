@@ -11,13 +11,8 @@ import { createClient } from "@/utils/supabase/client";
 import FooterFull from "@/components/Footers/FooterFull";
 import MyButton from "./submit-button";
 import Script from "next/script";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: 'Login - EventJacket',
-    description:
-        'Login to your EventJacket account to manage your events.',
-};
+
 declare global
 {
     interface Window

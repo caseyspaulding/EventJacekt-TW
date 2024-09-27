@@ -10,14 +10,7 @@ import { signUp } from "./signup";
 import toast from "react-hot-toast";
 import FooterFull from "@/components/Footers/FooterFull";
 import MyButton from "../login/submit-button";
-import { Metadata } from "next";
 
-
-export const metadata: Metadata = {
-    title: 'Get Started',
-    description:
-        'Get started with EventJacket to manage your events.',
-};
 declare global
 {
     interface Window
@@ -28,7 +21,7 @@ declare global
 
 export default function Component ()
 {
-    
+
     const [ email, setEmail ] = useState( '' );
     const [ password, setPassword ] = useState( '' );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -138,7 +131,7 @@ export default function Component ()
                             <h2 className="mt-1 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">
                                 Create an account
                             </h2>
-                           
+
                         </div>
 
 
@@ -212,7 +205,7 @@ export default function Component ()
                                 isLoading={ isLoading }
                                 spinnerDelay={ 1000 } // 1 second delay before hiding spinner
                                 loadingMessage="Signing In..."
-                                
+
                             >
                                 Create Account
                             </MyButton>

@@ -4,17 +4,19 @@ import React from 'react';
 import Link from 'next/link';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
-import { Metadata } from 'next';
+
+import { Head } from 'next/document';
 
 
-export const metadata: Metadata = {
-  title: 'Site Map - EventJacket',
-  description:
-    'Find your way around the EventJacket website with our site map.',
-};
 const Sitemap = () =>
 {
   return ( <>
+    <Head>
+      <title>Site Map - EventJacket</title>
+      <meta name="description" content="Find your way around the EventJacket website with our site map." />
+
+    
+    </Head>
     <NavBar1 />
     <div className="bg-gray-50 py-10">
       <div className="max-w-7xl mx-auto px-4 lg:px-4">
