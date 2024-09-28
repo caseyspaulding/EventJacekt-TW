@@ -114,9 +114,27 @@ export default function Component ()
         <>
             <Head>
                 <title>Create Account - EventJacket</title>
-                <meta name="description" content="Create your EventJacket account to manage your events." />
+                <meta name="description" content="Create your EventJacket account to manage your events, sell tickets, and track attendees." />
                 <meta name="robots" content="noindex, nofollow" />
+                <meta name="keywords" content="Event management, nonprofit events, create account, event software, event jacket" />
+
+                {/* OpenGraph tags for social media */ }
+                <meta property="og:title" content="Create Account - EventJacket" />
+                <meta property="og:description" content="Sign up for EventJacket to organize your events, manage vendors, and sell tickets." />
+                <meta property="og:image" content="https://eventjacket.com/images/logo-full.png" />
+                <meta property="og:url" content="https://eventjacket.com/signup" />
+                <meta property="og:type" content="website" />
+
+                {/* Twitter Card metadata */ }
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Create Account - EventJacket" />
+                <meta name="twitter:description" content="Join EventJacket and start organizing your nonprofit events today." />
+                <meta name="twitter:image" content="https://eventjacket.com/images/logo-full.png" />
+
+                {/* Canonical URL for SEO */ }
+                <link rel="canonical" href="https://eventjacket.com/signup" />
             </Head>
+
             <div className="relative flex min-h-screen items-center justify-center bg-cover bg-center" style={ { backgroundImage: "url('/images/festival-4.png')" } }>
                 <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
                 {/* Login Card */ }
