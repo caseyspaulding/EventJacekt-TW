@@ -42,6 +42,20 @@ export default async function BlogList ()
                 title="Blog"
                 description="Read the latest articles from our blog for tips to grow and organize stellar events with EventJacket."
             />
+            {/* Add more introductory text here to improve text/HTML ratio */ }
+            <section className="bg-gray-100 py-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                        Welcome to the EventJacket Blog
+                    </h2>
+                    <p className="text-lg text-gray-600 mb-8">
+                        Our blog is your go-to resource for the latest tips, tricks, and best practices for organizing successful events.
+                        Whether you're a nonprofit looking to streamline your event management or a festival organizer seeking new ways to engage your audience,
+                        our articles cover a wide range of topics to help you succeed. Explore our posts below and start organizing stellar events today!
+                    </p>
+                </div>
+            </section>
+
             <main className="bg-white py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
