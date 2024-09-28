@@ -33,10 +33,7 @@ export default function ResetPassword ()
         <title>Reset Password - EventJacket</title>
         <meta name="description" content="Reset your EventJacket account password by providing your email address. A reset link will be sent to your inbox." />
         <meta name="robots" content="noindex, nofollow" />
-        <meta property="og:title" content="Reset Password - EventJacket" />
-        <meta property="og:description" content="Reset your EventJacket account password by providing your email address. A reset link will be sent to your inbox." />
-        <meta property="og:url" content={ `${ window.location.origin }/auth/reset-password` } />
-        <meta property="og:type" content="website" />
+  
       </Head>
 
       <div className="flex flex-col items-center justify-center min-h-screen">
