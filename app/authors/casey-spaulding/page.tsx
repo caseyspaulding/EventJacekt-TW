@@ -1,4 +1,4 @@
-// /app/authors/casey/page.tsx
+'use client';
 
 import React, { SVGProps } from 'react';
 import Head from 'next/head';
@@ -24,11 +24,8 @@ const CaseyAuthorPage = () =>
     }
   };
 
-
   const navigation = {
-    
     social: [
-    
       {
         name: 'LinkedIn',
         href: 'https://www.linkedin.com/in/caseyspaulding/',
@@ -47,10 +44,8 @@ const CaseyAuthorPage = () =>
           </svg>
         ),
       },
-
-    
     ],
-  }
+  };
 
   return (
     <>
@@ -58,14 +53,29 @@ const CaseyAuthorPage = () =>
         <title>About Casey Spaulding | EventJacket</title>
         <meta
           name="description"
-          content="Learn more about Casey Spaulding, the founder of EventJacket, a event management software for non-profits."
+          content="Learn more about Casey Spaulding, the founder of EventJacket, an event management software for non-profits."
         />
+        <meta property="og:title" content="About Casey Spaulding | EventJacket" />
+        <meta
+          property="og:description"
+          content="Learn more about Casey Spaulding, the founder of EventJacket, an event management software for non-profits."
+        />
+        <meta property="og:image" content="https://www.eventjacket.com/images/caseyandlaura.jpg" />
+        <meta property="og:url" content="https://www.eventjacket.com/authors/casey-spaulding" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@caseyspaulding_" />
+        <meta name="twitter:title" content="About Casey Spaulding | EventJacket" />
+        <meta
+          name="twitter:description"
+          content="Learn more about Casey Spaulding, the founder of EventJacket, an event management software for non-profits."
+        />
+        <meta name="twitter:image" content="https://www.eventjacket.com/images/caseyandlaura.jpg" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={ { __html: JSON.stringify( schemaData ) } }
         />
       </Head>
-      <NavBar1 /> 
+      <NavBar1 />
       <div className="bg-gray-100 min-h-screen">
         <div className="container mx-auto px-4 py-12">
           <div className="flex flex-col items-center">
@@ -106,7 +116,7 @@ const CaseyAuthorPage = () =>
           </div>
         </div>
       </div>
-      <FooterFull />  
+      <FooterFull />
     </>
   );
 };

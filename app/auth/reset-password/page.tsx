@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Input, Button } from '@nextui-org/react';
 import { createClient } from '@/utils/supabase/client';
-
+import Head from 'next/head';
 
 export default function ResetPassword ()
 {
@@ -27,20 +27,34 @@ export default function ResetPassword ()
   };
 
   return (
-    <><div className="flex flex-col items-center justify-center min-h-screen">
-      <h2>Reset Password</h2>
-      <Input
-        label="Email Address"
-        name="email"
-        placeholder="Enter your email"
-        type="email"
-        value={ email }
-        onChange={ ( e ) => setEmail( e.target.value ) }
-        required />
-      <Button onClick={ handleResetPassword } className="mt-4">
-        Send Reset Email
-      </Button>
-      { message && <p className="mt-4 text-center">{ message }</p> }
-    </div></>
+    <>
+      {/* Meta tags for SEO */ }
+      <Head>
+        <title>Reset Password - EventJacket</title>
+        <meta name="description" content="Reset your EventJacket account password by providing your email address. A reset link will be sent to your inbox." />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta property="og:title" content="Reset Password - EventJacket" />
+        <meta property="og:description" content="Reset your EventJacket account password by providing your email address. A reset link will be sent to your inbox." />
+        <meta property="og:url" content={ `${ window.location.origin }/auth/reset-password` } />
+        <meta property="og:type" content="website" />
+      </Head>
+
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h2>Reset Password</h2>
+        <Input
+          label="Email Address"
+          name="email"
+          placeholder="Enter your email"
+          type="email"
+          value={ email }
+          onChange={ ( e ) => setEmail( e.target.value ) }
+          required
+        />
+        <Button onClick={ handleResetPassword } className="mt-4">
+          Send Reset Email
+        </Button>
+        { message && <p className="mt-4 text-center">{ message }</p> }
+      </div>
+    </>
   );
 }
