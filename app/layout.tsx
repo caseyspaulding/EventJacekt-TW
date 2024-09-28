@@ -16,9 +16,9 @@ export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (
         <html lang="en" className={ spaceGrotesk.className }>
-            { process.env.NODE_ENV === "production" ? (
-                <GoogleTagManager gtmId="G-M6F4XVZM25" />
-            ) : null }
+
+            <GoogleTagManager gtmId="G-M6F4XVZM25" />
+
             <body>
 
 
