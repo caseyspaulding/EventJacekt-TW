@@ -83,12 +83,12 @@ export default async function BlogList ()
                                     </h3>
                                     <p className="text-1rem text-gray-600 mb-4 line-clamp-3">{ post.excerpt }</p>
                                 </div>
-                                <div className="px-6 py-4 bg-gray-50 mt-auto">
+                                <div className="px-6 py-4 mt-auto">
                                     <Link
                                         href={ `/blog/${ post.slug }` }
                                         className="text-blue-600 hover:text-blue-800 font-medium text-1rem"
                                     >
-                                        Read more →
+                                        Read more about { post.title } →
                                     </Link>
                                 </div>
                             </article>
