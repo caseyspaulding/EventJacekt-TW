@@ -10,7 +10,7 @@ import FooterFull from '@/components/Footers/FooterFull';
 const Sitemap = () =>
 {
   return ( <>
-    
+
     <NavBar1 />
     <div className="bg-gray-50 py-10">
       <div className="max-w-7xl mx-auto px-4 lg:px-4">
@@ -37,9 +37,8 @@ const Sitemap = () =>
             <ul>
               <li><Link href="/getting-started"><p className="text-blue-600 hover:underline">Getting Started</p></Link></li>
               <li><Link href="/how-it-works"><p className="text-blue-600 hover:underline">How It Works</p></Link></li>
-              <li><Link href="/sell-tickets"><p className="text-blue-600 hover:underline">Sell Tickets</p></Link></li>
-              <li><Link href="/online-registration"><p className="text-blue-600 hover:underline">Online Event Registration</p></Link></li>
-              <li><Link href="/accept-payments"><p className="text-blue-600 hover:underline">Accept Payments</p></Link></li>
+              <li><Link href="/ticketing"><p className="text-blue-600 hover:underline">Sell Tickets</p></Link></li>
+
               {/* Add more links as needed */ }
             </ul>
           </div>
@@ -53,13 +52,20 @@ const Sitemap = () =>
             </ul>
           </div>
 
-          {/* Cptegories Section */ }
+          {/* Categories Section */ }
           <div>
-            <h3 className="font-bold text-xl mb-4">Categories</h3>
+            <h3 className="font-bold text-xl mb-4">Guides</h3>
             <ul>
-              <li><Link href="/nonprofits"><p className="text-blue-600 hover:underline">Nonprofit Event Ticketing</p></Link></li>
-              <li><Link href="/workshop-ticketing"><p className="text-blue-600 hover:underline">Workshop Ticketing</p></Link></li>
-              <li><Link href="/ren-faire-ticketing"><p className="text-blue-600 hover:underline">Ren Faire Ticketing</p></Link></li>
+              <li><Link href="/blog"><p className="text-blue-600 hover:underline">Blog</p></Link></li>
+
+              {/* Add more categories as needed */ }
+            </ul>
+          </div>
+          {/* Free Tools Section */ }
+          <div>
+            <h3 className="font-bold text-xl mb-4">Free Tools</h3>
+            <ul>
+              <li><Link href="/qrcode"><p className="text-blue-600 hover:underline">QR code generater</p></Link></li>
 
               {/* Add more categories as needed */ }
             </ul>
