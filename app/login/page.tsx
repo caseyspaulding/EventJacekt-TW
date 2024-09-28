@@ -149,7 +149,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
     return (
         <>
             <Head>
-                <title>Login - EventJacket</title>
+                <title>Login </title>
                 <meta name="description" content="Login to your EventJacket account to manage your events." />
                 <meta name="robots" content="noindex, nofollow" />
             </Head>
