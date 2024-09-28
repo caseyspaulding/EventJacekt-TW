@@ -39,5 +39,5 @@
     "app/dashboard/[org]/events/[eventSlug]/create-tickets",
     "hooks/useStripeConnect.ts",
     "utils/Gradient.ts"
-  ]
+, "lib/gtmPageView.js"  ]
 }
