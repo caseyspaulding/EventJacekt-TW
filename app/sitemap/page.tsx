@@ -97,8 +97,8 @@ const Sitemap = () =>
               <h3 className="font-bold text-xl mb-4">Guides</h3>
               <ul>
                 <li>
-                  <Link href="/blog">
-                    <p className="text-blue-600 hover:underline">Blog</p>
+                  <Link href="/blog/eventbrite-alternatives">
+                    <p className="text-blue-600 hover:underline">Eventbrite Alternatives</p>
                   </Link>
                 </li>
               </ul>
@@ -110,7 +110,7 @@ const Sitemap = () =>
               <ul>
                 <li>
                   <Link href="/qrcode">
-                    <p className="text-blue-600 hover:underline">QR code generator</p>
+                    <p className="text-blue-600 hover:underline">Free QR code generator</p>
                   </Link>
                 </li>
               </ul>
