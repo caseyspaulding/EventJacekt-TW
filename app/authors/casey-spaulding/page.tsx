@@ -1,10 +1,16 @@
-'use client';
+
 
 import React, { SVGProps } from 'react';
 import Head from 'next/head';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
+import { Metadata } from 'next';
 
+
+export const metadata: Metadata = {
+  title: 'About Casey Spaulding | EventJacket',
+  description: 'Learn more about Casey Spaulding, the founder of EventJacket, an event management software for non-profits.',
+}
 const CaseyAuthorPage = () =>
 {
   const schemaData = {
@@ -47,34 +53,11 @@ const CaseyAuthorPage = () =>
     ],
   };
 
+
+
   return (
     <>
-      <Head>
-        <title>About Casey Spaulding | EventJacket</title>
-        <meta
-          name="description"
-          content="Learn more about Casey Spaulding, the founder of EventJacket, an event management software for non-profits."
-        />
-        <meta property="og:title" content="About Casey Spaulding | EventJacket" />
-        <meta
-          property="og:description"
-          content="Learn more about Casey Spaulding, the founder of EventJacket, an event management software for non-profits."
-        />
-        <meta property="og:image" content="https://www.eventjacket.com/images/caseyandlaura.jpg" />
-        <meta property="og:url" content="https://www.eventjacket.com/authors/casey-spaulding" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content="@caseyspaulding_" />
-        <meta name="twitter:title" content="About Casey Spaulding | EventJacket" />
-        <meta
-          name="twitter:description"
-          content="Learn more about Casey Spaulding, the founder of EventJacket, an event management software for non-profits."
-        />
-        <meta name="twitter:image" content="https://www.eventjacket.com/images/caseyandlaura.jpg" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={ { __html: JSON.stringify( schemaData ) } }
-        />
-      </Head>
+
       <NavBar1 />
       <div className="bg-gray-100 min-h-screen">
         <div className="container mx-auto px-4 py-12">
