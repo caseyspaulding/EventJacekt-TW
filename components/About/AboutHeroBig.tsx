@@ -77,16 +77,19 @@ const team = [
     name: 'Casey Spaulding',
     role: 'Founder',
     imageUrl: '/images/avatars/caseyProfilePic.jpg',
+    websiteUrl: 'https://www.caseyspaulding.com',
   },
   {
     name: 'Laura Spaulding',
     role: 'Co-Founder',
     imageUrl: '/images/avatars/laura.jpg',
+    websiteUrl: 'https://www.facebook.com/laura.spaulding.5',
   },
   {
     name: 'Whidbey Ren Faire',
     role: 'Advisor',
     imageUrl: '/images/avatars/wrf.jpg',
+    websiteUrl: 'https://whidbeyislandrenfaire.org'
   },
 
 
@@ -336,7 +339,11 @@ export default function AboutHeroBig ()
             { team.map( ( person ) => (
               <li key={ person.name }>
                 <img alt="" src={ person.imageUrl } className="mx-auto h-24 w-24 rounded-full" />
-                <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">{ person.name }</h3>
+                <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">
+                  <a href={ person.websiteUrl } target="_blank" rel="noopener noreferrer">
+                    { person.name }
+                  </a>
+                </h3>
                 <p className="text-sm leading-6 text-gray-600">{ person.role }</p>
               </li>
             ) ) }

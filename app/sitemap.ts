@@ -74,7 +74,7 @@ export default async function sitemap (): Promise<MetadataRoute.Sitemap>
             lastModified: new Date().toISOString(),
         },
         {
-            url: `${ baseUrl }/docs`,
+            url: `${ baseUrl }/authors/casey-spaulding`,
             lastModified: new Date().toISOString(),
         },
         // Add more static pages here as needed...
