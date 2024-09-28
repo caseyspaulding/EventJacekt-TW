@@ -4,13 +4,21 @@ import React from 'react';
 import Link from 'next/link';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
+import Head from 'next/head';
 
 
 
 const Sitemap = () =>
 {
   return ( <>
-
+    <Head>
+      <title>Site Map - EventJacket</title>
+      <meta name="description" content="Explore all the pages of EventJacket, including our blog, tools, events, and more." />
+      <meta property="og:title" content="Site Map - EventJacket" />
+      <meta property="og:description" content="Discover the full site map for EventJacket, your go-to event management solution." />
+      <meta property="og:url" content="https://eventjacket.com/sitemap" />
+      <meta property="og:type" content="website" />
+    </Head>
     <NavBar1 />
     <div className="bg-gray-50 py-10">
       <div className="max-w-7xl mx-auto px-4 lg:px-4">
@@ -21,7 +29,7 @@ const Sitemap = () =>
             <h3 className="font-bold text-xl mb-4">General Information</h3>
             <ul>
               <li><Link href="/"><p className="text-blue-600 hover:underline">Home</p></Link></li>
-              <li><Link href="/pbout"><p className="text-blue-600 hover:underline">About Us</p></Link></li>
+              <li><Link href="/about"><p className="text-blue-600 hover:underline">About Us</p></Link></li>
 
               <li><Link href="/pricing"><p className="text-blue-600 hover:underline">Fees</p></Link></li>
               <li><Link href="/contact"><p className="text-blue-600 hover:underline">Contact Us</p></Link></li>
@@ -35,9 +43,9 @@ const Sitemap = () =>
           <div>
             <h3 className="font-bold text-xl mb-4">Holding Events</h3>
             <ul>
-              <li><Link href="/getting-started"><p className="text-blue-600 hover:underline">Getting Started</p></Link></li>
-              <li><Link href="/how-it-works"><p className="text-blue-600 hover:underline">How It Works</p></Link></li>
-              <li><Link href="/ticketing"><p className="text-blue-600 hover:underline">Sell Tickets</p></Link></li>
+              <li><Link href="/signup"><p className="text-blue-600 hover:underline">Sign up to hold events</p></Link></li>
+              <li><Link href="/login"><p className="text-blue-600 hover:underline">Login</p></Link></li>
+              <li><Link href="/ticketing"><p className="text-blue-600 hover:underline">Selling Tickets</p></Link></li>
 
               {/* Add more links as needed */ }
             </ul>
