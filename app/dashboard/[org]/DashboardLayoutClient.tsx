@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
+import type React from 'react';
+import { useEffect, useState } from 'react';
+import { loadStripe, type Stripe } from '@stripe/stripe-js';
 import UserProvider from '@/contexts/UserContext';
 import DashboardLayoutTW from './components/DashboardLayoutTW/DashboardLayoutTW';
 import type { UserType } from '@/types/UserType';

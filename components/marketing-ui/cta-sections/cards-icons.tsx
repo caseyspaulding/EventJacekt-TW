@@ -1,4 +1,4 @@
-import { FlowbiteLogo } from "@/components/flowbite-logo";
+
 
 export function CardCTAsWithIconsSection ()
 {
@@ -25,7 +25,7 @@ export function CardCTAsWithIconsSection ()
             href="#"
             className="inline-flex items-center justify-center rounded-lg bg-gray-50 p-5 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           >
-            <FlowbiteLogo />
+          
             <span className="w-full">
               Explore Flowbite and take your marketplace to the next level.
             </span>
@@ -50,6 +50,7 @@ export function CardCTAsWithIconsSection ()
             <span className="w-full">
               Get started with our Figma Design System
             </span>
+            {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
             <svg
               className="ml-3 h-6 w-6"
               fill="currentColor"

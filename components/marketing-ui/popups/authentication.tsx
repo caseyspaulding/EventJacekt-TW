@@ -1,6 +1,6 @@
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
-import { FlowbiteLogo } from "@/components/flowbite-logo";
+
 
 export function AuthenticationPopup ()
 {
@@ -25,7 +25,7 @@ export function AuthenticationPopup ()
               href="#"
               className="flex items-center text-xl font-semibold text-gray-900 dark:text-white"
             >
-              <FlowbiteLogo />
+             
               Flowbite
             </a>
             <button

@@ -131,6 +131,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
   const [ sidebarOpen, setSidebarOpen ] = useState( false );
   const { user } = useUser(); // Fetch user data from context
   const orgName = user?.orgName;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
   const [ isCollapsed, setIsCollapsed ] = useState( true );
   // Initialize Stripe Connect
@@ -140,12 +141,13 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
     if ( clientSecret )
     {
       const instance = loadConnectAndInitialize( {
-        publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+        publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
         fetchClientSecret: () => Promise.resolve( clientSecret ),
       } );
       setStripeConnectInstance( instance );
     }
   };
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect( () =>
   {
     initializeStripeConnect();

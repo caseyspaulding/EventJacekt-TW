@@ -101,6 +101,65 @@ export const grants = pgTable( 'grants', {
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
 
+export const forms = pgTable( 'forms', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ), // Foreign key to the organization
+    formName: text( 'form_name' ).notNull(), // The name of the form
+    description: text( 'description' ), // Form description
+    status: text( 'status' ).default( 'active' ), // Form status (e.g., 'active', 'inactive')
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+export const formFields = pgTable( 'form_fields', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    formId: uuid( 'form_id' )
+        .notNull()
+        .references( () => forms.id ), // Foreign key to the forms table
+    fieldName: text( 'field_name' ).notNull(), // Name of the field (e.g., 'email', 'phone')
+    placeholder: text( 'placeholder' ), // Placeholder text for the field
+    fieldType: text( 'field_type' ).notNull(), // Type of the field (e.g., 'text', 'checkbox', 'radio', 'date')
+    options: jsonb( 'options' ), // JSON object for additional options (e.g., dropdown options, validation rules)
+    isRequired: boolean( 'is_required' ).default( false ), // Whether the field is required
+    order: integer( 'order' ).notNull(), // The order of the field in the form
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+} );
+
+export const formResponses = pgTable( 'form_responses', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    formId: uuid( 'form_id' )
+        .notNull()
+        .references( () => forms.id ), // Foreign key to the forms table
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ), // Foreign key to the organization
+    responderId: uuid( 'responder_id' ), // (Optional) ID of the user filling out the form
+    responseData: jsonb( 'response_data' ).notNull(), // JSON data storing the responses
+    submittedAt: timestamp( 'submitted_at' ).defaultNow().notNull(),
+} );
+
+export const formResponseDetails = pgTable( 'form_response_details', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    formResponseId: uuid( 'form_response_id' )
+        .notNull()
+        .references( () => formResponses.id ), // Foreign key to form responses
+    formFieldId: uuid( 'form_field_id' )
+        .notNull()
+        .references( () => formFields.id ), // Foreign key to form fields
+    fieldValue: text( 'field_value' ).notNull(), // The value entered by the user
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+} );
+
 // Grant Reviews Table
 export const grantReviews = pgTable( 'grant_reviews', {
     id: uuid( 'id' )
@@ -460,7 +519,7 @@ export const orgCustomers = pgTable( 'org_customers', {
     orgId: uuid( 'org_id' )
         .notNull()
         .references( () => organizations.id ),
-   
+
     firstName: text( 'first_name' ),
     lastName: text( 'last_name' ),
     email: text( 'email' ).notNull().unique(),
@@ -518,7 +577,7 @@ export const orgTicketTypes = pgTable( 'org_ticket_types', {
     description: text( 'description' ),
     price: numeric( 'price', { precision: 10, scale: 2 } ).notNull(),
     quantity: integer( 'quantity' ).notNull(),
-    eventDate: date( 'event_date' ).notNull(), 
+    eventDate: date( 'event_date' ).notNull(),
     doorOpenTime: time( 'gate_open_time' ), // New column for gate open time
     eventStartTime: time( 'event_start_time' ), // New column for event start time
     eventEndTime: time( 'event_end_time' ), // New column for event end time
@@ -741,7 +800,7 @@ export const orgMembers = pgTable( 'org_members', {
         .references( () => organizations.id ),
     eventId: uuid( 'event_id' )
         .references( () => events.id ),
-    tags: jsonb( 'tags' ), 
+    tags: jsonb( 'tags' ),
     name: text( 'name' ).notNull(),
     email: text( 'email' ).notNull().unique(),
     role: text( 'role' ).notNull(), // Role within the organization
@@ -772,7 +831,7 @@ export const guilds = pgTable( 'guilds', {
     eventId: uuid( 'event_id' )
         .references( () => events.id ),
     description: text( 'description' ),
-    tags: jsonb( 'tags' ), 
+    tags: jsonb( 'tags' ),
     leaderName: text( 'leader_name' ),
     leaderContact: text( 'leader_contact' ),
     leaderEmail: text( 'leader_email' ), // Email of the guild leader for communication
@@ -804,7 +863,7 @@ export const orgPerformers = pgTable( 'org_performers', {
     stageName: text( 'stage_name' ).notNull(),
     email: text( 'email' ).notNull().unique(),
     phone: text( 'phone' ),
-    tags: jsonb( 'tags' ), 
+    tags: jsonb( 'tags' ),
     profileImageUrl: text( 'profile_image_url' ), // URL of the performer's profile image
     genre: text( 'genre' ), // Type of performance or genre
     performanceTime: timestamp( 'performance_time' ), // Scheduled time of performance
@@ -834,7 +893,7 @@ export const eventSpeakers = pgTable( 'event_speakers', {
     title: text( 'title' ), // Speaker's title or designation
     email: text( 'email' ).notNull().unique(), // Speaker's email
     phone: text( 'phone' ), // Speaker's phone number
-    tags: jsonb( 'tags' ), 
+    tags: jsonb( 'tags' ),
     profileImageUrl: text( 'profile_image_url' ), // URL of the speaker's profile image
     bio: text( 'bio' ), // Speaker's biography
     talkTitle: text( 'talk_title' ), // Title of the talk or presentation
@@ -881,7 +940,7 @@ export const orgVendors = pgTable( 'org_vendors', {
     nextFollowUp: timestamp( 'next_follow_up' ), // When to follow up next
     emailGroup: text( 'email_group' ), // Group name for email campaigns
     notes: text( 'notes' ),
-    tags: jsonb( 'tags' ), 
+    tags: jsonb( 'tags' ),
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );

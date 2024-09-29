@@ -1,5 +1,5 @@
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { FlowbiteLogo } from "@/components/flowbite-logo";
+
 
 export function ResetPasswordFormWithBackgroundImage ()
 {
@@ -10,7 +10,7 @@ export function ResetPasswordFormWithBackgroundImage ()
           href="#"
           className="mb-6 flex items-center text-2xl font-semibold text-white"
         >
-          <FlowbiteLogo />
+    
           Flowbite
         </a>
         <div className="w-full rounded-lg bg-white p-6 shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md sm:p-8 md:mt-0">

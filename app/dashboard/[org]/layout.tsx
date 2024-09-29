@@ -1,21 +1,20 @@
-// app/dashboard/layout.tsx
 import { fetchUserProfile } from '../../actions/fetchUserProfile';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import DashboardLayoutClient from './DashboardLayoutClient'; // Import the client component wrapper
 import Head from 'next/head';
 import Script from 'next/script';
-
+import type React from 'react';
 
 export default async function DashboardLayout ( { children }: React.PropsWithChildren<unknown> )
 {
-    
     const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
     const supabase = createClient();
     const {
         data: { session }
     } = await supabase.auth.getSession();
 
+    // If no session, redirect to login page
     if ( !session )
     {
         console.warn( 'No active session found, redirecting to login.' );
@@ -23,14 +22,11 @@ export default async function DashboardLayout ( { children }: React.PropsWithChi
         return null; // Safeguard in case redirect fails
     }
 
-  
-
-    // Fetch user profile safely
+    // Fetch user profile
     let user = null;
     try
     {
         user = await fetchUserProfile();
-
     } catch ( error )
     {
         console.error( 'Error fetching user profile:', error );
@@ -38,6 +34,7 @@ export default async function DashboardLayout ( { children }: React.PropsWithChi
         return null;
     }
 
+    // If user does not have an organization, show error message
     if ( !user?.orgName )
     {
         console.error( 'Organization not found for user:', user );
@@ -51,22 +48,16 @@ export default async function DashboardLayout ( { children }: React.PropsWithChi
         );
     }
 
-    // Pass the user data down to the client component
-    return ( <>
-        <Head>
-            <title>{ user.orgName } Dashboard</title>
-            <Script src="https://connect.stripe.com/connect-js" defer></Script>
-        
-        </Head>
-
-        <DashboardLayoutClient user={ user } stripePublishableKey={ stripePublishableKey ||
-            ''
-         }>
-          
+    // Render the layout with the fetched user data
+    return (
+        <>
+            <Head>
+                <title>{ user.orgName } Dashboard</title>
+                <Script src="https://connect.stripe.com/connect-js" defer  />
+            </Head>
+            <DashboardLayoutClient user={ user } stripePublishableKey={ stripePublishableKey || '' }>
                 { children }
-       
-        </DashboardLayoutClient>
-        
-    </>
-    )
+            </DashboardLayoutClient>
+        </>
+    );
 }

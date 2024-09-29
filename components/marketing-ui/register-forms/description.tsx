@@ -1,5 +1,5 @@
 import { Avatar, Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { FlowbiteLogo } from "@/components/flowbite-logo";
+
 
 export function RegisterFormWithDescription ()
 {
@@ -199,7 +199,7 @@ export function RegisterFormWithDescription ()
               href="#"
               className="mb-4 flex items-center text-2xl font-semibold text-white"
             >
-              <FlowbiteLogo />
+  
               Flowbite
             </a>
             <h1 className="mb-4 text-3xl font-extrabold leading-none tracking-tight text-white xl:text-5xl">
