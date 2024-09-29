@@ -22,7 +22,8 @@
     },
     "plugins": [
       {
-        "name": "next"
+        "name": "next",
+        
       }
     ],
     "resolveJsonModule": true,

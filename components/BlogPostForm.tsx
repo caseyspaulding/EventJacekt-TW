@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import RichTextEditor from './RichTextEditor';
 import { createBlogPost } from '../app/actions/blogActions';
 import { createClient } from '@/utils/supabase/client';
@@ -8,6 +8,11 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
 import { Button } from '@nextui-org/button';
+import JoditEditor from 'jodit-react';
+
+
+
+
 
 interface Author
 {
@@ -40,7 +45,21 @@ const BlogPostForm: React.FC = () =>
   const [ isPublished, setIsPublished ] = useState( false );
   const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
   const [ postImage, setPostImage ] = useState<File | null>( null ); // State for blog post image
+  
+  
+  
+  // Configuration for the editor
+  const config = useMemo(
+    () => ( {
+      readonly: false,
+      placeholder: 'Start typing your blog post...',
+    } ),
+    []
+  );
 
+  const editor = useRef( null ); // Define the editor reference
+
+  
   useEffect( () =>
   {
     const checkUser = async () =>
@@ -299,10 +318,19 @@ const BlogPostForm: React.FC = () =>
           </div>
 
           {/* Content */ }
+         
+          {/* Jodit Editor for Content */ }
           <div>
             <label className="block text-sm font-medium text-gray-700">Content</label>
-            <RichTextEditor value={ content } onChange={ setContent } />
+            <JoditEditor
+              ref={ editor }
+              value={ content } // The editor's current content
+              config={ config } // Editor configuration
+              onBlur={ ( newContent ) => setContent( newContent ) } // Use this to update the content
+              onChange={ ( newContent ) => setContent( newContent ) } // Optional: Update the content as the user types
+            />
           </div>
+
 
           {/* Author Select Dropdown */ }
           <div>
