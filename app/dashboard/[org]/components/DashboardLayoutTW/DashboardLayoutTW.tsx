@@ -378,9 +378,9 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 lg:pl-56 bg-gray-100">
+      <div className="flex flex-col flex-1 lg:pl-56">
 
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-2 bg-gradient-to-l from-blue-700 via-blue-500 to-blue-700 sm:bg-none lg:bg-white max-w-8xl">
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-13 py-3 bg-gradient-to-l from-blue-700 via-blue-500 to-blue-700 sm:bg-none lg:bg-white max-w-8xl">
 
           <button
             type="button"
