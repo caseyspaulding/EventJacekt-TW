@@ -43,7 +43,7 @@ export default async function BlogList ()
                 description="Read the latest articles from our blog for tips to grow and organize stellar events with EventJacket."
             />
             {/* Add more introductory text here to improve text/HTML ratio */ }
-            <section className="bg-gray-100 py-8">
+            <section className=" py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">
                         Welcome to the EventJacket Blog
