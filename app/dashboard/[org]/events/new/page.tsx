@@ -280,7 +280,7 @@ const CreateEventPage = () =>
                 {/* Main Form Content */ }
                 <form onSubmit={ handleSubmit } className="space-y-6 pb-24 lg:col-span-2">
                     <div>
-                        <label className="block text-sm mb-3 font-medium text-gray-700">
+                        <label className="block font-semibold text-lg text-gray-700">
                             Add an event featured image
                         </label>
                         <FileUploadButton
@@ -651,14 +651,14 @@ const CreateEventPage = () =>
                 <aside className="hidden lg:block lg:col-span-1 sticky top-20">
                     <div className="space-y-6 sticky top-20">
                         {/* Place any additional navigation or steps here */ }
-                        <h2 className="font-semibold text-lg text-gray-700">Event Steps</h2>
+                        <h2 className="font-semibold text-lg text-gray-700">Steps</h2>
                         <ul className="space-y-2">
-                            <li><a href="#step1" className="text-blue-500">Step 1: Event Featured Image</a></li>
-                            <li><a href="#step2" className="text-blue-500">Step 2: Event Basic Info</a></li>
-                            <li><a href="#step3" className="text-blue-500">Step 3: Venue Image</a></li>
-                            <li><a href="#step4" className="text-blue-500">Step 4: Venue Info</a></li>
-                            <li><a href="#step5" className="text-blue-500">Step 5: Event FAQs</a></li>
-                            <li><a href="#step6" className="text-blue-500">Step 6: Event Highlights</a></li>
+                            <li><a href="#step1" className="text-blue-500">Step 1: Add Event Featured Image</a></li>
+                            <li><a href="#step2" className="text-blue-500">Step 2: Add Event Basic Info</a></li>
+                            <li><a href="#step3" className="text-blue-500">Step 3: Add Venue Image</a></li>
+                            <li><a href="#step4" className="text-blue-500">Step 4: Add Venue Info</a></li>
+                            <li><a href="#step5" className="text-blue-500">Step 5: Add Event FAQs</a></li>
+                            <li><a href="#step6" className="text-blue-500">Step 6: Add Event Highlights</a></li>
                             <li><a href="#step7" className="text-blue-500">Step 7: Save Event</a></li>
                             <li><a href="#step8" className="text-blue-500">Step 8: Create Event Tickets</a></li>
 
