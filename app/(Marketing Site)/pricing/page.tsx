@@ -59,21 +59,33 @@ export default function Example ()
                                 <span className="ml-2 text-blue-600">$0 a month</span>
                             </h1>
                             <p className="mt-5 text-xl text-gray-500">
-                                We must be crazy to give you a deal like this! Every feature included in every package, with no long-term commitments required!
+                               Every feature included in every package, with no long-term commitments required!
                             </p>
                             <p className="mt-5 text-xl text-gray-500">
 
                             </p>
                         </div>
-                        <Button
-                            as='a'
-                            href="/signup"
-                            className="mt-8 shadow-2xl inline-flex rounded-3xl w-full items-center justify-centerrounded-md bg-gradient-to-br from-blue-400 to-blue-700  ring-2 ring-blue-500/50 ring-offset-2 ring-offset-zinc-350 transition-all hover:scale-[1.02] hover:ring-transparent active:scale-[0.98] active:ring-blue-500/70 px-8 py-3 text-lg font-medium text-white  sm:mt-10 sm:w-auto xl:mt-0"
-                        >
-                            Get Started
-                        </Button>
+                        
                     </div>
-                    <EventJacketCalculator />   
+                    <div>
+                        <EventJacketCalculator />   
+                        <div className="mt-8 xl:mt-0 mb-8">
+                            <div className="flex items-center justify-center">
+                                <div className="inline-flex rounded-3xl shadow-2xl">
+                                    <Button
+                                        as='a'
+                                        href="/signup"
+                                        className="inline-flex items-center px-6 py-3 text-xl font-semibold text-blue-800 bg-gradient-to-t from-yellow-400 to-yellow-300 hover:bg-yellow-400"
+                                    >
+                                        Get Started
+                                    </Button>
+                                </div>
+                            </div>
+                            <p className="mt-4 ml-3 text-sm justify-center text-center text-gray-500">No credit card required. Start today!</p>
+
+                        </div>
+                    </div>
+                   
                     <div className="border-t border-gray-200 pt-16 xl:grid xl:grid-cols-3 xl:gap-x-8">
                         <div>
                             <h2 className="text-lg font-semibold text-blue-600">
@@ -142,6 +154,21 @@ export default function Example ()
 
                     <FAQ_2 />
                 </div>
+                <div className="mt-8 xl:mt-0 mb-8 pb-9">
+                    <div className="flex items-center justify-center">
+                        <div className="inline-flex rounded-3xl shadow-2xl">
+                            <Button
+                                as='a'
+                                href="/signup"
+                                className="inline-flex items-center px-6 py-3 text-xl font-semibold text-blue-800 bg-gradient-to-t from-yellow-400 to-yellow-300 hover:bg-yellow-400"
+                            >
+                                Get Started
+                            </Button>
+                        </div>
+                    </div>
+                    <p className="mt-4 ml-3 text-sm justify-center text-center text-gray-50">No credit card required. Start today!</p>
+
+                </div>
             </div>
 
             {/* Fee Calculator */ }
@@ -158,14 +185,20 @@ export default function Example ()
                         <span className="block text-white">Start free today.</span>
                     </h2>
                     <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-                        <div className="inline-flex rounded-3xl shadow-2xl">
-                            <Button
-                                as='a'
-                                href="/signup"
-                                className="inline-flex items-center px-6 py-3 text-xl font-semibold text-blue-800 bg-gradient-to-t from-yellow-400 to-yellow-300 hover:bg-yellow-400 "
-                            >
-                                Get Started
-                            </Button>
+                        <div className="mt-8 xl:mt-0">
+                            <div className="flex items-center justify-center">
+                                <div className="inline-flex rounded-3xl shadow-2xl">
+                                    <Button
+                                        as='a'
+                                        href="/signup"
+                                        className="inline-flex items-center px-6 py-3 text-xl font-semibold text-blue-800 bg-gradient-to-t from-yellow-400 to-yellow-300 hover:bg-yellow-400"
+                                    >
+                                        Get Started
+                                    </Button>
+                                </div>
+                            </div>
+                            <p className="mt-4 ml-3 text-sm text-gray-50">No credit card required. Start today!</p>
+
                         </div>
                     </div>
                 </div>
