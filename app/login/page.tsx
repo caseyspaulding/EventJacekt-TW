@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { Input, Checkbox, Link } from "@nextui-org/react";
+
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
@@ -11,6 +11,9 @@ import { createClient } from "@/utils/supabase/client";
 import FooterFull from "@/components/Footers/FooterFull";
 import MyButton from "./submit-button";
 import Script from "next/script";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 
 
 declare global
@@ -220,51 +223,35 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                         </div>
                         <form className="flex flex-col gap-3" onSubmit={ handleLogin }>
                             <Input
-                                label="Email Address"
+                                
                                 name="email"
                                 placeholder="Enter your email"
                                 type="email"
-                                variant="bordered"
+                              
                                 value={ email }
                                 onChange={ ( e ) => setEmail( e.target.value ) }
                                 required
                             />
                             <Input
-                                endContent={
-                                    <button type="button" onClick={ toggleVisibility }>
-                                        { isVisible ? (
-                                            <Icon
-                                                className="pointer-events-none text-2xl text-default-400"
-                                                icon="solar:eye-closed-linear"
-                                            />
-                                        ) : (
-                                            <Icon
-                                                className="pointer-events-none text-2xl text-default-400"
-                                                icon="solar:eye-bold"
-                                            />
-                                        ) }
-                                    </button>
-                                }
-                                label="Password"
+                                
+                                
                                 name="password"
                                 placeholder="Enter your password"
                                 type={ isVisible ? "text" : "password" }
-                                variant="bordered"
+                               
                                 value={ password }
                                 onChange={ ( e ) => setPassword( e.target.value ) }
                                 required
                             />
                             <div className="flex items-center justify-between px-1 py-2">
-                                <Checkbox name="remember" size="sm">
-                                    Remember me
-                                </Checkbox>
-                                <Link className="text-default-500" href="/auth/reset-password" size="sm">
+                               
+                                <Link className="text-default-500" href="/auth/reset-password" >
                                     Forgot password?
                                 </Link>
                             </div>
                             <MyButton
                                 type="submit"
-                                className="w-full bg-orange-500 font-medium py-2 text-medium text-white hover:bg-orange-400 rounded-3xl"
+                                className="w-full bg-blue-500 font-medium py-2 text-medium text-white hover:bg-blue-400 rounded-3xl"
                                 isLoading={ isLoading }
                                 spinnerDelay={ 1000 } // 1 second delay before hiding spinner
                                 loadingMessage="Signing In..."
@@ -283,9 +270,9 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                                 </p>
                             ) }
                         </form>
-                        <p className="text-center text-sm mt-4">
+                        <p className="text-center text-sm mt-4 ">
                             Don't have an account?&nbsp;
-                            <Link href="/signup" size="sm">
+                            <Link href="/signup" >
                                 Create Account
                             </Link>
                         </p>

@@ -1,16 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { Input, Link } from "@nextui-org/react";
+
 import { Icon } from "@iconify/react";
 import { useRouter } from 'next/navigation';
 import Head from 'next/head';
-
+import Link from "next/link";
 import { signUp } from "./signup";
 import toast from "react-hot-toast";
 import FooterFull from "@/components/Footers/FooterFull";
 import MyButton from "../login/submit-button";
 import { Metadata } from "next";
+import { Input } from "@/components/ui/input";
 
 declare global
 {
@@ -175,31 +176,23 @@ export default function Component ()
                         </div>
                         <form className="space-y-6" onSubmit={ handleSubmit }>
                             <Input
-                                label="Email Address"
+                                
                                 name="email"
                                 placeholder="Enter your email"
                                 type="email"
-                                variant="bordered"
+                                
                                 value={ email }
                                 onChange={ ( e ) => setEmail( e.target.value ) }
                                 required
                             />
                             <Input
                                 className="text-gray-500"
-                                endContent={
-                                    <button type="button" onClick={ toggleVisibility }>
-                                        { isVisible ? (
-                                            <Icon className="pointer-events-none text-2xl text-default-400" icon="solar:eye-closed-linear" />
-                                        ) : (
-                                            <Icon className="pointer-events-none text-2xl text-default-400" icon="solar:eye-bold" />
-                                        ) }
-                                    </button>
-                                }
-                                label="Password"
+                                
+                               
                                 name="password"
                                 placeholder="Enter your password"
                                 type={ isVisible ? "text" : "password" }
-                                variant="bordered"
+                             
                                 value={ password }
                                 onChange={ ( e ) => setPassword( e.target.value ) }
                                 required
@@ -217,7 +210,7 @@ export default function Component ()
                         </form>
                         <p className="text-center text-sm mt-4">
                             Already have an account?&nbsp;
-                            <Link href="/login" size="sm">
+                            <Link href="/login" >
                                 Log In
                             </Link>
                         </p>
