@@ -87,13 +87,31 @@ const CaseyAuthorPage = () =>
                 ) ) }
               </div>
             </div>
-            <div className="max-w-2xl text-center">
-              <p className="text-lg text-gray-800 mb-4">
-                Welcome to my author page! I'm Casey, the founder and lead developer of
-                EventJacket, a SaaS platform designed to empower non-profits by simplifying event
-                management. With a passion for technology and a heart for community service, I've
-                dedicated my career to building tools that make a real difference.
-              </p>
+            <div className="max-w-2xl ">
+              
+              <div className="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+                
+                
+
+
+                
+                <p className="text-lg text-gray-700 mb-4">
+                  Hi, I'm <strong>Casey Spaulding</strong>, the founder of <strong>EventJacket</strong>, an affordable, all-in-one event management solution designed for nonprofits and community event planners. After serving 20 years in the Navy and earning degrees in both software engineering and business management, I’ve combined my passion for technology and leadership to create tools that simplify event management.
+                </p>
+
+                <p className="text-lg text-gray-700 mb-4">
+                  During my time in the Navy, I organized and managed a variety of events, including retirement ceremonies, holiday parties, and change of command ceremonies. Those experiences taught me how to manage teams, coordinate logistics, and ensure everything runs smoothly — all of which laid the foundation for EventJacket.
+                </p>
+
+                <p className="text-lg text-gray-700 mb-4">
+                  After leaving the Navy, I saw that many nonprofits and community event planners lacked an easy, affordable way to manage their events. That’s when I decided to create <strong>EventJacket</strong> — a platform that makes ticketing, volunteer coordination, vendor management, and CRM functions simple and accessible for organizations of all sizes.
+                </p>
+
+                <p className="text-lg text-gray-700">
+                  EventJacket is my way of giving back and helping those who bring people together through events. My goal is to empower nonprofits and small organizations by giving them the tools they need to run successful events without the stress.
+                </p>
+              </div>
+
               {/* Add more content about yourself, your background, and your mission */ }
             </div>
           </div>
