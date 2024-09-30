@@ -272,23 +272,25 @@ const CreateEventPage = () =>
             <Script src="https://accounts.google.com/gsi/client" defer></Script>
 
         </Head>
-        <div className=" p-1 lg:px-3 lg:py-4 sm:py-1 sm:px-2 bg-white ">
+        <div className="p-1 lg:px-3 lg:py-4 sm:py-1 sm:px-2 bg-white">
+            {/* Page Header */ }
             <BreadcrumbsPageHeader title="Create Event" breadcrumbs={ breadcrumbs } />
 
-            <form onSubmit={ handleSubmit } className="space-y-6 pb-24 ">
-                <div>
-                    <label className="block text-sm mb-3 font-medium text-gray-700">
-                        Add an event featured image
-                    </label>
-                    <FileUploadButton
-                        setImage={ setFeaturedImage }
-                        previewImage={ previewImage }
-                        setPreviewImage={ setPreviewImage }
-                        label=""
-                        orgName={ user?.orgName || '' } />
-
-
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-8">
+                {/* Main Form Content */ }
+                <form onSubmit={ handleSubmit } className="space-y-6 pb-24 lg:col-span-2">
+                    <div>
+                        <label className="block text-sm mb-3 font-medium text-gray-700">
+                            Add an event featured image
+                        </label>
+                        <FileUploadButton
+                            setImage={ setFeaturedImage }
+                            previewImage={ previewImage }
+                            setPreviewImage={ setPreviewImage }
+                            label=""
+                            orgName={ user?.orgName || '' }
+                        />
+                    </div>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
                         <InputFieldEJ
@@ -633,24 +635,51 @@ const CreateEventPage = () =>
                         label={ ' Max Attendees' } />
                 </div>
 
+                    {/* Sticky Footer for Small Screens */ }
+                    <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md flex justify-center">
+                        <Button
+                            type="submit"
+                            radius="sm"
+                            className="px-6 py-2 bg-blue-700 text-white font-medium text-xl rounded-3xl"
+                        >
+                            Save Event
+                        </Button>
+                    </div>
+                </form>
 
-                {/* Sticky Footer Button */ }
-                <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md flex justify-center">
-                    <Button
-                        type="submit"
-                        radius="sm"
-                        className="px-6 py-2 bg-blue-700 text-white font-medium text-xl rounded-3xl"
-                    >
-                        Save Event
-                    </Button>
-                </div>
-            </form>
-            <ModalBasic
-                isOpen={ isModalOpen }
-                onClose={ handleModalClose }
-                user={ user }
-                slug={ slug as string }
-            />
+                {/* Sticky Aside for Large Screens */ }
+                <aside className="hidden lg:block lg:col-span-1 sticky top-20">
+                    <div className="space-y-6 sticky top-20">
+                        {/* Place any additional navigation or steps here */ }
+                        <h2 className="font-semibold text-lg text-gray-700">Event Steps</h2>
+                        <ul className="space-y-2">
+                            <li><a href="#step1" className="text-blue-500">Step 1: Event Featured Image</a></li>
+                            <li><a href="#step2" className="text-blue-500">Step 2: Event Basic Info</a></li>
+                            <li><a href="#step3" className="text-blue-500">Step 3: Venue Image</a></li>
+                            <li><a href="#step4" className="text-blue-500">Step 4: Venue Info</a></li>
+                            <li><a href="#step5" className="text-blue-500">Step 5: Event FAQs</a></li>
+                            <li><a href="#step6" className="text-blue-500">Step 6: Event Highlights</a></li>
+                            <li><a href="#step7" className="text-blue-500">Step 7: Save Event</a></li>
+                            <li><a href="#step8" className="text-blue-500">Step 8: Create Event Tickets</a></li>
+
+
+                            {/* Add more steps as necessary */ }
+                        </ul>
+
+                        <div className="mt-6">
+                            <Button
+                                type="submit"
+                                radius="sm"
+                                className="w-full py-2 bg-blue-700 text-white font-medium text-xl rounded-3xl"
+                            >
+                                Save Event
+                            </Button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <ModalBasic isOpen={ isModalOpen } onClose={ handleModalClose } user={ user } slug={ slug as string } />
         </div>
     </>
     );
