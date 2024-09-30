@@ -159,7 +159,7 @@ export default function MembersPage ()
             </p>
           </div>
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <Button
+            {/*<Button
               as = "a"
               href={ `/dashboard/${ user?.orgName }/members/new` }
               className=" block rounded-3xl bg-blue-500 px-3 py-2 text-center text-lg font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
@@ -167,7 +167,7 @@ export default function MembersPage ()
               
                 Add New Member
              
-            </Button>
+            </Button>*/}
           </div>
           <div className='mt-4 sm:ml-16 sm:mt-0 sm:flex-none'>
             <Button
