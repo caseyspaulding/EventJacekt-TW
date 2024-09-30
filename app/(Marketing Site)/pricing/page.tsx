@@ -15,6 +15,8 @@ import { Button } from '@nextui-org/button';
 import ComparisonTable from '@/components/ComparisonTable/ComparisonTable';
 
 import FAQ_2 from '@/components/FAQ/FAQ_2';
+import { EventJacketCalculator } from '@/components/event-jacket-calculator';
+import { FeeCalculator } from '@/components/fee-calculator';
 
 
 export const metadata: Metadata = {
@@ -46,14 +48,14 @@ export default function Example ()
     return (
         <div className="bg-white">
             <NavBar1 />
-            <HeaderCentered title="Pricing" description="" />
+          
             <div className="bg-white">
                 {/* Pricing section with single price and feature list */ }
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
                     <div className="pb-16 xl:flex xl:items-center xl:justify-between">
                         <div>
                             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-                                <span className="text-gray-900">An Offer You Can't Refuse! </span>
+                                <span className="text-gray-900">Event Planners Save Thousands! </span>
                                 <span className="ml-2 text-blue-600">$0 a month</span>
                             </h1>
                             <p className="mt-5 text-xl text-gray-500">
@@ -66,11 +68,12 @@ export default function Example ()
                         <Button
                             as='a'
                             href="/signup"
-                            className="mt-8 shadow-2xl inline-flex rounded-3xl w-full items-center justify-center bg-yellow-500 hover:bg-yellow-500  px-8 py-3 text-lg font-medium text-white  sm:mt-10 sm:w-auto xl:mt-0"
+                            className="mt-8 shadow-2xl inline-flex rounded-3xl w-full items-center justify-centerrounded-md bg-gradient-to-br from-blue-400 to-blue-700  ring-2 ring-blue-500/50 ring-offset-2 ring-offset-zinc-350 transition-all hover:scale-[1.02] hover:ring-transparent active:scale-[0.98] active:ring-blue-500/70 px-8 py-3 text-lg font-medium text-white  sm:mt-10 sm:w-auto xl:mt-0"
                         >
                             Get Started
                         </Button>
                     </div>
+                    <EventJacketCalculator />   
                     <div className="border-t border-gray-200 pt-16 xl:grid xl:grid-cols-3 xl:gap-x-8">
                         <div>
                             <h2 className="text-lg font-semibold text-blue-600">
@@ -93,7 +96,7 @@ export default function Example ()
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
-                                            className="h-8 w-8 font-bold flex-shrink-0 text-yellow-500"
+                                            className="h-8 w-8 font-bold flex-shrink-0 text-yellow-300"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
                                             { feature }
@@ -115,7 +118,7 @@ export default function Example ()
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
-                                            className="h-8 w-8 flex-shrink-0 text-yellow-500"
+                                            className="h-8 w-8 flex-shrink-0 text-yellow-300"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
                                             { feature }
@@ -141,19 +144,25 @@ export default function Example ()
                 </div>
             </div>
 
+            {/* Fee Calculator */ }
+            <div className='my-6 '>
+                <FeeCalculator />
+            </div>
+
+
             {/* CTA section */ }
-            <div className="bg-white">
+            <div className="bg-blue-700">
                 <div className="mx-auto max-w-7xl px-6 py-12 lg:flex lg:items-center lg:justify-between lg:px-8 lg:py-24">
-                    <h2 className="text-3xl font-bold tracking-tight text-yellow-500 sm:text-4xl">
+                    <h2 className="text-3xl font-bold tracking-tight text-yellow-300 sm:text-4xl">
                         <span className="block">Ready to dive in?</span>
-                        <span className="block text-blue-600">Start free today.</span>
+                        <span className="block text-white">Start free today.</span>
                     </h2>
                     <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
                         <div className="inline-flex rounded-3xl shadow-2xl">
                             <Button
                                 as='a'
                                 href="/signup"
-                                className="inline-flex items-center justify-center rounded-3xl border border-transparent bg-yellow-500 px-8 py-6 text-xl font-medium text-white hover:bg-green-600"
+                                className="inline-flex items-center px-6 py-3 text-xl font-semibold text-blue-800 bg-gradient-to-t from-yellow-400 to-yellow-300 hover:bg-yellow-400 "
                             >
                                 Get Started
                             </Button>

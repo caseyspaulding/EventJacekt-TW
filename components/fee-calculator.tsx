@@ -35,16 +35,16 @@ export function FeeCalculator() {
   }, [ticketPrice, feePayer])
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto shadow-md sm:p-3 lg:p-1 shadow-yellow-300" >
       <CardHeader>
-        <CardTitle className="text-3xl font-bold text-center text-purple-600">
+        <CardTitle className="text-3xl font-bold text-center text-blue-600">
           Calculate your EventJacket fees
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="text-center space-y-2">
           <p className="text-lg font-semibold">
-            Understanding your ticket fees just got way easier
+            Understand your ticket fees. Easy.
           </p>
           <p className="text-sm text-gray-600">
             We charge 50¢ per ticket, plus 2.9% + 30¢ for credit card processing. 
@@ -83,27 +83,27 @@ export function FeeCalculator() {
           <CardContent className="p-4 space-y-2">
             <div className="flex justify-between">
               <span>EventJacket Fee:</span>
-              <span className="font-semibold text-purple-600">${eventJacketFee.toFixed(2)}</span>
+              <span className="font-semibold text-blue-600">${eventJacketFee.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span>Credit Card Processing:</span>
-              <span className="font-semibold text-purple-600">${processingFee.toFixed(2)}</span>
+              <span className="font-semibold text-blue-600">${processingFee.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-lg font-bold">
               <span>Your Buyers Pay:</span>
-              <span className="text-purple-600">${buyerPays.toFixed(2)}</span>
+              <span className="text-blue-600">${buyerPays.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-lg font-bold">
               <span>You Receive:</span>
-              <span className="text-purple-600">${youReceive.toFixed(2)}</span>
+              <span className="text-blue-600">${youReceive.toFixed(2)}</span>
             </div>
           </CardContent>
         </Card>
 
         <p className="text-xs text-center text-gray-500">
-          * For tickets $5 and below, we offer a flat $0.49 fee plus credit card processing.
+         
           <br />
-          ** Credit card processing fees may be $0.01 or more higher due to rounding.
+        
         </p>
       </CardContent>
     </Card>

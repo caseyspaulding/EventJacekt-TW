@@ -52,10 +52,10 @@ export function EventJacketCalculator ()
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
+    <Card className="w-full max-w-4xl mx-auto mb-10">
       <CardHeader>
         <CardTitle className="text-3xl font-bold text-center">
-          Event Pros Save Thousands With <span className="text-green-500">EventJacket</span>
+          Compare <span className="text-blue-500">EventJacket</span> with the rest.
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -130,18 +130,7 @@ export function EventJacketCalculator ()
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="fees-paid-by">Who pays the fees?</Label>
-            <Select value={ feesPaidBy } onValueChange={ setFeesPaidBy }>
-              <SelectTrigger id="fees-paid-by">
-                <SelectValue placeholder="Select who pays the fees" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="organizer">Event Organizer</SelectItem>
-                <SelectItem value="attendee">Attendee</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
