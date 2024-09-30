@@ -31,7 +31,7 @@ export default function NavBarTW ()
                 <Link href="/signup" passHref>
                   <button
                     type="button"
-                    className="relative z-10 py-2 bg-gradient-to-b from-yellow-300 to-yellow-600  hover:bg-yellow-500 text-white font-semibold text-2xl rounded-3xl w-full sm:w-auto px-8 sm:px-12 lg:px-44 flex justify-center items-center"
+                    className="relative z-10  bg-gradient-to-br from-blue-400 to-blue-700  py-2  text-zinc-50 ring-2 ring-blue-500/50 ring-offset-2 ring-offset-zinc-350 transition-all hover:scale-[1.02] hover:ring-transparent active:scale-[0.98] active:ring-blue-500/70 font-medium text-2xl rounded-3xl w-full sm:w-auto px-8 sm:px-12 lg:px-44 flex justify-center items-center"
                   >
                     Free Account
                   </button>

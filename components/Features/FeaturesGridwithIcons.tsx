@@ -65,7 +65,7 @@ export default function FeaturesGridWithIcons ()
         </h2>
         <p
           
-          className={ `mt-2 text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-yellow-600 to-yellow-300 sm:text-4xl animate__animated animate__fadeInUp` }
+          className={ `mt-2 text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-yellow-500 to-yellow-300 sm:text-4xl animate__animated animate__fadeInUp` }
         >
           Everything you need to manage your event
         </p>
@@ -86,7 +86,7 @@ export default function FeaturesGridWithIcons ()
                 <div className="flow-root rounded-2xl bg-slate-50 px-6 pb-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <div className="-mt-6">
                     <span
-                      className="inline-flex items-center justify-center rounded-xl p-3 shadow-lg bg-gradient-to-l from-yellow-400 to-yellow-600 "
+                      className="inline-flex items-center justify-center rounded-xl p-3 shadow-lg bg-gradient-to-l from-yellow-300 to-yellow-400 "
                       
                     >
                       <feature.icon aria-hidden="true" className="h-8 w-8 text-white" />
