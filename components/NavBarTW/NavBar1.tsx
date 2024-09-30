@@ -5,12 +5,13 @@ import { BookOpenIcon, ChevronDownIcon, QrCodeIcon, XMarkIcon } from "@heroicons
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
-import { Bars3CenterLeftIcon, BookmarkIcon, BuildingStorefrontIcon, ChartBarIcon, HeartIcon, MegaphoneIcon, TicketIcon } from "@heroicons/react/24/outline";
+import { Bars3CenterLeftIcon, BookmarkIcon, BookmarkSquareIcon, BuildingStorefrontIcon, ChartBarIcon, CurrencyDollarIcon, HeartIcon, MegaphoneIcon, PhoneArrowDownLeftIcon, TicketIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 import { createClient } from "@/utils/supabase/client";
 import React from "react";
 import type { Json } from "@/database.types";
 import { Button } from "@nextui-org/button";
 import { useUser } from "@/contexts/UserContext";
+import { BookDashedIcon, User } from "lucide-react";
 
 
 // Define your UserType
@@ -38,7 +39,7 @@ export interface User
 
 
 const solutions = [
- 
+
   {
     name: "Ticketing",
     description: "Sell tickets for your events without breaking the bank.",
@@ -63,13 +64,55 @@ const solutions = [
     href: "/qrcode",
     icon: QrCodeIcon,
   },
-  
+
+];
+
+const mobile = [
+
+  {
+    name: "Pricing",
+    description: "",
+    href: "/pricing",
+    icon: CurrencyDollarIcon,
+  },
+  {
+    name: "Tips",
+    description: "Coming Soon",
+    href: "/blog",
+    icon: BookmarkSquareIcon,
+  },
+  {
+    name: "Ticketing",
+    description: "Sell tickets for your events without breaking the bank.",
+    href: "/ticketing",
+    icon: TicketIcon,
+  },
+
+  {
+    name: "Free QR Code Generator",
+    description: "Free Custom QR Code Generator.",
+    href: "/qrcode",
+    icon: QrCodeIcon,
+  },
+  {
+    name: "About Us",
+    description: "Free Custom QR Code Generator.",
+    href: "/about",
+    icon: UserGroupIcon,
+  },
+  {
+    name: "Contact",
+    description: "Free Custom QR Code Generator.",
+    href: "/contact",
+    icon: PhoneArrowDownLeftIcon,
+  },
+
 ];
 const navigation = [
   { name: "About Us", href: "/about" },
   { name: "Pricing", href: "/pricing" },
   { name: "Contact", href: "/contact" },
-  { name: "Articles", href: "/blog" },
+  { name: "Blog", href: "/blog" },
 
 ];
 
@@ -169,7 +212,7 @@ export default function NavBar1 ()
               <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
                 {/* Solutions Popover */ }
                 <Popover className="relative">
-                  <PopoverButton className="group inline-flex items-center rounded-md text-lg font-medium text-gray-100 hover:text-yellow-200 focus:outline-none focus:ring-1 focus:ring-yellow-300  data-[open]:text-gray-200">
+                  <PopoverButton className="group inline-flex items-center rounded-md text-medium font-medium text-gray-100 hover:text-yellow-200 focus:outline-none focus:ring-1   data-[open]:text-gray-200">
                     <span>Solutions</span>
                     <ChevronDownIcon
                       aria-hidden="true"
@@ -190,7 +233,7 @@ export default function NavBar1 ()
                               <item.icon aria-hidden="true" className="h-6 w-6" />
                             </div>
                             <div className="ml-4">
-                              <p className="text-lg font-medium text-white">{ item.name }</p>
+                              <p className="text-medium font-medium text-white">{ item.name }</p>
                               <p className="mt-1 text-base text-gray-50">{ item.description }</p>
                             </div>
                           </a>
@@ -202,7 +245,7 @@ export default function NavBar1 ()
 
                 {/* Navigation Links */ }
                 { navigation.map( ( item ) => (
-                  <a key={ item.name } href={ item.href } className="text-lg font-medium text-gray-100 hover:text-yellow-300">
+                  <a key={ item.name } href={ item.href } className="text-medium font-medium text-gray-100 hover:text-yellow-300">
                     { item.name }
                   </a>
                 ) ) }
@@ -212,13 +255,13 @@ export default function NavBar1 ()
               <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
                 { !isAuthenticated ? (
                   <>
-                    <a href="/login" className="whitespace-nowrap text-lg font-medium text-gray-100 hover:text-gray-200">
+                    <a href="/login" className="whitespace-nowrap text-medium font-medium text-gray-100 hover:text-gray-200">
                       Sign in
                     </a>
                     <Button
                       as='a'
                       href="/signup"
-                      className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-lg font-medium text-white shadow-sm bg-blue-600 hover:bg-blue-600 "
+                      className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-3xl px-4 py-2 text-medium font-medium text-white shadow-sm bg-blue-600 hover:bg-blue-600 "
                     >
                       Start Free
                     </Button>
@@ -389,7 +432,7 @@ export default function NavBar1 ()
                 {/* Solutions and additional links */ }
                 <div className="mt-6">
                   <nav className="grid grid-cols-1 gap-7">
-                    { solutions.map( ( item ) => (
+                    { mobile.map( ( item ) => (
                       <a
                         key={ item.name }
                         href={ item.href }

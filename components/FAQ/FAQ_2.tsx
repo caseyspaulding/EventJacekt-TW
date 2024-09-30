@@ -53,7 +53,7 @@ export default function Example ()
               <Disclosure key={ faq.question } as="div" className="pt-6">
                 <dt>
                   <DisclosureButton className="group flex w-full items-start justify-between text-left text-white">
-                    <span className="text-base font-semibold leading-7">{ faq.question }</span>
+                    <span className="text-base  leading-7">{ faq.question }</span>
                     <span className="ml-6 flex h-7 items-center">
                       <PlusSmallIcon aria-hidden="true" className="h-6 w-6 group-data-[open]:hidden" />
                       <MinusSmallIcon aria-hidden="true" className="h-6 w-6 [.group:not([data-open])_&]:hidden" />
