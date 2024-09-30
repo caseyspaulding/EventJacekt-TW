@@ -40,7 +40,7 @@ export default function TicketingFeatures ()
         <div className="bg-white py-12">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="text-center">
-                    <h2 className="text-base font-semibold leading-7 text-yellow-600">
+                    <h2 className="text-base font-semibold leading-7 text-yellow-400">
                         Everything you need
                     </h2>
                     <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -56,7 +56,7 @@ export default function TicketingFeatures ()
                 <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                     { features.map( ( feature ) => (
                         <div key={ feature.name } className="flex items-start">
-                            <CheckIcon className="h-7 w-7 text-yellow-500" aria-hidden="true" />
+                            <CheckIcon className="h-7 w-7 text-yellow-300" aria-hidden="true" />
                             <div className="ml-4">
                                 <h3 className="text-lg font-medium leading-6 text-gray-900">
                                     { feature.name }

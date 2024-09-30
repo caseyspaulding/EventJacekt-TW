@@ -116,7 +116,7 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                                     </p>
                                     <a
                                         href="/signup"
-                                        className="inline-block px-4 py-2 text-black bg-yellow-400 rounded-3xl hover:bg-yellow-500"
+                                        className="inline-block px-4 py-2 text-white bg-blue-600 rounded-3xl hover:bg-blue-500"
                                     >
                                         Create Free Account
                                     </a>
