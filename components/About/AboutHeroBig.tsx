@@ -39,37 +39,34 @@ const stats = [
   { label: 'Happy organizers', value: '100%' },
   { label: 'New features added monthly', value: '5' },
 ];
+
 const values = [
   {
-    name: 'Be World-Class',
+    name: 'Sell tickets seamlessly and affordably',
     description:
       'Strive for excellence in everything you do. Whether it’s the smallest detail or the biggest challenge, we aim to set the standard and exceed expectations.',
   },
   {
-    name: 'Share Everything You Know',
+    name: 'Manage vendors, sponsors, volunteers, and performers in one place',
     description:
       'Knowledge is power, and we believe in spreading that power around. By sharing what we know, we help each other grow and achieve more together.',
   },
   {
-    name: 'Always Learning',
+    name: 'Track sales and analytics in real time',
     description:
       'The world is always changing, and so are we. We embrace every opportunity to learn something new, pushing ourselves to grow and adapt.',
   },
   {
-    name: 'Be Supportive',
+    name: 'Use role-based permissions to organize your team',
     description:
       'We’re all in this together. Whether it’s a teammate, a customer, or a partner, we lift each other up and celebrate each other’s successes.',
   },
   {
-    name: 'Take Responsibility',
+    name: 'Streamline your event with features like QR code ticket scanning',
     description:
       'We own our actions and their outcomes. When something needs to be done, we step up and see it through, with integrity and accountability.',
   },
-  {
-    name: 'Enjoy Downtime',
-    description:
-      'Work hard, play hard. We value balance and know that taking time to recharge is key to staying creative and motivated.',
-  },
+ 
 ];
 
 const team = [
@@ -111,7 +108,7 @@ export default function AboutHeroBig ()
         <div className="relative isolate -z-10">
           <svg
             aria-hidden="true"
-            className="absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]"
+            className="absolute inset-x-0 top-0 -z-10 h-[69rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]"
           >
             <defs>
               <pattern
@@ -213,33 +210,7 @@ export default function AboutHeroBig ()
           </div>
         </div>
 
-        {/* Timeline section */ }
-        <div className="mx-auto -mt-8 max-w-7xl px-6 lg:px-8 mb-12">
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
-            { timeline.map( ( item ) => (
-              <div key={ item.name }>
-                <time
-                  dateTime={ item.dateTime }
-                  className="flex items-center text-sm font-semibold leading-6 text-blue-600"
-                >
-                  <svg viewBox="0 0 4 4" aria-hidden="true" className="mr-4 h-1 w-1 flex-none">
-                    <circle r={ 2 } cx={ 2 } cy={ 2 } fill="currentColor" />
-                  </svg>
-                  { item.date }
-                  <div
-                    aria-hidden="true"
-                    className="absolute -ml-2 h-px w-screen -translate-x-full bg-gray-900/10 sm:-ml-4 lg:static lg:-mr-6 lg:ml-8 lg:w-auto lg:flex-auto lg:translate-x-0"
-                  />
-                </time>
-                <p className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">{ item.name }</p>
-                <p className="mt-1 text-base leading-7 text-gray-600">{ item.description }</p>
-              </div>
-            ) ) }
-          </div>
-        </div>
-        <div className='py-10'>
-
-        </div>
+       
         {/* Content section */ }
         <div className="mx-auto -mt-12 max-w-7xl px-6 sm:mt-4 lg:px-8 xl:-mt-10">
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
@@ -287,9 +258,9 @@ export default function AboutHeroBig ()
         {/* Values section */ }
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Values</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Commitment</h2>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              At EventJacket, we’re just getting started, but our values are rock solid. We're all about passion, creativity, and making every event unforgettable. We may be small now, but we're big on heart—and we're here to help you shine.
+              We are committed to making event management more accessible, particularly for nonprofits and community organizations. We know budgets can be tight, so we designed EventJacket to be affordable without compromising on the features you need:
             </p>
           </div>
           <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base leading-7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -302,34 +273,31 @@ export default function AboutHeroBig ()
           </dl>
         </div>
 
-        {/* Logo cloud */ }
-        <div className="relative isolate -z-10 mt-32 sm:mt-48">
-          <div className="absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 justify-center overflow-hidden [mask-image:radial-gradient(50%_45%_at_50%_55%,white,transparent)]">
-            <svg aria-hidden="true" className="h-[40rem] w-[80rem] flex-none stroke-gray-200">
-              <defs>
-                <pattern
-                  x="50%"
-                  y="50%"
-                  id="e9033f3e-f665-41a6-84ef-756f6778e6fe"
-                  width={ 200 }
-                  height={ 200 }
-                  patternUnits="userSpaceOnUse"
-                  patternTransform="translate(-100 0)"
-                >
-                  <path d="M.5 200V.5H200" fill="none" />
-                </pattern>
-              </defs>
-              <svg x="50%" y="50%" className="overflow-visible fill-gray-50">
-                <path d="M-300 0h201v201h-201Z M300 200h201v201h-201Z" strokeWidth={ 0 } />
-              </svg>
-              <rect fill="url(#e9033f3e-f665-41a6-84ef-756f6778e6fe)" width="100%" height="100%" strokeWidth={ 0 } />
-            </svg>
-          </div>
+        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">What Makes Us Different</h2>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            EventJacket was created with people like my Navy friend in mind—those who are dedicated to organizing incredible events but find themselves juggling multiple platforms that don't quite fit. Our platform is all about simplicity and affordability, designed to help you do more with less.
+          </p>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            Instead of paying for several tools, EventJacket consolidates everything into one, saving you time and money. Our tool grows with your event, whether it’s your first small gathering or your biggest festival yet.
+          </p>
 
+          <h2 className="text-3xl mt-6 font-bold tracking-tight text-gray-900 sm:text-4xl">Our Inspiration</h2>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            The inspiration for EventJacket comes from real-world challenges that I witnessed while helping my friend manage her Renaissance fair. Watching her navigate multiple tools—each with its own complexity and cost—made me realize that event organizers deserve a single solution that works for them, not against them.
+          </p>
+
+          <h2 className="text-3xl mt-6 font-bold tracking-tight text-gray-900 sm:text-4xl">Looking Ahead</h2>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            EventJacket continues to grow and adapt to the evolving needs of event organizers. We’re constantly working to add new features, improve the user experience, and keep our platform affordable for all. Our goal is to make sure that you can focus on what matters most—creating memorable experiences for your attendees—while we handle the logistics.
+          </p>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            Whether you’re managing a small community event or a large-scale festival, EventJacket is here to support you with a reliable, all-in-one platform.
+          </p>
         </div>
 
         {/* Team section */ }
-        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8 mb-11">
+        <div className="mx-auto mt-12 max-w-7xl px-6 sm:mt-48 lg:px-8 mb-11">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Meet Our Team</h2>
             <p className="mt-6 text-lg leading-8 text-gray-600">
@@ -359,7 +327,33 @@ export default function AboutHeroBig ()
       </main>
 
       {/* Footer */ }
+      {/* Timeline section */ }
+      {/*<div className="mx-auto -mt-8 max-w-7xl px-6 lg:px-8 mb-12">
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
+          { timeline.map( ( item ) => (
+            <div key={ item.name }>
+              <time
+                dateTime={ item.dateTime }
+                className="flex items-center text-sm font-semibold leading-6 text-blue-600"
+              >
+                <svg viewBox="0 0 4 4" aria-hidden="true" className="mr-4 h-1 w-1 flex-none">
+                  <circle r={ 2 } cx={ 2 } cy={ 2 } fill="currentColor" />
+                </svg>
+                { item.date }
+                <div
+                  aria-hidden="true"
+                  className="absolute -ml-2 h-px w-screen -translate-x-full bg-gray-900/10 sm:-ml-4 lg:static lg:-mr-6 lg:ml-8 lg:w-auto lg:flex-auto lg:translate-x-0"
+                />
+              </time>
+              <p className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">{ item.name }</p>
+              <p className="mt-1 text-base leading-7 text-gray-600">{ item.description }</p>
+            </div>
+          ) ) }
+        </div>
+      </div>
+      <div className='py-10'>
 
+      </div>*/}
     </div>
   )
 }
