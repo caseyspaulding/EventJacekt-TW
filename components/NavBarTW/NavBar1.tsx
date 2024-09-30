@@ -38,12 +38,7 @@ export interface User
 
 
 const solutions = [
-  {
-    name: "Pricing",
-    description: "Unbeatable pricing for all your needs.",
-    href: "/pricing",
-    icon: BuildingStorefrontIcon,
-  },
+ 
   {
     name: "Ticketing",
     description: "Sell tickets for your events without breaking the bank.",
@@ -68,16 +63,12 @@ const solutions = [
     href: "/qrcode",
     icon: QrCodeIcon,
   },
-  {
-    name: "Articles",
-    description: "Read our latest articles.",
-    href: "/blog",
-    icon: BookOpenIcon,
-  },
+  
 ];
 const navigation = [
+  { name: "About Us", href: "/about" },
   { name: "Pricing", href: "/pricing" },
-
+  { name: "Contact", href: "/contact" },
   { name: "Articles", href: "/blog" },
 
 ];
@@ -169,7 +160,7 @@ export default function NavBar1 ()
 
               </div>
               <div className="-my-2 -mr-2 md:hidden">
-                <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-100 hover:bg-blue-600 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-inset">
+                <PopoverButton className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-gray-100 hover:bg-blue-600 hover:text-yellow-300 focus:outline-none focus:ring-2 focus:ring-inset">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open menu</span>
                   <Bars3CenterLeftIcon aria-hidden="true" className="h-6 w-6" />
@@ -178,7 +169,7 @@ export default function NavBar1 ()
               <PopoverGroup as="nav" className="hidden space-x-10 md:flex">
                 {/* Solutions Popover */ }
                 <Popover className="relative">
-                  <PopoverButton className="group inline-flex items-center rounded-md text-lg font-medium text-gray-100 hover:text-yellow-400 focus:outline-none focus:ring-1 focus:ring-yellow-500  data-[open]:text-gray-200">
+                  <PopoverButton className="group inline-flex items-center rounded-md text-lg font-medium text-gray-100 hover:text-yellow-200 focus:outline-none focus:ring-1 focus:ring-yellow-300  data-[open]:text-gray-200">
                     <span>Solutions</span>
                     <ChevronDownIcon
                       aria-hidden="true"
@@ -195,7 +186,7 @@ export default function NavBar1 ()
                             href={ item.href }
                             className="-m-3 flex items-start rounded-lg p-3 hover:bg-blue-800"
                           >
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-yellow-400 sm:h-12 sm:w-12">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-yellow-300 sm:h-12 sm:w-12">
                               <item.icon aria-hidden="true" className="h-6 w-6" />
                             </div>
                             <div className="ml-4">
@@ -211,7 +202,7 @@ export default function NavBar1 ()
 
                 {/* Navigation Links */ }
                 { navigation.map( ( item ) => (
-                  <a key={ item.name } href={ item.href } className="text-lg font-medium text-gray-100 hover:text-yellow-400">
+                  <a key={ item.name } href={ item.href } className="text-lg font-medium text-gray-100 hover:text-yellow-300">
                     { item.name }
                   </a>
                 ) ) }
@@ -299,7 +290,7 @@ export default function NavBar1 ()
 
           {/* Mobile menu */ }
           <PopoverPanel className="absolute inset-x-0 top-0 z-30 origin-top-right transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-100 data-[enter]:ease-out data-[leave]:ease-in md:hidden">
-            <div className="divide-y-2 divide-yellow-50 rounded-lg h-screen bg-blue-700 shadow-lg ring-1 ring-yellow-400 ring-opacity-5">
+            <div className="divide-y-2 divide-yellow-50 rounded-lg h-screen bg-blue-700 shadow-lg ring-1 ring-yellow-300 ring-opacity-5">
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div>
@@ -404,7 +395,7 @@ export default function NavBar1 ()
                         href={ item.href }
                         className="-m-3 flex items-center rounded-lg p-3 hover:bg-blue-500 hover:text-gray-900"
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md  text-yellow-400 hover:text-yellow-400">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md  text-yellow-300 hover:text-yellow-200">
                           <item.icon aria-hidden="true" className="h-6 w-6" />
                         </div>
                         <div className="ml-4 text-base font-medium text-gray-100">{ item.name }</div>

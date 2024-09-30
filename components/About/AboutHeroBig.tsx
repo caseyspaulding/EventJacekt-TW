@@ -5,29 +5,29 @@ const timeline = [
   {
     name: 'Founded Company',
     description:
-      'EventJacket was born out of a passion for simplifying event management. With a vision to revolutionize the industry, we laid the foundation for our journey.',
+      'EventJacket was born out of a passion for simplifying event management. ',
     date: 'Aug 2024',
     dateTime: '2024-08',
   },
   {
     name: 'Launched MVP',
     description:
-      'After months of hard work and dedication, we launched our Minimum Viable Product (MVP) to start helping event organizers streamline their operations.',
-    date: 'Oct 2024',
+      'Launched our Minimum Viable Product (MVP) to start helping event organizers streamline their operations.',
+    date: 'Sep 2024',
     dateTime: '2024-10',
   },
   {
     name: 'Onboarded First Customer',
     description:
-      'A major milestone was reached as we welcomed our first customer, who believed in our vision and provided invaluable feedback to shape our product.',
-    date: 'Nov 2024',
+      'First customer, who believed in our vision and provided invaluable feedback to shape our product.',
+    date: 'Oct 2024',
     dateTime: '2024-11',
   },
   {
     name: 'Released Version 1.0',
     description:
       'With feedback from our early users, we refined our platform and launched Version 1.0, packed with features to enhance the event planning experience.',
-    date: 'Dec 2025',
+    date: 'Nov 2025',
     dateTime: '2025-03',
   },
 
@@ -150,11 +150,15 @@ export default function AboutHeroBig ()
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
                   <h1 className="text-4xl font-bold tracking-tight text-blue-700 sm:text-6xl">
-                    Humble Beginnings, Big Dreams
+                    About EventJacket
                   </h1>
                   <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                    At EventJacket, we're all about shaking up the event planning game! 🎉 We've blended the latest tech with an easy-to-use design to make your event management smoother than ever. From ticketing to keeping your attendees engaged, we've got everything covered so you can focus on making your event awesome!
+                    EventJacket was born out of a personal mission to simplify event management, especially for nonprofits and community-driven organizations. As a software developer, I’ve always been passionate about solving real-world problems with technology. The spark for EventJacket came when I was helping a close friend who ran a Renaissance fair. She was also a Navy veteran, and I saw firsthand the struggles she faced managing her events using several disjointed tools.
                   </p>
+                  <br /> 
+                  <p>
+                    That experience made me realize how cumbersome and expensive it was for small organizations to juggle multiple platforms for ticket sales, vendor coordination, volunteer management, and more. I knew there had to be a better way—a more efficient, affordable solution that would bring all of these features under one roof. And so, EventJacket was born.
+                </p>
                 </div>
                 <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
                   <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
