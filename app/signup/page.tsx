@@ -199,7 +199,7 @@ export default function Component ()
                             />
                             <MyButton
                                 type="submit"
-                                className="w-full bg-blue-600 font-medium py-2 text-medium text-white hover:bg-green-500 rounded-3xl"
+                                className="w-full bg-blue-600 font-medium py-2 text-medium text-white hover:bg-blue-500 rounded-3xl"
                                 isLoading={ isLoading }
                                 spinnerDelay={ 1000 } // 1 second delay before hiding spinner
                                 loadingMessage="Signing In..."

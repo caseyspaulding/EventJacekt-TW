@@ -7,7 +7,7 @@ import { generateSlug } from '@/utils/stringUtils';
 import toast from 'react-hot-toast';
 import { createEvent } from '@/app/actions/eventActions';
 import ModalBasic from '@/components/modals/ModalBasic';
-import { Button, Input, Textarea, } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import { FileUploadButton } from './FileUploadButton';
 
 import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
@@ -20,6 +20,9 @@ import InputFieldEJ from '@/components/Input/InputEJ';
 
 import Head from 'next/head';
 import Script from 'next/script';
+import React from 'react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 
 const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
@@ -329,7 +332,7 @@ const CreateEventPage = () =>
                             onChange={ ( e ) => setStartDate( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm "
                             required
-                            label="Start Date"
+                            
                         />
                     </div>
 
@@ -341,7 +344,7 @@ const CreateEventPage = () =>
                             onChange={ ( e ) => setEndDate( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             required
-                            label="End Date"
+                            
                         />
                     </div>
 
@@ -353,7 +356,7 @@ const CreateEventPage = () =>
                             onChange={ ( e ) => setEventStartTime( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             required
-                            label="Event Start Time"
+                           
                         />
                     </div>
 
@@ -365,7 +368,7 @@ const CreateEventPage = () =>
                             onChange={ ( e) => setEventEndTime( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             required
-                            label="Event End Time"
+                            
                         />
                     </div>
                 </div>
@@ -393,7 +396,7 @@ const CreateEventPage = () =>
                         id="venueDescription"
                         value={ venueDescription }
                         onChange={ ( e ) => setVenueDescription( e.target.value ) }
-                        label="Venue Description"
+                        
                         placeholder="Describe the venue"
                         rows={ 4 } // Adjust the number of visible rows
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
@@ -480,7 +483,7 @@ const CreateEventPage = () =>
                         value={ scheduleDetails }
                         onChange={ ( e ) => setScheduleDetails( e.target.value ) }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Details about the schedule, agenda, etc." label={ '' } />
+                        placeholder="Details about the schedule, agenda, etc." />
                 </div>
 
                 <div>
