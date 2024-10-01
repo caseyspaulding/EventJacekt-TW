@@ -26,6 +26,13 @@ export default function Contact ()
                   <dt className="sr-only">Phone number</dt>
                   <dd>+1 (407) 326-3692</dd>
                 </div>
+                <div className="mt-3">
+                  <dt className="sr-only">Address</dt>
+                  <dd>1101 Miranda Lane<br/>
+
+                    Kissimmee, FL. 34741</dd>
+                </div>
+                
               </p>
             </div>
             <div className="mt-12">
@@ -40,7 +47,7 @@ export default function Contact ()
               <h3 className="text-base font-semibold leading-7 text-gray-900">Our Location</h3>
               <div className="mt-4">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3512.6265761729796!2d-81.41955028865772!3d28.30963397574193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjjCsDE4JzM0LjciTiA4McKwMjUnMDEuMSJX!5e0!3m2!1sen!2sus!4v1727817904271!5m2!1sen!2sus"
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14045.509180239367!2d-81.4144439!3d28.3474407!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88dd86daf816a1ad%3A0xa25df25bf6770055!2sSBC%20Office%20Center!5e0!3m2!1sen!2sus!4v1727818350859!5m2!1sen!2sus" width="600" height="450" style="border:0;"
                   width="100%"
                   height="450"
                   style={ { border: 0 } }
