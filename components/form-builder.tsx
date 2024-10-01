@@ -43,7 +43,7 @@ interface Form
 
 const initialForm: Form = {
   id: '',
-  name: 'New Form',
+  name: '',
   description: '',
   fields: []
 }
@@ -236,7 +236,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Advanced Form Builder</h1>
+      <h1 className="text-3xl font-bold mb-4">Form Builder</h1>
       <div className="mb-4">
         <Input
           value={ form.name }
@@ -260,7 +260,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
             <div className="w-full md:w-1/4">
               <Card>
                 <CardHeader>
-                  <CardTitle>Form Elements</CardTitle>
+                  <CardTitle>Add Form Elements</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2">
                   { ( [ 'text', 'textarea', 'number', 'checkbox', 'radio', 'select', 'date', 'file' ] as FieldType[] ).map( ( type ) => (
@@ -282,7 +282,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
             <div className="w-full md:w-3/4">
               <Card>
                 <CardHeader>
-                  <CardTitle>Form Builder</CardTitle>
+                  <CardTitle>Your Form</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <DragDropContext onDragEnd={ onDragEnd }>
