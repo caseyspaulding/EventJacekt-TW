@@ -5,6 +5,7 @@ import './globals.css';
 import ClientProviders from './ClientProviders';
 import { ThemeProvider } from "@/providers/theme-provider";
 import Script from 'next/script';
+import { Toaster } from "@/components/ui/toaster"
 
 // Google Font Configuration
 const spaceGrotesk = Space_Grotesk( {
@@ -37,6 +38,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
                         { children }
                     </ClientProviders>
                 </ThemeProvider>
+                <Toaster />
             </body>
         </html>
     );

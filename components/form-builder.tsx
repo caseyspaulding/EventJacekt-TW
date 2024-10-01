@@ -16,12 +16,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
 import { PlusCircle, Trash2, Save, Eye, Share2 } from 'lucide-react'
+import { saveFormAction } from '@/app/actions/saveForm';
 
 const supabase = createClient()
 
 type FieldType = 'text' | 'textarea' | 'number' | 'checkbox' | 'radio' | 'select' | 'date' | 'file'
 
-interface FormField {
+interface FormField
+{
   id: string
   type: FieldType
   label: string
@@ -31,7 +33,8 @@ interface FormField {
   order: number
 }
 
-interface Form {
+interface Form
+{
   id: string
   name: string
   description: string
@@ -45,46 +48,57 @@ const initialForm: Form = {
   fields: []
 }
 
-export function FormBuilderComponent() {
-  const [form, setForm] = useState<Form>(initialForm)
-  const [activeTab, setActiveTab] = useState<'builder' | 'preview'>('builder')
-  const router = useRouter()
+interface FormBuilderProps
+{
+  orgId: string; // Or orgId if you have it directly
+}
 
-  useEffect(() => {
-    const formId = new URLSearchParams(window.location.search).get('id')
-    if (formId) {
-      loadForm(formId)
+export function FormBuilderComponent ( { orgId }: FormBuilderProps )
+{
+  const [ form, setForm ] = useState<Form>( initialForm )
+  const [ activeTab, setActiveTab ] = useState<'builder' | 'preview'>( 'builder' )
+
+
+  useEffect( () =>
+  {
+    const formId = new URLSearchParams( window.location.search ).get( 'id' )
+    if ( formId )
+    {
+      loadForm( formId )
     }
-  }, [])
+  }, [] )
 
-  const loadForm = async (formId: string) => {
+  const loadForm = async ( formId: string ) =>
+  {
     const { data: formData, error: formError } = await supabase
-      .from('forms')
-      .select('*')
-      .eq('id', formId)
+      .from( 'forms' )
+      .select( '*' )
+      .eq( 'id', formId )
       .single()
 
-    if (formError) {
-      console.error('Error loading form:', formError)
+    if ( formError )
+    {
+      console.error( 'Error loading form:', formError )
       return
     }
 
     const { data: fieldsData, error: fieldsError } = await supabase
-      .from('form_fields')
-      .select('*')
-      .eq('form_id', formId)
-      .order('order', { ascending: true })
+      .from( 'form_fields' )
+      .select( '*' )
+      .eq( 'form_id', formId )
+      .order( 'order', { ascending: true } )
 
-    if (fieldsError) {
-      console.error('Error loading form fields:', fieldsError)
+    if ( fieldsError )
+    {
+      console.error( 'Error loading form fields:', fieldsError )
       return
     }
 
-    setForm({
+    setForm( {
       id: formData.id,
       name: formData.name,
       description: formData.description,
-      fields: fieldsData.map((field: any) => ({
+      fields: fieldsData.map( ( field: any ) => ( {
         id: field.id,
         type: field.type as FieldType,
         label: field.label,
@@ -92,116 +106,112 @@ export function FormBuilderComponent() {
         required: field.required,
         options: field.options,
         order: field.order
-      }))
-    })
+      } ) )
+    } )
   }
 
-  const onDragEnd = (result: any) => {
-    if (!result.destination) return
+  const onDragEnd = ( result: any ) =>
+  {
+    if ( !result.destination ) return
 
-    const items = Array.from(form.fields)
-    const [reorderedItem] = items.splice(result.source.index, 1)
-    items.splice(result.destination.index, 0, reorderedItem)
+    const items = Array.from( form.fields )
+    const [ reorderedItem ] = items.splice( result.source.index, 1 )
+    items.splice( result.destination.index, 0, reorderedItem )
 
-    const updatedFields = items.map((field, index) => ({ ...field, order: index }))
-    setForm({ ...form, fields: updatedFields })
+    const updatedFields = items.map( ( field, index ) => ( { ...field, order: index } ) )
+    setForm( { ...form, fields: updatedFields } )
   }
 
-  const addField = (type: FieldType) => {
+  const addField = ( type: FieldType ) =>
+  {
     const newField: FormField = {
       id: uuidv4(),
       type,
-      label: `New ${type} field`,
-      placeholder: `Enter ${type}`,
+      label: `New ${ type } field`,
+      placeholder: `Enter ${ type }`,
       required: false,
-      options: type === 'radio' || type === 'select' ? ['Option 1', 'Option 2'] : undefined,
+      options: type === 'radio' || type === 'select' ? [ 'Option 1', 'Option 2' ] : undefined,
       order: form.fields.length
     }
-    setForm({ ...form, fields: [...form.fields, newField] })
+    setForm( { ...form, fields: [ ...form.fields, newField ] } )
   }
 
-  const removeField = (id: string) => {
-    setForm({ ...form, fields: form.fields.filter(field => field.id !== id) })
+  const removeField = ( id: string ) =>
+  {
+    setForm( { ...form, fields: form.fields.filter( field => field.id !== id ) } )
   }
 
-  const updateField = (id: string, updates: Partial<FormField>) => {
-    setForm({
+  const updateField = ( id: string, updates: Partial<FormField> ) =>
+  {
+    setForm( {
       ...form,
-      fields: form.fields.map(field => 
+      fields: form.fields.map( field =>
         field.id === id ? { ...field, ...updates } : field
       )
-    })
+    } )
   }
 
-  const saveForm = async () => {
-    if (!form.id) {
-      form.id = uuidv4()
+  const saveForm = async () =>
+  {
+    if ( !form.id )
+    {
+      form.id = uuidv4();
     }
 
-    const { error: formError } = await supabase
-      .from('forms')
-      .upsert({
-        id: form.id,
-        name: form.name,
-        description: form.description
-      })
+    const input = {
+      orgId: orgId,
+      formId: form.id,
+      name: form.name,
+      description: form.description,
+      fields: form.fields,
+    };
 
-    if (formError) {
-      console.error('Error saving form:', formError)
-      return
+    try
+    {
+      await saveFormAction( input );
+      alert( 'Form saved successfully!' );
+    } catch ( error )
+    {
+      console.error( 'Error saving form:', error );
+      alert( 'Error saving form. Please try again.' );
+    }
+  };
+
+  const shareForm = () =>
+  {
+    if ( !form.id )
+    {
+      alert( 'Please save the form before sharing.' );
+      return;
     }
 
-    const { error: fieldsError } = await supabase
-      .from('form_fields')
-      .upsert(form.fields.map(field => ({
-        id: field.id,
-        form_id: form.id,
-        type: field.type,
-        label: field.label,
-        placeholder: field.placeholder,
-        required: field.required,
-        options: field.options,
-        order: field.order
-      })))
+    // Use orgId (or slug) and formId in the share URL
+    const shareUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`;
+    navigator.clipboard.writeText( shareUrl );
+    alert( `Form share link copied to clipboard: ${ shareUrl }` );
+  };
 
-    if (fieldsError) {
-      console.error('Error saving form fields:', fieldsError)
-      return
-    }
-
-    alert('Form saved successfully!')
-  }
-
-  const shareForm = () => {
-    if (!form.id) {
-      alert('Please save the form before sharing.')
-      return
-    }
-
-    const shareUrl = `${window.location.origin}/forms/${form.id}`
-    navigator.clipboard.writeText(shareUrl)
-    alert(`Form share link copied to clipboard: ${shareUrl}`)
-  }
-
-  const renderField = (field: FormField) => {
-    switch (field.type) {
+  const renderField = ( field: FormField ) =>
+  {
+    switch ( field.type )
+    {
       case 'text':
       case 'number':
       case 'date':
-        return <Input type={field.type} id={field.id} placeholder={field.placeholder} required={field.required} />
+        return <Input type={ field.type } id={ field.id } placeholder={ field.placeholder } required={ field.required } />
       case 'textarea':
-        return <Textarea id={field.id} placeholder={field.placeholder} required={field.required} />
+        return <Textarea id={ field.id } placeholder={ field.placeholder } required={ field.required } />
       case 'checkbox':
-        return <Checkbox id={field.id} />
+        return <Checkbox id={ field.id } />
       case 'radio':
         return (
           <RadioGroup>
-            {field.options?.map((option, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <RadioGroupItem value={option} id={`${field.id}-${index}`} />
-                <Label htmlFor={`${field.id}-${index}`}>{option}</Label>
+            { field.options?.map( ( option, index ) => (
+              <div key={ index } className="flex items-center space-x-2">
+                <RadioGroupItem value={ option } id={ `${ field.id }-${ index }` } />
+                <Label htmlFor={ `${ field.id }-${ index }` }>{ option }</Label>
               </div>
-            ))}
+            ) ) }
           </RadioGroup>
         )
       case 'select':
@@ -211,14 +221,14 @@ export function FormBuilderComponent() {
               <SelectValue placeholder="Select an option" />
             </SelectTrigger>
             <SelectContent>
-              {field.options?.map((option, index) => (
-                <SelectItem key={index} value={option}>{option}</SelectItem>
-              ))}
+              { field.options?.map( ( option, index ) => (
+                <SelectItem key={ index } value={ option }>{ option }</SelectItem>
+              ) ) }
             </SelectContent>
           </Select>
         )
       case 'file':
-        return <Input type="file" id={field.id} required={field.required} />
+        return <Input type="file" id={ field.id } required={ field.required } />
       default:
         return null
     }
@@ -229,18 +239,18 @@ export function FormBuilderComponent() {
       <h1 className="text-3xl font-bold mb-4">Advanced Form Builder</h1>
       <div className="mb-4">
         <Input
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          value={ form.name }
+          onChange={ ( e ) => setForm( { ...form, name: e.target.value } ) }
           placeholder="Form Name"
           className="text-2xl font-bold mb-2"
         />
         <Textarea
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          value={ form.description }
+          onChange={ ( e ) => setForm( { ...form, description: e.target.value } ) }
           placeholder="Form Description"
         />
       </div>
-      <Tabs value={activeTab} onValueChange={(value: string) => setActiveTab(value as 'builder' | 'preview')}>
+      <Tabs value={ activeTab } onValueChange={ ( value: string ) => setActiveTab( value as 'builder' | 'preview' ) }>
         <TabsList className="mb-4">
           <TabsTrigger value="builder">Builder</TabsTrigger>
           <TabsTrigger value="preview">Preview</TabsTrigger>
@@ -253,18 +263,18 @@ export function FormBuilderComponent() {
                   <CardTitle>Form Elements</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2">
-                  {(['text', 'textarea', 'number', 'checkbox', 'radio', 'select', 'date', 'file'] as FieldType[]).map((type) => (
-                    <Button key={type} onClick={() => addField(type)} className="w-full">
-                      <PlusCircle className="mr-2 h-4 w-4" /> Add {type.charAt(0).toUpperCase() + type.slice(1)}
+                  { ( [ 'text', 'textarea', 'number', 'checkbox', 'radio', 'select', 'date', 'file' ] as FieldType[] ).map( ( type ) => (
+                    <Button key={ type } onClick={ () => addField( type ) } className="w-full">
+                      <PlusCircle className="mr-2 h-4 w-4" /> Add { type.charAt( 0 ).toUpperCase() + type.slice( 1 ) }
                     </Button>
-                  ))}
+                  ) ) }
                 </CardContent>
               </Card>
               <div className="mt-4 space-y-2">
-                <Button onClick={saveForm} className="w-full">
+                <Button onClick={ saveForm } className="w-full">
                   <Save className="mr-2 h-4 w-4" /> Save Form
                 </Button>
-                <Button onClick={shareForm} className="w-full">
+                <Button onClick={ shareForm } className="w-full">
                   <Share2 className="mr-2 h-4 w-4" /> Share Form
                 </Button>
               </div>
@@ -275,62 +285,62 @@ export function FormBuilderComponent() {
                   <CardTitle>Form Builder</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <DragDropContext onDragEnd={onDragEnd}>
+                  <DragDropContext onDragEnd={ onDragEnd }>
                     <Droppable droppableId="form-fields">
-                      {(provided) => (
-                        <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
-                          {form.fields.map((field, index) => (
-                            <Draggable key={field.id} draggableId={field.id} index={index}>
-                              {(provided) => (
+                      { ( provided ) => (
+                        <div { ...provided.droppableProps } ref={ provided.innerRef } className="space-y-4">
+                          { form.fields.map( ( field, index ) => (
+                            <Draggable key={ field.id } draggableId={ field.id } index={ index }>
+                              { ( provided ) => (
                                 <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
+                                  ref={ provided.innerRef }
+                                  { ...provided.draggableProps }
+                                  { ...provided.dragHandleProps }
                                   className="bg-white p-4 rounded-md shadow-sm border border-gray-200"
                                 >
                                   <div className="flex items-center justify-between mb-2">
                                     <Input
-                                      value={field.label}
-                                      onChange={(e) => updateField(field.id, { label: e.target.value })}
+                                      value={ field.label }
+                                      onChange={ ( e ) => updateField( field.id, { label: e.target.value } ) }
                                       className="font-semibold"
                                     />
                                     <Button
                                       variant="ghost"
                                       size="icon"
-                                      onClick={() => removeField(field.id)}
+                                      onClick={ () => removeField( field.id ) }
                                     >
                                       <Trash2 className="h-4 w-4" />
                                     </Button>
                                   </div>
                                   <div className="space-y-2">
                                     <Input
-                                      value={field.placeholder}
-                                      onChange={(e) => updateField(field.id, { placeholder: e.target.value })}
+                                      value={ field.placeholder }
+                                      onChange={ ( e ) => updateField( field.id, { placeholder: e.target.value } ) }
                                       placeholder="Placeholder text"
                                     />
                                     <div className="flex items-center space-x-2">
                                       <Switch
-                                        id={`${field.id}-required`}
-                                        checked={field.required}
-                                        onCheckedChange={(checked) => updateField(field.id, { required: checked })}
+                                        id={ `${ field.id }-required` }
+                                        checked={ field.required }
+                                        onCheckedChange={ ( checked ) => updateField( field.id, { required: checked } ) }
                                       />
-                                      <Label htmlFor={`${field.id}-required`}>Required</Label>
+                                      <Label htmlFor={ `${ field.id }-required` }>Required</Label>
                                     </div>
-                                    {(field.type === 'radio' || field.type === 'select') && (
+                                    { ( field.type === 'radio' || field.type === 'select' ) && (
                                       <Textarea
-                                        value={field.options?.join('\n')}
-                                        onChange={(e) => updateField(field.id, { options: e.target.value.split('\n') })}
+                                        value={ field.options?.join( '\n' ) }
+                                        onChange={ ( e ) => updateField( field.id, { options: e.target.value.split( '\n' ) } ) }
                                         placeholder="Enter options (one per line)"
                                       />
-                                    )}
+                                    ) }
                                   </div>
                                 </div>
-                              )}
+                              ) }
                             </Draggable>
-                          ))}
-                          {provided.placeholder}
+                          ) ) }
+                          { provided.placeholder }
                         </div>
-                      )}
+                      ) }
                     </Droppable>
                   </DragDropContext>
                 </CardContent>
@@ -345,12 +355,12 @@ export function FormBuilderComponent() {
             </CardHeader>
             <CardContent>
               <form className="space-y-4">
-                {form.fields.map((field) => (
-                  <div key={field.id} className="space-y-2">
-                    <Label htmlFor={field.id}>{field.label}{field.required && <span className="text-red-500">*</span>}</Label>
-                    {renderField(field)}
+                { form.fields.map( ( field ) => (
+                  <div key={ field.id } className="space-y-2">
+                    <Label htmlFor={ field.id }>{ field.label }{ field.required && <span className="text-red-500">*</span> }</Label>
+                    { renderField( field ) }
                   </div>
-                ))}
+                ) ) }
                 <Button type="submit">Submit</Button>
               </form>
             </CardContent>

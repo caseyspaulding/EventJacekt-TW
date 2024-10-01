@@ -75,22 +75,16 @@ const navigation = [
 
   //  ],
   //},
-  //{
+  {
 
+    name: 'Forms',
+    icon: ClipboardDocumentIcon,
+    current: false,
+    children: [
+      { name: 'Create Form', href: '/forms/new' },
 
-  //  name: 'Forms',
-  //  icon: ClipboardDocumentIcon,
-  //  current: false,
-  //  children: [
-  //    { name: 'Create Form', href: '/forms/signups' },
-  //    { name: 'Your Forms', href: '/forms/sponsors' },
-  //    { name: 'Create Sign-Up Form', href: '/forms/sponsors' },
-
-
-
-
-  //  ],
-  //},
+    ],
+  },
 
 
 
