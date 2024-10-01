@@ -117,9 +117,6 @@ export default function Component ()
             <Head>
                 <title>Create Account - EventJacket</title>
                 <meta name="description" content="Create your EventJacket account to manage your events, sell tickets, and track attendees." />
-                <meta name="robots" content="noindex, nofollow" />
-
-
 
             </Head>
 
@@ -176,23 +173,23 @@ export default function Component ()
                         </div>
                         <form className="space-y-6" onSubmit={ handleSubmit }>
                             <Input
-                                
+
                                 name="email"
                                 placeholder="Enter your email"
                                 type="email"
-                                
+
                                 value={ email }
                                 onChange={ ( e ) => setEmail( e.target.value ) }
                                 required
                             />
                             <Input
                                 className="text-gray-500"
-                                
-                               
+
+
                                 name="password"
                                 placeholder="Enter your password"
                                 type={ isVisible ? "text" : "password" }
-                             
+
                                 value={ password }
                                 onChange={ ( e ) => setPassword( e.target.value ) }
                                 required

@@ -32,7 +32,7 @@ export default function ResetPassword ()
       <Head>
         <title>Reset Password - EventJacket</title>
         <meta name="description" content="Reset your EventJacket account password by providing your email address. A reset link will be sent to your inbox." />
-        <meta name="robots" content="noindex, nofollow" />
+        
   
       </Head>
 

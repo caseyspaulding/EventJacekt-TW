@@ -274,8 +274,8 @@ export async function updateBlogPost ( id: number, formData: FormData )
     const title = formData.get( 'title' ) as string;
     const content = formData.get( 'content' ) as string;
     const excerpt = ( formData.get( 'excerpt' ) as string ) || '';
-    const authorSlug = formData.get( 'author' ) as string;
-    const tags = ( formData.get( 'tags' ) as string )?.split( ',' ).map( ( tag ) => tag.trim() ) || [];
+    const authorId = formData.get( 'author' ) as string; // Now we're getting the authorId directly
+    const tags = ( formData.get( 'tags' ) as string )?.split( ',' ).map( tag => tag.trim() ) || [];
     let slug = formData.get( 'slug' ) as string;
     const featuredImage = formData.get( 'featuredImage' ) as string;
     const metaTitle = formData.get( 'metaTitle' ) as string;
@@ -289,21 +289,14 @@ export async function updateBlogPost ( id: number, formData: FormData )
 
     try
     {
-        // Fetch the author ID based on the provided slug
-        const [ author ] = await db.select().from( authors ).where( eq( authors.slug, authorSlug ) );
-        if ( !author )
-        {
-            return { success: false, message: 'Author not found.' };
-        }
-
-        // Update the blog post in the database
+        // Update the blog post directly with authorId
         await db
             .update( blogPosts )
             .set( {
                 title,
                 content,
                 excerpt,
-                authorId: author.id,
+                authorId: parseInt( authorId ), // Use authorId directly
                 tags,
                 slug,
                 featuredImage,
@@ -317,7 +310,7 @@ export async function updateBlogPost ( id: number, formData: FormData )
         return { success: true, message: 'Blog post updated successfully' };
     } catch ( error )
     {
-        console.error( 'Error updating blog post:', error );
+        console.log( 'Error updating blog post:', error );
         return { success: false, message: 'Failed to update the blog post. Please try again.' };
     }
 }

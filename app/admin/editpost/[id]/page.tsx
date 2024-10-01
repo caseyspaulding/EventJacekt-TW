@@ -1,21 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import RichTextEditor from '@/components/RichTextEditor';
+
 import { updateBlogPost } from '@/app/actions/blogActions';
 import { createClient } from '@/utils/supabase/client';
 import toast from 'react-hot-toast';
 import { Button } from 'flowbite-react';
 import LogoSpinner from '@/components/Loaders/LogoSpinner';
-
-
+import dynamic from 'next/dynamic';
+// Dynamically import JoditEditor with SSR disabled
+const JoditEditor = dynamic( () => import( 'jodit-react' ), {
+    ssr: false,
+} );
 
 interface Author
 {
     id: number;
     name: string;
-  
+
 }
 
 interface BlogPost
@@ -47,7 +50,7 @@ export default function EditPostPage ()
     const [ content, setContent ] = useState( '' );
     const [ excerpt, setExcerpt ] = useState( '' );
     const [ authorId, setAuthorId ] = useState( '' );
-    
+
     const [ tags, setTags ] = useState( '' );
     const [ slug, setSlug ] = useState( '' );
     const [ metaTitle, setMetaTitle ] = useState( '' );
@@ -132,7 +135,7 @@ export default function EditPostPage ()
         formData.append( 'title', title );
         formData.append( 'content', content );
         formData.append( 'excerpt', excerpt );
-        formData.append( 'authorId', authorId ); // Update here
+        formData.append( 'author', authorId ); // Update here
         formData.append( 'tags', JSON.stringify( tags.split( ',' ).map( ( tag ) => tag.trim() ) ) );
         formData.append( 'slug', slug );
         formData.append( 'metaTitle', metaTitle );
@@ -140,6 +143,7 @@ export default function EditPostPage ()
         formData.append( 'isPublished', isPublished.toString() );
         formData.append( 'featuredImage', imageURL );
 
+        console.log( 'formData', formData, idAsNumber );  ////////// Debugging
         const response = await updateBlogPost( idAsNumber, formData );
 
         if ( response.success )
@@ -151,6 +155,18 @@ export default function EditPostPage ()
             toast.error( 'Error updating post' );
         }
     };
+
+
+    // Configuration for the editor
+    const config = useMemo(
+        () => ( {
+            readonly: false,
+            placeholder: 'Start typing your blog post...',
+        } ),
+        []
+    );
+
+    const editor = useRef( null ); // Define the editor reference
 
     if ( loading )
     {
@@ -254,11 +270,21 @@ export default function EditPostPage ()
                             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                         />
                     </div>
-
+                    {/* Jodit Editor for Content */ }
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Content</label>
+                        <JoditEditor
+                            ref={ editor }
+                            value={ content } // The editor's current content
+                            config={ config } // Editor configuration
+                            onBlur={ ( newContent ) => setContent( newContent ) } // Use this to update the content
+                            onChange={ ( newContent ) => setContent( newContent ) } // Optional: Update the content as the user types
+                        />
+                    </div>
                     {/* Content */ }
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Content</label>
-                        <RichTextEditor value={ content } onChange={ setContent } />
+
                         <input type="hidden" name="content" value={ content } />
                     </div>
 

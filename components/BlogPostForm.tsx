@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import RichTextEditor from './RichTextEditor';
+
 import { createBlogPost } from '../app/actions/blogActions';
 import { createClient } from '@/utils/supabase/client';
 import toast from 'react-hot-toast';
