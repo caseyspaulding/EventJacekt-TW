@@ -5,6 +5,9 @@ import { Input, Button } from '@nextui-org/react';
 import { createClient } from '@/utils/supabase/client';
 import Head from 'next/head';
 
+
+
+
 export default function ResetPassword ()
 {
   const [ email, setEmail ] = useState( '' );
@@ -27,14 +30,12 @@ export default function ResetPassword ()
   };
 
   return (
+    
     <>
-      {/* Meta tags for SEO */ }
       <Head>
-        <title>Reset Password - EventJacket</title>
-        <meta name="description" content="Reset your EventJacket account password by providing your email address. A reset link will be sent to your inbox." />
-        
-  
+        <title>Reset Password</title>
       </Head>
+
 
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h2>Reset Password</h2>
