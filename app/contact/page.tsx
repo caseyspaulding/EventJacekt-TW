@@ -47,7 +47,7 @@ export default function Contact ()
               <h3 className="text-base font-semibold leading-7 text-gray-900">Our Location</h3>
               <div className="mt-4">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14045.509180239367!2d-81.4144439!3d28.3474407!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88dd86daf816a1ad%3A0xa25df25bf6770055!2sSBC%20Office%20Center!5e0!3m2!1sen!2sus!4v1727818350859!5m2!1sen!2sus" width="600" height="450" style="border:0;"
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14045.509180239367!2d-81.4144439!3d28.3474407!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88dd86daf816a1ad%3A0xa25df25bf6770055!2sSBC%20Office%20Center!5e0!3m2!1sen!2sus!4v1727818350859!5m2!1sen!2sus"
                   width="100%"
                   height="450"
                   style={ { border: 0 } }
