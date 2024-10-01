@@ -82,6 +82,7 @@ const navigation = [
     current: false,
     children: [
       { name: 'Create Form', href: '/forms/new' },
+      { name: 'All Forms', href: '/forms/form-responses' },
 
     ],
   },
