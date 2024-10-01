@@ -69,7 +69,7 @@ export async function generateMetadata ( { params }: { params: Params } )
 
     return {
         title: `${ eventData.eventName } - EventJacket`,
-        description: eventData.description || 'Join us for this amazing event!',
+        description: `${ eventData.description } - Come Join Us!`,
         openGraph: {
             title: eventData.eventName,
             description: eventData.description || 'Join us for this amazing event!',

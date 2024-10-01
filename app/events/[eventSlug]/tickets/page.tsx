@@ -58,7 +58,7 @@ export async function generateMetadata ( { params }: { params: Params } ): Promi
   }
 
   const title = `${ eventData.eventName } | Get your tickets.`;
-  const description = eventData.description || `Get your tickets to ${ eventData.eventName }`;
+  const description = `${eventData.description} - Get your tickets to ${ eventData.eventName }`;
   const imageUrl = absoluteUrl( eventData.featuredImage || "/images/event-default.jpg" );
 
   return {
