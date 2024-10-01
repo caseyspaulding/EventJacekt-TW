@@ -179,6 +179,7 @@ export default function LoginComponent ( { searchParams }: { searchParams: any }
                                 src="/images/logo-full.png"
                                 className="h-12 w-auto mx-auto"
                             />
+                            <h1 className="mt-2 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">Log In</h1>
                             <h2 className="mt-2 text-2xl font-bold leading-9 tracking-tight text-gray-900 text-center">
                                 Welcome Back
                             </h2>

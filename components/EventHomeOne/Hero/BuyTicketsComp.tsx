@@ -72,9 +72,9 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( { eventName, tickets,
 
   return (
     <div className="my-5 pb-10 container mx-auto">
-      <h2 className="mb-4 mt-4 text-4xl flex justify-center font-semibold text-grey-900">
+      <h1 className="mb-4 mt-4 text-4xl flex justify-center font-semibold text-grey-900">
         Available Tickets
-      </h2>
+      </h1>
       <div className="flex justify-center mb-4">
         <Countdown startDate={ tickets[ 0 ]?.eventDate } />
       </div>

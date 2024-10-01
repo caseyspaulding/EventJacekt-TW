@@ -279,7 +279,7 @@ const CreateEventPage = () =>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-8">
                 {/* Main Form Content */ }
                 <form onSubmit={ handleSubmit } className="space-y-6 pb-24 lg:col-span-2">
-                    <div>
+                    <div id="step1">
                         <label className="block font-semibold text-lg text-gray-700">
                             Add an event featured image
                         </label>
@@ -291,349 +291,349 @@ const CreateEventPage = () =>
                             orgName={ user?.orgName || '' }
                         />
                     </div>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                    <div>
+                    <div id="step2" className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <div>
+                            <InputFieldEJ
+                                type="text"
+                                id="name"
+                                value={ name }
+                                onChange={ ( e ) => setName( e.target.value ) }
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                placeholder="Event Name"
+                                required label={ 'Event Title' } />
+                        </div>
+
+                        <div>
+                            <InputFieldEJ
+                                id="description"
+                                value={ description }
+                                onChange={ ( e ) => setDescription( e.target.value ) }
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                placeholder="Description"
+                                required label={ 'Description' } />
+                        </div>
+
+                        <div>
+                            <InputFieldEJ
+                                type="text"
+                                id="organizerContact"
+                                value={ organizerContact }
+                                onChange={ ( e ) => setOrganizerContact( e.target.value ) }
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                placeholder="Organizer Contact Information"
+                                label={ 'Organizer Contact' }
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <Input
+                                type="date"
+                                id="startDate"
+                                value={ startDate }
+                                onChange={ ( e ) => setStartDate( e.target.value ) }
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm "
+                                required
+
+                            />
+                        </div>
+
+                        <div>
+                            <Input
+                                type="date"
+                                id="endDate"
+                                value={ endDate }
+                                onChange={ ( e ) => setEndDate( e.target.value ) }
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                required
+
+                            />
+                        </div>
+
+                        <div>
+                            <Input
+                                type="time"
+                                id="eventStartTime"
+                                value={ eventStartTime }
+                                onChange={ ( e ) => setEventStartTime( e.target.value ) }
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                required
+
+                            />
+                        </div>
+
+                        <div>
+                            <Input
+                                type="time"
+                                id="eventEndTime"
+                                value={ eventEndTime }
+                                onChange={ ( e ) => setEventEndTime( e.target.value ) }
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                required
+
+                            />
+                        </div>
+                    </div>
+
+                    <div id="step3">
+
+
                         <InputFieldEJ
                             type="text"
-                            id="name"
-                            value={ name }
-                            onChange={ ( e ) => setName( e.target.value ) }
+                            id="venue"
+                            value={ venue }
+                            onChange={ ( e ) => setVenue( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Event Name"
-                            required label={ 'Event Title' } />
-                    </div>
-
-                    <div>
-                        <InputFieldEJ
-                            id="description"
-                            value={ description }
-                            onChange={ ( e ) => setDescription( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Description"
-                            required label={ 'Description' } />
-                    </div>
-
-                    <div>
-                        <InputFieldEJ
-                            type="text"
-                            id="organizerContact"
-                            value={ organizerContact }
-                            onChange={ ( e ) => setOrganizerContact( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Organizer Contact Information"
-                            label={ 'Organizer Contact' }
-                            required
+                            placeholder="Venue" label={ ' Venue Name' }
                         />
                     </div>
-
-                    <div>
-                        <Input
-                            type="date"
-                            id="startDate"
-                            value={ startDate }
-                            onChange={ ( e ) => setStartDate( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm "
-                            required
-                            
-                        />
-                    </div>
-
-                    <div>
-                        <Input
-                            type="date"
-                            id="endDate"
-                            value={ endDate }
-                            onChange={ ( e ) => setEndDate( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            required
-                            
-                        />
-                    </div>
-
-                    <div>
-                        <Input
-                            type="time"
-                            id="eventStartTime"
-                            value={ eventStartTime }
-                            onChange={ ( e ) => setEventStartTime( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            required
-                           
-                        />
-                    </div>
-
-                    <div>
-                        <Input
-                            type="time"
-                            id="eventEndTime"
-                            value={ eventEndTime }
-                            onChange={ ( e) => setEventEndTime( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            required
-                            
-                        />
-                    </div>
-                </div>
-
-                <div>
-
-
-                    <InputFieldEJ
-                        type="text"
-                        id="venue"
-                        value={ venue }
-                        onChange={ ( e ) => setVenue( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Venue" label={ ' Venue Name' }
+                    <ImageUploadVenue
+                        setImage={ setVenueImage }
+                        previewImage={ venueImagePreview }
+                        setPreviewImage={ setVenueImagePreview }
+                        label=""
                     />
-                </div>
-                <ImageUploadVenue
-                    setImage={ setVenueImage }
-                    previewImage={ venueImagePreview }
-                    setPreviewImage={ setVenueImagePreview }
-                    label=""
-                />
-                <div>
-                    <Textarea
-                        id="venueDescription"
-                        value={ venueDescription }
-                        onChange={ ( e ) => setVenueDescription( e.target.value ) }
-                        
-                        placeholder="Describe the venue"
-                        rows={ 4 } // Adjust the number of visible rows
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
-                </div>
-
-
-                <div>
-
-
-                    <InputFieldEJ
-                        type="text"
-                        id="address"
-                        value={ address }
-                        onChange={ ( e ) => setAddress( e.target.value ) }
-                        className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Address" label={ '  Venue Street Address' } />
-
-
-                </div>
-
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
+                        <Textarea
+                            id="venueDescription"
+                            value={ venueDescription }
+                            onChange={ ( e ) => setVenueDescription( e.target.value ) }
 
-                        <InputFieldEJ
-                            type="text"
-                            id="city"
-                            value={ city }
-                            onChange={ ( e ) => setCity( e.target.value ) }
-                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="City" label={ 'City' } />
+                            placeholder="Describe the venue"
+                            rows={ 4 } // Adjust the number of visible rows
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        />
                     </div>
 
-                    <div>
-
-                        <InputFieldEJ
-                            type="text"
-                            id="state"
-                            value={ state }
-                            onChange={ ( e ) => setState( e.target.value ) }
-                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="State" label={ 'State' } />
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-
 
                     <div>
 
+
                         <InputFieldEJ
                             type="text"
-                            id="zipCode"
-                            value={ zipCode }
-                            onChange={ ( e ) => setZipCode( e.target.value ) }
+                            id="address"
+                            value={ address }
+                            onChange={ ( e ) => setAddress( e.target.value ) }
                             className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Zip Code" label={ 'Zip Code' } />
+                            placeholder="Address" label={ '  Venue Street Address' } />
+
+
                     </div>
 
-                </div>
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <div>
+
+                            <InputFieldEJ
+                                type="text"
+                                id="city"
+                                value={ city }
+                                onChange={ ( e ) => setCity( e.target.value ) }
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                placeholder="City" label={ 'City' } />
+                        </div>
+
+                        <div>
+
+                            <InputFieldEJ
+                                type="text"
+                                id="state"
+                                value={ state }
+                                onChange={ ( e ) => setState( e.target.value ) }
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                placeholder="State" label={ 'State' } />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
 
 
-               
+                        <div>
+
+                            <InputFieldEJ
+                                type="text"
+                                id="zipCode"
+                                value={ zipCode }
+                                onChange={ ( e ) => setZipCode( e.target.value ) }
+                                className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                placeholder="Zip Code" label={ 'Zip Code' } />
+                        </div>
+
+                    </div>
+
+
+
                     <VenueMap address={ mapAddress || '' } />
-              
-                <div>
-                    <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
-                        Notes
-                    </label>
-                    <InputFieldEJ
-                        id="notes"
-                        value={ notes }
-                        onChange={ ( e ) => setNotes( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Notes" label={ 'Notes' } />
-                </div>
 
-                <div>
-                    <label htmlFor="scheduleDetails" className="block text-sm font-medium text-gray-700">
-                        Schedule Details
-                    </label>
-                    <Textarea
-                        id="scheduleDetails"
-                        value={ scheduleDetails }
-                        onChange={ ( e ) => setScheduleDetails( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Details about the schedule, agenda, etc." />
-                </div>
+                    <div>
+                        <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
+                            Notes
+                        </label>
+                        <InputFieldEJ
+                            id="notes"
+                            value={ notes }
+                            onChange={ ( e ) => setNotes( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            placeholder="Notes" label={ 'Notes' } />
+                    </div>
 
-                <div>
-                    <label htmlFor="refundPolicy" className="block text-sm font-medium text-gray-700">
-                        Refund Policy
-                    </label>
-                    <Textarea
-                        id="refundPolicy"
-                        value={ refundPolicy }
-                        onChange={ ( e ) => setRefundPolicy( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Refund Policy"
-                    />
-                </div>
+                    <div>
+                        <label htmlFor="scheduleDetails" className="block text-sm font-medium text-gray-700">
+                            Schedule Details
+                        </label>
+                        <Textarea
+                            id="scheduleDetails"
+                            value={ scheduleDetails }
+                            onChange={ ( e ) => setScheduleDetails( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            placeholder="Details about the schedule, agenda, etc." />
+                    </div>
 
-                <div>
+                    <div>
+                        <label htmlFor="refundPolicy" className="block text-sm font-medium text-gray-700">
+                            Refund Policy
+                        </label>
+                        <Textarea
+                            id="refundPolicy"
+                            value={ refundPolicy }
+                            onChange={ ( e ) => setRefundPolicy( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            placeholder="Refund Policy"
+                        />
+                    </div>
 
-                    <InputFieldEJ
-                        type="text"
-                        id="timezone"
-                        value={ timezone }
-                        onChange={ ( e ) => setTimezone( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Timezone"
-                        label={ ' Timezone' } />
-                </div>
+                    <div>
 
-                <div>
+                        <InputFieldEJ
+                            type="text"
+                            id="timezone"
+                            value={ timezone }
+                            onChange={ ( e ) => setTimezone( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            placeholder="Timezone"
+                            label={ ' Timezone' } />
+                    </div>
 
-                    <InputFieldEJ
-                        type="text"
-                        id="tags"
-                        value={ tags }
-                        onChange={ ( e ) => setTags( e.target.value ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Tags (comma separated)"
-                        label={ 'Tags' } />
-                </div>
+                    <div>
 
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Frequently Asked Questions</label>
-                    <p className="text-sm text-gray-500 mb-4">
-                        Answer questions your attendees may have about the event, like accessibility and amenities.
-                    </p>
-                    { faqs.map( ( faq, index ) => (
-                        <div key={ index } className="mb-4">
-                            <div>
-                                <label htmlFor={ `faq-question-${ index }` } className="block text-sm font-medium text-gray-700">
-                                    Question
-                                </label>
-                                <InputFieldEJ
-                                    type="text"
-                                    id={ `faq-question-${ index }` }
-                                    value={ faq.question }
-                                    onChange={ ( e ) => handleFaqChange( e, index, 'question' ) }
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                    placeholder="Enter your question"
-                                    label={ 'Question' } />
-                                { faq.question.trim() === '' && faq.answer.trim() !== '' && (
-                                    <p className="text-red-500 text-sm mt-1">A question is required if you provide an answer.</p>
-                                ) }
-                            </div>
-                            <div className="mt-2">
-                                <label htmlFor={ `faq-answer-${ index }` } className="block text-sm font-medium text-gray-700">
-                                    Answer
-                                </label>
-                                <InputFieldEJ
-                                    id={ `faq-answer-${ index }` }
-                                    value={ faq.answer }
-                                    onChange={ ( e ) => handleFaqChange( e, index, 'answer' ) }
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                    placeholder="Enter your answer"
-                                    label={ 'Answer' } />
-                                { faq.answer.trim() === '' && faq.question.trim() !== '' && (
-                                    <p className="text-red-500 text-sm mt-1">An answer is required if you provide a question.</p>
-                                ) }
-                            </div>
-                            <button
-                                type="button"
-                                onClick={ () => removeFaq( index ) }
-                                className="mt-2 text-red-500 hover:text-red-700 text-md"
-                            >
-                                Remove FAQ
-                            </button>
-                        </div>
-                    ) ) }
-                    <button
-                        type="button"
-                        onClick={ addFaq }
-                        className="mt-2 text-green-600 hover:text-green-700 text-md"
-                    >
-                        + Add question
-                    </button>
-                </div>
+                        <InputFieldEJ
+                            type="text"
+                            id="tags"
+                            value={ tags }
+                            onChange={ ( e ) => setTags( e.target.value ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            placeholder="Tags (comma separated)"
+                            label={ 'Tags' } />
+                    </div>
 
-                <div>
-                    <h3 className="text-lg font-semibold mb-4">Add highlights about your event</h3>
-
-                    {/* Age Restriction Options */ }
-                    <div className="mb-6">
-                        <p className="text-sm font-medium text-gray-700 mb-2">Is there an age restriction?</p>
-                        <div className="flex gap-4">
-                            { [ 'All ages allowed', 'There’s an age restriction', 'Parent or guardian needed' ].map( ( option ) => (
+                    <div id="step5">
+                        <label className="block text-sm font-medium text-gray-700">Frequently Asked Questions</label>
+                        <p className="text-sm text-gray-500 mb-4">
+                            Answer questions your attendees may have about the event, like accessibility and amenities.
+                        </p>
+                        { faqs.map( ( faq, index ) => (
+                            <div key={ index } className="mb-4">
+                                <div>
+                                    <label htmlFor={ `faq-question-${ index }` } className="block text-sm font-medium text-gray-700">
+                                        Question
+                                    </label>
+                                    <InputFieldEJ
+                                        type="text"
+                                        id={ `faq-question-${ index }` }
+                                        value={ faq.question }
+                                        onChange={ ( e ) => handleFaqChange( e, index, 'question' ) }
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                        placeholder="Enter your question"
+                                        label={ 'Question' } />
+                                    { faq.question.trim() === '' && faq.answer.trim() !== '' && (
+                                        <p className="text-red-500 text-sm mt-1">A question is required if you provide an answer.</p>
+                                    ) }
+                                </div>
+                                <div className="mt-2">
+                                    <label htmlFor={ `faq-answer-${ index }` } className="block text-sm font-medium text-gray-700">
+                                        Answer
+                                    </label>
+                                    <InputFieldEJ
+                                        id={ `faq-answer-${ index }` }
+                                        value={ faq.answer }
+                                        onChange={ ( e ) => handleFaqChange( e, index, 'answer' ) }
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                        placeholder="Enter your answer"
+                                        label={ 'Answer' } />
+                                    { faq.answer.trim() === '' && faq.question.trim() !== '' && (
+                                        <p className="text-red-500 text-sm mt-1">An answer is required if you provide a question.</p>
+                                    ) }
+                                </div>
                                 <button
-                                    key={ option }
                                     type="button"
-                                    onClick={ () => handleAgeRestrictionChange( option ) }
-                                    className={ `py-2 px-4 border rounded-md ${ ageRestriction === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
-                                        }` }
+                                    onClick={ () => removeFaq( index ) }
+                                    className="mt-2 text-red-500 hover:text-red-700 text-md"
                                 >
-                                    { option }
+                                    Remove FAQ
                                 </button>
-                            ) ) }
+                            </div>
+                        ) ) }
+                        <button
+                            type="button"
+                            onClick={ addFaq }
+                            className="mt-2 text-green-600 hover:text-green-700 text-md"
+                        >
+                            + Add question
+                        </button>
+                    </div>
+
+                    <div id="step6">
+                        <h3 className="text-lg font-semibold mb-4">Add highlights about your event</h3>
+
+                        {/* Age Restriction Options */ }
+                        <div className="mb-6">
+                            <p className="text-sm font-medium text-gray-700 mb-2">Is there an age restriction?</p>
+                            <div className="flex gap-4">
+                                { [ 'All ages allowed', 'There’s an age restriction', 'Parent or guardian needed' ].map( ( option ) => (
+                                    <button
+                                        key={ option }
+                                        type="button"
+                                        onClick={ () => handleAgeRestrictionChange( option ) }
+                                        className={ `py-2 px-4 border rounded-md ${ ageRestriction === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                                            }` }
+                                    >
+                                        { option }
+                                    </button>
+                                ) ) }
+                            </div>
+                        </div>
+
+                        {/* Parking Options */ }
+                        <div className="mb-6">
+                            <p className="text-sm font-medium text-gray-700 mb-2">Is there parking at your venue?</p>
+                            <div className="flex gap-4">
+                                { [ 'Free parking', 'Paid parking', 'No parking options' ].map( ( option ) => (
+                                    <button
+                                        key={ option }
+                                        type="button"
+                                        onClick={ () => handleParkingOptionsChange( option ) }
+                                        className={ `py-2 px-4 border rounded-md ${ parkingOptions === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                                            }` }
+                                    >
+                                        { option }
+                                    </button>
+                                ) ) }
+                            </div>
                         </div>
                     </div>
 
-                    {/* Parking Options */ }
-                    <div className="mb-6">
-                        <p className="text-sm font-medium text-gray-700 mb-2">Is there parking at your venue?</p>
-                        <div className="flex gap-4">
-                            { [ 'Free parking', 'Paid parking', 'No parking options' ].map( ( option ) => (
-                                <button
-                                    key={ option }
-                                    type="button"
-                                    onClick={ () => handleParkingOptionsChange( option ) }
-                                    className={ `py-2 px-4 border rounded-md ${ parkingOptions === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
-                                        }` }
-                                >
-                                    { option }
-                                </button>
-                            ) ) }
-                        </div>
+
+
+                    <div id="step7">
+
+                        <InputFieldEJ
+                            type="number"
+                            id="maxAttendees"
+                            value={ maxAttendees.toString() }
+                            onChange={ ( e ) => setMaxAttendees( Number( e.target.value ) ) }
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            placeholder="Max Attendees"
+                            label={ ' Max Attendees' } />
                     </div>
-                </div>
-
-
-
-                <div>
-
-                    <InputFieldEJ
-                        type="number"
-                        id="maxAttendees"
-                        value={ maxAttendees.toString() }
-                        onChange={ ( e ) => setMaxAttendees( Number( e.target.value ) ) }
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                        placeholder="Max Attendees"
-                        label={ ' Max Attendees' } />
-                </div>
 
                     {/* Sticky Footer for Small Screens */ }
                     <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md flex justify-center">
@@ -660,7 +660,7 @@ const CreateEventPage = () =>
                             <li><a href="#step5" className="text-blue-500">Step 5: Add Event FAQs</a></li>
                             <li><a href="#step6" className="text-blue-500">Step 6: Add Event Highlights</a></li>
                             <li><a href="#step7" className="text-blue-500">Step 7: Save Event</a></li>
-                            <li><a href="#step8" className="text-blue-500">Step 8: Create Event Tickets</a></li>
+                            <li><div className="text-blue-500">Step 8: Create Event Tickets</div></li>
 
 
                             {/* Add more steps as necessary */ }

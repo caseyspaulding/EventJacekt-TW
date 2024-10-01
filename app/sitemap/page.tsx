@@ -19,11 +19,11 @@ const Sitemap = () =>
       <NavBar1 />
       <div className="bg-gray-50 py-10">
         <div className="max-w-7xl mx-auto px-4 lg:px-4">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Site Map</h2>
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">Site Map</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* General Information Section */ }
             <div>
-              <h3 className="font-bold text-xl mb-4">General Information</h3>
+              <h2 className="font-bold text-xl mb-4">General Information</h2>
               <ul>
                 <li>
                   <Link href="/">
@@ -60,7 +60,7 @@ const Sitemap = () =>
 
             {/* Holding Events Section */ }
             <div>
-              <h3 className="font-bold text-xl mb-4">Holding Events</h3>
+              <h2 className="font-bold text-xl mb-4">Holding Events</h2>
               <ul>
                 <li>
                   <Link href="/signup">
@@ -82,7 +82,7 @@ const Sitemap = () =>
 
             {/* Attending Events Section */ }
             <div>
-              <h3 className="font-bold text-xl mb-4">Attending Events</h3>
+              <h2 className="font-bold text-xl mb-4">Attending Events</h2>
               <ul>
                 <li>
                   <Link href="/events">
@@ -94,7 +94,7 @@ const Sitemap = () =>
 
             {/* Categories Section */ }
             <div>
-              <h3 className="font-bold text-xl mb-4">Guides</h3>
+              <h2 className="font-bold text-xl mb-4">Guides</h2>
               <ul>
                 <li>
                   <Link href="/blog/eventbrite-alternatives">
@@ -106,7 +106,7 @@ const Sitemap = () =>
 
             {/* Free Tools Section */ }
             <div>
-              <h3 className="font-bold text-xl mb-4">Free Tools</h3>
+              <h2 className="font-bold text-xl mb-4">Free Tools</h2>
               <ul>
                 <li>
                   <Link href="/qrcode">
