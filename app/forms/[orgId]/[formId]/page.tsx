@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React, { useTransition, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { submitForm } from '@/app/actions/saveForm';
+import { submitForm } from '@/app/actions/formActions';
 import { useToast } from "@/hooks/use-toast"
 
 const supabase = createClient();

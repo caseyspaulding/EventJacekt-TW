@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUser } from '@/contexts/UserContext'; // Replace with your actual user context if needed
-import { createClient } from '@utils/supabase/client'; // Adjust the path to your Supabase client utility
+
 import LogoSpinner from '@/components/Loaders/LogoSpinner';
-import { Button } from '@nextui-org/react'; // Import NextUI components
+import { Button } from '@nextui-org/button'; // Import NextUI components
 import
 {
   Modal,
@@ -16,12 +16,17 @@ import
   useDisclosure
 } from "@nextui-org/modal";
 import React from 'react';
+import { archiveForm, deleteForm, getForms } from '@/app/actions/formActions';
+import { Badge } from '@/components/ui/badge';
 
 interface Form
 {
   id: string;
   form_name: string;
   description: string | null;
+  isArchived: boolean;
+  isDeleted: boolean;
+  isDraft: boolean;
 }
 
 export default function FormsPage ()
@@ -34,12 +39,11 @@ export default function FormsPage ()
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [ selectedFormId, setSelectedFormId ] = useState<string | null>( null );
 
+  
   useEffect( () =>
   {
     async function fetchForms ()
     {
-      const supabase = createClient();
-
       if ( !user?.organizationId )
       {
         setError( 'Organization not found' );
@@ -50,17 +54,7 @@ export default function FormsPage ()
       try
       {
         setLoading( true );
-        const { data: formsData, error: formsError } = await supabase
-          .from( 'forms' ) // Adjust the table name to match your schema
-          .select( '*' )
-          .eq( 'org_id', user.organizationId );
-
-        if ( formsError )
-        {
-          setError( 'Failed to fetch forms' );
-          return;
-        }
-
+        const formsData = await getForms( user.organizationId ); // Call the server action
         setForms( formsData );
       } catch ( error )
       {
@@ -75,30 +69,35 @@ export default function FormsPage ()
     fetchForms();
   }, [ user?.organizationId ] );
 
-  const handleDelete = async ( formId: string ) =>
+ 
+ 
+// Labels for the status badge
+  const renderStatusLabel = ( form: Form ) =>
   {
-    if ( confirm( 'Are you sure you want to delete this form?' ) )
+    if ( form.isDraft )
     {
-      const supabase = createClient();
+      return <Badge color="warning">Draft</Badge>;
+    }
+    if ( form.isArchived )
+    {
+      return <Badge color="secondary">Archived</Badge>;
+    }
+    return <Badge color="success">Active</Badge>;
+  };
 
+// Archive form handler
+  const handleArchive = async ( formId: string ) =>
+  {
+    if ( confirm( 'Are you sure you want to archive this form?' ) )
+    {
       try
       {
-        const { error: deleteError } = await supabase
-          .from( 'forms' )
-          .delete()
-          .eq( 'id', formId );
-
-        if ( deleteError )
-        {
-          setError( 'Failed to delete form' );
-        } else
-        {
-          setForms( forms.filter( ( form ) => form.id !== formId ) );
-        }
+        await archiveForm( formId, user?.organizationId || '' ); // Call the server action
+        setForms( forms.filter( ( form ) => form.id !== formId ) ); // Remove the archived form from the list
       } catch ( error )
       {
-        console.error( 'Failed to delete form:', error );
-        setError( 'Failed to delete form' );
+        console.error( 'Failed to archive form:', error );
+        setError( 'Failed to archive form' );
       }
     }
   };
@@ -106,17 +105,18 @@ export default function FormsPage ()
   const openModal = ( formId: string ) =>
   {
     setSelectedFormId( formId );
-    onOpen();
+    onOpen(); // Open the modal
   };
 
-  const confirmDelete = () =>
+  const confirmArchive = () =>
   {
     if ( selectedFormId )
     {
-      handleDelete( selectedFormId );
+      handleArchive( selectedFormId ); // Call the archive handler
     }
     onOpenChange(); // Close the modal
   };
+
 
   if ( loading )
   {
@@ -160,6 +160,7 @@ export default function FormsPage ()
                     <tr>
                       <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">Form Name</th>
                       <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">Description</th>
+                      <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
                       <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
                     </tr>
                   </thead>
@@ -170,28 +171,31 @@ export default function FormsPage ()
                           <td className="px-3 py-2">{ form.form_name }</td>
                           <td className="px-3 py-2">{ form.description || 'No description' }</td>
                           <td className="px-3 py-2">
-                            <Link href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }/edit` }>
+                            { renderStatusLabel( form ) } {/* Render the status badge */ }
+                          </td>
+                          <td className="px-3 py-2">
+                            <Link href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }` }>
                               <span className="text-blue-600 hover:text-blue-900 cursor-pointer">
                                 Edit
                               </span>
                             </Link>
-                            <Link href={ `/dashboard/forms/${ form.id }` }>
+                            <Link href={ `/forms/${ user?.organizationId }/${ form.id }` }>
                               <span className="text-blue-600 hover:text-blue-900 cursor-pointer ml-4">
-                                View Details
+                                View Form
                               </span>
                             </Link>
                             <button
                               onClick={ () => openModal( form.id ) }
                               className="text-red-600 hover:text-red-900 cursor-pointer ml-4"
                             >
-                              Delete
+                              Archive
                             </button>
                           </td>
                         </tr>
                       ) )
                     ) : (
                       <tr>
-                        <td colSpan={ 3 } className="px-3 py-2 text-center text-sm text-gray-500">
+                        <td colSpan={ 4 } className="px-3 py-2 text-center text-sm text-gray-500">
                           No forms found.
                         </td>
                       </tr>
@@ -209,13 +213,13 @@ export default function FormsPage ()
         <ModalContent>
           { onClose => (
             <>
-              <ModalHeader>Confirm Deletion</ModalHeader>
+              <ModalHeader>Confirm Archive</ModalHeader>
               <ModalBody>
-                <p>Are you sure you want to delete this form? This action cannot be undone.</p>
+                <p>Are you sure you want to Archive this form? </p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={ confirmDelete }>
-                  Yes, Delete
+                <Button color="danger" variant="light" onPress={ confirmArchive }>
+                  Yes, Archive
                 </Button>
                 <Button color="primary" onPress={ onClose }>
                   Cancel

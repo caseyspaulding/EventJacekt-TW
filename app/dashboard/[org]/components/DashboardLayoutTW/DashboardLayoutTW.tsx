@@ -81,8 +81,9 @@ const navigation = [
     icon: ClipboardDocumentIcon,
     current: false,
     children: [
+      { name: 'All Forms', href: '/forms/all-forms' },
       { name: 'Create Form', href: '/forms/new' },
-      { name: 'All Forms', href: '/forms/form-responses' },
+
 
     ],
   },

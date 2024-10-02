@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { createClient } from '@/utils/supabase/client'
@@ -14,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
-import { PlusCircle, Trash2, Save, Eye, Share2 } from 'lucide-react'
+import { PlusCircle, Trash2, Save, Share2 } from 'lucide-react'
 import { saveFormAction } from '@/app/actions/formActions';
 
 const supabase = createClient()
@@ -47,16 +45,15 @@ const initialForm: Form = {
   fields: []
 }
 
-interface FormBuilderProps
+interface FormEditorProps
 {
-  orgId: string; // Or orgId if you have it directly
+  orgId: string; // Org ID to associate with the form
 }
 
-export function FormBuilderComponent ( { orgId }: FormBuilderProps )
+export function FormEditorComponent ( { orgId }: FormEditorProps )
 {
   const [ form, setForm ] = useState<Form>( initialForm )
   const [ activeTab, setActiveTab ] = useState<'builder' | 'preview'>( 'builder' )
-
 
   useEffect( () =>
   {
@@ -69,6 +66,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
 
   const loadForm = async ( formId: string ) =>
   {
+    // Fetch form data
     const { data: formData, error: formError } = await supabase
       .from( 'forms' )
       .select( '*' )
@@ -81,6 +79,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
       return
     }
 
+    // Fetch fields associated with the form
     const { data: fieldsData, error: fieldsError } = await supabase
       .from( 'form_fields' )
       .select( '*' )
@@ -150,9 +149,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
     } )
   }
 
-
-  // Save form
-  const saveForm = async ( isDraft = false, isArchived = false ) =>
+  const saveForm = async () =>
   {
     if ( !form.id )
     {
@@ -165,8 +162,6 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
       name: form.name,
       description: form.description,
       fields: form.fields,
-      isDraft: isDraft,
-      isArchived: isArchived,
     };
 
     try
@@ -180,9 +175,6 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
     }
   };
 
-
-
-  // Share form
   const shareForm = () =>
   {
     if ( !form.id )
@@ -191,7 +183,6 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
       return;
     }
 
-    // Use orgId (or slug) and formId in the share URL
     const shareUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`;
     navigator.clipboard.writeText( shareUrl );
     alert( `Form share link copied to clipboard: ${ shareUrl }` );
@@ -277,13 +268,9 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
                 </CardContent>
               </Card>
               <div className="mt-4 space-y-2">
-                <Button onClick={ () => saveForm( false ) } className="w-full">
+                <Button onClick={ saveForm } className="w-full">
                   <Save className="mr-2 h-4 w-4" /> Save Form
                 </Button>
-                <Button onClick={ () => saveForm( true ) } className="w-full">
-                  <Save className="mr-2 h-4 w-4" /> Save as Draft
-                </Button>
-                
                 <Button onClick={ shareForm } className="w-full">
                   <Share2 className="mr-2 h-4 w-4" /> Share Form
                 </Button>

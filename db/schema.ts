@@ -101,19 +101,21 @@ export const grants = pgTable( 'grants', {
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
 
+
+/// Forms Table
 export const forms = pgTable( 'forms', {
-    id: uuid( 'id' )
-        .primaryKey()
-        .default( sql`uuid_generate_v4()` ),
-    orgId: uuid( 'org_id' )
-        .notNull()
-        .references( () => organizations.id ), // Foreign key to the organization
-    formName: text( 'form_name' ).notNull(), // The name of the form
-    description: text( 'description' ), // Form description
-    status: text( 'status' ).default( 'active' ), // Form status (e.g., 'active', 'inactive')
-    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
-    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
+    formName: text( 'form_name' ).notNull(),
+    description: text( 'description' ),
+    status: text( 'status' ).default( 'active' ),
+    isArchived: boolean( 'is_archived' ).default( false ), // New field for archiving
+    isDeleted: boolean( 'is_deleted' ).default( false ),   // New field for soft deletion
+    isDraft: boolean( 'is_draft' ).default( false ), // New field for draft forms
+    createdAt: timestamp( 'created_at' ).defaultNow(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow(),
 } );
+
 
 export const formFields = pgTable( 'form_fields', {
     id: uuid( 'id' )
