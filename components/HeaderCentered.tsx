@@ -11,8 +11,8 @@ export default function HeaderCentered ( { title, description }: HeaderCenteredP
     <div className="relative mx-auto  isolate overflow-hidden   ">
       <img
         alt=""
-        src="/images/festival-4.webp"
-        className="absolute inset-0 -z-10 h-full w-full object-cover opacity-10"
+        src="/images/giving.png"
+        className="absolute inset-0 -z-10 h-full w-full object-cover opacity-20"
       />
       <div
         aria-hidden="true"

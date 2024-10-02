@@ -20,19 +20,19 @@ export default function Contact ()
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-gray-900">Contact Us</h1>
               <p className="mt-4 leading-7 text-gray-600">
-                We’d love to hear from you! Call us or email us directly at{ ' ' }
-                <a href="mailto:team@eventjacket.com" className="font-semibold text-blue-600">  team@eventjacket.com </a>
+                When you reach out to EventJacket, you’re not speaking to a support team—you’re speaking directly to me, the person who built the platform. I know what it’s like to be on the front lines, and I’m here to ensure your nonprofit succeeds. Contact me directly if you have any questions or if I can help your nonprofit thrive.{ ' ' }
+                <a href="mailto:team@eventjacket.com" className="font-semibold text-blue-600">  casey@eventjacket.com </a>
                 <div className="mt-1">
                   <dt className="sr-only">Phone number</dt>
                   <dd>+1 (407) 326-3692</dd>
                 </div>
                 <div className="mt-3">
                   <dt className="sr-only">Address</dt>
-                  <dd>1101 Miranda Lane<br/>
+                  <dd>1101 Miranda Lane<br />
 
                     Kissimmee, FL. 34741</dd>
                 </div>
-                
+
               </p>
             </div>
             <div className="mt-12">

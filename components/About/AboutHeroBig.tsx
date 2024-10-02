@@ -5,7 +5,7 @@ const people = [
     role: 'Founder / Developer',
     imageUrl:
       '/images/avatars/caseyProfilePic.jpg',
-    bio: 'Hi, I’m Casey Spaulding, and I created EventJacket with a simple goal in mind: to make event management easier for people like you. After spending 20 years in the U.S. Navy, where I organized everything from retirements to large-scale ceremonies, I know firsthand how challenging it can be to juggle multiple tools just to keep an event running smoothly.',
+    bio: 'Hi, I’m Casey, the founder of EventJacket. I spent 20 years in the Navy, learning the importance of discipline, reliability, and service. After teaching for two years and transitioning into software development, I saw an opportunity to give back to nonprofits—organizations that are often overlooked by large tech platforms. EventJacket is my way of helping them thrive, with tools that are affordable, powerful, and built for their needs.',
     xUrl: 'https://x.com/caseyspaulding_',
     linkedinUrl: 'https://www.linkedin.com/in/caseyspaulding/',
   },
@@ -77,7 +77,7 @@ const values = [
     description:
       'We own our actions and their outcomes. When something needs to be done, we step up and see it through, with integrity and accountability.',
   },
- 
+
 ];
 
 const team = [
@@ -161,12 +161,16 @@ export default function AboutHeroBig ()
                     About EventJacket
                   </h1>
                   <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                    EventJacket was born out of a personal mission to simplify event management, especially for nonprofits and community-driven organizations. As a software developer, I’ve always been passionate about solving real-world problems with technology. The spark for EventJacket came when I was helping a close friend who ran a Renaissance fair. She was also a Navy veteran, and I saw firsthand the struggles she faced managing her events using several disjointed tools.
+                    After 20 years of service in the Navy, I knew what it meant to serve a mission bigger than myself. I’ve carried that same sense of duty and discipline into every aspect of my life—first as a teacher, and now as a software engineer and founder of EventJacket. Through my own experience volunteering for a nonprofits, I witnessed firsthand the challenges that small organizations face when trying to create an impact with limited resources.
                   </p>
-                  <br /> 
+                  <br />
                   <p>
-                    That experience made me realize how cumbersome and expensive it was for small organizations to juggle multiple platforms for ticket sales, vendor coordination, volunteer management, and more. I knew there had to be a better way—a more efficient, affordable solution that would bring all of these features under one roof. And so, EventJacket was born.
-                </p>
+                    EventJacket was born out of this experience. Watching my friend, a fellow Navy veteran, struggle to manage her event with a patchwork of disconnected tools, I knew there had to be a better way. Nonprofits needed an affordable, all-in-one solution that could handle ticket sales, vendor coordination, volunteer management, and more—without the hassle of juggling multiple platforms.
+                  </p>
+                  <br />
+                  <p>
+                    As the founder and developer of EventJacket, I’m directly involved in every step of your journey. I’ve built this platform with the same passion and discipline I applied to my Navy service—focused, reliable, and designed to empower nonprofits to do what they do best: make a difference. When you reach out to EventJacket, you’re talking to me, and I’m here to ensure your success.
+                  </p>
                 </div>
                 <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
                   <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
@@ -221,7 +225,7 @@ export default function AboutHeroBig ()
           </div>
         </div>
 
-       
+
         {/* Content section */ }
         <div className="mx-auto -mt-12 max-w-7xl px-6 sm:mt-4 lg:px-8 xl:-mt-10">
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
@@ -287,23 +291,29 @@ export default function AboutHeroBig ()
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">What Makes Us Different</h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            EventJacket was created with people like my Navy friend in mind—those who are dedicated to organizing incredible events but find themselves juggling multiple platforms that don't quite fit. Our platform is all about simplicity and affordability, designed to help you do more with less.
+            EventJacket is not just another event management tool—it was built from the ground up by someone who has walked in your shoes. After 20 years in the Navy, and working for a nonprofit, I’ve seen firsthand the challenges nonprofits face when juggling multiple tools just to keep an event running smoothly.
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Instead of paying for several tools, EventJacket consolidates everything into one, saving you time and money. Our tool grows with your event, whether it’s your first small gathering or your biggest festival yet.
+            With EventJacket, you’re not dealing with a faceless corporation; you’re working with a founder who knows exactly what you need, and who’s directly involved in making sure you get it.
+          </p>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            Our platform simplifies event management by combining everything in one place—ticket sales, vendor coordination, volunteer management, and more. Designed to save you time and money, EventJacket adapts to your needs, whether you're organizing a small community gathering or a large festival.
           </p>
 
           <h2 className="text-3xl mt-6 font-bold tracking-tight text-gray-900 sm:text-4xl">Our Inspiration</h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            The inspiration for EventJacket comes from real-world challenges that I witnessed while helping my friend manage her Renaissance fair. Watching her navigate multiple tools—each with its own complexity and cost—made me realize that event organizers deserve a single solution that works for them, not against them.
+            The inspiration behind EventJacket comes from real-world experience. I was volunteering at my friends non-profit, and I saw how hard it was to manage everything with several disconnected tools—each adding its own complexity and cost. It became clear to me that event organizers, especially in nonprofits, deserve a solution that simplifies their workload without breaking their budget.
+          </p>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            EventJacket was born out of the need for a single, all-in-one platform that serves nonprofits and community organizations—helping them create impactful events without the hassle. I knew there was a better way, and that’s what EventJacket delivers.
           </p>
 
           <h2 className="text-3xl mt-6 font-bold tracking-tight text-gray-900 sm:text-4xl">Looking Ahead</h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            EventJacket continues to grow and adapt to the evolving needs of event organizers. We’re constantly working to add new features, improve the user experience, and keep our platform affordable for all. Our goal is to make sure that you can focus on what matters most—creating memorable experiences for your attendees—while we handle the logistics.
+            At EventJacket, we’re constantly evolving to meet the needs of our users. As both the founder and developer, I’m dedicated to adding new features, improving the user experience, and keeping our platform accessible and affordable for all nonprofits.
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Whether you’re managing a small community event or a large-scale festival, EventJacket is here to support you with a reliable, all-in-one platform.
+            Whether you’re planning your first small event or managing your largest festival yet, EventJacket grows with you, offering a reliable, all-in-one solution that lets you focus on what truly matters: delivering memorable experiences for your attendees. We handle the logistics, so you can focus on making an impact.
           </p>
         </div>
         <div className="bg-white py-24 md:py-32">
@@ -311,7 +321,7 @@ export default function AboutHeroBig ()
             <div className="max-w-2xl xl:col-span-2">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">About Us</h2>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                We’re a dynamic group of individuals who are passionate about what we do and dedicated to delivering the
+               Passionate about what we do and dedicated to delivering the
                 best results for our clients.
               </p>
             </div>

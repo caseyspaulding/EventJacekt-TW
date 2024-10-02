@@ -1,6 +1,6 @@
 
 import type { JSX, SVGProps } from "react"
-import Image from "next/image"  
+import Image from "next/image"
 
 const navigation = {
   solutions: [
@@ -9,7 +9,7 @@ const navigation = {
     { name: 'Analytics', href: '/analytics' },
   ],
   support: [
-    { name: 'Blog', href: '/blog' }, 
+    { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
     { name: 'Site Map', href: '/sitemap' },
     { name: 'Events', href: '/events' },
@@ -18,7 +18,7 @@ const navigation = {
   company: [
 
     { name: 'About', href: '/about' },
-   
+
     { name: 'Affiliate', href: '/affiliate' },
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },
@@ -97,14 +97,14 @@ export default function FooterFull ()
 
             <Image
               alt="EventJacket"
-              height={ 20 } 
+              height={ 20 }
               width={ 200 }
-          
+
               src="/images/logo-full.png"
-               />
+            />
 
             <p className=" pl-1 text-sm leading-6 text-blue-700">
-              All in one event management software
+              Your Mission, Our Technology — Driven by Purpose, Built for Impact.
             </p>
             <div className="flex space-x-6">
               { navigation.social.map( ( item ) => (
@@ -118,8 +118,8 @@ export default function FooterFull ()
               <div>
                 <p>Proud Veteran-Owned Business <br />
                   <img
-                    src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
-                    className="h-4 w-6"
+                    src="/images/veteran-owned-business.png"
+                    className="h-8 "
                     alt="Flag of the United States"
                   />
                 </p>
@@ -137,9 +137,9 @@ export default function FooterFull ()
                   </div>
                 </address>
               </div>
-             
-           
-             
+
+
+
             </div>
           </div>
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">

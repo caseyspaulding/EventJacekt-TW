@@ -59,7 +59,7 @@ export default function Example ()
                                 <span className="ml-2 text-blue-600">No Monthly Fee</span>
                             </h1>
                             <p className="mt-5 text-xl text-gray-500">
-                               Every feature included in every package, with no long-term commitments required!
+                                As someone who’s seen firsthand the challenges nonprofits face, I’ve made it my mission to offer affordable tools that make a real difference—without breaking the bank.
                             </p>
                             <p className="mt-5 text-xl text-gray-500">
 
