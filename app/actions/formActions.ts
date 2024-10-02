@@ -337,7 +337,7 @@ export async function archiveForm ( formId: string, orgId: string )
     // Mark the form as archived
     const { error: archiveError } = await supabase
       .from( 'forms' )
-      .update( { is_archived: true } ) // Mark as archived
+      .update( { is_archived: true, status: 'archived' } ) // Mark as archived
       .eq( 'id', formId )
       .eq( 'org_id', orgId );
 

@@ -23,6 +23,7 @@ interface Form
 {
   id: string;
   form_name: string;
+  status: string; 
   description: string | null;
   isArchived: boolean;
   isDeleted: boolean;
@@ -76,13 +77,13 @@ export default function FormsPage ()
   {
     if ( form.isDraft )
     {
-      return <Badge color="warning">Draft</Badge>;
+      return <Badge className='bg-red-500'>Draft</Badge>;
     }
-    if ( form.isArchived )
+    if ( form.isArchived || form.status === 'archived' )
     {
-      return <Badge color="secondary">Archived</Badge>;
+      return <Badge className='bg-yellow-400'>Archived</Badge>;
     }
-    return <Badge color="success">Active</Badge>;
+    return <Badge className='bg-green-500'>Active</Badge>;
   };
 
 // Archive form handler
@@ -92,8 +93,15 @@ export default function FormsPage ()
     {
       try
       {
-        await archiveForm( formId, user?.organizationId || '' ); // Call the server action
-        setForms( forms.filter( ( form ) => form.id !== formId ) ); // Remove the archived form from the list
+        await archiveForm( formId, user?.organizationId || '' ); // Call the server action here
+       
+        // Update the specific form's status to "archived" in the local state
+        setForms( forms.map( ( form ) =>
+          form.id === formId
+            ? { ...form, isArchived: true, status: 'archived' }
+            : form
+        ) );
+
       } catch ( error )
       {
         console.error( 'Failed to archive form:', error );
@@ -101,7 +109,6 @@ export default function FormsPage ()
       }
     }
   };
-
   const openModal = ( formId: string ) =>
   {
     setSelectedFormId( formId );
