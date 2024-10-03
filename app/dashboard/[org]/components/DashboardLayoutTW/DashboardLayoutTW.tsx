@@ -12,6 +12,10 @@ import
   ChevronRightIcon,
   ClipboardDocumentIcon,
 
+  Cog8ToothIcon,
+
+  CogIcon,
+
   FolderIcon,
   HomeIcon,
 
@@ -87,7 +91,7 @@ const navigation = [
 
     ],
   },
-
+ 
 
 
 
@@ -103,7 +107,7 @@ const navigation = [
       { name: 'Help', href: '/banking/help' },
     ],
   },
-
+  { name: 'Settings', href: '/settings', icon: CogIcon, current: false },
 
 ];
 

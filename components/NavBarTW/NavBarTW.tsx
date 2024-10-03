@@ -1,6 +1,7 @@
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import React from 'react';
 
 const VideoPlayer = dynamic( () => import( '../VideoFacade' ), {
   ssr: false,
