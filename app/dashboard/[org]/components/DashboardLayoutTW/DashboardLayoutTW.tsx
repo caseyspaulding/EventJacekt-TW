@@ -16,8 +16,14 @@ import
 
   CogIcon,
 
+  EnvelopeIcon,
+
+  EnvelopeOpenIcon,
+
   FolderIcon,
   HomeIcon,
+
+  MegaphoneIcon,
 
   UserGroupIcon,
 
@@ -30,7 +36,9 @@ import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { fetchClientSecret } from './fetchClientSecret';
 
 
-import { HiOutlineLibrary } from 'react-icons/hi';
+import { HiMailOpen, HiOutlineLibrary } from 'react-icons/hi';
+import { LucideMailbox } from 'lucide-react';
+import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
 
 
 
@@ -38,6 +46,7 @@ import { HiOutlineLibrary } from 'react-icons/hi';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: HomeIcon, current: false },
+
   {
     name: 'Events',
     icon: FolderIcon,
@@ -49,7 +58,7 @@ const navigation = [
 
     ],
   },
-
+  { name: 'Connect', href: '/connect', icon: EnvelopeIcon, current: false },
 
   {
     name: 'Team',
