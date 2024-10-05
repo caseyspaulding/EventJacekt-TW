@@ -55,27 +55,27 @@ const values = [
   {
     name: 'Sell tickets seamlessly and affordably',
     description:
-      'Strive for excellence in everything you do. Whether it’s the smallest detail or the biggest challenge, we aim to set the standard and exceed expectations.',
+      '',
   },
   {
     name: 'Manage vendors, sponsors, volunteers, and performers in one place',
     description:
-      'Knowledge is power, and we believe in spreading that power around. By sharing what we know, we help each other grow and achieve more together.',
+      '',
   },
   {
     name: 'Track sales and analytics in real time',
     description:
-      'The world is always changing, and so are we. We embrace every opportunity to learn something new, pushing ourselves to grow and adapt.',
+      '',
   },
   {
     name: 'Use role-based permissions to organize your team',
     description:
-      'We’re all in this together. Whether it’s a teammate, a customer, or a partner, we lift each other up and celebrate each other’s successes.',
+      '',
   },
   {
     name: 'Streamline your event with features like QR code ticket scanning',
     description:
-      'We own our actions and their outcomes. When something needs to be done, we step up and see it through, with integrity and accountability.',
+      '',
   },
 
 ];
@@ -165,12 +165,10 @@ export default function AboutHeroBig ()
                   </p>
                   <br />
                   <p>
-                    EventJacket was born out of this experience. Watching my friend, a fellow Navy veteran, struggle to manage her event with a patchwork of disconnected tools, I knew there had to be a better way. Nonprofits needed an affordable, all-in-one solution that could handle ticket sales, vendor coordination, volunteer management, and more—without the hassle of juggling multiple platforms.
+                    EventJacket was born out of this experience. Watching organizations struggle to manage events with a patchwork of disconnected tools, I knew there had to be a better way. Nonprofits needed an affordable, all-in-one solution that could handle ticket sales, vendor coordination, volunteer management, and more—without the hassle of juggling multiple platforms.
                   </p>
                   <br />
-                  <p>
-                    As the founder and developer of EventJacket, I’m directly involved in every step of your journey. I’ve built this platform with the same passion and discipline I applied to my Navy service—focused, reliable, and designed to empower nonprofits to do what they do best: make a difference. When you reach out to EventJacket, you’re talking to me, and I’m here to ensure your success.
-                  </p>
+
                 </div>
                 <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
                   <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
@@ -321,7 +319,7 @@ export default function AboutHeroBig ()
             <div className="max-w-2xl xl:col-span-2">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">About Us</h2>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-               Passionate about what we do and dedicated to delivering the
+                Passionate about what we do and dedicated to delivering the
                 best results for our clients.
               </p>
             </div>
