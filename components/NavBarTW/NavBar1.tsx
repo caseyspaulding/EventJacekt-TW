@@ -109,10 +109,11 @@ const mobile = [
 
 ];
 const navigation = [
-  { name: "About Us", href: "/about" },
+ 
   { name: "Pricing", href: "/pricing" },
-  { name: "Contact", href: "/contact" },
   { name: "Blog", href: "/blog" },
+  { name: "Contact", href: "/contact" },
+  { name: "About Us", href: "/about" },
 
 ];
 

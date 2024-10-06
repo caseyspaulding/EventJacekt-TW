@@ -21,8 +21,8 @@ export default function NavBarTW ()
               </span>
               <h1>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
-                  <span className="block underline-effect text-gray-900">Event management software</span>
-                  <span className="block text-blue-600">for nonprofits</span>
+                  <span className="block underline-effect text-gray-900">Event Management Software</span>
+                  <span className="block text-blue-600">For Nonprofits</span>
                 </span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
