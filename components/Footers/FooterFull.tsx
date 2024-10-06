@@ -116,13 +116,13 @@ export default function FooterFull ()
             </div>
             <div className="text-sm text-blue-700 mt-4 md:mt-0 inline-flex items-center">
               <div>
-                <p>Proud Veteran-Owned Business <br />
+               
                   <img
                     src="/images/veteran-owned-business.png"
-                    className="h-8 "
-                    alt="Flag of the United States"
+                    className="h-8 mt-2"
+                    alt="Proud Veteran-Owned Business"
                   />
-                </p>
+              
                 <address className="not-italic mt-2">
                   Kissimmee, FL 34747
                   <div className="mt-1">
