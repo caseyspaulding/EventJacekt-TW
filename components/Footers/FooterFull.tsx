@@ -1,6 +1,7 @@
 
 import type { JSX, SVGProps } from "react"
 import Image from "next/image"
+import React from "react";
 
 const navigation = {
   solutions: [
@@ -104,7 +105,7 @@ export default function FooterFull ()
             />
 
             <p className=" pl-1 text-sm leading-6 text-blue-700">
-              Your Mission, Our Technology — Driven by Purpose, Built for Impact.
+             Fundraising event management software for nonprofits.
             </p>
             <div className="flex space-x-6">
               { navigation.social.map( ( item ) => (

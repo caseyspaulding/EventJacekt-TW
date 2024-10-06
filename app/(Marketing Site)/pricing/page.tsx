@@ -55,7 +55,7 @@ export default function Example ()
                     <div className="pb-16 xl:flex xl:items-center xl:justify-between">
                         <div>
                             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-                                <span className="text-gray-900">Event Planners Save Thousands! </span>
+                                <span className="text-gray-900">Nonprofit Event Planners Save Thousands! </span>
                                 <span className="ml-2 text-blue-600">No Monthly Fee</span>
                             </h1>
                             <p className="mt-5 text-xl text-gray-500">

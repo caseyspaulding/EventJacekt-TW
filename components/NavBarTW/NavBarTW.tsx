@@ -17,7 +17,7 @@ export default function NavBarTW ()
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
               <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
-                Just Launched
+                Fundraising 
               </span>
               <h1>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">

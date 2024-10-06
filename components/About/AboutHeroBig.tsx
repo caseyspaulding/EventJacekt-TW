@@ -47,8 +47,8 @@ const timeline = [
 
 const stats = [
   { label: 'Events supported so far', value: '3' },
-  { label: 'Happy organizers', value: '100%' },
-  { label: 'New features added monthly', value: '5' },
+  { label: 'Cups of Coffee', value: '100+' },
+  { label: 'New features added monthly', value: '2' },
 ];
 
 const values = [
