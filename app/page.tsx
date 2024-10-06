@@ -11,6 +11,8 @@ import FAQ_TW from '@/components/FAQ/FAQ_TW';
 
 import { Button } from '@nextui-org/button';
 import React from 'react';
+import FreeServices from '@/components/free-service';
+import FreeServiceAccordion from '@/components/free-services-accordion';
 
 
 export const metadata: Metadata = {
@@ -60,7 +62,9 @@ export default async function Index ()
             <NavBar1 />
             <NavBarTW />
 
-
+            <div className='mt-10'>
+                <FreeServiceAccordion />
+             </div>
 
             <HowItWorks />
             <SlantedDividerSolid color="#f1f5f9" height="81px" zIndex={ 2 } />
