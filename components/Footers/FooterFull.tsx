@@ -105,7 +105,7 @@ export default function FooterFull ()
             />
 
             <p className=" pl-1 text-sm leading-6 text-blue-700">
-             Fundraising event management software for nonprofits.
+              Fundraising event management software for nonprofits.
             </p>
             <div className="flex space-x-6">
               { navigation.social.map( ( item ) => (
@@ -117,15 +117,15 @@ export default function FooterFull ()
             </div>
             <div className="text-sm text-blue-700 mt-4 md:mt-0 inline-flex items-center">
               <div>
-               
-                  <img
-                    src="/images/veteran-owned-business.png"
-                    className="h-8 mt-2"
-                    alt="Proud Veteran-Owned Business"
-                  />
-              
+
+                <img
+                  src="/images/veteran-owned-business.png"
+                  className="h-8 mt-2"
+                  alt="Proud Veteran-Owned Business"
+                />
+
                 <address className="not-italic mt-2">
-                  Kissimmee, FL 34747
+                  Proudly made in the USA.
                   <div className="mt-1">
                     <dl>
                       <dt className="sr-only">Phone number</dt>
