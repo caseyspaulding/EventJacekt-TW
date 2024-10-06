@@ -128,10 +128,10 @@ export default function AboutHeroBig ()
               </h1>
               <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
                 <p className="text-lg leading-8 text-gray-600">
-                  After serving twenty years in the Navy, I knew what it meant to serve a mission bigger than myself. I’ve carried that same sense of duty and discipline into every aspect of my life—first as a teacher, and now as a software engineer and founder of EventJacket. Through my own experience volunteering for a nonprofits, I witnessed firsthand the challenges that small organizations face when trying to create an impact with limited resources.
+                  After dedicating twenty years to the Navy, I learned the true meaning of serving a mission greater than myself. That same sense of purpose and discipline has guided me throughout my life—first as a teacher, and now as a software engineer and the founder of EventJacket. Through my own time volunteering with nonprofits, I saw firsthand the hurdles small organizations face in trying to make a difference with limited resources.
                 </p>
                 <p className="text-lg leading-8 mt-3 text-gray-600">
-                  EventJacket was born out of this experience. Watching organizations struggle to manage events with a patchwork of disconnected tools, I knew there had to be a better way. Nonprofits needed an affordable, all-in-one solution that could handle ticket sales, vendor coordination, volunteer management, and more—without the hassle of juggling multiple platforms.
+                  EventJacket was born from that realization. As I watched organizations struggle with a patchwork of disconnected tools to manage events, I knew there had to be a better solution. Nonprofits needed an affordable, all-in-one platform to handle everything from ticket sales and vendor coordination to volunteer management—without the complexity of using multiple systems.
                 </p>
               </div>
               <img
@@ -143,7 +143,7 @@ export default function AboutHeroBig ()
           </div>
           <div className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-white sm:h-32" />
         </div>
-       
+
 
 
         {/* Content section */ }
