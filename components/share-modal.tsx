@@ -42,7 +42,15 @@ export default function ShareModal ( { eventName }: ShareModalProps )
   const shareButtons = [
     { name: 'Email', icon: EnvelopeOpenIcon, url: `mailto:?subject=Join me at ${ encodeURIComponent( eventName ) }&body=${ encodeURIComponent( `Join me at ${ eventName }: ${ currentUrl }` ) }` },
     { name: 'WhatsApp', icon: faWhatsapp, url: `https://wa.me/?text=${ encodeURIComponent( `Join me at ${ eventName }: ${ currentUrl }` ) }` },
-    { name: 'Messenger', icon: faFacebookMessenger, url: `https://www.facebook.com/dialog/send?app_id=2283279935382121&link=${ encodeURIComponent( currentUrl ) }&redirect_uri=${ encodeURIComponent( currentUrl ) }` },
+    {
+      name: 'Messenger',
+      icon: faFacebookMessenger,
+      url: `https://www.facebook.com/dialog/send?link=${ encodeURIComponent(
+        currentUrl
+      ) }&redirect_uri=${ encodeURIComponent(
+        currentUrl
+      ) }&app_id=2283279935382121`,
+    },
     { name: 'Facebook', icon: faFacebook, url: `https://www.facebook.com/sharer/sharer.php?u=${ encodeURIComponent( currentUrl ) }&quote=${ encodeURIComponent( `Join me at ${ eventName }` ) }` },
     { name: 'X', icon: faXTwitter, url: `https://x.com/intent/tweet?text=${ encodeURIComponent( `Join me at ${ eventName }: ${ currentUrl }` ) }` },
   ];
