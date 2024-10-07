@@ -77,16 +77,32 @@ export default function ShareModal ( { eventName }: ShareModalProps )
                 <a
                   key={ button.name }
                   href={ button.url }
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={ ( e ) =>
+                  {
+                    e.preventDefault();
+                    window.open(
+                      button.url,
+                      '_blank',
+                      'width=600,height=600,toolbar=0,menubar=0'
+                    );
+                  } }
                   aria-label={ `Share on ${ button.name }` }
                 >
                   { typeof button.icon === 'string' ? (
-                    <Image src={ button.icon } alt={ `${ button.name } icon` } width={ 24 } height={ 24 } />
+                    <Image
+                      src={ button.icon }
+                      alt={ `${ button.name } icon` }
+                      width={ 24 }
+                      height={ 24 }
+                    />
                   ) : button.icon === EnvelopeOpenIcon ? (
                     <button.icon className="w-6 h-6 text-blue-500" />
                   ) : (
-                    <FontAwesomeIcon icon={ button.icon as IconDefinition } size="lg" color="#2563eb" />
+                    <FontAwesomeIcon
+                      icon={ button.icon as IconDefinition }
+                      size="lg"
+                      color="#2563eb"
+                    />
                   ) }
                 </a>
               ) ) }
