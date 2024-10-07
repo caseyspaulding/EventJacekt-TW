@@ -176,7 +176,7 @@ const BlogPostForm: React.FC = () =>
     formData.append( 'content', content );
     formData.append( 'excerpt', excerpt );
     formData.append( 'authorId', authorId );
-    formData.append( 'tags', JSON.stringify( tagsArray ) );
+    formData.append( 'tags', tagsArray.join( ',' ) );
     formData.append( 'slug', slug );
     formData.append( 'metaTitle', metaTitle );
     formData.append( 'metaDescription', metaDescription );
