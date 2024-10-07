@@ -53,7 +53,7 @@ export default function FooterTW ()
     <footer className="bg-white">
       <div className="mx-auto max-w-7xl overflow-hidden px-6   lg:px-8">
         <div className=" mt-4 flex justify-center items-center">
-          <Link href="https://www.eventjacket.com">
+          <span className='mr-2 text-gray-500'>Powered By</span><Link href="https://www.eventjacket.com">
             <img src="/images/logo-full.png" alt="EventJacket" className="h-8" />
           </Link>
         </div>
@@ -89,7 +89,7 @@ export default function FooterTW ()
           />
         </div>
         <p className="mt-1 text-center text-xs leading-5 text-gray-500">
-          Proudly made in the USA
+
         </p>
 
         <p className="mt-5 pb-12 text-center text-xs leading-5 text-gray-500">
