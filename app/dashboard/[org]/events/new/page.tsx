@@ -23,6 +23,9 @@ import Script from 'next/script';
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import TimePicker from '@/components/TimePicker';
+import DatePicker from '@/components/DatePicker';
+
 
 
 const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
@@ -35,13 +38,19 @@ type FAQ = {
     answer: string;
 };
 
+
+
 const CreateEventPage = () =>
 {
+
     const [ name, setName ] = useState( '' );
     const [ description, setDescription ] = useState( '' );
     const [ startDate, setStartDate ] = useState( '' );
     const [ endDate, setEndDate ] = useState( '' );
+
+
     const [ eventStartTime, setEventStartTime ] = useState( '' );
+
     const [ eventEndTime, setEventEndTime ] = useState( '' );
     const [ organizerContact, setOrganizerContact ] = useState( '' );
 
@@ -72,6 +81,29 @@ const CreateEventPage = () =>
     const [ previewImage, setPreviewImage ] = useState<string | null>( null ); // New state for image preview
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const handleEventStartTimeChange = ( time: string ) =>
+    {
+        setEventStartTime( time )
+        console.log( 'Selected time:', time )
+    }
+
+    const handleEventStartDateChange = ( date: string ) =>
+    {
+        setStartDate( date )
+
+    }
+
+    const handleEventEndDateChange = ( date: string ) =>
+    {
+        setEndDate( date )
+
+    }
+
+    const handleEventEndTimeChange = ( time: string ) =>
+    {
+        setEventEndTime( time )
+        console.log( 'Selected time:', time )
+    }
 
     const [ venueImagePreview, setVenueImagePreview ] = useState<string | null>( null ); // State for the venue image preview
     const [ agendaItems, setAgendaItems ] = useState<{ title: string; startTime: string; endTime: string; description: string; hostOrArtist: string }[]>( [ { title: '', startTime: '', endTime: '', description: '', hostOrArtist: '' } ] );
@@ -291,47 +323,53 @@ const CreateEventPage = () =>
                             orgName={ user?.orgName || '' }
                         />
                     </div>
-                    <div id="step2" className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div id="step2" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
                         <div>
-                            <InputFieldEJ
+                            <Input
                                 type="text"
                                 id="name"
                                 value={ name }
                                 onChange={ ( e ) => setName( e.target.value ) }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Event Name"
-                                required label={ 'Event Title' } />
+                                required />
                         </div>
 
                         <div>
-                            <InputFieldEJ
+                            <Input
                                 id="description"
                                 value={ description }
                                 onChange={ ( e ) => setDescription( e.target.value ) }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Description"
-                                required label={ 'Description' } />
+                                required />
                         </div>
 
                         <div>
-                            <InputFieldEJ
+                            
+                            <Input
                                 type="text"
                                 id="organizerContact"
                                 value={ organizerContact }
                                 onChange={ ( e ) => setOrganizerContact( e.target.value ) }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Organizer Contact Information"
-                                label={ 'Organizer Contact' }
+
                                 required
                             />
                         </div>
 
                         <div>
-                            <Input
-                                type="date"
+                            <label className="block text-sm font-medium text-gray-700">
+                                Event Start Date
+                            </label>
+
+                            <DatePicker
+
                                 id="startDate"
                                 value={ startDate }
-                                onChange={ ( e ) => setStartDate( e.target.value ) }
+                                onChange={ handleEventStartDateChange }
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm "
                                 required
 
@@ -339,11 +377,14 @@ const CreateEventPage = () =>
                         </div>
 
                         <div>
-                            <Input
-                                type="date"
+                            <label className="block text-sm font-medium text-gray-700">
+                                Event End Date
+                            </label>
+                            <DatePicker
+
                                 id="endDate"
                                 value={ endDate }
-                                onChange={ ( e ) => setEndDate( e.target.value ) }
+                                onChange={ handleEventEndDateChange }
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 required
 
@@ -351,26 +392,31 @@ const CreateEventPage = () =>
                         </div>
 
                         <div>
-                            <Input
-                                type="time"
+                            <label htmlFor="eventStartTime" className="block text-sm font-medium text-gray-700">
+                                Event Start Time
+                            </label>
+                            <TimePicker
+
                                 id="eventStartTime"
-                                value={ eventStartTime }
-                                onChange={ ( e ) => setEventStartTime( e.target.value ) }
+                                value={ eventEndTime }
+                                onChange={ handleEventStartTimeChange }
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 required
 
                             />
+
                         </div>
 
                         <div>
-                            <Input
-                                type="time"
+                            <label htmlFor="eventEndTime" className="block text-sm font-medium text-gray-700">
+                                Event End Time
+                            </label>
+                            <TimePicker
                                 id="eventEndTime"
                                 value={ eventEndTime }
-                                onChange={ ( e ) => setEventEndTime( e.target.value ) }
+                                onChange={ handleEventEndTimeChange }
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 required
-
                             />
                         </div>
                     </div>
@@ -378,13 +424,13 @@ const CreateEventPage = () =>
                     <div id="step3">
 
 
-                        <InputFieldEJ
+                        <Input
                             type="text"
                             id="venue"
                             value={ venue }
                             onChange={ ( e ) => setVenue( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Venue" label={ ' Venue Name' }
+                            placeholder="Venue"
                         />
                     </div>
                     <ImageUploadVenue
