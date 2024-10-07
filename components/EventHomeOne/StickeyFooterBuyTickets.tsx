@@ -19,7 +19,7 @@ const StickyFooterBuyTickets: React.FC<StickyFooterBuyTicketsProps> = ( { eventS
           <Button
             as="a"
             href={ `/events/${ eventSlug }/tickets` }
-            className="px-2 py-1 bg-gradient-to-t from-yellow-600 to-yellow-400 text-white text-xl  rounded-3xl hover:bg-yellow-500 transition-colors w-full"
+            className="px-2 py-1 bg-gradient-to-tl from-blue-600 to-blue-400 text-white text-xl  rounded-3xl hover:bg-blue-500 transition-colors w-full"
             
           >
             Buy Your Tickets

@@ -18,6 +18,7 @@ import FooterTW from "@/components/Footers/FooterTW";
 import Script from "next/script";
 import Head from "next/head";
 import { absoluteUrl } from "@/utils/absoluteUrl";
+import Navbar from "@/components/NavBarTW/NavBarEvents";
 
 
 interface Params
@@ -142,6 +143,7 @@ export default async function EventPage ( { params }: { params: Params } )
             updatedAt: events.updatedAt,
             orgId: events.orgId,
             orgName: organizations.name,
+            orgLogoUrl: organizations.logoUrl,
         } )
         .from( events )
         .innerJoin( organizations, eq( events.orgId, organizations.id ) )
@@ -229,16 +231,22 @@ export default async function EventPage ( { params }: { params: Params } )
                     } ) ),
                 } }
             />
-
-            <NavBar1 />
-
+  
+            <Navbar
+                logoUrl={ eventData.orgLogoUrl || '/images/logo.png' }
+                orgName={ eventData.orgName }
+                eventName={ eventData.eventName }
+              
+            />
             <main className="">
                 <div className="relative z-20 max-w-screen-xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 xl:p-9">
-                    <EventImage
-                        imageUrl={ eventData.featuredImage || '/images/eventjacket-banner.png' }
-                        alt={ `${ eventData.eventName } image` }
-                        overlayColor=""
-                    />
+                    { eventData.featuredImage && (
+                        <EventImage
+                            imageUrl={ eventData.featuredImage }
+                            alt={ `${ eventData.eventName || 'Event' } image` }
+                            overlayColor=""
+                        />
+                    ) }
 
                     <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 mt-8">
                         <div className="xl:col-span-2 space-y-4">

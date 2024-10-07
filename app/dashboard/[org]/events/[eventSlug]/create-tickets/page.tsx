@@ -10,7 +10,11 @@ import toast from 'react-hot-toast';
 import { createTicketType } from '@/app/actions/ticketActions';
 
 import ModalEventCreation from '@/components/modals/ModalEventCreation';
-import { Button, Input, Textarea } from '@nextui-org/react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@nextui-org/button';
+
+
 
 const CreateTicketsPage = () =>
 {
@@ -106,8 +110,8 @@ const CreateTicketsPage = () =>
     };
 
     return (
-        <div className="container mx-auto max-w-3xl bg-white p-8 rounded-lg">
-            <h1 className="mb-6 text-center text-2xl font-bold text-gray-900">Create Tickets for Event</h1>
+        <div className="container mx-auto max-w-3xl bg-white  rounded-lg">
+            <h1 className="mb-6 text-center text-2xl font-bold text-gray-900">Create ticket types for your Event</h1>
             <p className="mb-8 text-center text-gray-600">
                 Fill in the details below to create a new ticket type for your event. Define different ticket types like General Admission, VIP, or Early Bird, and set their respective prices, quantities, and sale dates.
             </p>

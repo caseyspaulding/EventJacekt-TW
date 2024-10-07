@@ -35,7 +35,7 @@ const EventsListComponent: React.FC<EventsListComponentProps> = ( { eventList } 
         </span>
       </h2>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-       
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           { eventList.map( ( event ) => (
             <article key={ event.id } className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
@@ -56,12 +56,12 @@ const EventsListComponent: React.FC<EventsListComponentProps> = ( { eventList } 
                     <CalendarIcon className="w-4 h-4 mr-2" />
                     { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'TBA' }
                   </div>
-                  { event.venue && (
-                    <div className="flex items-center text-sm text-gray-500">
-                      <MapPinIcon className="w-4 h-4 mr-2" />
-                      { event.venue }
-                    </div>
-                  ) }
+
+                  <div className="flex items-center text-sm text-gray-500">
+                    <MapPinIcon className="w-4 h-4 mr-2" />
+                    { event.venue || 'TBD' }
+                  </div>
+
                 </div>
               </Link>
               <div className="px-6 py-4 bg-gray-100">

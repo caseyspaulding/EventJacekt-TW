@@ -349,7 +349,7 @@ const CreateEventPage = () =>
                         <div>
                             
                             <Input
-                                type="text"
+                               
                                 id="organizerContact"
                                 value={ organizerContact }
                                 onChange={ ( e ) => setOrganizerContact( e.target.value ) }
@@ -430,7 +430,7 @@ const CreateEventPage = () =>
                             value={ venue }
                             onChange={ ( e ) => setVenue( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Venue"
+                            placeholder="Add Venue Name"
                         />
                     </div>
                     <ImageUploadVenue
@@ -455,13 +455,13 @@ const CreateEventPage = () =>
                     <div>
 
 
-                        <InputFieldEJ
+                        <Input
                             type="text"
                             id="address"
                             value={ address }
                             onChange={ ( e ) => setAddress( e.target.value ) }
                             className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Address" label={ '  Venue Street Address' } />
+                            placeholder="Address"  />
 
 
                     </div>
@@ -469,24 +469,24 @@ const CreateEventPage = () =>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                         <div>
 
-                            <InputFieldEJ
+                            <Input
                                 type="text"
                                 id="city"
                                 value={ city }
                                 onChange={ ( e ) => setCity( e.target.value ) }
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="City" label={ 'City' } />
+                                placeholder="City"  />
                         </div>
 
                         <div>
 
-                            <InputFieldEJ
+                            <Input
                                 type="text"
                                 id="state"
                                 value={ state }
                                 onChange={ ( e ) => setState( e.target.value ) }
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="State" label={ 'State' } />
+                                placeholder="State"  />
                         </div>
                     </div>
 
@@ -495,13 +495,13 @@ const CreateEventPage = () =>
 
                         <div>
 
-                            <InputFieldEJ
+                            <Input
                                 type="text"
                                 id="zipCode"
                                 value={ zipCode }
                                 onChange={ ( e ) => setZipCode( e.target.value ) }
                                 className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="Zip Code" label={ 'Zip Code' } />
+                                placeholder="Zip Code"  />
                         </div>
 
                     </div>
