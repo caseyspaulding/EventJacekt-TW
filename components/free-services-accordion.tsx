@@ -26,11 +26,11 @@ export default function FreeServiceAccordion()
   ]
 
   return (
-    <Card className="w-full max-w-4xl rounded-3xl mx-auto mt-24">
-      <CardHeader className="text-center rounded-3xl bg-gradient-to-tr from-blue-600 to-blue-800 text-white">
+    <Card className="w-full max-w-4xl rounded-3xl mx-auto mt-36">
+      <CardHeader className="text-center rounded-3xl bg-gradient-to-tr from-yellow-200 to-yellow-400 text-blue-800">
         <CardTitle className="text-3xl  mb-6 md:text-4xl ">Completely Free Services</CardTitle>
         <CardDescription className="text-lg md:text-xl mt-4">
-          <span className="bg-white text-blue-600 px-2 mt-2 py-1 rounded-2xl">Whats that mean?</span>
+          <span className="bg-blue-500 text-white px-4 mt-2 py-1 rounded-2xl">Whats that mean?</span>
         </CardDescription>
       </CardHeader>
       <CardContent className="p-6">
