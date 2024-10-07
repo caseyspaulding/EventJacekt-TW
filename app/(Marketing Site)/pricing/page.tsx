@@ -48,7 +48,7 @@ export default function Example ()
     return (
         <div className="bg-white">
             <NavBar1 />
-          
+
             <div className="bg-white">
                 {/* Pricing section with single price and feature list */ }
                 <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
@@ -56,7 +56,7 @@ export default function Example ()
                         <div>
                             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
                                 <span className="text-gray-900">Nonprofit Event Planners Save Thousands! </span>
-                                <span className="ml-2 text-blue-600">No Monthly Fee</span>
+                                <p className=" text-blue-600">No Monthly Fee</p>
                             </h1>
                             <p className="mt-5 text-xl text-gray-500">
                                 As someone who’s seen firsthand the challenges nonprofits face, I’ve made it my mission to offer affordable tools that make a real difference—without breaking the bank.
@@ -65,17 +65,17 @@ export default function Example ()
 
                             </p>
                         </div>
-                        
+
                     </div>
                     <div>
-                        <EventJacketCalculator />   
+                        <EventJacketCalculator />
                         <div className="mt-8 xl:mt-0 mb-8">
                             <div className="flex items-center justify-center">
                                 <div className="inline-flex rounded-3xl shadow-2xl">
                                     <Button
                                         as='a'
                                         href="/signup"
-                                        className="inline-flex items-center px-6 py-3 text-xl font-semibold text-blue-800 bg-gradient-to-t from-yellow-400 to-yellow-300 hover:bg-yellow-400"
+                                        className="inline-flex items-center px-6 py-3 text-xl font-semibold bg-gradient-to-tr from-yellow-200 to-yellow-400 text-blue-800"
                                     >
                                         Get Started
                                     </Button>
@@ -85,7 +85,7 @@ export default function Example ()
 
                         </div>
                     </div>
-                   
+
                     <div className="border-t border-gray-200 pt-16 xl:grid xl:grid-cols-3 xl:gap-x-8">
                         <div>
                             <h2 className="text-lg font-semibold text-blue-600">
@@ -108,7 +108,7 @@ export default function Example ()
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
-                                            className="h-8 w-8 font-bold flex-shrink-0 text-yellow-300"
+                                            className="h-8 w-8 font-bold flex-shrink-0 text-blue-400"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
                                             { feature }
@@ -130,7 +130,7 @@ export default function Example ()
                                     >
                                         <CheckIcon
                                             aria-hidden="true"
-                                            className="h-8 w-8 flex-shrink-0 text-yellow-300"
+                                            className="h-8 w-8 flex-shrink-0 text-blue-300"
                                         />
                                         <span className="ml-3 text-base text-gray-500">
                                             { feature }

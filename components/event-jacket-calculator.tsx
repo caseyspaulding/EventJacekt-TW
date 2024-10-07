@@ -172,7 +172,7 @@ export function EventJacketCalculator ()
           </Card>
         </div>
 
-        <Card className="bg-gradient-to-r from-blue-500 to-green-500 text-white">
+        <Card className="bg-gradient-to-tr from-yellow-100 to-yellow-300 text-blue-800 ">
           <CardContent className="p-6">
             <h3 className="text-2xl font-bold text-center mb-4">Total savings with EventJacket</h3>
             <p className="text-4xl font-bold text-center">
