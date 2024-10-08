@@ -63,7 +63,7 @@ const CaseyAuthorPage = () =>
         <div className="container mx-auto px-4 py-12">
           <div className="flex flex-col items-center">
             <img
-              src="/images/caseyandlaura.jpg" // Replace with your image path
+              src="/images/caseyProfilePic.jpg" // Replace with your image path
               alt="Casey"
               className="w-40 h-40 rounded-full mb-6 object-cover"
             />

@@ -73,22 +73,38 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                     <div className="relative mb-8 flex flex-col md:flex-row items-center md:items-stretch">
                         <div className="md:w-2/3 flex flex-col justify-center p-4 bg-white rounded-tl-xl rounded-bl-xl">
                             <div className="flex flex-wrap gap-2 mb-4">
-                                { post.tags } {/* Display tags as a single string */ }
+                                { post.tags ? JSON.parse( post.tags ).map( ( tag: string, index: number ) => (
+                                    <span
+                                        key={ index }
+                                        className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
+                                    >
+                                        { tag.trim() }
+                                    </span>
+                                ) ) : null }
                             </div>
                             <h1 className="text-4xl font-extrabold text-gray-800 mb-4 leading-tight">{ post.title }</h1>
                             <p className="text-base text-gray-500 mb-4 leading-relaxed">
                                 { new Date( post.createdAt ).toLocaleDateString() } • { readTime }
                             </p>
-                            <p className="text-base text-gray-500 leading-relaxed">
-                                By{ ' ' }
-                                { post.author ? (
-                                    <a href={ `/authors/${ post.author.slug }` } className="text-blue-600 hover:underline">
-                                        { post.author.name }
-                                    </a>
-                                ) : (
-                                    'Unknown Author'
+                            <div className="flex items-center text-base text-gray-500 leading-relaxed">
+                                { post.author?.avatarUrl && (
+                                    <img
+                                        src='/images/caseyProfilePic.jpg'
+                                        alt={ post.author.name }
+                                        className="w-8 h-8 rounded-full mr-2"
+                                    />
                                 ) }
-                            </p>
+                                <span>
+                                    By{ ' ' }
+                                    { post.author ? (
+                                        <a href={ `/authors/${ post.author.slug }` } className="text-blue-600 hover:underline">
+                                            { post.author.name }
+                                        </a>
+                                    ) : (
+                                        'Unknown Author'
+                                    ) }
+                                </span>
+                            </div>
                         </div>
 
                         { post.featuredImage && (

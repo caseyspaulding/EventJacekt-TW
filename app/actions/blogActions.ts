@@ -193,7 +193,7 @@ export async function createBlogPost ( formData: FormData )
     const content = formData.get( 'content' ) as string;
     const excerpt = ( formData.get( 'excerpt' ) as string ) || '';
     const authorSlug = formData.get( 'author' ) as string; // Assuming author is provided as slug
-    const tags = formData.get('tags') as string; // Keep tags as a string
+    const tags = ( formData.get( 'tags' ) as string )?.split( ',' ).map( tag => tag.trim() ).join( ',' ) || '';
     let slug = formData.get( 'slug' ) as string;
     const featuredImage = formData.get( 'featuredImage' ) as string;
     const metaTitle = formData.get( 'metaTitle' ) as string;
@@ -287,6 +287,8 @@ export async function updateBlogPost ( id: number, formData: FormData )
     {
         slug = generateSlug( title );
     }
+   
+    console.log( tags );
     
     try
     {

@@ -29,7 +29,7 @@ interface BlogPost
     content: string;
     excerpt?: string | null;
     authorId: number;
-    tags?: string[] | null;
+    tags?: string | null;
     featuredImage?: string | null;
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -80,7 +80,8 @@ export default function EditPostPage ()
                 setContent( post.content );
                 setExcerpt( post.excerpt );
                 setAuthorId( post.author_id ); // Update here
-                setTags( post.tags ? post.tags.join( ', ' ) : '' );
+                setTags( post.tags ? JSON.parse( post.tags ).join( ', ' ) : '' );
+
                 setSlug( post.slug );
                 setMetaTitle( post.meta_title );
                 setMetaDescription( post.meta_description );

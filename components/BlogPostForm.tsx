@@ -45,9 +45,9 @@ const BlogPostForm: React.FC = () =>
   const [ isPublished, setIsPublished ] = useState( false );
   const [ featuredImage, setFeaturedImage ] = useState<File | null>( null );
   const [ postImage, setPostImage ] = useState<File | null>( null ); // State for blog post image
-  
-  
-  
+
+
+
   // Configuration for the editor
   const config = useMemo(
     () => ( {
@@ -59,7 +59,7 @@ const BlogPostForm: React.FC = () =>
 
   const editor = useRef( null ); // Define the editor reference
 
-  
+
   useEffect( () =>
   {
     const checkUser = async () =>
@@ -169,14 +169,14 @@ const BlogPostForm: React.FC = () =>
       return;
     }
 
-    const tagsArray = tags.split( ',' ).map( ( tag ) => tag.trim() );
+
 
     const formData = new FormData();
     formData.append( 'title', title );
     formData.append( 'content', content );
     formData.append( 'excerpt', excerpt );
     formData.append( 'authorId', authorId );
-    formData.append( 'tags', tagsArray.join( ',' ) );
+    formData.append( 'tags', tags );
     formData.append( 'slug', slug );
     formData.append( 'metaTitle', metaTitle );
     formData.append( 'metaDescription', metaDescription );
@@ -318,7 +318,7 @@ const BlogPostForm: React.FC = () =>
           </div>
 
           {/* Content */ }
-         
+
           {/* Jodit Editor for Content */ }
           <div>
             <label className="block text-sm font-medium text-gray-700">Content</label>
