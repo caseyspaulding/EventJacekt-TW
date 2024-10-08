@@ -76,8 +76,8 @@ const mobile = [
     icon: CurrencyDollarIcon,
   },
   {
-    name: "Tips",
-    description: "Coming Soon",
+    name: "Blog",
+    description: "Read our latest articles and updates.",
     href: "/blog",
     icon: BookmarkSquareIcon,
   },
