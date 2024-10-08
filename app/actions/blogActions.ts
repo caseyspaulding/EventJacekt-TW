@@ -23,7 +23,7 @@ interface BlogPost
     content: string;
     excerpt?: string | null;
     authorId: number;
-    tags?: string[] | null;
+    tags?: string | null;
     featuredImage?: string | null;
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -64,6 +64,7 @@ export async function getPostsByAuthorId ( authorId: number ): Promise<BlogPost[
         } ) );
 
         return formattedPosts;
+
     } catch ( error )
     {
         console.error( 'Error fetching posts by author ID:', error );
@@ -192,7 +193,7 @@ export async function createBlogPost ( formData: FormData )
     const content = formData.get( 'content' ) as string;
     const excerpt = ( formData.get( 'excerpt' ) as string ) || '';
     const authorSlug = formData.get( 'author' ) as string; // Assuming author is provided as slug
-    const tags = ( formData.get( 'tags' ) as string )?.split( ',' ).map( ( tag ) => tag.trim() ) || [];
+    const tags = formData.get('tags') as string; // Keep tags as a string
     let slug = formData.get( 'slug' ) as string;
     const featuredImage = formData.get( 'featuredImage' ) as string;
     const metaTitle = formData.get( 'metaTitle' ) as string;
@@ -275,7 +276,7 @@ export async function updateBlogPost ( id: number, formData: FormData )
     const content = formData.get( 'content' ) as string;
     const excerpt = ( formData.get( 'excerpt' ) as string ) || '';
     const authorId = formData.get( 'author' ) as string; // Now we're getting the authorId directly
-    const tags = ( formData.get( 'tags' ) as string )?.split( ',' ).map( tag => tag.trim() ) || [];
+    const tags = ( formData.get( 'tags' ) as string )?.split( ',' ).map( tag => tag.trim() ).join( ',' ) || '';
     let slug = formData.get( 'slug' ) as string;
     const featuredImage = formData.get( 'featuredImage' ) as string;
     const metaTitle = formData.get( 'metaTitle' ) as string;
@@ -286,7 +287,7 @@ export async function updateBlogPost ( id: number, formData: FormData )
     {
         slug = generateSlug( title );
     }
-
+    
     try
     {
         // Update the blog post directly with authorId

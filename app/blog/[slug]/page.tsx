@@ -62,6 +62,8 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
     // Sanitize the HTML content
     const sanitizedContent = DOMPurify.sanitize( post.content );
     const readTime = calculateReadTime( post.content );
+  
+    
 
     return (
         <>
@@ -70,9 +72,9 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
                 <article className="mx-auto max-w-7xl px-2 py-12 sm:px-4 lg:px-4">
                     <div className="relative mb-8 flex flex-col md:flex-row items-center md:items-stretch">
                         <div className="md:w-2/3 flex flex-col justify-center p-4 bg-white rounded-tl-xl rounded-bl-xl">
-                            <p className="text-base text-gray-500 mb-4 leading-relaxed">
-                                { post.tags ? post.tags.join( ', ' ) : '' }
-                            </p>
+                            <div className="flex flex-wrap gap-2 mb-4">
+                                { post.tags } {/* Display tags as a single string */ }
+                            </div>
                             <h1 className="text-4xl font-extrabold text-gray-800 mb-4 leading-tight">{ post.title }</h1>
                             <p className="text-base text-gray-500 mb-4 leading-relaxed">
                                 { new Date( post.createdAt ).toLocaleDateString() } • { readTime }

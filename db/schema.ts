@@ -994,7 +994,7 @@ export const blogPosts = pgTable( 'blog_posts', {
     createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
     updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
     publishedAt: timestamp( 'published_at' ),
-    tags: text( 'tags' ).array(),
+    tags: text( 'tags' ),
     featuredImage: varchar( 'featured_image', { length: 255 } ),
     metaTitle: varchar( 'meta_title', { length: 255 } ),
     metaDescription: text( 'meta_description' ),
