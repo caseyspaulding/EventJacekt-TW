@@ -323,7 +323,7 @@ const CreateEventPage = () =>
                             orgName={ user?.orgName || '' }
                         />
                     </div>
-                    <div id="step2" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div id="step2" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
 
                         <div>
                             <Input
@@ -333,7 +333,8 @@ const CreateEventPage = () =>
                                 onChange={ ( e ) => setName( e.target.value ) }
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Event Name"
-                                required />
+                                required
+                            />
                         </div>
 
                         <div>
@@ -343,19 +344,17 @@ const CreateEventPage = () =>
                                 onChange={ ( e ) => setDescription( e.target.value ) }
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Description"
-                                required />
+                                required
+                            />
                         </div>
 
                         <div>
-                            
                             <Input
-                               
                                 id="organizerContact"
                                 value={ organizerContact }
                                 onChange={ ( e ) => setOrganizerContact( e.target.value ) }
-                                className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Organizer Contact Information"
-
                                 required
                             />
                         </div>
@@ -364,15 +363,12 @@ const CreateEventPage = () =>
                             <label className="block text-sm font-medium text-gray-700">
                                 Event Start Date
                             </label>
-
                             <DatePicker
-
                                 id="startDate"
                                 value={ startDate }
                                 onChange={ handleEventStartDateChange }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm "
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 required
-
                             />
                         </div>
 
@@ -381,13 +377,11 @@ const CreateEventPage = () =>
                                 Event End Date
                             </label>
                             <DatePicker
-
                                 id="endDate"
                                 value={ endDate }
                                 onChange={ handleEventEndDateChange }
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 required
-
                             />
                         </div>
 
@@ -396,15 +390,12 @@ const CreateEventPage = () =>
                                 Event Start Time
                             </label>
                             <TimePicker
-
                                 id="eventStartTime"
-                                value={ eventEndTime }
+                                value={ eventStartTime }
                                 onChange={ handleEventStartTimeChange }
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 required
-
                             />
-
                         </div>
 
                         <div>
