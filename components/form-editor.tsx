@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { createClient } from '@/utils/supabase/client'
+
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,8 +14,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
 import { PlusCircle, Trash2, Save, Share2 } from 'lucide-react'
 import { saveFormAction } from '@/app/actions/formActions';
+import { useSearchParams } from 'next/navigation'
+import { loadForm } from '@/utils/loadForm'
+import ShareFormModal from './ShareFormModal'
 
-const supabase = createClient()
 
 type FieldType = 'text' | 'textarea' | 'number' | 'checkbox' | 'radio' | 'select' | 'date' | 'file'
 
@@ -47,65 +49,51 @@ const initialForm: Form = {
 
 interface FormEditorProps
 {
-  orgId: string; // Org ID to associate with the form
+  orgId: string;  // Org ID to associate with the form
+  formId: string; // Form ID to load the form
 }
 
-export function FormEditorComponent ( { orgId }: FormEditorProps )
+export function FormEditorComponent ( { orgId, formId }: FormEditorProps )
 {
-  const [ form, setForm ] = useState<Form>( initialForm )
-  const [ activeTab, setActiveTab ] = useState<'builder' | 'preview'>( 'builder' )
+  const [ form, setForm ] = useState<Form>( initialForm );
+  const [ activeTab, setActiveTab ] = useState<'builder' | 'preview'>( 'builder' );
+  const [ loading, setLoading ] = useState( true );
+  const [ error, setError ] = useState<string | null>( null );
 
   useEffect( () =>
   {
-    const formId = new URLSearchParams( window.location.search ).get( 'id' )
-    if ( formId )
+    const load = async () =>
     {
-      loadForm( formId )
-    }
-  }, [] )
+      if ( formId )
+      {
+        setLoading( true );
+        try
+        {
+          const formData = await loadForm( formId );
+          console.log( "Loaded Form Data:", formData );
+          setForm( formData );
+        } catch ( error )
+        {
+          console.error( 'Error loading form data:', error );
+          setError( 'Failed to load form data. Please try again.' );
+        } finally
+        {
+          setLoading( false );
+        }
+      }
+    };
 
-  const loadForm = async ( formId: string ) =>
+    load();
+  }, [ formId ] );
+
+  if ( loading )
   {
-    // Fetch form data
-    const { data: formData, error: formError } = await supabase
-      .from( 'forms' )
-      .select( '*' )
-      .eq( 'id', formId )
-      .single()
+    return <div>Loading form data...</div>;
+  }
 
-    if ( formError )
-    {
-      console.error( 'Error loading form:', formError )
-      return
-    }
-
-    // Fetch fields associated with the form
-    const { data: fieldsData, error: fieldsError } = await supabase
-      .from( 'form_fields' )
-      .select( '*' )
-      .eq( 'form_id', formId )
-      .order( 'order', { ascending: true } )
-
-    if ( fieldsError )
-    {
-      console.error( 'Error loading form fields:', fieldsError )
-      return
-    }
-
-    setForm( {
-      id: formData.id,
-      name: formData.name,
-      description: formData.description,
-      fields: fieldsData.map( ( field: any ) => ( {
-        id: field.id,
-        type: field.type as FieldType,
-        label: field.label,
-        placeholder: field.placeholder,
-        required: field.required,
-        options: field.options,
-        order: field.order
-      } ) )
-    } )
+  if ( error )
+  {
+    return <div className="text-red-500">{ error }</div>;
   }
 
   const onDragEnd = ( result: any ) =>
@@ -151,14 +139,9 @@ export function FormEditorComponent ( { orgId }: FormEditorProps )
 
   const saveForm = async () =>
   {
-    if ( !form.id )
-    {
-      form.id = uuidv4();
-    }
-
     const input = {
       orgId: orgId,
-      formId: form.id,
+      formId: form.id || uuidv4(),
       name: form.name,
       description: form.description,
       fields: form.fields,
@@ -174,7 +157,7 @@ export function FormEditorComponent ( { orgId }: FormEditorProps )
       alert( 'Error saving form. Please try again.' );
     }
   };
-
+  <ShareFormModal form={ form } orgId={ orgId } />
   const shareForm = () =>
   {
     if ( !form.id )
@@ -233,7 +216,7 @@ export function FormEditorComponent ( { orgId }: FormEditorProps )
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Form Builder</h1>
+      <h1 className="text-3xl font-bold mb-4">Form Editor</h1>
       <div className="mb-4">
         <Input
           value={ form.name }
@@ -271,9 +254,8 @@ export function FormEditorComponent ( { orgId }: FormEditorProps )
                 <Button onClick={ saveForm } className="w-full">
                   <Save className="mr-2 h-4 w-4" /> Save Form
                 </Button>
-                <Button onClick={ shareForm } className="w-full">
-                  <Share2 className="mr-2 h-4 w-4" /> Share Form
-                </Button>
+                <ShareFormModal form={ form } orgId={ orgId } />
+               
               </div>
             </div>
             <div className="w-full md:w-3/4">

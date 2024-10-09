@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
 import { PlusCircle, Trash2, Save, Eye, Share2 } from 'lucide-react'
 import { saveFormAction } from '@/app/actions/formActions';
+import ShareFormModal from './ShareFormModal'
 
 const supabase = createClient()
 
@@ -183,6 +184,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
 
 
   // Share form
+  
   const shareForm = () =>
   {
     if ( !form.id )
@@ -285,6 +287,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
                 </Button>
                 
                 <Button onClick={ shareForm } className="w-full">
+                  <ShareFormModal form={ form } orgId={ orgId } />
                   <Share2 className="mr-2 h-4 w-4" /> Share Form
                 </Button>
               </div>
