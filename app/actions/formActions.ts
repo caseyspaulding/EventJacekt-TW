@@ -174,17 +174,21 @@ export async function submitForm ( formData: FormData, formId: string, orgId: st
   "use server";
 
   const supabase = createClient();
-
-  // Collect form responses
   const responses: { [ key: string ]: any } = {};
+
   for ( const [ key, value ] of formData.entries() )
   {
     if ( value instanceof File )
     {
+      // Generate a unique filename using current datetime and a random number
+      const timestamp = Date.now(); // Current timestamp in milliseconds
+      const randomNumber = Math.floor( Math.random() * 1000000 ); // Random number between 0 and 999999
+      const uniqueFileName = `${ timestamp }_${ randomNumber }_${ value.name }`;
+
       // Handle file upload
       const { data: fileData, error: fileError } = await supabase.storage
         .from( "formImages" )
-        .upload( `uploads/${ value.name }`, value );
+        .upload( `uploads/${ uniqueFileName }`, value );
 
       if ( fileError )
       {
@@ -192,7 +196,12 @@ export async function submitForm ( formData: FormData, formId: string, orgId: st
         throw new Error( "Failed to upload file" );
       }
 
-      responses[ key ] = fileData.path; // Save the file path or URL
+      // Get the public URL
+      const { data: publicUrlData } = supabase.storage
+        .from( "formImages" )
+        .getPublicUrl( fileData.path );
+
+      responses[ key ] = publicUrlData.publicUrl; // Save the public URL
     } else
     {
       responses[ key ] = value;
@@ -205,46 +214,18 @@ export async function submitForm ( formData: FormData, formId: string, orgId: st
     .insert( {
       form_id: formId,
       org_id: orgId,
-      response_data: responses, // Save the collected responses object
+      response_data: responses,
     } )
     .select()
-    .single(); // We expect a single row to be returned
+    .single();
 
   if ( responseError )
   {
     console.error( "Error saving form response:", responseError );
     throw new Error( "Failed to save form response" );
   }
-
-  const formResponseId = responseData?.id; // Get the generated form response ID
-
-  // Insert each form field value into `form_response_details` table
-  for ( const [ fieldKey, fieldValue ] of Object.entries( responses ) )
-  {
-    // Here, `fieldKey` is the form field ID and `fieldValue` is the user's input
-    const { error: detailsError } = await supabase
-      .from( "form_response_details" )
-      .insert( {
-        form_response_id: formResponseId, // Foreign key to form_responses
-        form_field_id: fieldKey, // Form field ID
-        field_value: fieldValue, // The user's input or uploaded file URL
-      } );
-
-    if ( detailsError )
-    {
-      console.error( "Error saving form response detail:", detailsError );
-      throw new Error( "Failed to save form response detail" );
-    }
-  }
-
-  // Optionally, return success or some other feedback
-  if ( responseError )
-  {
-    return { success: false, message: "Form submission failed. Please try again." };
-  }
-
-  return { success: true, message: "Form submitted successfully!" };
 }
+
 
 export async function publishForm ( formId: string, orgId: string )
 {
@@ -376,4 +357,9 @@ export async function getFormFields ( formId: string )
     } )
     .from( formFields )
     .where( eq( formFields.formId, formId ) );
+}
+
+function uuidv4 ()
+{
+  throw new Error( "Function not implemented." );
 }
