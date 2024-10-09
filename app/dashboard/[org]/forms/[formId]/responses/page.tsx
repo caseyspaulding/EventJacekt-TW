@@ -60,10 +60,10 @@ export default function FormResponsesPage ()
         setResponses( formattedResponses );
 
         // Fetch form fields
-        const fieldsData = (await getFormFields(formId as string)).map((field: any) => ({
+        const fieldsData = ( await getFormFields( formId as string ) ).map( ( field: any ) => ( {
           ...field,
           fieldType: field.fieldType || 'text', // Default to 'text' if fieldType is missing
-        }));
+        } ) );
         setFields( fieldsData );
       } catch ( error )
       {
