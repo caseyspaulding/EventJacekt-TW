@@ -89,11 +89,11 @@ export async function generateMetadata ( { params }: { params: Params } )
         additionalMetaTags: [
             {
                 property: 'fb:app_id',
-                content: '453279560972900',
+                content: '2283279935382121',
             },
         ],
         // Moved themeColor to viewport
-       
+
     };
 }
 
@@ -232,12 +232,12 @@ export default async function EventPage ( { params }: { params: Params } )
                     } ) ),
                 } }
             />
-  
+
             <Navbar
                 logoUrl={ eventData.orgLogoUrl || '/images/logo.png' }
                 orgName={ eventData.orgName }
                 eventName={ eventData.eventName }
-              
+
             />
             <main className="">
                 <div className="relative z-20 max-w-screen-xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 xl:p-9">
@@ -311,9 +311,9 @@ export default async function EventPage ( { params }: { params: Params } )
                         <aside className="xl:col-span-1 space-y-6 xl:space-y-10">
                             <div className="sticky top-20">
                                 <BuyTicketsButton eventSlug={ eventSlug } priceRange={ ticket.price } />
-                                 
+
                                 <div className="lg:ml-16 sm:text-center mt-2">
-                                    <ShareModal eventName={ eventData.eventName } />  
+                                    <ShareModal eventName={ eventData.eventName } />
                                     <Countdown
                                         startDate={ ticket.eventDate ? ticket.eventDate.toString() : "" }
                                         color="text-gray-700"

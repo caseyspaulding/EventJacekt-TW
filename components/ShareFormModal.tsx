@@ -4,24 +4,24 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import
-  {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-  } from "@/components/ui/dialog";
+{
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Share, Copy } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast"// Adjusted import path for useToast
 import { EnvelopeOpenIcon } from '@heroicons/react/24/outline';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import
-  {
-    faFacebook,
-    faWhatsapp,
-    faFacebookMessenger,
-    faXTwitter,
-    IconDefinition,
-  } from '@fortawesome/free-brands-svg-icons';
+{
+  faFacebook,
+  faWhatsapp,
+  faFacebookMessenger,
+  faXTwitter,
+  IconDefinition,
+} from '@fortawesome/free-brands-svg-icons';
 import Image from 'next/image';
 
 interface ShareFormModalProps
