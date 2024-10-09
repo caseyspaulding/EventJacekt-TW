@@ -92,27 +92,16 @@ export default function FormResponsesPage ()
     return acc;
   }, {} as Record<string, string> );
 
-  // Implement handleExportToCSV
   function handleExportToCSV ()
   {
     // Define CSV headers
     const headers = [ 'Response ID', 'Submitted At' ];
 
-    // Include field names in headers, adjusting for attachments
+    // Include field names in headers
     fields.forEach( ( field ) =>
     {
-      if ( field.fieldType === 'file' || field.fieldType === 'attachment' )
-      {
-        // Add a column for the attachment field with its name
-        headers.push( `${ field.fieldName } (Attachment URL)` );
-      } else
-      {
-        headers.push( field.fieldName );
-      }
+      headers.push( field.fieldName );
     } );
-
-    // Optionally, add a "Has Attachment" column
-    headers.push( 'Has Attachment' );
 
     // Map responses to CSV rows
     const csvRows = [
@@ -124,18 +113,16 @@ export default function FormResponsesPage ()
           response.submittedAt,
         ];
 
-        let hasAttachment = false;
-
         fields.forEach( ( field ) =>
         {
           const value = response.responseData[ field.fieldId ];
-          if ( field.fieldType === 'file' || field.fieldType === 'attachment' )
+          if ( field.fieldType === 'file' )
           {
-            // Include the URL or indicate 'Yes'/'No'
             if ( value )
             {
-              hasAttachment = true;
-              row.push( value );
+              // Include the hyperlink formula recognized by Excel/Google Sheets
+              const hyperlink = `=HYPERLINK("${ value }", "Download")`;
+              row.push( hyperlink );
             } else
             {
               row.push( '' );
@@ -148,9 +135,6 @@ export default function FormResponsesPage ()
             row.push( formattedValue );
           }
         } );
-
-        // Add "Has Attachment" column value
-        row.push( hasAttachment ? 'Yes' : 'No' );
 
         return row.join( ',' );
       } ),
