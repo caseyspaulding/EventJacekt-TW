@@ -2,8 +2,9 @@
 'use server';
 
 import { db } from "@/db";
-import { formFields, forms } from "@/db/schema";
+import { formFields, formResponses, forms } from "@/db/schema";
 import { createClient } from "@/utils/supabase/server";
+import { eq } from "drizzle-orm";
 
 interface FormFieldInput
 {
@@ -352,4 +353,27 @@ export async function archiveForm ( formId: string, orgId: string )
     console.error( 'Error archiving form:', error );
     throw new Error( 'Failed to archive form' );
   }
+}
+
+export async function getFormResponses ( formId: string )
+{
+  return await db
+    .select( {
+      responseId: formResponses.id,
+      responseData: formResponses.responseData,
+      submittedAt: formResponses.submittedAt,
+    } )
+    .from( formResponses )
+    .where( eq( formResponses.formId, formId ) );
+}
+
+export async function getFormFields ( formId: string )
+{
+  return await db
+    .select( {
+      fieldId: formFields.id,
+      fieldName: formFields.fieldName,
+    } )
+    .from( formFields )
+    .where( eq( formFields.formId, formId ) );
 }

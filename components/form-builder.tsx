@@ -245,19 +245,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Form Builder</h1>
-      <div className="mb-4">
-        <Input
-          value={ form.name }
-          onChange={ ( e ) => setForm( { ...form, name: e.target.value } ) }
-          placeholder="Form Name"
-          className="text-2xl font-bold mb-2"
-        />
-        <Textarea
-          value={ form.description }
-          onChange={ ( e ) => setForm( { ...form, description: e.target.value } ) }
-          placeholder="Form Description"
-        />
-      </div>
+      
       <Tabs value={ activeTab } onValueChange={ ( value: string ) => setActiveTab( value as 'builder' | 'preview' ) }>
         <TabsList className="mb-4">
           <TabsTrigger value="builder">Builder</TabsTrigger>
@@ -298,6 +286,19 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
                   <CardTitle>Your Form</CardTitle>
                 </CardHeader>
                 <CardContent>
+                  <div className="mb-4">
+                    <Input
+                      value={ form.name }
+                      onChange={ ( e ) => setForm( { ...form, name: e.target.value } ) }
+                      placeholder="Form Name"
+                      className="text-2xl font-bold mb-2"
+                    />
+                    <Textarea
+                      value={ form.description }
+                      onChange={ ( e ) => setForm( { ...form, description: e.target.value } ) }
+                      placeholder="Form Description"
+                    />
+                  </div>
                   <DragDropContext onDragEnd={ onDragEnd }>
                     <Droppable droppableId="form-fields">
                       { ( provided ) => (

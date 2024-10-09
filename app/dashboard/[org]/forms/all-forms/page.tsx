@@ -191,6 +191,11 @@ export default function FormsPage ()
                                 View Form
                               </span>
                             </Link>
+                            <Link href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }/responses` }>
+                              <span className="text-blue-600 hover:text-blue-900 cursor-pointer ml-4">
+                                View Responses
+                              </span>
+                            </Link>
                             <button
                               onClick={ () => openModal( form.id ) }
                               className="text-red-600 hover:text-red-900 cursor-pointer ml-4"

@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { registerOrganization } from './registerOrganization'; // Update with correct path
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { Input } from '@nextui-org/react';
+
 import { createClient } from '@/utils/supabase/client';
 import LoadingButton from '@/components/LoadingButton/LoadingButton';
 import { LoadingScreen } from '@/components/Loaders/Loading';
 
 import Head from 'next/head';
+import { Input } from '@/components/ui/input';
 
 
 const RegisterOrganizationPage = () =>
