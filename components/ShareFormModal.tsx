@@ -102,8 +102,8 @@ export default function ShareFormModal ( { form, orgId }: ShareFormModalProps )
     <>
       <Button
         onClick={ () => setIsOpen( true ) }
-        disabled={ !form.id }
-        className="flex items-center bg-white space-x-2 border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
+        
+        className="flex items-center bg-white space-x-2 mt-2 ml-2 border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
       >
         <Share className="h-4 w-4" />
         <span>Share Form</span>

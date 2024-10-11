@@ -184,7 +184,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
 
 
   // Share form
-  
+
   const shareForm = () =>
   {
     if ( !form.id )
@@ -241,16 +241,72 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
         return null
     }
   }
+  const viewFormLive = () =>
+  {
+    if ( !form.id )
+    {
+      alert( 'Please save the form before viewing.' );
+      return;
+    }
+
+    // Construct the form URL
+    const formUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`;
+
+    // Open the form in a new, smaller window
+    window.open(
+      formUrl,
+      '_blank',
+      'width=800,height=600,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes'
+    );
+  };
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Form Builder</h1>
-      
+
       <Tabs value={ activeTab } onValueChange={ ( value: string ) => setActiveTab( value as 'builder' | 'preview' ) }>
         <TabsList className="mb-4">
           <TabsTrigger value="builder">Builder</TabsTrigger>
           <TabsTrigger value="preview">Preview</TabsTrigger>
         </TabsList>
+        <label htmlFor="formUrl" className="block text-sm font-medium text-gray-700">
+          Form Live URL
+        </label>
+        <div className="mt-1 flex">
+          <input
+            type="text"
+            name="formUrl"
+            id="formUrl"
+            value={ `${ window.location.origin }/forms/${ orgId }/${ form.id }` }
+            readOnly
+            className="flex-grow block w-full min-w-0 rounded-none rounded-l-md sm:text-sm border-gray-300"
+          />
+          <button
+            type="button"
+            onClick={ () =>
+            {
+              const formUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`;
+              if ( formUrl )
+              {
+                navigator.clipboard.writeText( formUrl );
+                alert( 'Form URL copied to clipboard' );
+              } else
+              {
+                alert( 'Please save the form to generate the URL.' );
+              }
+            } }
+            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md bg-gray-50 text-gray-700 hover:bg-gray-100"
+          >
+            Copy
+          </button>
+          
+        </div>
+        <div className='flex'>
+        <button onClick={ viewFormLive } className="bg-blue-500 text-white px-3 py-1 mt-2 rounded-md">
+          View Form Live
+        </button>
+          <ShareFormModal form={ form } orgId={ orgId } />
+        </div>
         <TabsContent value="builder">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="w-full md:w-1/4">
@@ -273,11 +329,8 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
                 <Button onClick={ () => saveForm( true ) } className="w-full">
                   <Save className="mr-2 h-4 w-4" /> Save as Draft
                 </Button>
+               
                 
-                <Button onClick={ shareForm } className="w-full">
-                  <ShareFormModal form={ form } orgId={ orgId } />
-                  <Share2 className="mr-2 h-4 w-4" /> Share Form
-                </Button>
               </div>
             </div>
             <div className="w-full md:w-3/4">
