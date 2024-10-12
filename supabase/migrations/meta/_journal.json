@@ -141,6 +141,34 @@
       "when": 1728335122746,
       "tag": "0019_nebulous_rawhide_kid",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1728684270054,
+      "tag": "0020_lyrical_goblin_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1728687551242,
+      "tag": "0021_early_wither",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1728687574514,
+      "tag": "0022_brief_shinobi_shaw",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1728687728843,
+      "tag": "0023_nifty_tempest",
+      "breakpoints": true
     }
   ]
 }

@@ -102,7 +102,7 @@ export default function ShareFormModal ( { form, orgId }: ShareFormModalProps )
     <>
       <Button
         onClick={ () => setIsOpen( true ) }
-        
+
         className="flex items-center bg-white space-x-2 mt-2 ml-2 border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
       >
         <Share className="h-4 w-4" />
@@ -150,7 +150,7 @@ export default function ShareFormModal ( { form, orgId }: ShareFormModalProps )
                         height={ 24 }
                       />
                     ) : button.icon === EnvelopeOpenIcon ? (
-                      <button.icon className="w-6 h-6 text-blue-500" />
+                      <button.icon className="w-6 h-6  text-blue-500" />
                     ) : (
                       <FontAwesomeIcon
                         icon={ button.icon as IconDefinition }

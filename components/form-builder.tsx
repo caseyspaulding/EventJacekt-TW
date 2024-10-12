@@ -309,15 +309,20 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
         </div>
         <TabsContent value="builder">
           <div className="flex flex-col md:flex-row gap-4">
-            <div className="w-full md:w-1/4">
+            <div className=" md:w-1/4">
               <Card>
                 <CardHeader>
                   <CardTitle>Add Form Elements</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2">
                   { ( [ 'text', 'textarea', 'number', 'checkbox', 'radio', 'select', 'date', 'file' ] as FieldType[] ).map( ( type ) => (
-                    <Button key={ type } onClick={ () => addField( type ) } className="w-full">
-                      <PlusCircle className="mr-2 h-4 w-4" /> Add { type.charAt( 0 ).toUpperCase() + type.slice( 1 ) }
+                    <Button
+                      key={ type }
+                      onClick={ () => addField( type ) }
+                      className="flex items-center justify-start"
+                    >
+                      <PlusCircle className="mr-2 h-4 w-4" />
+                      Add { type.charAt( 0 ).toUpperCase() + type.slice( 1 ) }
                     </Button>
                   ) ) }
                 </CardContent>
@@ -343,7 +348,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
                     <Input
                       value={ form.name }
                       onChange={ ( e ) => setForm( { ...form, name: e.target.value } ) }
-                      placeholder="Form Name"
+                      placeholder="Untitled Form"
                       className="text-2xl font-bold mb-2"
                     />
                     <Textarea

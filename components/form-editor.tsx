@@ -244,11 +244,17 @@ export function FormEditorComponent ( { orgId, formId }: FormEditorProps )
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2">
                   { ( [ 'text', 'textarea', 'number', 'checkbox', 'radio', 'select', 'date', 'file' ] as FieldType[] ).map( ( type ) => (
-                    <Button key={ type } onClick={ () => addField( type ) } className="w-full">
-                      <PlusCircle className="mr-2 h-4 w-4" /> Add { type.charAt( 0 ).toUpperCase() + type.slice( 1 ) }
+                    <Button
+                      key={ type }
+                      onClick={ () => addField( type ) }
+                      className="w-full flex items-center justify-start"
+                    >
+                      <PlusCircle className="mr-2 h-4 w-4" />
+                      Add { type.charAt( 0 ).toUpperCase() + type.slice( 1 ) }
                     </Button>
                   ) ) }
                 </CardContent>
+
               </Card>
               <div className="mt-4 space-y-2">
                 <Button onClick={ saveForm } className="w-full">

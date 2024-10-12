@@ -107,11 +107,14 @@ export const forms = pgTable( 'forms', {
     id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
     orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
     formName: text( 'form_name' ).notNull(),
+    creator_id: uuid( 'creator_id' ).notNull().references( () => userProfiles.id ), // Reference to the userProfiles table
     description: text( 'description' ),
     status: text( 'status' ).default( 'active' ),
     isArchived: boolean( 'is_archived' ).default( false ), // New field for archiving
     isDeleted: boolean( 'is_deleted' ).default( false ),   // New field for soft deletion
     isDraft: boolean( 'is_draft' ).default( false ), // New field for draft forms
+    headerMediaUrl: text( 'header_media_url' ),    // New column for media URL
+    headerMediaType: text( 'header_media_type' ),  // New column for media type ('image' or 'video')
     createdAt: timestamp( 'created_at' ).defaultNow(),
     updatedAt: timestamp( 'updated_at' ).defaultNow(),
 } );
@@ -1584,7 +1587,7 @@ export const calendars = pgTable( 'calendars', {
     userId: uuid( 'user_id' ).references( () => userProfiles.id ), // Reference to the user, nullable for organizational calendars
     name: text( 'name' ).notNull(), // Name of the calendar (e.g., "Main Event Calendar", "Personal Tasks")
     description: text( 'description' ), // Optional description of the calendar
-    color: varchar( 'color', { length: 7 } ), // Color code for the calendar (e.g., "#FF5733")
+    color: varchar( 'color', { length: 7 } ), // Color code for the calendar
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
