@@ -51,9 +51,10 @@ interface FormEditorProps
 {
   orgId: string;  // Org ID to associate with the form
   formId: string; // Form ID to load the form
+  user: any;     // User object
 }
 
-export function FormEditorComponent ( { orgId, formId }: FormEditorProps )
+export function FormEditorComponent ( { orgId, formId, user }: FormEditorProps )
 {
   const [ form, setForm ] = useState<Form>( initialForm );
   const [ activeTab, setActiveTab ] = useState<'builder' | 'preview'>( 'builder' );
@@ -145,6 +146,7 @@ export function FormEditorComponent ( { orgId, formId }: FormEditorProps )
       name: form.name,
       description: form.description,
       fields: form.fields,
+      creator_id: user.id, // Add the creator_id property here
     };
 
     try
@@ -157,20 +159,10 @@ export function FormEditorComponent ( { orgId, formId }: FormEditorProps )
       alert( 'Error saving form. Please try again.' );
     }
   };
-  <ShareFormModal form={ form } orgId={ orgId } />
-  const shareForm = () =>
-  {
-    if ( !form.id )
-    {
-      alert( 'Please save the form before sharing.' );
-      return;
-    }
 
-    const shareUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`;
-    navigator.clipboard.writeText( shareUrl );
-    alert( `Form share link copied to clipboard: ${ shareUrl }` );
-  };
 
+
+  
   const renderField = ( field: FormField ) =>
   {
     switch ( field.type )

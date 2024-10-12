@@ -18,7 +18,7 @@ export default function EditForm ()
 
   return (
     <div>
-      <FormEditorComponent orgId={ orgId } formId={ formId } />
+      <FormEditorComponent orgId={ orgId } formId={ formId } user={user } />
     </div>
   );
 }

@@ -50,10 +50,11 @@ const initialForm: Form = {
 
 interface FormBuilderProps
 {
-  orgId: string; // Or orgId if you have it directly
+  orgId: string;
+  user: { id: string }; // Define user as an object with an `id` property
 }
 
-export function FormBuilderComponent ( { orgId }: FormBuilderProps )
+export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
 {
   const [ form, setForm ] = useState<Form>( initialForm )
   const [ activeTab, setActiveTab ] = useState<'builder' | 'preview'>( 'builder' )
@@ -168,6 +169,7 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
       fields: form.fields,
       isDraft: isDraft,
       isArchived: isArchived,
+      creator_id: user.id, // You need to pass the creator's ID, assuming you have the `user` object
     };
 
     try
@@ -180,7 +182,6 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
       alert( 'Error saving form. Please try again.' );
     }
   };
-
 
 
   // Share form
@@ -299,12 +300,12 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
           >
             Copy
           </button>
-          
+
         </div>
         <div className='flex'>
-        <button onClick={ viewFormLive } className="bg-blue-500 text-white px-3 py-1 mt-2 rounded-md">
-          View Form Live
-        </button>
+          <button onClick={ viewFormLive } className="bg-blue-500 text-white px-3 py-1 mt-2 rounded-md">
+            View Form Live
+          </button>
           <ShareFormModal form={ form } orgId={ orgId } />
         </div>
         <TabsContent value="builder">
@@ -334,8 +335,8 @@ export function FormBuilderComponent ( { orgId }: FormBuilderProps )
                 <Button onClick={ () => saveForm( true ) } className="w-full">
                   <Save className="mr-2 h-4 w-4" /> Save as Draft
                 </Button>
-               
-                
+
+
               </div>
             </div>
             <div className="w-full md:w-3/4">

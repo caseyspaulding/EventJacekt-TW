@@ -27,12 +27,13 @@ interface SaveFormInput
   isArchived?: boolean;
   isDeleted?: boolean;
   isDraft?: boolean;  // Add draft flag
+  creator_id: string; // Add creator_id
 }
 
 
 export async function saveFormAction ( input: SaveFormInput )
 {
-  const { orgId, formId, name, description, fields, isArchived, isDeleted, isDraft } = input;
+  const { orgId, formId, name, description, fields, isArchived, isDeleted, isDraft, creator_id } = input;
 
   // Upsert the form metadata
   await db
@@ -40,6 +41,7 @@ export async function saveFormAction ( input: SaveFormInput )
     .values( {
       id: formId,
       orgId: orgId,
+      creator_id: creator_id, // Include creator_id here
       formName: name,
       description: description,
       status: 'active',

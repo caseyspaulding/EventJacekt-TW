@@ -14,7 +14,8 @@ export default function NewForm ()
 
   return (
     <div>
-      <FormBuilderComponent orgId={ orgId } />
+      <FormBuilderComponent orgId={ orgId } user={ user }
+        />
     </div>
   );
 }
