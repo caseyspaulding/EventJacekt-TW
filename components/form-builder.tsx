@@ -17,6 +17,8 @@ import { Switch } from "@/components/ui/switch"
 import { PlusCircle, Trash2, Save, Eye, Share2 } from 'lucide-react'
 import { saveFormAction } from '@/app/actions/formActions';
 import ShareFormModal from './ShareFormModal'
+import { AddElementsDrawer } from './AddElementsDrawer'
+import CustomAlertDialog from './CustomAlertDialog'
 
 const supabase = createClient()
 
@@ -175,29 +177,68 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
     try
     {
       await saveFormAction( input );
-      alert( 'Form saved successfully!' );
+      showAlert( {
+        title: 'Success',
+        description: 'Form saved successfully!',
+        type: 'success',
+      } );
     } catch ( error )
     {
       console.error( 'Error saving form:', error );
-      alert( 'Error saving form. Please try again.' );
+      showAlert( {
+        title: 'Error',
+        description: 'Error saving form. Please try again.',
+        type: 'error',
+      } );
     }
   };
 
+  const [ alertState, setAlertState ] = useState<{
+    open: boolean;
+    title: string;
+    description: string;
+    type: 'info' | 'success' | 'warning' | 'error';
+    onConfirm: ( () => void ) | null;
+  }>( {
+    open: false,
+    title: '',
+    description: '',
+    type: 'info',
+    onConfirm: null,
+  } );
 
+  const showAlert = ( { title, description, type = 'info', onConfirm = null }: { title: string, description: string, type?: 'info' | 'success' | 'warning' | 'error', onConfirm?: ( () => void ) | null } ) =>
+  {
+    setAlertState( {
+      open: true,
+      title,
+      description,
+      type,
+      onConfirm,
+    } );
+  };
   // Share form
 
   const shareForm = () =>
   {
     if ( !form.id )
     {
-      alert( 'Please save the form before sharing.' );
+      showAlert( {
+        title: 'Notice',
+        description: 'Please save the form before sharing.',
+        type: 'warning',
+      } );
       return;
     }
 
     // Use orgId (or slug) and formId in the share URL
     const shareUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`;
     navigator.clipboard.writeText( shareUrl );
-    alert( `Form share link copied to clipboard: ${ shareUrl }` );
+    showAlert( {
+      title: 'Success',
+      description: 'Form share link copied to clipboard.',
+      type: 'success',
+    } );
   };
 
   const renderField = ( field: FormField ) =>
@@ -246,7 +287,11 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
   {
     if ( !form.id )
     {
-      alert( 'Please save the form before viewing.' );
+      showAlert( {
+        title: 'Notice',
+        description: 'Please save the form before viewing.',
+        type: 'warning',
+      } );
       return;
     }
 
@@ -263,6 +308,22 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
 
   return (
     <div className="container mx-auto p-4">
+      <CustomAlertDialog
+        open={ alertState.open }
+        onOpenChange={ ( open: any ) => setAlertState( ( prev ) => ( { ...prev, open } ) ) }
+        title={ alertState.title }
+        description={ alertState.description }
+        onConfirm={ () =>
+        {
+          if ( alertState.onConfirm )
+          {
+            alertState.onConfirm();
+          }
+          setAlertState( ( prev ) => ( { ...prev, open: false } ) );
+        } }
+        showCancel={ !!alertState.onConfirm }
+        type={ alertState.type } // Pass the 'type' prop here
+      />
       <h1 className="text-3xl font-bold mb-4">Form Builder</h1>
 
       <Tabs value={ activeTab } onValueChange={ ( value: string ) => setActiveTab( value as 'builder' | 'preview' ) }>
@@ -287,139 +348,125 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
             onClick={ () =>
             {
               const formUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`;
-              if ( formUrl )
+              if ( form.id )
               {
                 navigator.clipboard.writeText( formUrl );
-                alert( 'Form URL copied to clipboard' );
+                showAlert( {
+                  title: 'Success',
+                  description: 'Form URL copied to clipboard.',
+                  type: 'success',
+                } );
               } else
               {
-                alert( 'Please save the form to generate the URL.' );
+                showAlert( {
+                  title: 'Notice',
+                  description: 'Please save the form to generate the URL.',
+                  type: 'warning',
+                } );
               }
             } }
             className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md bg-gray-50 text-gray-700 hover:bg-gray-100"
           >
             Copy
           </button>
-
+          <Button onClick={ viewFormLive } className="bg-blue-500 ml-2 text-white py-2 rounded-md">
+            View Live
+          </Button>
         </div>
-        <div className='flex'>
-          <button onClick={ viewFormLive } className="bg-blue-500 text-white px-3 py-1 mt-2 rounded-md">
-            View Form Live
-          </button>
+        <div className='flex mt-2'>
+
           <ShareFormModal form={ form } orgId={ orgId } />
         </div>
         <TabsContent value="builder">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className=" md:w-1/4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Add Form Elements</CardTitle>
-                </CardHeader>
-                <CardContent className="flex flex-col gap-2">
-                  { ( [ 'text', 'textarea', 'number', 'checkbox', 'radio', 'select', 'date', 'file' ] as FieldType[] ).map( ( type ) => (
-                    <Button
-                      key={ type }
-                      onClick={ () => addField( type ) }
-                      className="flex items-center justify-start"
-                    >
-                      <PlusCircle className="mr-2 h-4 w-4" />
-                      Add { type.charAt( 0 ).toUpperCase() + type.slice( 1 ) }
-                    </Button>
-                  ) ) }
-                </CardContent>
-              </Card>
-              <div className="mt-4 space-y-2">
-                <Button onClick={ () => saveForm( false ) } className="w-full">
-                  <Save className="mr-2 h-4 w-4" /> Save Form
-                </Button>
-                <Button onClick={ () => saveForm( true ) } className="w-full">
-                  <Save className="mr-2 h-4 w-4" /> Save as Draft
-                </Button>
 
-
-              </div>
-            </div>
-            <div className="w-full md:w-3/4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Your Form</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="mb-4">
-                    <Input
-                      value={ form.name }
-                      onChange={ ( e ) => setForm( { ...form, name: e.target.value } ) }
-                      placeholder="Untitled Form"
-                      className="text-2xl font-bold mb-2"
-                    />
-                    <Textarea
-                      value={ form.description }
-                      onChange={ ( e ) => setForm( { ...form, description: e.target.value } ) }
-                      placeholder="Form Description"
-                    />
-                  </div>
-                  <DragDropContext onDragEnd={ onDragEnd }>
-                    <Droppable droppableId="form-fields">
-                      { ( provided ) => (
-                        <div { ...provided.droppableProps } ref={ provided.innerRef } className="space-y-4">
-                          { form.fields.map( ( field, index ) => (
-                            <Draggable key={ field.id } draggableId={ field.id } index={ index }>
-                              { ( provided ) => (
-                                <div
-                                  ref={ provided.innerRef }
-                                  { ...provided.draggableProps }
-                                  { ...provided.dragHandleProps }
-                                  className="bg-white p-4 rounded-md shadow-sm border border-gray-200"
-                                >
-                                  <div className="flex items-center justify-between mb-2">
-                                    <Input
-                                      value={ field.label }
-                                      onChange={ ( e ) => updateField( field.id, { label: e.target.value } ) }
-                                      className="font-semibold"
-                                    />
-                                    <Button
-                                      variant="ghost"
-                                      size="icon"
-                                      onClick={ () => removeField( field.id ) }
-                                    >
-                                      <Trash2 className="h-4 w-4" />
-                                    </Button>
-                                  </div>
-                                  <div className="space-y-2">
-                                    <Input
-                                      value={ field.placeholder }
-                                      onChange={ ( e ) => updateField( field.id, { placeholder: e.target.value } ) }
-                                      placeholder="Placeholder text"
-                                    />
-                                    <div className="flex items-center space-x-2">
-                                      <Switch
-                                        id={ `${ field.id }-required` }
-                                        checked={ field.required }
-                                        onCheckedChange={ ( checked ) => updateField( field.id, { required: checked } ) }
-                                      />
-                                      <Label htmlFor={ `${ field.id }-required` }>Required</Label>
-                                    </div>
-                                    { ( field.type === 'radio' || field.type === 'select' ) && (
-                                      <Textarea
-                                        value={ field.options?.join( '\n' ) }
-                                        onChange={ ( e ) => updateField( field.id, { options: e.target.value.split( '\n' ) } ) }
-                                        placeholder="Enter options (one per line)"
-                                      />
-                                    ) }
-                                  </div>
-                                </div>
-                              ) }
-                            </Draggable>
-                          ) ) }
-                          { provided.placeholder }
-                        </div>
-                      ) }
-                    </Droppable>
-                  </DragDropContext>
-                </CardContent>
-              </Card>
-            </div>
+          <div className='flex gap-3'>
+            <AddElementsDrawer onAddField={ addField } />
+            <Button onClick={ () => saveForm( false ) } className="">
+              <Save className="mr-2 h-4 w-4" /> Save Form
+            </Button>
           </div>
+
+          <div className="w-full md:w-3/4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Your Form</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="mb-4">
+                  <Input
+                    value={ form.name }
+                    onChange={ ( e ) => setForm( { ...form, name: e.target.value } ) }
+                    placeholder="Untitled Form"
+                    className="text-2xl font-bold mb-2"
+                  />
+                  <Textarea
+                    value={ form.description }
+                    onChange={ ( e ) => setForm( { ...form, description: e.target.value } ) }
+                    placeholder="Form Description"
+                  />
+                </div>
+                <DragDropContext onDragEnd={ onDragEnd }>
+                  <Droppable droppableId="form-fields">
+                    { ( provided ) => (
+                      <div { ...provided.droppableProps } ref={ provided.innerRef } className="space-y-4">
+                        { form.fields.map( ( field, index ) => (
+                          <Draggable key={ field.id } draggableId={ field.id } index={ index }>
+                            { ( provided ) => (
+                              <div
+                                ref={ provided.innerRef }
+                                { ...provided.draggableProps }
+                                { ...provided.dragHandleProps }
+                                className="bg-white p-4 rounded-md shadow-sm border border-gray-200"
+                              >
+                                <div className="flex items-center justify-between mb-2">
+                                  <Input
+                                    value={ field.label }
+                                    onChange={ ( e ) => updateField( field.id, { label: e.target.value } ) }
+                                    className="font-semibold"
+                                  />
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={ () => removeField( field.id ) }
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                                <div className="space-y-2">
+                                  <Input
+                                    value={ field.placeholder }
+                                    onChange={ ( e ) => updateField( field.id, { placeholder: e.target.value } ) }
+                                    placeholder="Placeholder text"
+                                  />
+                                  <div className="flex items-center space-x-2">
+                                    <Switch
+                                      id={ `${ field.id }-required` }
+                                      checked={ field.required }
+                                      onCheckedChange={ ( checked ) => updateField( field.id, { required: checked } ) }
+                                    />
+                                    <Label htmlFor={ `${ field.id }-required` }>Required</Label>
+                                  </div>
+                                  { ( field.type === 'radio' || field.type === 'select' ) && (
+                                    <Textarea
+                                      value={ field.options?.join( '\n' ) }
+                                      onChange={ ( e ) => updateField( field.id, { options: e.target.value.split( '\n' ) } ) }
+                                      placeholder="Enter options (one per line)"
+                                    />
+                                  ) }
+                                </div>
+                              </div>
+                            ) }
+                          </Draggable>
+                        ) ) }
+                        { provided.placeholder }
+                      </div>
+                    ) }
+                  </Droppable>
+                </DragDropContext>
+              </CardContent>
+            </Card>
+          </div>
+
         </TabsContent>
         <TabsContent value="preview">
           <Card>

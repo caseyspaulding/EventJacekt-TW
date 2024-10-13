@@ -103,7 +103,7 @@ export default function ShareFormModal ( { form, orgId }: ShareFormModalProps )
       <Button
         onClick={ () => setIsOpen( true ) }
 
-        className="flex items-center bg-white space-x-2 mt-2 ml-2 border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
+        className="flex items-center bg-white space-x-2  border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
       >
         <Share className="h-4 w-4" />
         <span>Share Form</span>
@@ -111,7 +111,7 @@ export default function ShareFormModal ( { form, orgId }: ShareFormModalProps )
       <Dialog open={ isOpen } onOpenChange={ setIsOpen }>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-center">Share this form</DialogTitle>
+            <DialogTitle className="text-center">Notice</DialogTitle>
           </DialogHeader>
           { !form.id ? (
             <div className="p-4">
