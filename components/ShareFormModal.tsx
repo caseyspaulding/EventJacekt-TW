@@ -10,7 +10,7 @@ import
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Share, Copy } from 'lucide-react';
+import { Share, Copy, Share2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast"// Adjusted import path for useToast
 import { EnvelopeOpenIcon } from '@heroicons/react/24/outline';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -101,11 +101,12 @@ export default function ShareFormModal ( { form, orgId }: ShareFormModalProps )
   return (
     <>
       <Button
+        variant="outline"
         onClick={ () => setIsOpen( true ) }
 
         className="flex items-center bg-white space-x-2  border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
       >
-        <Share className="h-4 w-4" />
+        <Share2 className="h-4 w-4" />
         <span>Share Form</span>
       </Button>
       <Dialog open={ isOpen } onOpenChange={ setIsOpen }>

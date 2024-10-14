@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
-import { Trash2, Save } from 'lucide-react'
+import { Trash2, Save, Copy, Eye } from 'lucide-react'
 import { saveFormAction, saveFormHeaderMedia } from '@/app/actions/formActions';
 import ShareFormModal from './ShareFormModal'
 import { AddElementsDrawer } from './AddElementsDrawer'
@@ -417,7 +417,7 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
       />
       <h1 className="text-3xl font-bold mb-4">Form Builder</h1>
 
-      <Tabs value={ activeTab } onValueChange={ ( value: string ) => setActiveTab( value as 'builder' | 'preview' ) }>
+      <Tabs className="w-full" value={ activeTab } onValueChange={ ( value: string ) => setActiveTab( value as 'builder' | 'preview' ) }>
         <TabsList className="mb-4">
           <TabsTrigger value="builder">Builder</TabsTrigger>
           <TabsTrigger value="preview">Preview</TabsTrigger>
@@ -434,33 +434,35 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
             readOnly
             className="flex-grow block w-full min-w-0 rounded-none rounded-l-md sm:text-sm border-gray-300"
           />
-          <button
-            type="button"
+          <Button
+            variant="outline"
+            className="ml-2"
             onClick={ () =>
             {
-              const formUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`;
+              const formUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`
               if ( form.id )
               {
-                navigator.clipboard.writeText( formUrl );
+                navigator.clipboard.writeText( formUrl )
                 showAlert( {
                   title: 'Success',
                   description: 'Form URL copied to clipboard.',
                   type: 'success',
-                } );
+                } )
               } else
               {
                 showAlert( {
                   title: 'Notice',
                   description: 'Please save the form to generate the URL.',
                   type: 'warning',
-                } );
+                } )
               }
             } }
-            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md bg-gray-50 text-gray-700 hover:bg-gray-100"
           >
+            <Copy className="h-4 w-4 mr-2" />
             Copy
-          </button>
-          <Button onClick={ viewFormLive } className="bg-blue-500 ml-2 text-white py-2 rounded-md">
+          </Button>
+          <Button className="ml-2" onClick={ viewFormLive }>
+            <Eye className="h-4 w-4 mr-2" />
             View Live
           </Button>
         </div>
@@ -473,8 +475,9 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
           <div className='flex gap-3'>
 
             <AddElementsDrawer onAddField={ addField } />
-            <Button onClick={ () => saveForm( false ) } className="">
-              <Save className="mr-2 h-4 w-4" /> Save Form
+            <Button variant="secondary" onClick={ () => saveForm( false ) }>
+              <Save className="h-4 w-4 mr-2" />
+              Save Form
             </Button>
           </div>
 
@@ -488,7 +491,7 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
                 <label htmlFor="headerMedia" className="block text-sm font-medium text-gray-700 mb-2">
                   Add an event featured image
                 </label>
-                <p className="text-sm text-gray-500 my-1">*Best results: image 1536 x 864 pixels or higher</p>
+                
                 {/* Image Preview Section */ }
                 <div className="relative flex items-center justify-center">
                   { headerMediaPreview ? (
@@ -504,8 +507,10 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
                       className="bg-gray-200 rounded-lg flex items-center justify-center w-full"
                       style={ { height: '200px' } }
                     >
-                      <p className="text-gray-500">No image uploaded</p>
-                    </div>
+                        <p className="text-gray-500">No image uploaded - 1536 x 864 pixels</p>
+                       
+                      </div>
+                       
                   ) }
 
                   {/* Upload Button (Overlays the image) */ }
