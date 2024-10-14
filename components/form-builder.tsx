@@ -72,13 +72,15 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
   const [ isUploading, setIsUploading ] = useState( false );
   const [ headerMediaPreview, setHeaderMediaPreview ] = useState<string | null>( null ); // For preview
 
+
+
   // Upload header image to Supabase
   const handleFileUpload = async ( file: File ) =>
   {
     setIsUploading( true );
     const { data, error } = await supabase.storage
       .from( 'media' )
-      .upload( `public/${ file.name }`, file );
+      .upload( `public/${ user?.orgName }/${ new Date().toISOString() }/${ file.name }`, file );
 
     if ( error )
     {
@@ -232,7 +234,7 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
     let uploadedHeaderMediaUrl = headerMediaUrl;
     if ( headerMediaFile )
     {
-      uploadedHeaderMediaUrl = await handleFileUpload( headerMediaFile ); 
+      uploadedHeaderMediaUrl = await handleFileUpload( headerMediaFile );
       console.log( 'Uploaded header media URL:', uploadedHeaderMediaUrl );
       setHeaderMediaUrl( uploadedHeaderMediaUrl ); // Store the URL in state
     }
@@ -491,7 +493,7 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
                 <label htmlFor="headerMedia" className="block text-sm font-medium text-gray-700 mb-2">
                   Add an event featured image
                 </label>
-                
+
                 {/* Image Preview Section */ }
                 <div className="relative flex items-center justify-center">
                   { headerMediaPreview ? (
@@ -507,10 +509,10 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
                       className="bg-gray-200 rounded-lg flex items-center justify-center w-full"
                       style={ { height: '200px' } }
                     >
-                        <p className="text-gray-500">No image uploaded - 1536 x 864 pixels</p>
-                       
-                      </div>
-                       
+                      <p className="text-gray-500">No image uploaded - 1536 x 864 pixels</p>
+
+                    </div>
+
                   ) }
 
                   {/* Upload Button (Overlays the image) */ }
