@@ -242,7 +242,7 @@ export default function FormResponsesPage ()
         <h2 className="text-xl font-semibold">Summary</h2>
         <p>Total Responses: { responses.length }</p>
         {/* You may want to update this to compute actual statistics */ }
-        <p>Most common answer for "New number field": 889</p>
+       
       </div>
 
       {/* Export Button */ }
