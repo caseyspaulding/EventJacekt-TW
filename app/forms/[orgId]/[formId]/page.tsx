@@ -184,7 +184,7 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
         );
       case 'radio':
         return (
-          <div>
+          <div className="space-y-2"> {/* Add vertical spacing here */ }
             { field.options?.map( ( option: string, index: number ) => (
               <div key={ index } className="flex items-center space-x-2">
                 <input
@@ -199,9 +199,10 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
             ) ) }
           </div>
         );
+
       case 'checkbox':
         return (
-          <div>
+          <div className="space-y-2"> {/* Add vertical spacing here */ }
             { field.options?.map( ( option: string, index: number ) => (
               <div key={ index } className="flex items-center space-x-2">
                 <input
@@ -243,7 +244,7 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
             />
           </div>
         ) }
-        <Card className="rounded-2xl max-w-5xl mx-auto bg-opacity-50 backdrop-blur-lg pb-16 shadow-lg">
+        <Card className="rounded-2xl max-w-5xl mx-auto bg-opacity-50 backdrop-blur-lg pb-16 text-2xl shadow-lg">
           <CardHeader className="bg-blue-500 text-white font-normal ">
             <CardTitle>{ form.name }</CardTitle>
           </CardHeader>
