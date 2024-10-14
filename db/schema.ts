@@ -107,7 +107,7 @@ export const forms = pgTable( 'forms', {
     id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
     orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
     formName: text( 'form_name' ).notNull(),
-    creator_id: uuid( 'creator_id' ).notNull().references( () => userProfiles.id ), // Reference to the userProfiles table
+    creator_id: uuid( 'creator_id' ).notNull().references( () => userProfiles.userId ), // Reference to the userProfiles table
     description: text( 'description' ),
     status: text( 'status' ).default( 'active' ),
     isArchived: boolean( 'is_archived' ).default( false ), // New field for archiving

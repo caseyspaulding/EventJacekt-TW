@@ -26,70 +26,113 @@ interface SaveFormInput
   fields: FormFieldInput[];
   isArchived?: boolean;
   isDeleted?: boolean;
+  headerMediaUrl: string | null;
+  headerMediaType: string,
   isDraft?: boolean;  // Add draft flag
   creator_id: string; // Add creator_id
 }
 
 
+
+export async function saveFormHeaderMedia ( formId: string, headerMediaUrl: string )
+{
+  try
+  {
+    // Update the form record with the header media URL
+    await db.update( forms )
+      .set( {
+        headerMediaUrl: headerMediaUrl, // Set the uploaded media URL
+      } )
+      .where( eq( forms.id, formId ) ); // Specify the form by ID
+
+    return { success: true };
+  } catch ( error )
+  {
+    console.error( "Error saving media URL to database:", error );
+    return { success: false, error };
+  }
+}
+
 export async function saveFormAction ( input: SaveFormInput )
 {
-  const { orgId, formId, name, description, fields, isArchived, isDeleted, isDraft, creator_id } = input;
+  const {
+    orgId,
+    formId,
+    name,
+    description,
+    fields,
+    isArchived,
+    isDeleted,
+    isDraft,
+    headerMediaUrl,
+    headerMediaType,
+    creator_id, // This is now userProfile.id
+  } = input;
 
-  // Upsert the form metadata
-  await db
-    .insert( forms )
-    .values( {
-      id: formId,
-      orgId: orgId,
-      creator_id: creator_id, // Include creator_id here
-      formName: name,
-      description: description,
-      status: 'active',
-      isArchived: isArchived || false,
-      isDeleted: isDeleted || false,
-      isDraft: isDraft || true, // Default to true (draft mode)
-    } )
-    .onConflictDoUpdate( {
-      target: forms.id,
-      set: {
+  // Use a transaction to save both the form and the fields
+  await db.transaction( async ( tx ) =>
+  {
+    // Upsert the form metadata (headerMediaUrl and other details)
+    await tx
+      .insert( forms )
+      .values( {
+        id: formId,
+        orgId: orgId,
+        creator_id: creator_id, // Use the passed-in creator_id
         formName: name,
         description: description,
-        updatedAt: new Date(),
+        status: 'active',
+        headerMediaUrl: input.headerMediaUrl,
+        headerMediaType: input.headerMediaType,
         isArchived: isArchived || false,
         isDeleted: isDeleted || false,
-        isDraft: isDraft || true, // Update the draft status
-      },
-    } );
-
-  // Upsert the form fields as usual
-  for ( const field of fields )
-  {
-    await db
-      .insert( formFields )
-      .values( {
-        id: field.id,
-        formId: formId,
-        fieldName: field.label,
-        fieldType: field.type,
-        placeholder: field.placeholder,
-        options: field.options ? JSON.stringify( field.options ) : null,
-        isRequired: field.required,
-        order: field.order,
+        isDraft: isDraft || true, // Default to true (draft mode)
       } )
       .onConflictDoUpdate( {
-        target: formFields.id,
+        target: forms.id,
         set: {
+          formName: name,
+          description: description,
+          updatedAt: new Date(),
+          headerMediaUrl: input.headerMediaUrl,
+          headerMediaType: input.headerMediaType,
+          isArchived: isArchived || false,
+          isDeleted: isDeleted || false,
+          isDraft: isDraft || true, // Update the draft status
+        },
+      } );
+
+    // Upsert the form fields
+    for ( const field of fields )
+    {
+      await tx
+        .insert( formFields )
+        .values( {
+          id: field.id,
+          formId: formId,
           fieldName: field.label,
           fieldType: field.type,
           placeholder: field.placeholder,
           options: field.options ? JSON.stringify( field.options ) : null,
           isRequired: field.required,
           order: field.order,
-        },
-      } );
-  }
-}
+        } )
+        .onConflictDoUpdate( {
+          target: formFields.id,
+          set: {
+            fieldName: field.label,
+            fieldType: field.type,
+            placeholder: field.placeholder,
+            options: field.options ? JSON.stringify( field.options ) : null,
+            isRequired: field.required,
+            order: field.order,
+          },
+        } );
+    }
+  } );
 
+  console.log( 'Form and fields saved successfully' );
+}
 
 
 export async function getActiveForms ( orgId: string )

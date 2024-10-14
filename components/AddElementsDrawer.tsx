@@ -37,6 +37,7 @@ export function AddElementsDrawer ( { onAddField }: AddElementsDrawerProps )
          
         </SheetHeader>
         <div className="grid gap-4 py-4">
+          
           { ( [ 'text', 'textarea', 'number', 'checkbox', 'radio', 'select', 'date', 'file' ] as FieldType[] ).map( ( type ) => (
             <Button
               key={ type }

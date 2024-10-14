@@ -14,11 +14,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
-import { PlusCircle, Trash2, Save, Eye, Share2 } from 'lucide-react'
-import { saveFormAction } from '@/app/actions/formActions';
+import { Trash2, Save } from 'lucide-react'
+import { saveFormAction, saveFormHeaderMedia } from '@/app/actions/formActions';
 import ShareFormModal from './ShareFormModal'
 import { AddElementsDrawer } from './AddElementsDrawer'
 import CustomAlertDialog from './CustomAlertDialog'
+import { useUser } from '@/contexts/UserContext'
+
+
 
 const supabase = createClient()
 
@@ -41,6 +44,8 @@ interface Form
   name: string
   description: string
   fields: FormField[]
+  headermediaUrl?: string
+  headerMediaType?: string
 }
 
 const initialForm: Form = {
@@ -53,14 +58,62 @@ const initialForm: Form = {
 interface FormBuilderProps
 {
   orgId: string;
-  user: { id: string }; // Define user as an object with an `id` property
+  orgName: string;
+  userId: { id: string }; // Define user as an object with an `id` property
 }
 
-export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
+export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
 {
   const [ form, setForm ] = useState<Form>( initialForm )
   const [ activeTab, setActiveTab ] = useState<'builder' | 'preview'>( 'builder' )
+  const { user, loading } = useUser();  // Ensure this hook has proper context 
+  const [ headerMediaUrl, setHeaderMediaUrl ] = useState<string | null>( null );
+  const [ headerMediaFile, setHeaderMediaFile ] = useState<File | null>( null ); // New state for header media file
+  const [ isUploading, setIsUploading ] = useState( false );
+  const [ headerMediaPreview, setHeaderMediaPreview ] = useState<string | null>( null ); // For preview
 
+  // Upload header image to Supabase
+  const handleFileUpload = async ( file: File ) =>
+  {
+    setIsUploading( true );
+    const { data, error } = await supabase.storage
+      .from( 'media' )
+      .upload( `public/${ file.name }`, file );
+
+    if ( error )
+    {
+      console.error( 'Error uploading file:', error.message );
+      setIsUploading( false );
+      return null;
+    }
+
+    const { data: publicUrlData } = supabase.storage
+      .from( 'media' )
+      .getPublicUrl( `public/${ file.name }` );
+
+    setIsUploading( false );
+    return publicUrlData?.publicUrl || null;
+  };
+  // Handle file selection and preview generation
+  const handleFileChange = ( e: React.ChangeEvent<HTMLInputElement> ) =>
+  {
+    const file = e.target.files?.[ 0 ] || null;
+    setHeaderMediaFile( file );
+
+    // Generate preview
+    if ( file )
+    {
+      const reader = new FileReader();
+      reader.onloadend = () =>
+      {
+        setHeaderMediaPreview( reader.result as string ); // Set preview URL
+      };
+      reader.readAsDataURL( file ); // Read file as data URL
+    } else
+    {
+      setHeaderMediaPreview( null ); // Reset preview if no file is selected
+    }
+  };
 
   useEffect( () =>
   {
@@ -160,7 +213,29 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
   {
     if ( !form.id )
     {
-      form.id = uuidv4();
+      form.id = uuidv4(); // Generate form ID if not set
+    }
+
+    // Fetch user_profiles.id where user_profiles.userId = userId
+    const { data: userProfile, error: userProfileError } = await supabase
+      .from( 'user_profiles' )
+      .select( 'id' )
+      .eq( 'user_id', userId.id )
+      .single();
+
+    if ( userProfileError || !userProfile )
+    {
+      console.error( 'Error fetching user profile:', userProfileError );
+      return;
+    }
+
+    // Upload the header media if the file is selected
+    let uploadedHeaderMediaUrl = headerMediaUrl;
+    if ( headerMediaFile )
+    {
+      uploadedHeaderMediaUrl = await handleFileUpload( headerMediaFile ); 
+      console.log( 'Uploaded header media URL:', uploadedHeaderMediaUrl );
+      setHeaderMediaUrl( uploadedHeaderMediaUrl ); // Store the URL in state
     }
 
     const input = {
@@ -171,12 +246,15 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
       fields: form.fields,
       isDraft: isDraft,
       isArchived: isArchived,
-      creator_id: user.id, // You need to pass the creator's ID, assuming you have the `user` object
+      headerMediaUrl: uploadedHeaderMediaUrl, // Set the uploaded URL
+      headerMediaType: 'image', // Assuming you're working with an image
+      creator_id: userProfile.id, // Use the fetched userProfile.id
     };
 
     try
     {
       await saveFormAction( input );
+      // Show success alert
       showAlert( {
         title: 'Success',
         description: 'Form saved successfully!',
@@ -185,6 +263,7 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
     } catch ( error )
     {
       console.error( 'Error saving form:', error );
+      // Show error alert
       showAlert( {
         title: 'Error',
         description: 'Error saving form. Please try again.',
@@ -192,6 +271,8 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
       } );
     }
   };
+
+
 
   const [ alertState, setAlertState ] = useState<{
     open: boolean;
@@ -306,8 +387,10 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
     );
   };
 
+
+
   return (
-    <div className="container mx-auto p-4">
+    <div className="">
       <CustomAlertDialog
         open={ alertState.open }
         onOpenChange={ ( open: any ) => setAlertState( ( prev ) => ( { ...prev, open } ) ) }
@@ -380,6 +463,7 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
         <TabsContent value="builder">
 
           <div className='flex gap-3'>
+
             <AddElementsDrawer onAddField={ addField } />
             <Button onClick={ () => saveForm( false ) } className="">
               <Save className="mr-2 h-4 w-4" /> Save Form
@@ -387,10 +471,66 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
           </div>
 
           <div className="w-full md:w-3/4">
+
             <Card>
               <CardHeader>
                 <CardTitle>Your Form</CardTitle>
               </CardHeader>
+              <div className="mx-4 md:mx-6 mb-4">
+                <label htmlFor="headerMedia" className="block text-sm font-medium text-gray-700 mb-2">
+                  Add an event featured image
+                </label>
+                <p className="text-sm text-gray-500 my-1">*Best results: image 1536 x 864 pixels or higher</p>
+                {/* Image Preview Section */ }
+                <div className="relative flex items-center justify-center">
+                  { headerMediaPreview ? (
+                    <img
+                      src={ headerMediaPreview }
+                      alt="Header Preview"
+                      className="rounded-lg shadow-md w-full"
+                      style={ { maxWidth: '100%', maxHeight: '300px', objectFit: 'cover' } }
+                    />
+                  ) : (
+                    // If no image is uploaded, display a placeholder with appropriate dimensions
+                    <div
+                      className="bg-gray-200 rounded-lg flex items-center justify-center w-full"
+                      style={ { height: '200px' } }
+                    >
+                      <p className="text-gray-500">No image uploaded</p>
+                    </div>
+                  ) }
+
+                  {/* Upload Button (Overlays the image) */ }
+                  <label
+                    htmlFor="headerMedia"
+                    className="absolute inset-0 rounded-2xl flex items-center justify-center bg-blue-700 bg-opacity-70 text-white text-lg font-medium cursor-pointer opacity-0 hover:opacity-100 transition-opacity"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 10l7-7m0 0l7 7m-7-7v18"
+                      />
+                    </svg>
+                    Upload Form Header Image
+                  </label>
+                  <input
+                    type="file"
+                    id="headerMedia"
+                    onChange={ handleFileChange }
+                    className="hidden"
+                  />
+                </div>
+
+              </div>
+
               <CardContent>
                 <div className="mb-4">
                   <Input
@@ -474,6 +614,20 @@ export function FormBuilderComponent ( { orgId, user }: FormBuilderProps )
               <CardTitle>Form Preview</CardTitle>
             </CardHeader>
             <CardContent>
+              {/* Display uploaded header image in preview */ }
+              { headerMediaPreview && (
+                <div className="mb-4">
+
+                  <img
+                    src={ headerMediaPreview } // Use the preview URL instead of waiting for headerMediaUrl
+                    alt="Form Header"
+                    className="rounded-lg shadow-md mb-5"
+                    style={ { maxWidth: '500px', maxHeight: '300px', objectFit: 'cover' } }
+                  />
+                </div>
+              ) }
+              <h2 className="text-2xl font-bold mb-4">{ form.name }</h2>
+              <p className="text-gray-600 mb-4">{ form.description }</p>
               <form className="space-y-4">
                 { form.fields.map( ( field ) => (
                   <div key={ field.id } className="space-y-2">

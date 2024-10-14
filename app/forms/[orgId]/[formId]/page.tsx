@@ -1,18 +1,15 @@
 'use client';
 
+import React, { useEffect, useState, useTransition } from 'react';
 import { createClient } from '@utils/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import React, { useTransition, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { submitForm } from '@/app/actions/formActions';
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
 
 const supabase = createClient();
 
@@ -33,6 +30,9 @@ interface Form
   name: string;
   description: string;
   fields: FormField[];
+  headerMediaUrl?: string;
+  backgroundType?: string;
+  backgroundValue?: string;
 }
 
 async function getForm ( formId: string ): Promise<Form | null>
@@ -52,7 +52,7 @@ async function getForm ( formId: string ): Promise<Form | null>
   const { data: fieldsData, error: fieldsError } = await supabase
     .from( 'form_fields' )
     .select( '*' )
-    .eq( 'form_id', formId ) // Fixed this part
+    .eq( 'form_id', formId )
     .order( 'order', { ascending: true } );
 
   if ( fieldsError )
@@ -75,6 +75,9 @@ async function getForm ( formId: string ): Promise<Form | null>
     id: formData.id,
     name: formData.form_name,
     description: formData.description,
+    headerMediaUrl: formData.header_media_url,
+    backgroundType: formData.background_type,
+    backgroundValue: formData.background_value,
     fields: parsedFieldsData ?? [],
   };
 }
@@ -82,15 +85,13 @@ async function getForm ( formId: string ): Promise<Form | null>
 export default function SharedForm ( { params }: { params: { orgId: string; formId: string } } )
 {
   const { orgId, formId } = params;
-  const { toast } = useToast()
+  const { toast } = useToast();
   const [ form, setForm ] = useState<Form | null>( null );
   const [ isPending, startTransition ] = useTransition();
   const { register, handleSubmit, reset } = useForm();
 
   useEffect( () =>
   {
-    const { orgId, formId } = params;
-
     if ( formId && orgId )
     {
       getForm( formId ).then( setForm );
@@ -99,7 +100,7 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
 
   if ( !form )
   {
-    return <div>Loading...</div>;
+    return <div className="text-center py-10">Loading...</div>;
   }
 
   const onSubmit = async ( data: any ) =>
@@ -108,10 +109,8 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
     {
       await submitForm( new FormData( document.getElementById( 'dynamic-form' ) as HTMLFormElement ), form.id, orgId );
 
-      // Reset the form fields
       reset();
 
-      // Show success toast
       toast( {
         title: 'Form Submitted',
         description: 'Your form has been successfully submitted!',
@@ -119,97 +118,73 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
     } );
   };
 
-  const renderField = ( field: FormField ) =>
-  {
-    switch ( field.fieldType )
-    {
-      case 'text':
-      case 'number':
-      case 'date':
-        return (
-          <Input
-            type={ field.fieldType }
-            id={ field.id }
-            placeholder={ field.placeholder }
-            required={ field.isRequired }
-            { ...register( field.id ) }
-          />
-        );
-      case 'textarea':
-        return (
-          <Textarea
-            id={ field.id }
-            placeholder={ field.placeholder }
-            required={ field.isRequired }
-            { ...register( field.id ) }
-          />
-        );
-      case 'checkbox':
-        return <Checkbox id={ field.id } { ...register( field.id ) } />;
-      case 'radio':
-        return (
-          <RadioGroup { ...register( field.id ) }>
-            { field.options?.map( ( option, index ) => (
-              <div key={ index } className="flex items-center space-x-2">
-                <RadioGroupItem value={ option } id={ `${ field.id }-${ index }` } />
-                <Label htmlFor={ `${ field.id }-${ index }` }>{ option }</Label>
-              </div>
-            ) ) }
-          </RadioGroup>
-        );
-      case 'select':
-        return (
-          <Select { ...register( field.id ) }>
-            <SelectTrigger>
-              <SelectValue placeholder="Select an option" />
-            </SelectTrigger>
-            <SelectContent>
-              { field.options?.map( ( option, index ) => (
-                <SelectItem key={ index } value={ option }>
-                  { option }
-                </SelectItem>
-              ) ) }
-            </SelectContent>
-          </Select>
-        );
-      case 'file':
-        return (
-          <Input
-            type="file"
-            id={ field.id }
-            required={ field.isRequired }
-            { ...register( field.id ) }
-          />
-        );
-      default:
-        return null;
-    }
-  };
+  // Determine the background style for the form
+  const backgroundStyle =
+    form.backgroundType === 'image'
+      ? { backgroundImage: `url(${ form.backgroundValue })`, backgroundSize: 'cover', backgroundPosition: 'center' }
+      : form.backgroundType === 'color'
+        ? { backgroundColor: form.backgroundValue }
+        : { backgroundImage: 'linear-gradient(to top, #e7e5e4 0%, #fafaf9 100%)' }; // default gradient
 
   return (
-    <div className="container mx-auto p-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>{ form.name }</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="mb-4">{ form.description }</p>
-          <form id="dynamic-form" onSubmit={ handleSubmit( onSubmit ) } className="space-y-4">
-            { form.fields.map( ( field ) => (
-              <div key={ field.id } className="space-y-2">
-                <Label htmlFor={ field.id }>
-                  { field.fieldName }
-                  { field.isRequired && <span className="text-red-500">*</span> }
-                </Label>
-                { renderField( field ) }
+    <div className="min-h-screen flex items-center justify-center pb-16" style={ backgroundStyle }>
+      <div className="w-full max-w-5xl p-4">
+        { form.headerMediaUrl && (
+          <div className="">
+            <img
+              src={ form.headerMediaUrl }
+              alt="Form Header"
+              className="w-full max-w-screen-lg mx-auto rounded-t-2xl shadow-md object-cover"
+              style={ { maxHeight: '300px' } }
+            />
+          </div>
+        ) }
+        <Card className="rounded-2xl max-w-5xl mx-auto bg-opacity-50 backdrop-blur-lg pb-16 shadow-lg">
+          <CardHeader className="bg-blue-500 text-white font-normal ">
+            <CardTitle>{ form.name }</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="my-4 text-gray-700">{ form.description }</p>
+            <form id="dynamic-form" onSubmit={ handleSubmit( onSubmit ) } className="space-y-4">
+              { form.fields.map( ( field ) => (
+                <div key={ field.id } className="space-y-2">
+                  <Label htmlFor={ field.id } className="font-semibold">
+                    { field.fieldName }
+                    { field.isRequired && <span className="text-red-500">*</span> }
+                  </Label>
+                  { field.fieldType === 'textarea' ? (
+                    <Textarea
+                      id={ field.id }
+                      placeholder={ field.placeholder }
+                      required={ field.isRequired }
+                      { ...register( field.id ) }
+                      className="block w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <Input
+                      type={ field.fieldType }
+                      id={ field.id }
+                      placeholder={ field.placeholder }
+                      required={ field.isRequired }
+                      { ...register( field.id ) }
+                      className="block w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) }
+                </div>
+              ) ) }
+              <div className="sm:static fixed bottom-0 left-0 w-full p-4 z-10 flex justify-center">
+                <Button
+                  type="submit"
+                  disabled={ isPending }
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium text-xl  max-w-lg px-8 py-4 rounded-md"
+                >
+                  { isPending ? 'Submitting...' : 'Submit' }
+                </Button>
               </div>
-            ) ) }
-            <Button type="submit" disabled={ isPending }>
-              { isPending ? 'Submitting...' : 'Submit' }
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

@@ -11,11 +11,11 @@ export default function NewForm ()
   if ( !user ) return <div>User not authenticated</div>;
 
   const orgId = user.organizationId;  // Ensure user object has organizationId
-
+  const userId = user.id;  // Ensure user object has id
   return (
     <div>
-      <FormBuilderComponent orgId={ orgId } user={ user }
-        />
+      <FormBuilderComponent orgId={ orgId } userId={ user } orgName={ user.orgName }
+      />
     </div>
   );
 }
