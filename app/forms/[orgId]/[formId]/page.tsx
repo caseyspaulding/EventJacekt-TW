@@ -105,9 +105,35 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
 
   const onSubmit = async ( data: any ) =>
   {
+    // Convert checkbox groups to arrays
+    const formattedData = { ...data };
+    form.fields.forEach( ( field ) =>
+    {
+      if ( field.fieldType === 'checkbox' && field.options )
+      {
+        // Ensure the data is an array
+        const value = data[ field.id ];
+        formattedData[ field.id ] = Array.isArray( value ) ? value : value ? [ value ] : [];
+      }
+    } );
+
+    // Create a FormData object from formattedData
+    const formData = new FormData();
+    Object.keys( formattedData ).forEach( ( key ) =>
+    {
+      const value = formattedData[ key ];
+      if ( Array.isArray( value ) )
+      {
+        value.forEach( ( v ) => formData.append( key, v ) );
+      } else
+      {
+        formData.append( key, value );
+      }
+    } );
+
     startTransition( async () =>
     {
-      await submitForm( new FormData( document.getElementById( 'dynamic-form' ) as HTMLFormElement ), form.id, orgId );
+      await submitForm( formData, form.id, orgId );
 
       reset();
 
@@ -125,6 +151,84 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
       : form.backgroundType === 'color'
         ? { backgroundColor: form.backgroundValue }
         : { backgroundImage: 'linear-gradient(to top, #e7e5e4 0%, #fafaf9 100%)' }; // default gradient
+
+  const renderField = ( field: FormField ) =>
+  {
+    switch ( field.fieldType )
+    {
+      case 'textarea':
+        return (
+          <Textarea
+            id={ field.id }
+            placeholder={ field.placeholder }
+            required={ field.isRequired }
+            { ...register( field.id ) }
+            className="block w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        );
+      case 'select':
+        return (
+          <select
+            id={ field.id }
+            required={ field.isRequired }
+            { ...register( field.id ) }
+            className="block w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select an option</option>
+            { field.options?.map( ( option: string, index: number ) => (
+              <option key={ index } value={ option }>
+                { option }
+              </option>
+            ) ) }
+          </select>
+        );
+      case 'radio':
+        return (
+          <div>
+            { field.options?.map( ( option: string, index: number ) => (
+              <div key={ index } className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  id={ `${ field.id }-${ index }` }
+                  value={ option }
+                  { ...register( field.id ) }
+                  className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                />
+                <Label htmlFor={ `${ field.id }-${ index }` }>{ option }</Label>
+              </div>
+            ) ) }
+          </div>
+        );
+      case 'checkbox':
+        return (
+          <div>
+            { field.options?.map( ( option: string, index: number ) => (
+              <div key={ index } className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id={ `${ field.id }-${ index }` }
+                  value={ option }
+                  { ...register( field.id ) }
+                  className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                />
+                <Label htmlFor={ `${ field.id }-${ index }` }>{ option }</Label>
+              </div>
+            ) ) }
+          </div>
+        );
+      default:
+        return (
+          <Input
+            type={ field.fieldType }
+            id={ field.id }
+            placeholder={ field.placeholder }
+            required={ field.isRequired }
+            { ...register( field.id ) }
+            className="block w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        );
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center pb-16" style={ backgroundStyle }>
@@ -152,24 +256,7 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
                     { field.fieldName }
                     { field.isRequired && <span className="text-red-500">*</span> }
                   </Label>
-                  { field.fieldType === 'textarea' ? (
-                    <Textarea
-                      id={ field.id }
-                      placeholder={ field.placeholder }
-                      required={ field.isRequired }
-                      { ...register( field.id ) }
-                      className="block w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <Input
-                      type={ field.fieldType }
-                      id={ field.id }
-                      placeholder={ field.placeholder }
-                      required={ field.isRequired }
-                      { ...register( field.id ) }
-                      className="block w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) }
+                  { renderField( field ) }
                 </div>
               ) ) }
               <div className="sm:static fixed bottom-0 left-0 w-full p-4 z-10 flex justify-center">

@@ -15,7 +15,8 @@ import
     date,
     jsonb,
     doublePrecision,
-    time
+    time,
+    uniqueIndex
 } from 'drizzle-orm/pg-core';
 
 // Organizations Table
@@ -68,7 +69,6 @@ export const userProfiles = pgTable( 'user_profiles', {
     role: text( 'role' ).notNull().default( 'user' ), // User's role within the organization
     contactNumber: text( 'contact_number' ), // Contact phone number
     bio: text( 'bio' ), // User biography or description
-
     socialLinks: jsonb( 'social_links' ), // Links to social media profiles
     isActive: boolean( 'is_active' ).default( true ), // Active status flag
     lastLogin: timestamp( 'last_login' ), // Last login timestamp
@@ -77,7 +77,11 @@ export const userProfiles = pgTable( 'user_profiles', {
     department: text( 'department' ), // Department within the organization
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
-
+}, ( table ) =>
+{
+    return {
+        userIdUnique: uniqueIndex( 'user_profiles_user_id_unique' ).on( table.userId ), // Ensure userId is unique
+    };
 } );
 
 // Grants Table
@@ -161,7 +165,7 @@ export const formResponseDetails = pgTable( 'form_response_details', {
     formFieldId: uuid( 'form_field_id' )
         .notNull()
         .references( () => formFields.id ), // Foreign key to form fields
-    fieldValue: text( 'field_value' ).notNull(), // The value entered by the user
+    fieldValue: jsonb( 'field_value' ).notNull(), // Changed from 'text' to 'jsonb'
     createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
 } );
 

@@ -176,6 +176,20 @@
       "when": 1728856571520,
       "tag": "0024_wild_nuke",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1728926001446,
+      "tag": "0025_acoustic_nova",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1728926673022,
+      "tag": "0026_real_dark_phoenix",
+      "breakpoints": true
     }
   ]
 }

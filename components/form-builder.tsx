@@ -186,11 +186,11 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
       label: `New ${ type } field`,
       placeholder: `Enter ${ type }`,
       required: false,
-      options: type === 'radio' || type === 'select' ? [ 'Option 1', 'Option 2' ] : undefined,
-      order: form.fields.length
-    }
-    setForm( { ...form, fields: [ ...form.fields, newField ] } )
-  }
+      options: [ 'radio', 'select', 'checkbox' ].includes( type ) ? [ 'Option 1', 'Option 2' ] : undefined,
+      order: form.fields.length,
+    };
+    setForm( { ...form, fields: [ ...form.fields, newField ] } );
+  };
 
   const removeField = ( id: string ) =>
   {
@@ -219,8 +219,8 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
     // Fetch user_profiles.id where user_profiles.userId = userId
     const { data: userProfile, error: userProfileError } = await supabase
       .from( 'user_profiles' )
-      .select( 'id' )
-      .eq( 'user_id', userId.id )
+      .select( 'user_id' ) // Fetch the user_id, not id
+      .eq( 'user_id', userId.id ) // Assuming userId.id is the correct value from Supabase auth
       .single();
 
     if ( userProfileError || !userProfile )
@@ -228,7 +228,6 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
       console.error( 'Error fetching user profile:', userProfileError );
       return;
     }
-
     // Upload the header media if the file is selected
     let uploadedHeaderMediaUrl = headerMediaUrl;
     if ( headerMediaFile )
@@ -248,7 +247,7 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
       isArchived: isArchived,
       headerMediaUrl: uploadedHeaderMediaUrl, // Set the uploaded URL
       headerMediaType: 'image', // Assuming you're working with an image
-      creator_id: userProfile.id, // Use the fetched userProfile.id
+      creator_id: userProfile.user_id, // Use the user_id, not the id
     };
 
     try
@@ -333,7 +332,16 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
       case 'textarea':
         return <Textarea id={ field.id } placeholder={ field.placeholder } required={ field.required } />
       case 'checkbox':
-        return <Checkbox id={ field.id } />
+        return (
+          <div>
+            { field.options?.map( ( option, index ) => (
+              <div key={ index } className="flex items-center space-x-2">
+                <Checkbox id={ `${ field.id }-${ index }` } />
+                <Label htmlFor={ `${ field.id }-${ index }` }>{ option }</Label>
+              </div>
+            ) ) }
+          </div>
+        );
       case 'radio':
         return (
           <RadioGroup>
@@ -586,7 +594,7 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
                                     />
                                     <Label htmlFor={ `${ field.id }-required` }>Required</Label>
                                   </div>
-                                  { ( field.type === 'radio' || field.type === 'select' ) && (
+                                  { [ 'radio', 'select', 'checkbox' ].includes( field.type ) && (
                                     <Textarea
                                       value={ field.options?.join( '\n' ) }
                                       onChange={ ( e ) => updateField( field.id, { options: e.target.value.split( '\n' ) } ) }
