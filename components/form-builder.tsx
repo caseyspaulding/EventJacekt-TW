@@ -75,12 +75,22 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
 
 
   // Upload header image to Supabase
+  // Upload header image to Supabase
   const handleFileUpload = async ( file: File ) =>
   {
     setIsUploading( true );
+
+    // Use timestamp for a unique file name
+    const timestamp = new Date().getTime();
+    const uniqueFileName = `${ timestamp }_${ file.name }`; // Append the timestamp to the file name
+
+    // Create a folder for the organization but not for the timestamp
+    const filePath = `public/${ user?.orgName }/${ uniqueFileName }`;
+
+    // Upload the file to Supabase
     const { data, error } = await supabase.storage
       .from( 'media' )
-      .upload( `public/${ user?.orgName }/${ new Date().toISOString() }/${ file.name }`, file );
+      .upload( filePath, file );
 
     if ( error )
     {
@@ -89,9 +99,17 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
       return null;
     }
 
+    // Get the public URL of the uploaded file
     const { data: publicUrlData } = supabase.storage
       .from( 'media' )
-      .getPublicUrl( `public/${ file.name }` );
+      .getPublicUrl( filePath ); // Use the correct file path here
+
+    if ( !publicUrlData )
+    {
+      console.error( 'Error getting public URL' );
+      setIsUploading( false );
+      return null;
+    }
 
     setIsUploading( false );
     return publicUrlData?.publicUrl || null;

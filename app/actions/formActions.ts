@@ -6,6 +6,8 @@ import { formFields, formResponses, forms } from "@/db/schema";
 import { createClient } from "@/utils/supabase/server";
 import { eq } from "drizzle-orm";
 
+const supabase = createClient();
+
 interface FormFieldInput
 {
   id: string;
@@ -212,6 +214,23 @@ export async function getArchivedForms ( orgId: string )
     console.error( 'Error in getArchivedForms:', error );
     return [];
   }
+}
+
+export async function getOrganizationById ( orgId: string ): Promise<string | null>
+{
+  const { data, error } = await supabase
+    .from( 'organizations' )
+    .select( 'name' )
+    .eq( 'id', orgId )
+    .single();
+
+  if ( error )
+  {
+    console.error( 'Error fetching organization:', error.message );
+    return null;
+  }
+
+  return data?.name || null;
 }
 
 export async function submitForm ( formData: FormData, formId: string, orgId: string )

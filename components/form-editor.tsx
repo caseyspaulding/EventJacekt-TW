@@ -21,6 +21,7 @@ import CustomAlertDialog from './CustomAlertDialog'
 import { createClient } from '@/utils/supabase/client'
 import { AddElementsDrawer } from './AddElementsDrawer'
 
+
 const supabase = createClient();
 type FieldType = 'text' | 'textarea' | 'number' | 'checkbox' | 'radio' | 'select' | 'date' | 'file'
 
@@ -65,7 +66,7 @@ export function FormEditorComponent ( { orgId, formId, user }: FormEditorProps )
   const [ error, setError ] = useState<string | null>( null );
   const [ headerMediaUrl, setHeaderMediaUrl ] = useState<string | null>( null );
   const [ headerMediaFile, setHeaderMediaFile ] = useState<File | null>( null ); // New state for header media file
-
+  const [ isUploading, setIsUploading ] = useState( false );
   const [ headerMediaPreview, setHeaderMediaPreview ] = useState<string | null>( null ); // For preview
 
 
@@ -104,7 +105,7 @@ export function FormEditorComponent ( { orgId, formId, user }: FormEditorProps )
     load();
   }, [ formId ] );
 
-  
+
   if ( error )
   {
     return <div className="text-red-500">{ error }</div>;
@@ -323,6 +324,46 @@ export function FormEditorComponent ( { orgId, formId, user }: FormEditorProps )
     setForm( { ...form, fields: [ ...form.fields, newField ] } );
   };
 
+  // Upload header image to Supabase
+  // Upload header image to Supabase
+  const handleFileUpload = async ( file: File ) =>
+  {
+    setIsUploading( true );
+
+    // Use timestamp for a unique file name
+    const timestamp = new Date().getTime();
+    const uniqueFileName = `${ timestamp }_${ file.name }`; // Append the timestamp to the file name
+
+    // Create a folder for the organization but not for the timestamp
+    const filePath = `public/${ user?.orgName }/${ uniqueFileName }`;
+
+    // Upload the file to Supabase
+    const { data, error } = await supabase.storage
+      .from( 'media' )
+      .upload( filePath, file );
+
+    if ( error )
+    {
+      console.error( 'Error uploading file:', error.message );
+      setIsUploading( false );
+      return null;
+    }
+
+    // Get the public URL of the uploaded file
+    const { data: publicUrlData } = supabase.storage
+      .from( 'media' )
+      .getPublicUrl( filePath ); // Use the correct file path here
+
+    if ( !publicUrlData )
+    {
+      console.error( 'Error getting public URL' );
+      setIsUploading( false );
+      return null;
+    }
+
+    setIsUploading( false );
+    return publicUrlData?.publicUrl || null;
+  };
   // Handle file selection and preview generation
   const handleFileChange = ( e: React.ChangeEvent<HTMLInputElement> ) =>
   {

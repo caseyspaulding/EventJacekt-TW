@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useForm } from 'react-hook-form';
 import { submitForm } from '@/app/actions/formActions';
 import { useToast } from "@/hooks/use-toast";
+import { getOrganizationById } from '@/app/actions/formActions';
 
 const supabase = createClient();
 
@@ -89,12 +90,15 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
   const [ form, setForm ] = useState<Form | null>( null );
   const [ isPending, startTransition ] = useTransition();
   const { register, handleSubmit, reset } = useForm();
+  const [ orgName, setOrgName ] = useState<string | null>( null ); // State for org name
+
 
   useEffect( () =>
   {
     if ( formId && orgId )
     {
       getForm( formId ).then( setForm );
+      getOrganizationById( orgId ).then( setOrgName ); // Fetch the organization name
     }
   }, [ params ] );
 
@@ -234,7 +238,11 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
   return (
     <div className="min-h-screen flex items-center justify-center pb-16" style={ backgroundStyle }>
       <div className="w-full max-w-5xl p-4">
+        <div className="flex justify-center items-center py-4">
+          <h2 className="text-3xl font-bold text-gray-800">{ orgName }</h2>
+        </div>
         { form.headerMediaUrl && (
+
           <div className="">
             <img
               src={ form.headerMediaUrl }
@@ -246,7 +254,7 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
         ) }
         <Card className="rounded-2xl max-w-5xl mx-auto bg-opacity-50 backdrop-blur-lg pb-16 text-2xl shadow-lg">
           <CardHeader className="bg-blue-500 text-white font-normal ">
-            <CardTitle>{ form.name }</CardTitle>
+            <CardTitle><h1>{ form.name }</h1></CardTitle>
           </CardHeader>
           <CardContent>
             <p className="my-4 text-gray-700">{ form.description }</p>
