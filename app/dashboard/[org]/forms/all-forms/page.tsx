@@ -134,7 +134,7 @@ export default function FormsPage ()
 
   return (
     <>
-      <div className="sm:px-6 p-6 rounded-2xl bg-white">
+      <div className="rounded-2xl bg-white">
         <h1 className="text-2xl font-semibold mb-4">All Forms</h1>
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
@@ -184,8 +184,8 @@ export default function FormsPage ()
                         <td className="px-3 py-2">
                           { renderStatusLabel( form ) }
                         </td>
-                        <td className="px-3 py-2">
-                          <div className="flex flex-wrap gap-2">
+                        <td className="">
+                          <div className="flex ">
                             <Link
                               href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }` }
                             >
@@ -197,14 +197,14 @@ export default function FormsPage ()
                               href={ `/forms/${ user?.organizationId }/${ form.id }` }
                             >
                               <Button size="sm" color="primary" variant="light">
-                                View Form
+                                View 
                               </Button>
                             </Link>
                             <Link
                               href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }/responses` }
                             >
                               <Button size="sm" color="primary" variant="light">
-                                View Responses
+                               Responses
                               </Button>
                             </Link>
                             <Button
@@ -216,6 +216,7 @@ export default function FormsPage ()
                               Archive
                             </Button>
                           </div>
+
                         </td>
                       </tr>
                     ) )
@@ -249,7 +250,7 @@ export default function FormsPage ()
                   <p className="text-sm text-gray-600 mt-2">
                     { form.description || 'No description' }
                   </p>
-                  <div className="mt-4 flex flex-col space-y-2">
+                  <div className="mt-4 flex ">
                     <Link
                       href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }` }
                     >

@@ -456,7 +456,7 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
           />
           <Button
             variant="outline"
-            className="ml-2"
+            className="rounded-l-none"
             onClick={ () =>
             {
               const formUrl = `${ window.location.origin }/forms/${ orgId }/${ form.id }`
@@ -478,7 +478,7 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
               }
             } }
           >
-            <Copy className="h-4 w-4 mr-2" />
+            <Copy className="h-4 w-4 mr-2 " />
             Copy
           </Button>
           <Button className="ml-2" onClick={ viewFormLive }>
@@ -501,7 +501,7 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
             </Button>
           </div>
 
-          <div className="w-full md:w-3/4">
+          <div className="w-full ">
 
             <Card>
               <CardHeader>
