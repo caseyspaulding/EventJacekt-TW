@@ -151,7 +151,7 @@ export default function ScanTicketsPage ()
 
         { errorMessage && <p className="text-center text-red-600 font-semibold mt-4">{ errorMessage }</p> }
 
-        <div className="mt-6">
+        <div className="">
           <h2 className="text-lg text-center rounded-2xl font-bold mb-1">Scanned Tickets Log</h2>
           <ul className='bg-gray-100 rounded-2xl'>
             { scannedTickets.map( ( ticket, index ) => (
