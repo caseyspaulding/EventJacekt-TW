@@ -4,8 +4,16 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getFormResponses, getFormFields } from '@/app/actions/formActions';
 import LogoSpinner from '@/components/Loaders/LogoSpinner';
-import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/modal';
+import
+  {
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+  } from '@nextui-org/modal';
 import { Button } from '@nextui-org/button';
+import Link from 'next/link';
 
 interface FormResponse
 {
@@ -32,8 +40,13 @@ export default function FormResponsesPage ()
   // Added state variables
   const [ searchTerm, setSearchTerm ] = useState( '' );
   const [ isModalOpen, setIsModalOpen ] = useState( false );
-  const [ selectedResponse, setSelectedResponse ] = useState<FormResponse | null>( null );
-  const [ sortConfig, setSortConfig ] = useState<{ key: string; direction: 'ascending' | 'descending' } | null>( null );
+  const [ selectedResponse, setSelectedResponse ] = useState<FormResponse | null>(
+    null
+  );
+  const [ sortConfig, setSortConfig ] = useState<{
+    key: string;
+    direction: 'ascending' | 'descending';
+  } | null>( null );
 
   useEffect( () =>
   {
@@ -60,7 +73,9 @@ export default function FormResponsesPage ()
         setResponses( formattedResponses );
 
         // Fetch form fields
-        const fieldsData = ( await getFormFields( formId as string ) ).map( ( field: any ) => ( {
+        const fieldsData = (
+          await getFormFields( formId as string )
+        ).map( ( field: any ) => ( {
           ...field,
           fieldType: field.fieldType || 'text', // Default to 'text' if fieldType is missing
         } ) );
@@ -108,10 +123,7 @@ export default function FormResponsesPage ()
       headers.join( ',' ), // Header row
       ...responses.map( ( response ) =>
       {
-        const row = [
-          response.responseId,
-          response.submittedAt,
-        ];
+        const row = [ response.responseId, response.submittedAt ];
 
         fields.forEach( ( field ) =>
         {
@@ -131,7 +143,9 @@ export default function FormResponsesPage ()
           {
             // Escape quotes in values
             const formattedValue =
-              typeof value === 'string' ? `"${ value.replace( /"/g, '""' ) }"` : value;
+              typeof value === 'string'
+                ? `"${ value.replace( /"/g, '""' ) }"`
+                : value;
             row.push( formattedValue );
           }
         } );
@@ -156,7 +170,11 @@ export default function FormResponsesPage ()
   function handleSort ( key: string )
   {
     let direction: 'ascending' | 'descending' = 'ascending';
-    if ( sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending' )
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === 'ascending'
+    )
     {
       direction = 'descending';
     }
@@ -236,42 +254,56 @@ export default function FormResponsesPage ()
   }
 
   return (
-    <div className="sm:px-6 p-6 rounded-2xl bg-white">
+    <div className=" bg-white">
       {/* Summary Section */ }
       <div className="bg-gray-100 p-4 rounded-lg mb-6">
         <h2 className="text-xl font-semibold">Summary</h2>
         <p>Total Responses: { responses.length }</p>
         {/* You may want to update this to compute actual statistics */ }
-       
       </div>
 
-      {/* Export Button */ }
-      <Button className="bg-blue-700 ml-2 text-white px-4 py-2 rounded-md mb-4" onClick={ handleExportToCSV }>
-        Export to CSV
-      </Button>
+      {/* Export and Search Section */ }
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+        <div className="flex space-x-2 mb-2 sm:mb-0">
+          <Button
+            className="bg-blue-700 text-white px-4 py-2 rounded-md"
+            onClick={ handleExportToCSV }
+          >
+            Export to CSV
+          </Button>
+          {/* Add other buttons if needed */ }
+        </div>
+        <input
+          type="text"
+          placeholder="Search responses..."
+          className="px-4 py-2 border rounded-md"
+          onChange={ ( e ) => setSearchTerm( e.target.value ) }
+        />
+      </div>
 
-      {/* Search and Filter Section */ }
-      <input
-        type="text"
-        placeholder="Search responses..."
-        className="px-4 py-2 mb-4 ml-4 border rounded-md"
-        onChange={ ( e ) => setSearchTerm( e.target.value ) }
-      />
-
-      {/* Responses Table */ }
-      <div className="overflow-x-auto">
+      {/* Desktop Table */ }
+      <div className="overflow-x-auto hidden sm:block">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">
                 Submitted At
-                <button onClick={ () => handleSort( 'submittedAt' ) } className="ml-2 text-gray-500">
+                <button
+                  onClick={ () => handleSort( 'submittedAt' ) }
+                  className="ml-2 text-gray-500"
+                >
                   ⇅
                 </button>
               </th>
-              <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">Response Data</th>
-              <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900"></th>
-              <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
+              <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">
+                Response Data
+              </th>
+              <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">
+                Attachments
+              </th>
+              <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -290,42 +322,51 @@ export default function FormResponsesPage ()
                   </td>
                   <td className="px-3 py-2">
                     <ul className="list-disc list-inside">
-                      { Object.entries( response.responseData ).map( ( [ key, value ] ) =>
-                      {
-                        const fieldName = fieldIdToNameMap[ key ] || key;
-                        const fieldType = fieldIdToTypeMap[ key ];
-
-                        // If the field is an attachment, skip it here
-                        if ( fieldType === 'file' || fieldType === 'attachment' )
+                      { Object.entries( response.responseData ).map(
+                        ( [ key, value ] ) =>
                         {
-                          return null;
-                        }
+                          const fieldName = fieldIdToNameMap[ key ] || key;
+                          const fieldType = fieldIdToTypeMap[ key ];
 
-                        return (
-                          <li key={ key }>
-                            <strong>{ fieldName }:</strong> { value }
-                          </li>
-                        );
-                      } ) }
+                          // If the field is an attachment, skip it here
+                          if ( fieldType === 'file' || fieldType === 'attachment' )
+                          {
+                            return null;
+                          }
+
+                          return (
+                            <li key={ key }>
+                              <strong>{ fieldName }:</strong> { value }
+                            </li>
+                          );
+                        }
+                      ) }
                     </ul>
                   </td>
                   <td className="px-3 py-2">
-                    { Object.entries( response.responseData ).map( ( [ key, value ] ) =>
-                    {
-                      const fieldType = fieldIdToTypeMap[ key ];
-
-                      if ( fieldType === 'file' || fieldType === 'attachment' )
+                    { Object.entries( response.responseData ).map(
+                      ( [ key, value ] ) =>
                       {
-                        return (
-                          <div key={ key }>
-                            <a href={ value } target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                              { fieldIdToNameMap[ key ] || 'Attachment' }
-                            </a>
-                          </div>
-                        );
+                        const fieldType = fieldIdToTypeMap[ key ];
+
+                        if ( fieldType === 'file' || fieldType === 'attachment' )
+                        {
+                          return (
+                            <div key={ key }>
+                              <a
+                                href={ value }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline"
+                              >
+                                { fieldIdToNameMap[ key ] || 'Attachment' }
+                              </a>
+                            </div>
+                          );
+                        }
+                        return null;
                       }
-                      return null;
-                    } ) }
+                    ) }
                   </td>
                   <td className="px-3 py-2">
                     <button
@@ -339,7 +380,10 @@ export default function FormResponsesPage ()
               ) )
             ) : (
               <tr>
-                <td colSpan={ 4 } className="px-3 py-2 text-center text-sm text-gray-500">
+                <td
+                  colSpan={ 4 }
+                  className="px-3 py-2 text-center text-sm text-gray-500"
+                >
                   No responses found.
                 </td>
               </tr>
@@ -348,36 +392,127 @@ export default function FormResponsesPage ()
         </table>
       </div>
 
+      {/* Mobile Stacked Layout */ }
+      <div className="sm:hidden">
+        { filteredResponses.length > 0 ? (
+          filteredResponses.map( ( response ) => (
+            <div
+              key={ response.responseId }
+              className="border rounded-lg mb-4 p-4 bg-white shadow-sm"
+            >
+              <div className="mb-2">
+                <span className="font-medium text-gray-900">Submitted At:</span>{ ' ' }
+                { new Date( response.submittedAt ).toLocaleString( 'en-US', {
+                  month: '2-digit',
+                  day: '2-digit',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: false,
+                } ) }
+              </div>
+              <div className="mb-2">
+                <span className="font-medium text-gray-900">Response Data:</span>
+                <ul className="list-disc list-inside">
+                  { Object.entries( response.responseData ).map( ( [ key, value ] ) =>
+                  {
+                    const fieldName = fieldIdToNameMap[ key ] || key;
+                    const fieldType = fieldIdToTypeMap[ key ];
+
+                    // If the field is an attachment, skip it here
+                    if ( fieldType === 'file' || fieldType === 'attachment' )
+                    {
+                      return null;
+                    }
+
+                    return (
+                      <li key={ key }>
+                        <strong>{ fieldName }:</strong> { value }
+                      </li>
+                    );
+                  } ) }
+                </ul>
+              </div>
+              <div className="mb-2">
+                <span className="font-medium text-gray-900">Attachments:</span>
+                <div>
+                  { Object.entries( response.responseData ).map( ( [ key, value ] ) =>
+                  {
+                    const fieldType = fieldIdToTypeMap[ key ];
+
+                    if ( fieldType === 'file' || fieldType === 'attachment' )
+                    {
+                      return (
+                        <div key={ key }>
+                          <a
+                            href={ value }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 underline"
+                          >
+                            { fieldIdToNameMap[ key ] || 'Attachment' }
+                          </a>
+                        </div>
+                      );
+                    }
+                    return null;
+                  } ) }
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  className="text-blue-600 hover:text-blue-900"
+                  onClick={ () => openDetailsModal( response ) }
+                >
+                  View Details
+                </button>
+              </div>
+            </div>
+          ) )
+        ) : (
+          <p className="text-center text-sm text-gray-500">
+            No responses found.
+          </p>
+        ) }
+      </div>
+
       {/* Modal for Viewing Detailed Response */ }
       <Modal isOpen={ isModalOpen } onClose={ () => setIsModalOpen( false ) }>
         <ModalContent>
           <ModalHeader>Response Details</ModalHeader>
           <ModalBody>
             <ul>
-              { Object.entries( selectedResponse?.responseData ?? {} ).map( ( [ key, value ] ) =>
-              {
-                const fieldName = fieldIdToNameMap[ key ] || key;
-                const fieldType = fieldIdToTypeMap[ key ];
+              { Object.entries( selectedResponse?.responseData ?? {} ).map(
+                ( [ key, value ] ) =>
+                {
+                  const fieldName = fieldIdToNameMap[ key ] || key;
+                  const fieldType = fieldIdToTypeMap[ key ];
 
-                if ( fieldType === 'file' || fieldType === 'attachment' )
-                {
-                  return (
-                    <li key={ key }>
-                      <strong>{ fieldName }:</strong>{ ' ' }
-                      <a href={ value } target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                        View Attachment
-                      </a>
-                    </li>
-                  );
-                } else
-                {
-                  return (
-                    <li key={ key }>
-                      <strong>{ fieldName }:</strong> { value }
-                    </li>
-                  );
+                  if ( fieldType === 'file' || fieldType === 'attachment' )
+                  {
+                    return (
+                      <li key={ key }>
+                        <strong>{ fieldName }:</strong>{ ' ' }
+                        <a
+                          href={ value }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline"
+                        >
+                          View Attachment
+                        </a>
+                      </li>
+                    );
+                  } else
+                  {
+                    return (
+                      <li key={ key }>
+                        <strong>{ fieldName }:</strong> { value }
+                      </li>
+                    );
+                  }
                 }
-              } ) }
+              ) }
             </ul>
           </ModalBody>
           <ModalFooter>
