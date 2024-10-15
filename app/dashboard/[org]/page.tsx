@@ -95,7 +95,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                 name: 'Tickets Sold',
                 icon: BanknotesIcon,
                 amount: formattedTotalSales,
-                href: `/dashboard/${ decodedOrgName }/tickets-sole`,
+                href: `/dashboard/${ decodedOrgName }/banking/payments`,
             },
             {
                 name: 'Total Events',
@@ -107,7 +107,7 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
                 name: 'Members',
                 icon: HomeIcon,
                 amount: totalMembers.toString(),
-                href: `/dashboard/${ decodedOrgName }/members`,
+                href: `/dashboard/${ decodedOrgName }/team/members`,
             },
         ];
 
