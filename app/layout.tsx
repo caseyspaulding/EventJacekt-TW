@@ -18,7 +18,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
 {
     return (
         <html lang="en" className={ spaceGrotesk.className }>
-            
+
             <body>
                 {/* Google Tag Manager Script */ }
                 <Script
