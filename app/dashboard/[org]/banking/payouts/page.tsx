@@ -77,7 +77,7 @@ export default function PayoutsPage ( { params }: { params: { org: string } } )
 
   return (
     <ConnectComponentsProvider connectInstance={ stripeConnectInstance }>
-      <div className='bg-white p-6 rounded-2xl shadow-md'>
+      <div className='bg-white '>
         <h1 className="text-3xl font-semibold mb-4 ">Manage Your Payouts</h1>
         <ConnectPayouts />
         <h2 className="text-2xl mt-6 font-semibold mb-4">What are Payouts?</h2>

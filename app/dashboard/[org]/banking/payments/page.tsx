@@ -95,7 +95,7 @@ export default function PaymentsPage({ params }: { params: { org: string } }) {
   }
 
   return (
-    <div className='bg-white p-6 rounded-2xl shadow-md'>
+    <div className='bg-white '>
       <h1 className="text-3xl font-semibold mb-4">Payments</h1>
       <div id="payments-container"></div>
 

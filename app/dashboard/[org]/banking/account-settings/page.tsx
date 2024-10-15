@@ -73,7 +73,7 @@ export default function AccountManagementPage ( { params }: { params: { org: str
 
   return (
     <ConnectComponentsProvider connectInstance={ stripeConnectInstance }>
-      <div className='bg-white p-6 rounded-2xl shadow-md'>
+      <div className='bg-white '>
         <h1 className="text-3xl font-semibold mb-4">Manage Your Stripe Account</h1>
         <ConnectAccountManagement />
       </div>

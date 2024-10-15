@@ -78,7 +78,7 @@ export default function SettingsPage() {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Settings</h1>
+      <h1 className="text-3xl font-bold mb-6">Settings - (Under Construction)</h1>
 
       {/* Main navigation */}
       <nav className="flex space-x-6 mb-6">

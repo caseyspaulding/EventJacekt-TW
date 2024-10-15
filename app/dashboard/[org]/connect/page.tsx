@@ -11,12 +11,12 @@ const tabsData = [
         <div className="flex flex-col md:flex-row gap-8">
           <div className="flex-1 space-y-4">
             <h2 className="text-3xl font-bold">Send personalized emails, texts, videos, and more</h2>
-            <p className="text-xl">Engage your community like never before. This is donor stewardship, done right.</p>
+            <p className="text-xl">Connect your community like never before, done right.</p>
 
           </div>
           <div className="flex-1">
             <img
-              src="/placeholder.svg?height=400&width=400"
+              src="/images/festival-4.png?height=400&width=400"
               alt="Image"
               className="w-full h-auto rounded-lg shadow-lg"
             />
@@ -42,11 +42,11 @@ const tabsData = [
   },
 ];
 
-export default function MyApp ()
+export default function Connect ()
 {
   return (
     <TabsComponent
-      title="Connect"
+      title="Connect - Under Construction"
       description="Connect with your audience with branded and customized content."
       tabsData={ tabsData }
     />
