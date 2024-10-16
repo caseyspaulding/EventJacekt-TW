@@ -16,6 +16,8 @@ import
 
   CogIcon,
 
+  DocumentIcon,
+
   EnvelopeIcon,
 
   EnvelopeOpenIcon,
@@ -37,8 +39,9 @@ import { fetchClientSecret } from './fetchClientSecret';
 
 
 import { HiMailOpen, HiOutlineLibrary } from 'react-icons/hi';
-import { LucideMailbox } from 'lucide-react';
+import { ClipboardCheck, LucideMailbox, MessageCircleCodeIcon, MessageCircleDashed, MessageCircleHeartIcon, MessageCircleIcon, MessageCircleMoreIcon, MessageCirclePlusIcon } from 'lucide-react';
 import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
+import { DocumentArrowUpIcon } from '@heroicons/react/20/solid';
 
 
 
@@ -58,7 +61,7 @@ const navigation = [
 
     ],
   },
-  { name: 'Connect', href: '/connect', icon: EnvelopeIcon, current: false },
+  //{ name: 'Connect', href: '/connect', icon: MessageCircleMoreIcon, current: false },
 
   {
     name: 'Team',
@@ -91,7 +94,7 @@ const navigation = [
   {
 
     name: 'Forms',
-    icon: ClipboardDocumentIcon,
+    icon: DocumentIcon,
     current: false,
     children: [
       { name: 'All Forms', href: '/forms/all-forms' },
@@ -100,7 +103,18 @@ const navigation = [
 
     ],
   },
- 
+  {
+
+    name: 'Signups',
+    icon: ClipboardCheck,
+    current: false,
+    children: [
+      { name: 'All', href: '/signup-sheets/all' },
+      { name: 'Create Signup', href: '/signup-sheets/new' },
+
+
+    ],
+  },
 
 
 
@@ -116,7 +130,8 @@ const navigation = [
       { name: 'Help', href: '/banking/help' },
     ],
   },
-  { name: 'Settings', href: '/settings', icon: CogIcon, current: false },
+
+  //{ name: 'Settings', href: '/settings', icon: CogIcon, current: false },
 
 ];
 

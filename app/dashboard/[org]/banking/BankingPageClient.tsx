@@ -86,12 +86,12 @@ export default function BankingPageClient ( {
     const breadcrumbs = [
         { name: 'Dashboard', href: '/' },
         { name: 'Connect Account', href: '/banking', current: true },
-      
+
     ];
     return (
         <div className="bg-white   ">
 
-            <BreadcrumbsPageHeader title="Connect Account" breadcrumbs={ breadcrumbs } />
+            <BreadcrumbsPageHeader title="Connect Bank Account" breadcrumbs={ breadcrumbs } />
 
             { ( connectedAccountId || accountCreatePending || onboardingExited ) && (
                 <div className="mt-6 p-4 bg-gray-50 rounded-lg">
@@ -106,7 +106,7 @@ export default function BankingPageClient ( {
             ) }
 
             <div className="mt-8 space-y-6 ">
-               
+
                 { !connectedAccountId && (
                     <>
                         <h2 className="text-2xl font-semibold text-gray-700">Get ready for take off</h2>
@@ -160,6 +160,6 @@ export default function BankingPageClient ( {
                 </div>
             </div>
         </div>
-       
+
     );
 }
