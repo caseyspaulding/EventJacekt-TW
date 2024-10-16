@@ -25,7 +25,7 @@ export const organizations = pgTable( 'organizations', {
         .primaryKey()
         .default( sql`uuid_generate_v4()` ),
     name: text( 'name' ).notNull().unique(),
-
+   
     contactPhone: text( 'contact_phone' ),
     website: text( 'website' ),
     address: text( 'address' ),
@@ -1682,6 +1682,59 @@ export const calendarEventReminders = pgTable( 'calendar_event_reminders', {
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
+
+/////////////////    END CALENDAR SCHEMA    //////////////////////
+
+////////////////////     Sign Up Schema     //////////////////////
+
+export const signupSheets = pgTable( 'signup_sheets', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
+    creatorId: uuid( 'creator_id' ).notNull().references( () => userProfiles.id ),
+    title: text( 'title' ).notNull(),
+    description: text( 'description' ),
+    eventId: uuid( 'event_id' ).references( () => events.id ), // Optional link to an event
+    isPublished: boolean( 'is_published' ).default( false ),
+    createdAt: timestamp( 'created_at' ).defaultNow(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow(),
+} );
+
+export const signupSheetSlots = pgTable( 'signup_sheet_slots', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    signupSheetId: uuid( 'signup_sheet_id' ).notNull().references( () => signupSheets.id ),
+    title: text( 'title' ).notNull(), // e.g., "10 AM - 12 PM Shift"
+    description: text( 'description' ),
+    date: date( 'date' ), // Date of the slot
+    startTime: time( 'start_time' ),
+    endTime: time( 'end_time' ),
+    quantity: integer( 'quantity' ).default( 1 ), // Number of available spots
+    createdAt: timestamp( 'created_at' ).defaultNow(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow(),
+} );
+
+export const signupSheetResponses = pgTable( 'signup_sheet_responses', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    signupSheetId: uuid( 'signup_sheet_id' ).notNull().references( () => signupSheets.id ),
+    slotId: uuid( 'slot_id' ).notNull().references( () => signupSheetSlots.id ),
+    userId: uuid( 'user_id' ).references( () => userProfiles.userId ), // Nullable for guest sign-ups
+    responderName: text( 'responder_name' ).notNull(), // Required if no user account
+    responderEmail: text( 'responder_email' ).notNull(), // Required if no user account
+    responseData: jsonb( 'response_data' ), // For custom questions
+    createdAt: timestamp( 'created_at' ).defaultNow(),
+} );
+
+export const signupSheetCustomQuestions = pgTable( 'signup_sheet_custom_questions', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    signupSheetId: uuid( 'signup_sheet_id' ).notNull().references( () => signupSheets.id ),
+    questionText: text( 'question_text' ).notNull(),
+    fieldType: text( 'field_type' ).notNull(), // e.g., 'text', 'checkbox'
+    options: jsonb( 'options' ), // For select fields
+    isRequired: boolean( 'is_required' ).default( false ),
+    order: integer( 'order' ).default( 0 ),
+    createdAt: timestamp( 'created_at' ).defaultNow(),
+} );
+
+////////////////////     End Sign Up Schema     //////////////////////
 
 /**
  * Email Campaigns Schema:

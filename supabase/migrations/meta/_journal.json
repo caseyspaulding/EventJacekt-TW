@@ -190,6 +190,13 @@
       "when": 1728926673022,
       "tag": "0026_real_dark_phoenix",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1729080700587,
+      "tag": "0027_woozy_wendell_rand",
+      "breakpoints": true
     }
   ]
 }
