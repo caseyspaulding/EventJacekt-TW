@@ -25,7 +25,7 @@ export const organizations = pgTable( 'organizations', {
         .primaryKey()
         .default( sql`uuid_generate_v4()` ),
     name: text( 'name' ).notNull().unique(),
-   
+
     contactPhone: text( 'contact_phone' ),
     website: text( 'website' ),
     address: text( 'address' ),
@@ -1685,56 +1685,177 @@ export const calendarEventReminders = pgTable( 'calendar_event_reminders', {
 
 /////////////////    END CALENDAR SCHEMA    //////////////////////
 
-////////////////////     Sign Up Schema     //////////////////////
+////////////////////     Sign Up Schema (Updated)     ////////////////////
 
+
+// Enums
+export const participantRoles = [ 'attendee', 'volunteer', 'staff' ] as const;
+export type ParticipantRole = typeof participantRoles[ number ];
+
+export const contactMethods = [ 'email', 'sms' ] as const;
+export type ContactMethod = typeof contactMethods[ number ];
+
+export const notificationTypes = [ 'email', 'sms' ] as const;
+export type NotificationType = typeof notificationTypes[ number ];
+
+export const notificationStatuses = [ 'pending', 'sent', 'failed', 'read' ] as const;
+export type NotificationStatus = typeof notificationStatuses[ number ];
+
+export const fieldTypes = [ 'text', 'checkbox', 'select', 'radio', 'textarea', 'number', 'date' ] as const;
+export type FieldType = typeof fieldTypes[ number ];
+
+export const messageStatuses = [ 'pending', 'sent', 'failed' ] as const;
+export type MessageStatus = typeof messageStatuses[ number ];
+
+export const deliveryMethods = [ 'email', 'sms' ] as const;
+export type DeliveryMethod = typeof deliveryMethods[ number ];
+
+
+
+// Signup Sheets Table
 export const signupSheets = pgTable( 'signup_sheets', {
     id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
     orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
     creatorId: uuid( 'creator_id' ).notNull().references( () => userProfiles.id ),
+    groupId: uuid( 'group_id' ).references( () => signupSheetGroups.id ),
     title: text( 'title' ).notNull(),
     description: text( 'description' ),
-    eventId: uuid( 'event_id' ).references( () => events.id ), // Optional link to an event
-    isPublished: boolean( 'is_published' ).default( false ),
-    createdAt: timestamp( 'created_at' ).defaultNow(),
-    updatedAt: timestamp( 'updated_at' ).defaultNow(),
+    startDate: date( 'start_date' ),
+    endDate: date( 'end_date' ),
+    attachmentUrls: jsonb( 'attachment_urls' ), // Stores an array of URLs
+    eventId: uuid( 'event_id' ).references( () => events.id ),
+    isPublished: boolean( 'is_published' ).default( false ).notNull(),
+    isArchived: boolean( 'is_archived' ).default( false ).notNull(),
+    slug: text( 'slug' ).notNull().unique(), // Unique constraint added
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
 } );
 
+// Signup Sheet Groups Table
+export const signupSheetGroups = pgTable( 'signup_sheet_groups', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
+    name: text( 'name' ).notNull(),
+    description: text( 'description' ),
+    settings: jsonb( 'settings' ),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+// Participants Table
+export const participants = pgTable( 'participants', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    signupSheetId: uuid( 'signup_sheet_id' ).notNull().references( () => signupSheets.id ),
+    participantName: text( 'participant_name' ).notNull(),
+    email: text( 'email' ).notNull(),
+    phone: text( 'phone' ),
+    timeZone: text( 'time_zone' ),
+    profilePicUrl: text( 'profile_pic_url' ),
+    preferredMethodOfContact: text( 'preferred_method_of_contact' ).$type<ContactMethod>(),
+    participantRole: text( 'participant_role' ).$type<ParticipantRole>().default( 'attendee' ).notNull(),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+// Signup Sheet Slots Table
 export const signupSheetSlots = pgTable( 'signup_sheet_slots', {
     id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
     signupSheetId: uuid( 'signup_sheet_id' ).notNull().references( () => signupSheets.id ),
-    title: text( 'title' ).notNull(), // e.g., "10 AM - 12 PM Shift"
+    groupId: uuid( 'group_id' ).references( () => signupSheetGroups.id ),
+    title: text( 'title' ).notNull(),
     description: text( 'description' ),
-    date: date( 'date' ), // Date of the slot
-    startTime: time( 'start_time' ),
-    endTime: time( 'end_time' ),
-    quantity: integer( 'quantity' ).default( 1 ), // Number of available spots
-    createdAt: timestamp( 'created_at' ).defaultNow(),
-    updatedAt: timestamp( 'updated_at' ).defaultNow(),
+    startTimestamp: timestamp( 'start_timestamp' ),
+    endTimestamp: timestamp( 'end_timestamp' ),
+    quantity: integer( 'quantity' ).default( 1 ).notNull(),
+    filledQuantity: integer( 'filled_quantity' ).default( 0 ).notNull(),
+    hideNumberWanted: boolean( 'hide_number_wanted' ).default( false ).notNull(),
+    collectMoney: boolean( 'collect_money' ).default( false ).notNull(),
+    price: numeric( 'price', { precision: 10, scale: 2 } ),
+    currency: text( 'currency' ).default( 'USD' ),
+    waitlistCapacity: integer( 'waitlist_capacity' ).default( 0 ).notNull(),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
 } );
 
-export const signupSheetResponses = pgTable( 'signup_sheet_responses', {
-    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
-    signupSheetId: uuid( 'signup_sheet_id' ).notNull().references( () => signupSheets.id ),
-    slotId: uuid( 'slot_id' ).notNull().references( () => signupSheetSlots.id ),
-    userId: uuid( 'user_id' ).references( () => userProfiles.userId ), // Nullable for guest sign-ups
-    responderName: text( 'responder_name' ).notNull(), // Required if no user account
-    responderEmail: text( 'responder_email' ).notNull(), // Required if no user account
-    responseData: jsonb( 'response_data' ), // For custom questions
-    createdAt: timestamp( 'created_at' ).defaultNow(),
-} );
-
+// Signup Sheet Custom Questions Table
 export const signupSheetCustomQuestions = pgTable( 'signup_sheet_custom_questions', {
     id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
     signupSheetId: uuid( 'signup_sheet_id' ).notNull().references( () => signupSheets.id ),
     questionText: text( 'question_text' ).notNull(),
-    fieldType: text( 'field_type' ).notNull(), // e.g., 'text', 'checkbox'
-    options: jsonb( 'options' ), // For select fields
-    isRequired: boolean( 'is_required' ).default( false ),
-    order: integer( 'order' ).default( 0 ),
-    createdAt: timestamp( 'created_at' ).defaultNow(),
+    fieldType: text( 'field_type' ).$type<FieldType>().notNull(),
+    options: jsonb( 'options' ),
+    isRequired: boolean( 'is_required' ).default( false ).notNull(),
+    validationRules: jsonb( 'validation_rules' ),
+    order: integer( 'order' ).default( 0 ).notNull(),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
 } );
 
-////////////////////     End Sign Up Schema     //////////////////////
+// Signup Sheet Responses Table
+export const signupSheetResponses = pgTable( 'signup_sheet_responses', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    signupSheetId: uuid( 'signup_sheet_id' ).notNull().references( () => signupSheets.id ),
+    slotId: uuid( 'slot_id' ).notNull().references( () => signupSheetSlots.id ),
+    participantId: uuid( 'participant_id' ).references( () => participants.id ),
+    responderName: text( 'responder_name' ),
+    responderEmail: text( 'responder_email' ),
+    responseData: jsonb( 'response_data' ),
+    waitlistStatus: boolean( 'waitlist_status' ).default( false ).notNull(),
+    preferredContactMethod: text( 'preferred_contact_method' ).$type<ContactMethod>(),
+    lastUpdatedBy: uuid( 'last_updated_by' ).references( () => userProfiles.id ),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+// Group Members Table
+export const groupMembers = pgTable( 'group_members', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    groupId: uuid( 'group_id' ).notNull().references( () => signupSheetGroups.id ),
+    participantId: uuid( 'participant_id' ).notNull().references( () => participants.id ),
+    isGroupLeader: boolean( 'is_group_leader' ).default( false ).notNull(),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+// Notifications Table
+export const notifications = pgTable( 'notifications', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    recipientId: uuid( 'recipient_id' ).references( () => participants.id ),
+    notificationType: text( 'notification_type' ).$type<NotificationType>().notNull(),
+    messageContent: text( 'message_content' ).notNull(),
+    status: text( 'status' ).$type<NotificationStatus>().default( 'pending' ).notNull(),
+    scheduledAt: timestamp( 'scheduled_at' ),
+    readAt: timestamp( 'read_at' ),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+// Messages Table
+export const messages = pgTable( 'messages', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    groupId: uuid( 'group_id' ).references( () => signupSheetGroups.id ),
+    participantId: uuid( 'participant_id' ).references( () => participants.id ),
+    content: text( 'content' ).notNull(),
+    attachmentUrls: jsonb( 'attachment_urls' ), // Stores an array of URLs
+    messageTemplateId: uuid( 'message_template_id' ).references( () => messageTemplates.id ),
+    sentAt: timestamp( 'sent_at' ).defaultNow().notNull(),
+    deliveryMethod: text( 'delivery_method' ).$type<DeliveryMethod>().notNull(),
+    status: text( 'status' ).$type<MessageStatus>().default( 'pending' ).notNull(),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+// Message Templates Table
+export const messageTemplates = pgTable( 'message_templates', {
+    id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
+    name: text( 'name' ).notNull(),
+    content: text( 'content' ).notNull(),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+////////////////////     End Sign Up Schema (Updated)     ////////////////////
+
 
 /**
  * Email Campaigns Schema:

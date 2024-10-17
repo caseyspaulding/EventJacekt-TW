@@ -11,7 +11,7 @@ const navigation = {
   ],
   support: [
     { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' },
+
     { name: 'Site Map', href: '/sitemap' },
     { name: 'Events', href: '/events' },
 
@@ -19,8 +19,8 @@ const navigation = {
   company: [
 
     { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
 
-    { name: 'Affiliate', href: '/affiliate' },
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },
 

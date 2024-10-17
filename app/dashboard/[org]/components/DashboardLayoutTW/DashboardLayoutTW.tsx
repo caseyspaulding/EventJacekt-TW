@@ -33,15 +33,14 @@ import
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { signOut } from '@/app/actions/SignOut';
-import { Button } from '@nextui-org/button';
+
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { fetchClientSecret } from './fetchClientSecret';
 
 
 import { HiMailOpen, HiOutlineLibrary } from 'react-icons/hi';
-import { ClipboardCheck, LucideMailbox, MessageCircleCodeIcon, MessageCircleDashed, MessageCircleHeartIcon, MessageCircleIcon, MessageCircleMoreIcon, MessageCirclePlusIcon } from 'lucide-react';
-import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
-import { DocumentArrowUpIcon } from '@heroicons/react/20/solid';
+import { ClipboardCheck,  } from 'lucide-react';
+
 
 
 
