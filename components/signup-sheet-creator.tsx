@@ -18,6 +18,8 @@ import
 } from '@/app/actions/signupActions';
 
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import SignupSheetSettings from './SignupSheetSettings';
+import SignUpFormatSelector from './signup-Slot-Date-Selector';
 
 interface SignupSheetCreatorProps
 {
@@ -168,7 +170,7 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Create a Sign Up — Volunteer Sign Up</h1>
+      <h1 className="text-2xl font-bold mb-4">Create a Sign Up Sheet</h1>
       <Tabs defaultValue="design">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="design">Design</TabsTrigger>
@@ -247,47 +249,14 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
         </TabsContent>
         <TabsContent value="slots" className="space-y-4">
           <h2 className="text-xl font-semibold mb-2">Slots</h2>
-          { slots.map( ( slot, index ) => (
-            <div key={ index } className="border p-4 rounded-md space-y-2">
-              <Input
-                placeholder="Slot Title"
-                value={ slot.title }
-                onChange={ ( e ) => updateSlot( index, 'title', e.target.value ) }
-              />
-              <Input
-                type="date"
-                value={ slot.date }
-                onChange={ ( e ) => updateSlot( index, 'date', e.target.value ) }
-              />
-              <div className="flex space-x-2">
-                <Input
-                  type="time"
-                  value={ slot.startTime }
-                  onChange={ ( e ) => updateSlot( index, 'startTime', e.target.value ) }
-                />
-                <Input
-                  type="time"
-                  value={ slot.endTime }
-                  onChange={ ( e ) => updateSlot( index, 'endTime', e.target.value ) }
-                />
-              </div>
-              <Input
-                type="number"
-                placeholder="Quantity"
-                value={ slot.quantity }
-                onChange={ ( e ) => updateSlot( index, 'quantity', parseInt( e.target.value ) ) }
-              />
-              <Textarea
-                placeholder="Slot Description (optional)"
-                value={ slot.description }
-                onChange={ ( e ) => updateSlot( index, 'description', e.target.value ) }
-              />
-              <Button variant="destructive" onClick={ () => removeSlot( index ) }>
-                Remove Slot
-              </Button>
-            </div>
-          ) ) }
-          <Button onClick={ addSlot }>Add Slot</Button>
+          <SignUpFormatSelector />
+        </TabsContent>
+        <TabsContent value="settings">
+          {/* Use the SignupSheetSettings component in the Settings tab */ }
+          <SignupSheetSettings />
+        </TabsContent>
+        <TabsContent value="publish">
+          {/* Publish Tab Content */ }
         </TabsContent>
       </Tabs>
 
@@ -341,8 +310,8 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
       </Dialog>
 
       <div className="flex space-x-2 mt-6">
-        <Button variant="outline">Save as Draft</Button>
-        <Button onClick={ handleSubmit }>Publish</Button>
+
+        <Button onClick={ handleSubmit }>Save</Button>
       </div>
     </div>
   );

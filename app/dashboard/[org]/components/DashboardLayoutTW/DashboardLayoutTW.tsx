@@ -104,7 +104,7 @@ const navigation = [
   },
   {
 
-    name: 'Signups',
+    name: 'Sign Up Sheets',
     icon: ClipboardCheck,
     current: false,
     children: [

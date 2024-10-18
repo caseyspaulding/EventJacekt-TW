@@ -382,3 +382,29 @@ export const deleteSignupSheetSlot = async ( id: string ) =>
     throw new Error( 'Failed to delete signup sheet slot' );
   }
 };
+
+export const getSignupSheetSlotsGroupedByDate = async ( signupSheetId: string ) =>
+{
+  try
+  {
+    // Select slots, grouped by date and time ranges
+    const slots = await db
+      .select( {
+        date: sql`DATE(${ signupSheetSlots.startTimestamp })`,  // Extract the date part
+        timeRange: sql`${ signupSheetSlots.startTimestamp } || ' - ' || ${ signupSheetSlots.endTimestamp }`,  // Time range
+        title: signupSheetSlots.title,
+        description: signupSheetSlots.description,
+        filledQuantity: signupSheetSlots.filledQuantity,
+        totalQuantity: signupSheetSlots.quantity,
+      } )
+      .from( signupSheetSlots )
+      .where( eq( signupSheetSlots.signupSheetId, signupSheetId ) )
+      .orderBy( signupSheetSlots.startTimestamp );
+
+    return slots;  // Return grouped slots
+  } catch ( error )
+  {
+    console.error( "Error fetching signup sheet slots by date:", error );
+    throw new Error( "Failed to fetch slots grouped by date" );
+  }
+};
