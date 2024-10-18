@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -8,12 +8,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-import { createSignupSheet, createSignupSheetSlot } from '@/app/actions/signupActions';
+import { createSignupSheet, createSignupSheetSlot, getSignupSheetGroups } from '@/app/actions/signupActions';
 
 interface SignupSheetCreatorProps
 {
   orgId: string;
   creatorId: string; // This would be the userId
+}
+
+interface SignupSheetGroup
+{
+  id: string;
+  name: string;
 }
 
 export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCreatorProps )
@@ -27,6 +33,32 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
     { title: '', date: '', startTime: '', endTime: '', quantity: 1, description: '' }
   ] );
 
+  const [ groups, setGroups ] = useState<SignupSheetGroup[]>( [] ); // State to hold the groups
+  const [ loading, setLoading ] = useState( false ); // Loading state for fetching groups
+
+
+  // Fetch groups on component mount
+  useEffect( () =>
+  {
+    async function fetchGroups ()
+    {
+      setLoading( true ); // Set loading to true while fetching
+      try
+      {
+        const fetchedGroups = await getSignupSheetGroups( orgId ); // Fetch groups from server
+        setGroups( fetchedGroups ); // Set the fetched groups in state
+      } catch ( error )
+      {
+        console.error( 'Error fetching signup sheet groups:', error );
+      } finally
+      {
+        setLoading( false ); // Stop loading once fetching is done
+      }
+    }
+    fetchGroups();
+  }, [ orgId ] ); // Run this effect when orgId changes
+
+  // Add a new slot to the slots array
   const addSlot = () =>
   {
     setSlots( [ ...slots, { title: '', date: '', startTime: '', endTime: '', quantity: 1, description: '' } ] );
@@ -116,12 +148,18 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
             <div className="flex items-center gap-2">
               <Select value={ group } onValueChange={ setGroup }>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Set Up" />
+                  <SelectValue placeholder="Select Group" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="setup">Set Up</SelectItem>
-                  <SelectItem value="cleanup">Clean Up</SelectItem>
-                  <SelectItem value="registration">Registration</SelectItem>
+                  { loading ? (
+                    <SelectItem value={ 'select group' } >Loading...</SelectItem>
+                  ) : (
+                    groups.map( ( group ) => (
+                      <SelectItem key={ group.id } value={ group.id }>
+                        { group.name }
+                      </SelectItem>
+                    ) )
+                  ) }
                 </SelectContent>
               </Select>
               <Button size="icon" variant="outline">
