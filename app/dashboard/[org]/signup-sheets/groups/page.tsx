@@ -1,10 +1,9 @@
-"use client";
+'use client';
 
+import SignupSheetGroups from "@/components/signupGroups";
+import { useUser } from "@/contexts/UserContext";
 
-import SignupSheetCreator from "@/components/signup-sheet-creator";
-import { useUser } from '@/contexts/UserContext';
-
-export default function CreateSignUpSheet ()
+export default function GroupsPage ()
 {
   const { user, loading } = useUser();  // Ensure this hook has proper context wrapping
 
@@ -13,11 +12,9 @@ export default function CreateSignUpSheet ()
 
   const orgId = user.organizationId;  // Ensure user object has organizationId
   const userId = user.id;  // Ensure user object has id
-
   return (
     <div>
-      <SignupSheetCreator orgId={ orgId } creatorId={ userId } />
-
+      <SignupSheetGroups orgId={ orgId } />
     </div>
   )
 }

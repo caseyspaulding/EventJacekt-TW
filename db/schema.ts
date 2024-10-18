@@ -1722,7 +1722,7 @@ export const signupSheets = pgTable( 'signup_sheets', {
     description: text( 'description' ),
     startDate: date( 'start_date' ),
     endDate: date( 'end_date' ),
-    attachmentUrls: jsonb( 'attachment_urls' ), // Stores an array of URLs
+    attachmentUrls: jsonb( 'attachment_urls' ).$type<string[]>(), // Stores an array of URLs
     eventId: uuid( 'event_id' ).references( () => events.id ),
     isPublished: boolean( 'is_published' ).default( false ).notNull(),
     isArchived: boolean( 'is_archived' ).default( false ).notNull(),
@@ -1737,7 +1737,7 @@ export const signupSheetGroups = pgTable( 'signup_sheet_groups', {
     orgId: uuid( 'org_id' ).notNull().references( () => organizations.id ),
     name: text( 'name' ).notNull(),
     description: text( 'description' ),
-    settings: jsonb( 'settings' ),
+    settings: jsonb( 'settings' ).$type<Record<string, any>>(),
     createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
     updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
 } );
@@ -1783,9 +1783,10 @@ export const signupSheetCustomQuestions = pgTable( 'signup_sheet_custom_question
     signupSheetId: uuid( 'signup_sheet_id' ).notNull().references( () => signupSheets.id ),
     questionText: text( 'question_text' ).notNull(),
     fieldType: text( 'field_type' ).$type<FieldType>().notNull(),
-    options: jsonb( 'options' ),
+    options: jsonb( 'options' ).$type<string[]>(),
+    validationRules: jsonb( 'validation_rules' ).$type<Record<string, any>>(),
     isRequired: boolean( 'is_required' ).default( false ).notNull(),
-    validationRules: jsonb( 'validation_rules' ),
+
     order: integer( 'order' ).default( 0 ).notNull(),
     createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
     updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),

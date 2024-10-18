@@ -1,25 +1,36 @@
-import React, { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Label } from "@/components/ui/label"
-import { Plus } from "lucide-react"
+'use client';
 
-export default function SignupSheetCreator ()
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+import { Plus } from "lucide-react";
+import { createSignupSheet, createSignupSheetSlot } from '@/app/actions/signupActions';
+
+interface SignupSheetCreatorProps
 {
-  const [ title, setTitle ] = useState( '' )
-  const [ description, setDescription ] = useState( '' )
-  const [ group, setGroup ] = useState( '' )
-  const [ eventType, setEventType ] = useState( '' )
-  const [ eventCategory, setEventCategory ] = useState( '' )
-  const [ slots, setSlots ] = useState<{ title: string, date: string, startTime: string, endTime: string, quantity: number, description: string }[]>( [] )
+  orgId: string;
+  creatorId: string; // This would be the userId
+}
+
+export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCreatorProps )
+{
+  const [ title, setTitle ] = useState( '' );
+  const [ description, setDescription ] = useState( '' );
+  const [ group, setGroup ] = useState( '' );
+  const [ eventType, setEventType ] = useState( '' );
+  const [ eventCategory, setEventCategory ] = useState( '' );
+  const [ slots, setSlots ] = useState( [
+    { title: '', date: '', startTime: '', endTime: '', quantity: 1, description: '' }
+  ] );
 
   const addSlot = () =>
   {
-    setSlots( [ ...slots, { title: '', date: '', startTime: '', endTime: '', quantity: 1, description: '' } ] )
-  }
+    setSlots( [ ...slots, { title: '', date: '', startTime: '', endTime: '', quantity: 1, description: '' } ] );
+  };
 
   const updateSlot = ( index: number, field: string, value: string | number ) =>
   {
@@ -27,17 +38,58 @@ export default function SignupSheetCreator ()
     {
       if ( i === index )
       {
-        return { ...slot, [ field ]: value }
+        return { ...slot, [ field ]: value };
       }
-      return slot
-    } )
-    setSlots( updatedSlots )
-  }
+      return slot;
+    } );
+    setSlots( updatedSlots );
+  };
 
   const removeSlot = ( index: number ) =>
   {
-    setSlots( slots.filter( ( _, i ) => i !== index ) )
-  }
+    setSlots( slots.filter( ( _, i ) => i !== index ) );
+  };
+
+  const handleSubmit = async () =>
+  {
+    try
+    {
+      const signupSheetData = {
+        orgId,  // Use orgId from props
+        creatorId,  // Use creatorId from props
+        title,
+        description,
+        groupId: group,
+        eventType,
+        eventCategory,
+        slug: title.toLowerCase().replace( /\s+/g, '-' ),  // Generate slug from title
+        isPublished: false,  // Example: Adjust based on logic
+        attachmentUrls: [],  // Handle attachments if necessary
+      };
+
+      // Call server action to create the signup sheet
+      const newSignupSheet = await createSignupSheet( signupSheetData );
+
+      // Loop over slots and create them
+      for ( const slot of slots )
+      {
+        const slotData = {
+          title: slot.title,
+          startTimestamp: new Date( `${ slot.date }T${ slot.startTime }` ),
+          endTimestamp: new Date( `${ slot.date }T${ slot.endTime }` ),
+          quantity: slot.quantity,
+          signupSheetId: newSignupSheet.id,
+          description: slot.description,
+        };
+        await createSignupSheetSlot( slotData );
+      }
+
+      console.log( 'Signup sheet created successfully!' );
+    } catch ( error )
+    {
+      console.error( 'Error creating signup sheet:', error );
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -142,7 +194,7 @@ export default function SignupSheetCreator ()
                 type="number"
                 placeholder="Quantity"
                 value={ slot.quantity }
-                onChange={ ( e ) => updateSlot( index, 'quantity', e.target.value ) }
+                onChange={ ( e ) => updateSlot( index, 'quantity', parseInt( e.target.value ) ) }
               />
               <Textarea
                 placeholder="Slot Description (optional)"
@@ -163,8 +215,8 @@ export default function SignupSheetCreator ()
       </Tabs>
       <div className="flex space-x-2 mt-6">
         <Button variant="outline">Save as Draft</Button>
-        <Button>Publish</Button>
+        <Button onClick={ handleSubmit }>Publish</Button>
       </div>
     </div>
-  )
+  );
 }

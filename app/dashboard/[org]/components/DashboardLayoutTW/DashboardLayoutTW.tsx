@@ -39,7 +39,7 @@ import { fetchClientSecret } from './fetchClientSecret';
 
 
 import { HiMailOpen, HiOutlineLibrary } from 'react-icons/hi';
-import { ClipboardCheck,  } from 'lucide-react';
+import { ClipboardCheck, } from 'lucide-react';
 
 
 
@@ -110,6 +110,8 @@ const navigation = [
     children: [
       { name: 'All', href: '/signup-sheets/all' },
       { name: 'Create Signup', href: '/signup-sheets/new' },
+      { name: 'Groups', href: '/signup-sheets/groups' },
+
 
 
     ],
@@ -273,7 +275,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                         </a>
                       ) : (
                         <Disclosure as="div" key={ item.name } className="space-y-1">
-                          { ( { open } ) => (
+                          { ( { open }: { open: boolean } ) => (
                             <>
                               <Disclosure.Button
                                 className={ classNames(
@@ -357,7 +359,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                 </a>
               ) : (
                 <Disclosure as="div" key={ item.name } className="space-y-1">
-                  { ( { open } ) => (
+                  { ( { open }: { open: boolean } ) => (
                     <>
                       <Disclosure.Button
                         className={ classNames(
@@ -447,7 +449,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-3 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     { userNavigation.map( ( item ) => (
                       <Menu.Item key={ item.name }>
-                        { ( { active } ) =>
+                        { ( { active }: { active: boolean } ) =>
                           item.name === 'Sign out' ? (
                             <form method="post" className="w-full">
                               <button

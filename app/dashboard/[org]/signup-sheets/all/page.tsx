@@ -1,5 +1,11 @@
-export default function page() {
+import SignUpsComponent from "@/components/SignUpsComponent";
+
+export default function page ()
+{
   return (
-    <div>page</div>
+    <div>
+      <SignUpsComponent />
+
+    </div>
   )
 }
