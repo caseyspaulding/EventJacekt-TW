@@ -8,7 +8,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-import { createSignupSheet, createSignupSheetSlot, getSignupSheetGroups } from '@/app/actions/signupActions';
+import
+{
+  createSignupSheet,
+  createSignupSheetGroup,
+  createSignupSheetSlot,
+  getSignupSheetGroups,
+  updateSignupSheetGroup
+} from '@/app/actions/signupActions';
+
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface SignupSheetCreatorProps
 {
@@ -36,6 +45,10 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
   const [ groups, setGroups ] = useState<SignupSheetGroup[]>( [] ); // State to hold the groups
   const [ loading, setLoading ] = useState( false ); // Loading state for fetching groups
 
+  const [ isModalOpen, setModalOpen ] = useState( false ); // Modal state
+  const [ name, setName ] = useState( '' ); // For new group creation
+  const [ groupDescription, setGroupDescription ] = useState( '' ); // For new group creation
+  const [ settings, setSettings ] = useState( '' ); // Settings in JSON format for new group creation
 
   // Fetch groups on component mount
   useEffect( () =>
@@ -123,6 +136,36 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
     }
   };
 
+  // Handle new group submission
+  const handleGroupSubmit = async ( event: React.FormEvent ) =>
+  {
+    event.preventDefault();
+    setLoading( true );
+    try
+    {
+      await createSignupSheetGroup( {
+        orgId,
+        name,
+        description: groupDescription,
+        settings: settings ? JSON.parse( settings ) : undefined
+      } );
+      setModalOpen( false ); // Close the modal after submission
+      setName( '' ); // Clear the input fields
+      setGroupDescription( '' );
+      setSettings( '' );
+
+      // Refresh the group list
+      const refreshedGroups = await getSignupSheetGroups( orgId );
+      setGroups( refreshedGroups );
+    } catch ( error )
+    {
+      console.error( 'Error creating group:', error );
+    } finally
+    {
+      setLoading( false );
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Create a Sign Up — Volunteer Sign Up</h1>
@@ -152,7 +195,7 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
                 </SelectTrigger>
                 <SelectContent>
                   { loading ? (
-                    <SelectItem value={ 'select group' } >Loading...</SelectItem>
+                    <SelectItem value="loading">Loading...</SelectItem>
                   ) : (
                     groups.map( ( group ) => (
                       <SelectItem key={ group.id } value={ group.id }>
@@ -162,7 +205,7 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
                   ) }
                 </SelectContent>
               </Select>
-              <Button size="icon" variant="outline">
+              <Button size="icon" variant="outline" onClick={ () => setModalOpen( true ) }>
                 <Plus className="h-4 w-4" />
                 <span className="sr-only">Add new group</span>
               </Button>
@@ -239,18 +282,64 @@ export default function SignupSheetCreator ( { orgId, creatorId }: SignupSheetCr
                 value={ slot.description }
                 onChange={ ( e ) => updateSlot( index, 'description', e.target.value ) }
               />
-              <Button variant="destructive" onClick={ () => removeSlot( index ) }>Remove Slot</Button>
+              <Button variant="destructive" onClick={ () => removeSlot( index ) }>
+                Remove Slot
+              </Button>
             </div>
           ) ) }
           <Button onClick={ addSlot }>Add Slot</Button>
         </TabsContent>
-        <TabsContent value="settings">
-          <p>Settings content (to be implemented)</p>
-        </TabsContent>
-        <TabsContent value="publish">
-          <p>Publish content (to be implemented)</p>
-        </TabsContent>
       </Tabs>
+
+      {/* Modal for Adding New Group */ }
+      <Dialog open={ isModalOpen } onOpenChange={ setModalOpen }>
+        <DialogTrigger asChild>
+
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add New Group</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={ handleGroupSubmit } className="space-y-4">
+            <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+              <Label htmlFor="name">Group Name</Label>
+              <Input
+                id="name"
+                placeholder="Group Name"
+                value={ name }
+                onChange={ ( e ) => setName( e.target.value ) }
+              />
+            </div>
+            <div className="grid grid-cols-[120px_1fr] items-start gap-4">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                placeholder="Enter description"
+                value={ groupDescription }
+                onChange={ ( e ) => setGroupDescription( e.target.value ) }
+              />
+            </div>
+            <div className="grid grid-cols-[120px_1fr] items-start gap-4">
+              <Label htmlFor="settings">Settings (JSON)</Label>
+              <Textarea
+                id="settings"
+                placeholder="Enter settings as JSON"
+                value={ settings }
+                onChange={ ( e ) => setSettings( e.target.value ) }
+              />
+            </div>
+            <div className="flex space-x-2 mt-4">
+              <Button type="submit" disabled={ loading }>
+                Create Group
+              </Button>
+              <Button variant="outline" onClick={ () => setModalOpen( false ) }>
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
       <div className="flex space-x-2 mt-6">
         <Button variant="outline">Save as Draft</Button>
         <Button onClick={ handleSubmit }>Publish</Button>
