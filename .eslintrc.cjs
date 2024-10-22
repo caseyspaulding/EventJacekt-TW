@@ -9,15 +9,12 @@ module.exports = {
   extends: [
     'plugin:@typescript-eslint/recommended',
     'prettier',
-    'eslint:recommended',
-    
+    'eslint:recommended'
   ],
   overrides: [
     {
       files: ['**/*.{ts,tsx}'],
       plugins: ['@typescript-eslint'],
-      parser: '@typescript-eslint/parser',
-      extends: ['plugin:@typescript-eslint/recommended'],
       rules: {
         '@typescript-eslint/consistent-type-imports': 'error'
       }
@@ -42,7 +39,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'tailwindcss/enforces-shorthand': 'off',
     'tailwindcss/no-custom-classname': 'off',
-    'next/next/no-img-element': 'off',
-    '@typescript-eslint/consistent-type-imports': 'off'
+    'next/next/no-img-element': 'off'
   }
 }
