@@ -1,8 +1,8 @@
 'use server';
 import { db } from "@/db";
-import { orgMembers, userProfiles } from "@/db/schema";
+import { orgMembers, userProfiles } from "@/db/schemas/schema";
 import { and, eq } from 'drizzle-orm';
-import {createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 import { createAdminClient } from "@/utils/supabase/createAdminClient";
 
 const supabase = createClient();

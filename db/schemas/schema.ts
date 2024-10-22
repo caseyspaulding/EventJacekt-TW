@@ -389,6 +389,82 @@ export const events = pgTable( 'events', {
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
 } );
 
+// Contact Table for CRM
+
+export const contacts = pgTable( 'contacts', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ), // Reference to the organizations table
+    firstName: text( 'first_name' ).notNull(),
+    lastName: text( 'last_name' ).notNull(),
+    email: text( 'email' ).notNull(),
+    phone: text( 'phone' ),
+    address: text( 'address' ),
+    city: text( 'city' ),
+    state: text( 'state' ),
+    country: text( 'country' ),
+    zipCode: text( 'zip_code' ),
+    contactType: text( 'contact_type' ), // e.g., 'donor', 'volunteer', 'partner', 'attendee'
+    company: text( 'company' ), // If applicable
+    position: text( 'position' ), // Job title or role
+    notes: text( 'notes' ),
+    tags: text( 'tags' ).array(), // For categorizing contacts
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+}, ( table ) =>
+{
+    return {
+        uniqueContact: uniqueIndex( 'contacts_unique_email_org' ).on( table.email, table.orgId ),
+    };
+} );
+
+export const interactions = pgTable( 'interactions', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    contactId: uuid( 'contact_id' )
+        .notNull()
+        .references( () => contacts.id ), // Reference to the contacts table
+    userId: uuid( 'user_id' )
+        .notNull()
+        .references( () => userProfiles.userId ), // User who had the interaction
+    interactionType: text( 'interaction_type' ).notNull(), // e.g., 'email', 'phone call', 'meeting'
+    interactionDate: timestamp( 'interaction_date' ).defaultNow().notNull(),
+    subject: text( 'subject' ), // Subject or title of the interaction
+    notes: text( 'notes' ), // Details about the interaction
+    followUpDate: timestamp( 'follow_up_date' ), // For scheduling follow-ups
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+export const donations = pgTable( 'donations', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ),
+    contactId: uuid( 'contact_id' )
+        .references( () => contacts.id ), // Donor (could be null for anonymous donations)
+    amount: numeric( 'amount', { precision: 10, scale: 2 } ).notNull(),
+    currency: text( 'currency' ).default( 'USD' ).notNull(),
+    donationDate: timestamp( 'donation_date' ).defaultNow().notNull(),
+    paymentMethod: text( 'payment_method' ), // e.g., 'credit card', 'bank transfer'
+    paymentStatus: text( 'payment_status' ).default( 'pending' ).notNull(), // e.g., 'pending', 'completed'
+    transactionId: text( 'transaction_id' ), // From payment gateway like Stripe
+    isRecurring: boolean( 'is_recurring' ).default( false ),
+    campaignName: text( 'campaign_name' ), // If associated with a specific campaign
+    receiptSent: boolean( 'receipt_sent' ).default( false ),
+    notes: text( 'notes' ),
+    metadata: jsonb( 'metadata' ), // Additional data from payment gateway
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+
 // Agenda Table
 export const agenda = pgTable( 'agenda', {
     id: uuid( 'id' ).primaryKey().default( sql`uuid_generate_v4()` ),
@@ -1355,6 +1431,52 @@ export const volunteers = pgTable( 'volunteers', {
     waiverSigned: boolean( 'waiver_signed' ).default( false ), // Indicates if the volunteer waiver has been signed
     createdAt: timestamp( 'created_at' ).default( sql`now()` ),
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
+} );
+
+export const volunteerAssignments = pgTable( 'volunteer_assignments', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    volunteerId: uuid( 'volunteer_id' )
+        .notNull()
+        .references( () => volunteers.id ),
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ),
+    taskName: text( 'task_name' ).notNull(),
+    assignmentDate: date( 'assignment_date' ).notNull(),
+    startTime: timestamp( 'start_time' ).notNull(),
+    endTime: timestamp( 'end_time' ).notNull(),
+    location: text( 'location' ),
+    supervisorId: uuid( 'supervisor_id' )
+        .references( () => userProfiles.userId ), // Staff member supervising
+    notes: text( 'notes' ),
+    status: text( 'status' ).default( 'scheduled' ), // e.g., 'scheduled', 'completed', 'canceled'
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
+} );
+
+export const volunteerHours = pgTable( 'volunteer_hours', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    volunteerId: uuid( 'volunteer_id' )
+        .notNull()
+        .references( () => volunteers.id ),
+    assignmentId: uuid( 'assignment_id' )
+        .references( () => volunteerAssignments.id ), // Reference to the assignment
+    orgId: uuid( 'org_id' )
+        .notNull()
+        .references( () => organizations.id ),
+    date: date( 'date' ).notNull(),
+    hours: numeric( 'hours', { precision: 5, scale: 2 } ).notNull(), // Number of hours
+    activityDescription: text( 'activity_description' ), // Description of the work done
+    approvedBy: uuid( 'approved_by' )
+        .references( () => userProfiles.userId ), // User who approved the hours
+    isApproved: boolean( 'is_approved' ).default( false ),
+    notes: text( 'notes' ),
+    createdAt: timestamp( 'created_at' ).defaultNow().notNull(),
+    updatedAt: timestamp( 'updated_at' ).defaultNow().notNull(),
 } );
 
 

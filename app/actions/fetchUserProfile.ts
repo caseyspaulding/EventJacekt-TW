@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import { db } from '@/db';
-import { userProfiles, organizations } from '@/db/schema';
+import { userProfiles, organizations } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm/expressions';
 import type { UserType } from '@/types/UserType';
 

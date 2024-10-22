@@ -1,7 +1,7 @@
 'use server';
 import { stripe } from '@/utils/stripe';
 import { db } from '@/db';
-import { organizations } from '@/db/schema';
+import { organizations } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm';
 import { fetchUserProfile } from '@/app/actions/fetchUserProfile'; // Your user profile fetch action
 

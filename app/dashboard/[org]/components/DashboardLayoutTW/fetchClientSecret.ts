@@ -3,7 +3,7 @@
 
 import Stripe from 'stripe';
 import { eq } from 'drizzle-orm';
-import { organizations } from '@/db/schema'; // Import your organization schema
+import { organizations } from '@/db/schemas/schema'; // Import your organization schema
 import { db } from '@/db';
 
 const stripe = new Stripe( process.env.STRIPE_SECRET_KEY as string, {

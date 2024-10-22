@@ -1,5 +1,5 @@
 import { db } from '@/db';
-import { organizations } from '@/db/schema';
+import { organizations } from '@/db/schemas/schema';
 import { stripe } from '@/utils/stripe';
 import { eq } from 'drizzle-orm';
 

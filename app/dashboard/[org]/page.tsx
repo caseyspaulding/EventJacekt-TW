@@ -2,7 +2,7 @@ import { fetchEventsForOrg } from './actions';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import { db } from '../../../db';
-import { userProfiles, organizations } from '@/db/schema';
+import { userProfiles, organizations } from '@/db/schemas/schema';
 import { eq, and } from 'drizzle-orm/expressions';
 import UserProfileHeaderDashboard from '@/components/Headers/UserProfileHeaderDashboard';
 import { BanknotesIcon, ChevronRightIcon, FolderIcon, HomeIcon } from '@heroicons/react/24/outline';
@@ -119,9 +119,9 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
 
 
         return (
-        
-                <div className=" ">
-           
+
+            <div className=" ">
+
                 <div className='bg-white'>
                     <div>
                         {/* Back Navigation for Small Screens */ }
@@ -240,8 +240,8 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
 
                     </div>
                 </div>
-                </div>
-           
+            </div>
+
         );
     } catch ( error )
     {

@@ -1,6 +1,6 @@
 import { eq, SQL } from 'drizzle-orm';
 import { db } from '@/db';
-import { userProfiles } from '@/db/schema';
+import { userProfiles } from '@/db/schemas/schema';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(

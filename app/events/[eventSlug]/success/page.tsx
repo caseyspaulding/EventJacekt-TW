@@ -1,6 +1,6 @@
 import { Button } from '@nextui-org/button';
 import { getEventIdBySlug } from '@/app/actions/getEventIdBySlug';
-import { events, organizations, orgCustomers, orgTicketTypes } from '@/db/schema';
+import { events, organizations, orgCustomers, orgTicketTypes } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm';
 import { db } from '@/db';
 import { notFound } from 'next/navigation';

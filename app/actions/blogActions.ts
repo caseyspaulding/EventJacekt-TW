@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from '@/db';
-import { authors, blogPosts } from '@/db/schema';
+import { authors, blogPosts } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 
@@ -287,9 +287,9 @@ export async function updateBlogPost ( id: number, formData: FormData )
     {
         slug = generateSlug( title );
     }
-   
+
     console.log( tags );
-    
+
     try
     {
         // Update the blog post directly with authorId

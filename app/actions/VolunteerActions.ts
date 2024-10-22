@@ -1,7 +1,7 @@
-'use server'; 
+'use server';
 
 import { db } from '@/db';
-import { organizations, volunteers } from '@/db/schema';
+import { organizations, volunteers } from '@/db/schemas/schema';
 import { VolunteerType } from '@/types/VolunteerType';
 import { eq } from 'drizzle-orm'; // Assuming you use drizzle-orm
 

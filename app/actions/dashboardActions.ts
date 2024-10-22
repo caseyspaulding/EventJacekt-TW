@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import { db } from '@/db';
-import { organizations } from '@/db/schema';
+import { organizations } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm/expressions';
 
 const stripe = new Stripe( process.env.STRIPE_SECRET_KEY!, {

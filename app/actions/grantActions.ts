@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from "@/db";
-import { grants } from "@/db/schema";
+import { grants } from "@/db/schemas/schema";
 import { createClient } from "@/utils/supabase/server";
 
 import { eq } from 'drizzle-orm'; // Import the eq operator

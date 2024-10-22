@@ -7,7 +7,7 @@ import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
 import HeaderCentered from '@/components/HeaderCentered';
 import type { Metadata } from 'next';
-import { authors, blogPosts } from '@/db/schema';
+import { authors, blogPosts } from '@/db/schemas/schema';
 
 export const metadata: Metadata = {
     title: 'Blog - EventJacket',

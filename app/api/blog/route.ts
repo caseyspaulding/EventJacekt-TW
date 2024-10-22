@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/db';
 
 import { eq } from 'drizzle-orm';
-import { authors, blogPosts } from '@/db/schema';
+import { authors, blogPosts } from '@/db/schemas/schema';
 
 export async function POST ( request: Request )
 {

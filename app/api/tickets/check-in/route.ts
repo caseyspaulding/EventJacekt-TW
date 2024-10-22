@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { db } from '@/db';
-import { orgEventTickets } from '@/db/schema';
+import { orgEventTickets } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm';
 
 export async function POST ( req: NextRequest )

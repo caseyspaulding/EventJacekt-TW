@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { orgEventTickets, events } from '@/db/schema';
+import { orgEventTickets, events } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm';
 
 export async function fetchTicketInfo ( ticketId: string )
@@ -25,7 +25,7 @@ export async function fetchTicketInfo ( ticketId: string )
     console.error( 'Ticket not found.' );
     return null;
   }
-  
+
 
 
   return {

@@ -1,5 +1,5 @@
 import { db } from '@/db';
-import { orgEventTickets } from '@/db/schema';
+import { orgEventTickets } from '@/db/schemas/schema';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
@@ -117,7 +117,7 @@ export async function POST ( request: NextRequest )
     }
 
     return NextResponse.json( { received: true } );
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch ( err: any )
   {
     console.error( '⚠️ Webhook Error:', err.message );

@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { agenda, events, organizations, orgEventTickets, orgTicketTypes } from '@/db/schema';
+import { agenda, events, organizations, orgEventTickets, orgTicketTypes } from '@/db/schemas/schema';
 import { createClient } from '@/utils/supabase/server';
 
 import { revalidatePath } from 'next/cache';
@@ -115,7 +115,7 @@ export const createEvent = async ( formData: FormData ) =>
     const parkingOptions = formData.get( 'parkingOptions' ) as string;
     const agendaItemsRaw = formData.get( 'agendaItems' ) as string;
     const organizerContact = formData.get( 'organizerContact' ) as string;
-    const venueDescription = formData.get( 'venueDescription' ) as string;  
+    const venueDescription = formData.get( 'venueDescription' ) as string;
 
     // Parse JSON string for agenda items
     let agendaItems;
@@ -145,7 +145,7 @@ export const createEvent = async ( formData: FormData ) =>
         name,
         slug,
         description,
-        
+
         organizerContact,
         startDate: startDateString,  // Use plain date string
         endDate: endDateString,      // Use plain date string
@@ -273,8 +273,8 @@ export const updateEvent = async ( eventId: string, formData: FormData ) =>
         eventStartTime,              // Use plain time string
         eventEndTime,                // Use plain time string
         venue: venue || null,
-        venueDescription: formData.get( 'venueDescription' ) as string || null, 
-        venueImage: venueImage || null, 
+        venueDescription: formData.get( 'venueDescription' ) as string || null,
+        venueImage: venueImage || null,
         address: address || null,
         city: city || null,
         state: state || null,

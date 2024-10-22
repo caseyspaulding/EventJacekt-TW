@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from "@/db";
-import { formFields, formResponses, forms } from "@/db/schema";
+import { formFields, formResponses, forms } from "@/db/schemas/schema";
 import { createClient } from "@/utils/supabase/server";
 import { eq } from "drizzle-orm";
 

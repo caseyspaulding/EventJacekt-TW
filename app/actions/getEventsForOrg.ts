@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { events, organizations } from '@/db/schema';
+import { events, organizations } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm/expressions';
 
 type EventType = {

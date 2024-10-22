@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { stripe } from '@/utils/stripe';
 import { db } from '@/db';
-import { orgCustomers, orgTicketTypes, events, orgEventTickets } from '@/db/schema';
+import { orgCustomers, orgTicketTypes, events, orgEventTickets } from '@/db/schemas/schema';
 import { getOrgIdFromTicketType, getStripeAccountIdFromOrgId } from '@/app/actions/ticketActions';
 
 import { eq } from 'drizzle-orm';

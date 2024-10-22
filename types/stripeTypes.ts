@@ -1,4 +1,4 @@
-import { organizations } from '@/db/schema';
+import { organizations } from '@/db/schemas/schema';
 
 export type StripeDataUpdates = {
     stripeConnectAccountId?: string;

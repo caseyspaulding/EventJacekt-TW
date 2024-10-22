@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { ticketBuyerProfiles } from '@/db/schema';
+import { ticketBuyerProfiles } from '@/db/schemas/schema';
 
 
 export const registerAttendee = async ( formData: FormData ) =>

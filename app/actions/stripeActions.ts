@@ -4,7 +4,7 @@
 import { redirect } from 'next/navigation';
 import { fetchUserProfile } from '@/app/actions/fetchUserProfile';
 import { eq } from 'drizzle-orm/expressions';
-import { organizations } from '@/db/schema';
+import { organizations } from '@/db/schemas/schema';
 import { db } from '@/db';
 import { stripe } from '@/utils/stripe';
 

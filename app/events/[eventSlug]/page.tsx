@@ -5,7 +5,7 @@ import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
 import { eq } from "drizzle-orm/expressions";
 import { JsonLd } from 'react-schemaorg';
 import type { Event as SchemaEvent } from 'schema-dts'
-import { events, organizations, orgTicketTypes } from "@/db/schema";
+import { events, organizations, orgTicketTypes } from "@/db/schemas/schema";
 import NavBar1 from "@/components/NavBarTW/NavBar1";
 
 import EventImage from "@/components/EventHomeOne/Hero/EventImage";

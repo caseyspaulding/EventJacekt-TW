@@ -2,7 +2,7 @@
 
 import { stripe } from '@/utils/stripe'; // Ensure you have your stripe client initialized
 import { db } from '@/db';
-import { organizations } from '@/db/schema';
+import { organizations } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 

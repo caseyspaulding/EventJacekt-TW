@@ -1,11 +1,11 @@
 'use server';
 import { stripe } from '@/utils/stripe';
 import { db } from '@/db';
-import { organizations } from '@/db/schema';
+import { organizations } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm';
 import { fetchUserProfile } from '@/app/actions/fetchUserProfile'; // Assuming you have a user profile action
 
-export async function createAccountSession (org: string): Promise<string>
+export async function createAccountSession ( org: string ): Promise<string>
 {
   try
   {

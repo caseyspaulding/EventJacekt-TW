@@ -2,7 +2,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
-import { events, orgTicketTypes, organizations } from "@/db/schema";
+import { events, orgTicketTypes, organizations } from "@/db/schemas/schema";
 import { getEventIdBySlug } from "@/app/actions/getEventIdBySlug";
 import { eq } from "drizzle-orm/expressions";
 import { absoluteUrl } from "@/utils/absoluteUrl";
@@ -58,7 +58,7 @@ export async function generateMetadata ( { params }: { params: Params } ): Promi
   }
 
   const title = `${ eventData.eventName } | Get your tickets.`;
-  const description = `${eventData.description} - Get your tickets to ${ eventData.eventName }`;
+  const description = `${ eventData.description } - Get your tickets to ${ eventData.eventName }`;
   const imageUrl = absoluteUrl( eventData.featuredImage || "/images/event-default.jpg" );
 
   return {

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-import { organizations } from '@/db/schema';
+import { organizations } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm';
 import { db } from '@/db';
 
@@ -28,7 +28,7 @@ export async function POST ( req: Request )
       .limit( 1 ); // Ensure you're fetching only one result
 
     const stripeAccountId = organization[ 0 ]?.stripeAccountId;
-console.log( 'Stripe account ID:', stripeAccountId ); // Debugging
+    console.log( 'Stripe account ID:', stripeAccountId ); // Debugging
     if ( !stripeAccountId )
     {
       return NextResponse.json( { error: 'Stripe account not found for this organization' }, { status: 404 } );

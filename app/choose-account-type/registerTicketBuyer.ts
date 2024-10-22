@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { ticketBuyerProfiles } from "@/db/schema";
+import { ticketBuyerProfiles } from "@/db/schemas/schema";
 import { createClient } from "@/utils/supabase/server";
 import { eq } from "drizzle-orm";
 
@@ -43,7 +43,7 @@ export const registerTicketBuyer = async () =>
       // other fields can be added later by the user in their dashboard
     } );
 
-   
+
     return { success: true, userId };
   } catch ( error )
   {

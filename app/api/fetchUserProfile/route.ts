@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 import { db } from '@/db';
-import { userProfiles, organizations } from '@/db/schema';
+import { userProfiles, organizations } from '@/db/schemas/schema';
 import { eq } from 'drizzle-orm/expressions';
 
 // Define TypeScript types for the expected response structure

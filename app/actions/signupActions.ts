@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { signupSheets, signupSheetGroups, participants, signupSheetSlots } from '@/db/schema';
+import { signupSheets, signupSheetGroups, participants, signupSheetSlots } from '@/db/schemas/schema';
 import { createClient } from '@/utils/supabase/server';
 import { eq, InferInsertModel, sql } from 'drizzle-orm';
 
