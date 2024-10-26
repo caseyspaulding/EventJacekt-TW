@@ -1,37 +1,40 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { Database } from '@/database.types';
+import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
-export function createClient ()
+export async function createClient ()
 {
-    const cookieStore = cookies()
+    const cookieStore = await cookies();
 
-    // Create a server's supabase client with newly configured cookie,
-    // which could be used to maintain user's session
-    return createServerClient(
+    return createServerClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
         {
             cookies: {
                 getAll ()
                 {
-                    return cookieStore.getAll()
+
+                    // Iterate manually since getAll does not exist
+                    const allCookies = cookieStore.getAll().map( ( { name, value } ) => ( { name, value } ) );
+                    return allCookies;
                 },
                 setAll ( cookiesToSet )
                 {
-                    try
+                    cookiesToSet.forEach( ( { name, value, options } ) =>
                     {
-                        cookiesToSet.forEach( ( { name, value, options } ) =>
-                            cookieStore.set( name, value, options )
-                        )
-                    } catch
-                    {
-                        // The `setAll` method was called from a Server Component.
-                        // This can be ignored if you have middleware refreshing
-                        // user sessions.
-                    }
+                        // To persist cookie, you would need to set them manually here,
+                        // This example assumes `set` is available in some environments:
+                        try
+                        {
+                            ( cookieStore ).set( name, value, options );
+                        } catch
+                        {
+                            // Ignore if `setAll` was called in a server environment without access
+                        }
+                    } );
                 },
             },
         }
-    )
+    );
 }

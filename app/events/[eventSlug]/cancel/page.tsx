@@ -6,15 +6,15 @@ import { Button } from '@nextui-org/react';
 
 interface CancelPageProps
 {
-  params: {
+  params: Promise<{
     eventSlug: string;
-  };
+  }>;
 }
 
-export default function CancelPage ( { params }: CancelPageProps )
+export default async function CancelPage ( { params }: CancelPageProps )
 {
+  const { eventSlug } = await params; // Await params to extract `eventSlug`
   const router = useRouter();
-  const { eventSlug } = params;
 
   useEffect( () =>
   {

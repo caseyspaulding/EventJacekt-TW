@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchTicketInfo } from './action';
-
 import Html5QrcodePlugin from '@/components/QRCodeScanner/Html5QrCodePlugin';
 import SubmitButton from '@/app/login/submit-button';
 
@@ -12,12 +11,12 @@ type Ticket = {
   status: string;
   eventName: string;
   purchaseDate: string | null;
-  checkInStatus: boolean | null;  // Updated to boolean
+  checkInStatus: boolean | null;
 };
 
-export default function VerifyTicketPage ( { params }: { params: { ticketId: string } } )
+export default async function VerifyTicketPage ( { params }: { params: Promise<{ ticketId: string }> } )
 {
-  const { ticketId } = params;
+  const { ticketId } = await params; // Await the params Promise
   const [ ticket, setTicket ] = useState<Ticket | null>( null );
   const [ isPending, setIsPending ] = useState( false );
   const [ errorMessage, setErrorMessage ] = useState<string | null>( null );
@@ -69,9 +68,6 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
         const errorData = await response.json();
         throw new Error( errorData.error || 'Failed to check in ticket' );
       }
-
-     
-     
 
       setTicket( ( prevTicket ) => ( prevTicket ? { ...prevTicket, checkInStatus: true } : prevTicket ) );
     } catch ( error )
@@ -125,11 +121,9 @@ export default function VerifyTicketPage ( { params }: { params: { ticketId: str
             disableFlip={ false }
             qrCodeSuccessCallback={ ( decodedText ) =>
             {
-              // Extract the UUID from the URL
               const urlSegments = decodedText.split( '/' );
-              const ticketId = urlSegments.pop(); // Extract the last part of the URL, which should be the UUID
+              const ticketId = urlSegments.pop();
 
-              // Validate if ticketId is a valid UUID (optional, but recommended)
               const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
               if ( uuidRegex.test( ticketId! ) )
               {

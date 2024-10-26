@@ -379,7 +379,7 @@ export const deleteEvent = async ( eventId: string ) =>
 // Utility function to get user and organization ID
 export const getUserAndOrgId = async () =>
 {
-    const supabase = createClient();
+    const supabase = await createClient();
     const {
         data: { user },
         error: userError
@@ -390,7 +390,7 @@ export const getUserAndOrgId = async () =>
         throw new Error( 'Not authenticated' );
     }
 
-    const { data: profile, error: profileError } = await supabase
+    const { data: profile, error: profileError } = await ( await supabase )
         .from( 'user_profiles' )
         .select( 'org_id' )
         .eq( 'user_id', user.id )

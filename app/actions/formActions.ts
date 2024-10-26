@@ -5,8 +5,8 @@ import { db } from "@/db";
 import { formFields, formResponses, forms } from "@/db/schemas/schema";
 import { createClient } from "@/utils/supabase/server";
 import { eq } from "drizzle-orm";
-
-const supabase = createClient();
+import { Database } from '@/utils/database.types'
+const supabase = await createClient();
 
 interface FormFieldInput
 {
@@ -139,7 +139,7 @@ export async function saveFormAction ( input: SaveFormInput )
 
 export async function getActiveForms ( orgId: string )
 {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try
   {
@@ -166,7 +166,7 @@ export async function getActiveForms ( orgId: string )
 
 export async function getDraftForms ( orgId: string )
 {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try
   {
@@ -191,7 +191,7 @@ export async function getDraftForms ( orgId: string )
 
 export async function getArchivedForms ( orgId: string )
 {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try
   {
@@ -237,7 +237,7 @@ export async function submitForm ( formData: FormData, formId: string, orgId: st
 {
   "use server";
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const responses: { [ key: string ]: any } = {};
 
   for ( const [ key, value ] of formData.entries() )
@@ -293,7 +293,7 @@ export async function submitForm ( formData: FormData, formId: string, orgId: st
 
 export async function publishForm ( formId: string, orgId: string )
 {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try
   {
@@ -318,7 +318,7 @@ export async function publishForm ( formId: string, orgId: string )
 
 export async function getForms ( organizationId: string )
 {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   if ( !organizationId )
   {
@@ -350,7 +350,7 @@ export async function getForms ( organizationId: string )
 
 export async function deleteForm ( formId: string, orgId: string )
 {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try
   {
@@ -376,7 +376,7 @@ export async function deleteForm ( formId: string, orgId: string )
 
 export async function archiveForm ( formId: string, orgId: string )
 {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try
   {

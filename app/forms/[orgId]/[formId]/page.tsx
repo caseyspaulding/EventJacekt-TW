@@ -83,23 +83,26 @@ async function getForm ( formId: string ): Promise<Form | null>
   };
 }
 
-export default function SharedForm ( { params }: { params: { orgId: string; formId: string } } )
+export default function SharedForm ( { params }: { params: Promise<{ orgId: string; formId: string }> } )
 {
-  const { orgId, formId } = params;
   const { toast } = useToast();
   const [ form, setForm ] = useState<Form | null>( null );
   const [ isPending, startTransition ] = useTransition();
   const { register, handleSubmit, reset } = useForm();
-  const [ orgName, setOrgName ] = useState<string | null>( null ); // State for org name
-
+  const [ orgName, setOrgName ] = useState<string | null>( null );
 
   useEffect( () =>
   {
-    if ( formId && orgId )
+    async function fetchData ()
     {
-      getForm( formId ).then( setForm );
-      getOrganizationById( orgId ).then( setOrgName ); // Fetch the organization name
+      const { orgId, formId } = await params; // Await params here
+      if ( formId && orgId )
+      {
+        getForm( formId ).then( setForm );
+        getOrganizationById( orgId ).then( setOrgName );
+      }
     }
+    fetchData();
   }, [ params ] );
 
   if ( !form )
@@ -107,7 +110,7 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
     return <div className="text-center py-10">Loading...</div>;
   }
 
-  const onSubmit = async ( data: any ) =>
+  const onSubmit = async ( data: any, orgId: string ) =>
   {
     // Convert checkbox groups to arrays
     const formattedData = { ...data };
@@ -135,16 +138,19 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
       }
     } );
 
-    startTransition( async () =>
+    startTransition( () =>
     {
-      await submitForm( formData, form.id, orgId );
+      ( async () =>
+      {
+        await submitForm( formData, form.id, orgId );
 
-      reset();
+        reset();
 
-      toast( {
-        title: 'Form Submitted',
-        description: 'Your form has been successfully submitted!',
-      } );
+        toast( {
+          title: 'Form Submitted',
+          description: 'Your form has been successfully submitted!',
+        } );
+      } )();
     } );
   };
 
@@ -258,7 +264,7 @@ export default function SharedForm ( { params }: { params: { orgId: string; form
           </CardHeader>
           <CardContent>
             <p className="my-4 text-gray-700">{ form.description }</p>
-            <form id="dynamic-form" onSubmit={ handleSubmit( onSubmit ) } className="space-y-4">
+            <form id="dynamic-form" onSubmit={ handleSubmit( async ( data ) => onSubmit( data, ( await params ).orgId ) ) } className="space-y-4">
               { form.fields.map( ( field ) => (
                 <div key={ field.id } className="space-y-2">
                   <Label htmlFor={ field.id } className="font-semibold">

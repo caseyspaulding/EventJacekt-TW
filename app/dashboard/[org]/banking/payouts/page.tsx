@@ -5,7 +5,11 @@ import { ConnectComponentsProvider, ConnectPayouts } from '@stripe/react-connect
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { createPayoutSession } from '@/app/actions/createPayoutSession'; // The server action
 
-export default function PayoutsPage ( { params }: { params: { org: string } } )
+type PayoutsPageProps = {
+  params: Promise<{ org: string }>;
+};
+
+export default function PayoutsPage ( { params }: PayoutsPageProps )
 {
   const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
   const [ loading, setLoading ] = useState( true );
@@ -17,7 +21,8 @@ export default function PayoutsPage ( { params }: { params: { org: string } } )
     {
       try
       {
-        const secret = await createPayoutSession( params.org );
+        const { org } = await params;
+        const secret = await createPayoutSession( org );
         setClientSecret( secret );
       } catch ( error )
       {
@@ -29,7 +34,7 @@ export default function PayoutsPage ( { params }: { params: { org: string } } )
     };
 
     fetchClientSecret();
-  }, [ params.org ] );
+  }, [ params ] );
 
   useEffect( () =>
   {
@@ -62,17 +67,16 @@ export default function PayoutsPage ( { params }: { params: { org: string } } )
 
   if ( !stripeConnectInstance )
   {
-    return(
-    <div className="flex items-center justify-center h-[70vh]">
-      <div className="text-center p-6 bg-yellow-100 border border-yellow-300 rounded-lg shadow-md">
-        <p className="text-lg text-yellow-800 font-semibold">
-          Stripe Account not connected.
-        </p>
-        <p className="text-yellow-700 mt-2">
-          Please connect your Stripe Account to view your payouts.
-        </p>
+    return (
+      <div className="flex items-center justify-center h-[70vh]">
+        <div className="text-center p-6 bg-yellow-100 border border-yellow-300 rounded-lg shadow-md">
+          <p className="text-lg text-yellow-800 font-semibold">Stripe Account not connected.</p>
+          <p className="text-yellow-700 mt-2">
+            Please connect your Stripe Account to view your payouts.
+          </p>
+        </div>
       </div>
-    </div>)
+    );
   }
 
   return (
@@ -112,8 +116,6 @@ export default function PayoutsPage ( { params }: { params: { org: string } } )
           If you have any questions about your payouts or encounter any issues, feel free to reach out to our support team for assistance.
         </p>
       </div>
-    
-  </ConnectComponentsProvider >
-    
+    </ConnectComponentsProvider>
   );
 }

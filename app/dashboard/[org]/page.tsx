@@ -15,9 +15,8 @@ import Link from 'next/link';
 
 interface DashboardPageProps
 {
-    params: { org: string };
+    params: Promise<{ org: string }>;
 }
-
 
 async function getDashboardData ( orgName: string )
 {
@@ -72,9 +71,11 @@ async function getDashboardData ( orgName: string )
 
 export default async function DashboardPage ( { params }: DashboardPageProps )
 {
+    const { org } = await params; // Await params to get `org`
+
     try
     {
-        const decodedOrgName = decodeURIComponent( params.org );
+        const decodedOrgName = decodeURIComponent( org );
         const dashboardData = await getDashboardData( decodedOrgName );
 
         if ( !dashboardData )

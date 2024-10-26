@@ -33,9 +33,9 @@ interface FAQ
     answer: string;
 }
 
-export async function generateMetadata ( { params }: { params: Params } )
+export async function generateMetadata ( { params }: { params: Promise<Params> } )
 {
-    const eventSlug = params.eventSlug;
+    const { eventSlug } = await params; // Await params here
     const eventId = await getEventIdBySlug( eventSlug );
 
     if ( !eventId )
@@ -97,9 +97,9 @@ export async function generateMetadata ( { params }: { params: Params } )
     };
 }
 
-export default async function EventPage ( { params }: { params: Params } )
+export default async function EventPage ( { params }: { params: Promise<Params> } )
 {
-    const eventSlug = params.eventSlug;
+    const { eventSlug } = await params; // Await `params` here
     const eventId = await getEventIdBySlug( eventSlug );
 
     if ( !eventId )

@@ -12,10 +12,10 @@ export async function generateStaticParams ()
     return slugs.map( ( slug: string ) => ( { slug } ) );
 }
 
-export async function generateMetadata ( { params }: { params: { slug: string } } ): Promise<Metadata>
+export async function generateMetadata ( { params }: { params: Promise<{ slug: string }> } ): Promise<Metadata>
 {
-    const post = await getBlogPostBySlug( params.slug );
-
+    const resolvedParams = await params; // Await the promise
+    const post = await getBlogPostBySlug( resolvedParams.slug );
     if ( !post )
     {
         return {
@@ -30,7 +30,7 @@ export async function generateMetadata ( { params }: { params: { slug: string } 
         openGraph: {
             title: post.metaTitle || post.title,
             description: post.metaDescription || post.excerpt || post.content.slice( 0, 160 ),
-            url: `https://eventjacket.com/blog/${ params.slug }`, // Update to your website URL
+            url: `https://eventjacket.com/blog/${ resolvedParams.slug }`, // Update to your website URL
             images: post.featuredImage ? [ { url: post.featuredImage, alt: post.title } ] : [],
         },
         twitter: {
@@ -50,9 +50,10 @@ function calculateReadTime ( content: string ): string
     return `${ minutes } min read`;
 }
 
-export default async function BlogPost ( { params }: { params: { slug: string } } )
+export default async function BlogPost ( { params }: { params: Promise<{ slug: string }> } )
 {
-    const post = await getBlogPostBySlug( params.slug );
+    const resolvedParams = await params; // Await the promise
+    const post = await getBlogPostBySlug( resolvedParams.slug );
 
     if ( !post )
     {
@@ -62,8 +63,8 @@ export default async function BlogPost ( { params }: { params: { slug: string } 
     // Sanitize the HTML content
     const sanitizedContent = DOMPurify.sanitize( post.content );
     const readTime = calculateReadTime( post.content );
-  
-    
+
+
 
     return (
         <>

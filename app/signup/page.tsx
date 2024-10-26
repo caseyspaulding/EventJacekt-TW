@@ -1,12 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-
 import { Icon } from "@iconify/react";
 import { useRouter } from 'next/navigation';
 import Head from 'next/head';
 import Link from "next/link";
-import { signUp } from "./signup";
 import toast from "react-hot-toast";
 import FooterFull from "@/components/Footers/FooterFull";
 import MyButton from "../login/submit-button";
@@ -44,31 +42,25 @@ export default function Component ()
 
     const toggleVisibility = () => setIsVisible( !isVisible );
 
-    // Function to call the server action
+
     const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ) =>
     {
         event.preventDefault();
         const formData = new FormData( event.currentTarget );
 
-        // Calling server action here
-        const result = await signUp( formData );
+        const response = await fetch( '/api/signup', {
+            method: 'POST',
+            body: formData,
+        } );
+        const result = await response.json();
 
         if ( result.success )
         {
-            // Check if email confirmation is required
-            if ( result.user && !result.user.confirmed_at )
-            {
-                // Notify the user to check their email
-                router.push( '/signup-success' );
-            } else
-            {
-                // Redirect to the next step
-                router.push( result.redirectTo || '/choose-account-type' );
-            }
+            router.push( result.redirectTo || '/choose-account-type' );
         } else
         {
+            toast.error( 'Error creating account.' );
             console.error( result.message );
-            toast.error( 'Error creating account. ' );
         }
     };
 
@@ -79,18 +71,19 @@ export default function Component ()
             const formData = new FormData();
             formData.append( 'googleToken', response.credential );
 
-            // Send the token to the server action
             try
             {
-                const result = await signUp( formData );
+                const apiResponse = await fetch( '/api/signup', {
+                    method: 'POST',
+                    body: formData,
+                } );
+                const result = await apiResponse.json();
 
                 if ( result.success )
                 {
-                    // Optionally store the token or user info in a global state or context here
                     router.push( result.redirectTo || '/choose-account-type' );
                 } else
                 {
-                    console.error( 'Sign up failed:', result.message );
                     toast.error( 'Google sign-in failed.' );
                 }
             } catch ( error )
@@ -111,6 +104,7 @@ export default function Component ()
             document.body.removeChild( script );
         };
     }, [] );
+
 
     return (
         <>

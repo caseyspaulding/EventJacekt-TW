@@ -2,38 +2,50 @@
 
 import React, { useEffect, useState } from 'react';
 
+export default function RefreshStripe ( { params }: { params: Promise<{ id: string }> } )
+{
+    const [ accountLinkCreatePending, setAccountLinkCreatePending ] = useState( false );
+    const [ error, setError ] = useState( false );
+    const [ accountId, setAccountId ] = useState<string | null>( null );
 
-export default function RefreshStripe({ params }: { params: { id: string } }) {
-    const [accountLinkCreatePending, setAccountLinkCreatePending] = useState(false);
-    const [error, setError] = useState(false);
+    useEffect( () =>
+    {
+        async function fetchAccountLink ()
+        {
+            const { id } = await params; // Await params here
+            setAccountId( id );
 
-    useEffect(() => {
-        const connectedAccountId = params.id;
-        if (connectedAccountId) {
-            setAccountLinkCreatePending(true);
-            fetch('/api/stripe/create-account-link', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ account: connectedAccountId })
-            })
-                .then((response) => response.json())
-                .then((json) => {
-                    setAccountLinkCreatePending(false);
+            if ( id )
+            {
+                setAccountLinkCreatePending( true );
+                fetch( '/api/stripe/create-account-link', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify( { account: id } )
+                } )
+                    .then( ( response ) => response.json() )
+                    .then( ( json ) =>
+                    {
+                        setAccountLinkCreatePending( false );
 
-                    const { url, error } = json;
+                        const { url, error } = json;
 
-                    if (url) {
-                        window.location.href = url;
-                    }
+                        if ( url )
+                        {
+                            window.location.href = url;
+                        }
 
-                    if (error) {
-                        setError(true);
-                    }
-                });
+                        if ( error )
+                        {
+                            setError( true );
+                        }
+                    } );
+            }
         }
-    }, [params.id]);
+        fetchAccountLink();
+    }, [ params ] );
 
     return (
         <div className="container">
@@ -43,15 +55,15 @@ export default function RefreshStripe({ params }: { params: { id: string } }) {
             <div className="content">
                 <h2>Add information to start accepting money</h2>
                 <p>EventJacket partners with Stripe to help you receive payments securely.</p>
-                {error && <p className="error">Something went wrong!</p>}
+                { error && <p className="error">Something went wrong!</p> }
             </div>
             <div className="dev-callout">
-                {params.id && (
+                { accountId && (
                     <p>
-                        Your connected account ID is: <code className="bold">{params.id}</code>
+                        Your connected account ID is: <code className="bold">{ accountId }</code>
                     </p>
-                )}
-                {accountLinkCreatePending && <p>Creating a new Account Link...</p>}
+                ) }
+                { accountLinkCreatePending && <p>Creating a new Account Link...</p> }
             </div>
         </div>
     );

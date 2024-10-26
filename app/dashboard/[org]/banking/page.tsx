@@ -4,9 +4,14 @@ import { organizations } from '@/db/schemas/schema';
 import { db } from '@/db';
 import { eq } from 'drizzle-orm';
 
-export default async function BankingPageWrapper ( { params }: { params: { org: string } } )
+type BankingPageWrapperProps = {
+    params: Promise<{ org: string }>; // Define `params` as a Promise to meet the new type constraints
+};
+
+export default async function BankingPageWrapper ( { params }: BankingPageWrapperProps )
 {
-    const decodedOrgName = decodeURIComponent( params.org );
+    const { org } = await params;
+    const decodedOrgName = decodeURIComponent( org );
 
     try
     {
@@ -14,7 +19,7 @@ export default async function BankingPageWrapper ( { params }: { params: { org: 
         const [ organization ] = await db
             .select( {
                 stripeConnectLinked: organizations.stripeConnectLinked,
-                stripeAccountId: organizations.stripeAccountId
+                stripeAccountId: organizations.stripeAccountId,
             } )
             .from( organizations )
             .where( eq( organizations.name, decodedOrgName ) );
@@ -26,7 +31,7 @@ export default async function BankingPageWrapper ( { params }: { params: { org: 
             <BankingPageClient
                 isStripeConnected={ isLinked }
                 initialAccountId={ stripeAccountId }
-                params={ params }
+                params={ { org } }
             />
         );
     } catch ( error )

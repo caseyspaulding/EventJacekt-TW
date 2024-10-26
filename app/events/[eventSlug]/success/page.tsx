@@ -9,8 +9,8 @@ import TicketDisplay from '@/components/TicketViewer';
 
 interface SuccessPageProps
 {
-    params: { eventSlug: string };
-    searchParams: { firstName?: string; lastName?: string };
+    params: Promise<{ eventSlug: string }>;
+    searchParams: Promise<{ firstName?: string; lastName?: string }>;
 }
 
 export default async function SuccessPage ( {
@@ -18,12 +18,13 @@ export default async function SuccessPage ( {
     searchParams,
 }: SuccessPageProps )
 {
-    const { eventSlug } = params;
-    const { firstName, lastName } = searchParams;
-
+    const { eventSlug } = await params; // Await params here
+    const { firstName, lastName } = await searchParams; // Await searchParams here
     const customerName = `${ firstName ?? '' } ${ lastName ?? '' }`.trim() || '';
+
     console.log( 'Received eventSlug:', eventSlug );
     console.log( 'Received customerName:', customerName );
+
 
     // Fetch the event ID by slug
     const eventId = await getEventIdBySlug( eventSlug );

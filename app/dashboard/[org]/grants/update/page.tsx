@@ -2,18 +2,24 @@
 
 import { updateGrant } from "@/app/actions/grantActions";
 
+type UpdateGrantPageProps = {
+  params: Promise<{ grantId: string }>;
+};
 
-
-export default async function UpdateGrantPage ( { params }: { params: { grantId: string } } )
+export default async function UpdateGrantPage ( { params }: UpdateGrantPageProps )
 {
-  const onSubmit = async ( formData: FormData ) =>
+  const { grantId } = await params;
+
+  const onSubmit = async ( event: React.FormEvent<HTMLFormElement> ) =>
   {
+    event.preventDefault();
+    const formData = new FormData( event.currentTarget );
     await updateGrant( formData );
   };
 
   return (
-    <form action={ onSubmit }>
-      <input name="grantId" type="hidden" value={ params.grantId } />
+    <form onSubmit={ onSubmit }>
+      <input name="grantId" type="hidden" value={ grantId } />
       <input name="status" placeholder="Status" />
       <input name="amountApproved" type="number" placeholder="Amount Approved" />
       <textarea name="deliverables" placeholder="Deliverables" />

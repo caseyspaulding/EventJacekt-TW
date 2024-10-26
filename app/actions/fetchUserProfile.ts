@@ -8,7 +8,7 @@ export async function fetchUserProfile (): Promise<UserType | null>
 {
     try
     {
-        const supabase = createClient();
+        const supabase = await createClient();
 
         // Get user data from Supabase auth
         const { data: { user: supabaseUser }, error: authError } = await supabase.auth.getUser();

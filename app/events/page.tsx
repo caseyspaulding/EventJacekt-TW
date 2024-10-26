@@ -1,27 +1,43 @@
-// EventsList.tsx
-import React from 'react';
+
+'use client';
 import NavBar1 from '@/components/NavBarTW/NavBar1';
 import FooterFull from '@/components/Footers/FooterFull';
 import HeaderCentered from '@/components/HeaderCentered';
 import EventsListComponent from '@/components/EventListComponent';
 import { getEvents } from '@/app/actions/getEvents'; // Import the server action
-import type { Metadata } from 'next/types';
 
+import { useEffect, useState } from 'react';
 
 export const revalidate = 10; // Revalidate the page every 10 seconds
 
-export async function generateMetadata (): Promise<Metadata>
+
+// Create an async function to fetch events
+async function fetchEventList ()
 {
-    return {
-        title: 'Events - EventJacket',
-        description: 'Explore the events organized with EventJacket.',
-    };
+    return await getEvents();
 }
 
-const EventsList: React.FC = async () =>
+// Wrapper component to manage async data fetching and rendering
+const EventsListWrapper: React.FC = () =>
 {
-    // Call the server action to fetch the events
-    const eventList = await getEvents();
+    const [ eventList, setEventList ] = useState<any[]>( [] );
+    const [ loading, setLoading ] = useState( true );
+
+    useEffect( () =>
+    {
+        const fetchData = async () =>
+        {
+            const events = await fetchEventList();
+            setEventList( events );
+            setLoading( false );
+        };
+        fetchData();
+    }, [] );
+
+    if ( loading )
+    {
+        return <div>Loading Events...</div>;
+    }
 
     return (
         <>
@@ -30,11 +46,10 @@ const EventsList: React.FC = async () =>
                 title="Events"
                 description="Explore the events organized with EventJacket."
             />
-           
             <EventsListComponent eventList={ eventList } />
             <FooterFull />
         </>
     );
 };
 
-export default EventsList;
+export default EventsListWrapper;

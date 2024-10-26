@@ -12,10 +12,18 @@ import FooterTW from "@/components/Footers/FooterTW";
 import Script from "next/script";
 
 
-
-export async function generateMetadata ( { params }: { params: Params } ): Promise<Metadata>
+interface Params
 {
-  const eventSlug = params.eventSlug;
+  eventSlug: string;
+}
+
+export async function generateMetadata ( {
+  params,
+}: {
+  params: Promise<Params>;
+} ): Promise<Metadata>
+{
+  const { eventSlug } = await params; // Await params here
   const eventId = await getEventIdBySlug( eventSlug );
 
   if ( !eventId )
@@ -87,21 +95,19 @@ export async function generateMetadata ( { params }: { params: Params } ): Promi
   };
 }
 
-interface Params
+export default async function BuyTickets ( {
+  params,
+}: {
+  params: Promise<Params>;
+} )
 {
-  eventSlug: string;
-}
-
-export default async function BuyTickets ( { params }: { params: Params } )
-{
-  const eventSlug = params.eventSlug;
+  const { eventSlug } = await params; // Await params here
   const eventId = await getEventIdBySlug( eventSlug );
 
   if ( !eventId )
   {
     notFound();
   }
-
   const eventWithOrg = await db
     .select( {
       eventId: events.id,
