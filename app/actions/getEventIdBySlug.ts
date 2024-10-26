@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 export async function getEventIdBySlug ( eventSlug: string ): Promise<string | null>
 {
    
-    const supabase = createClient();
+    const supabase = await createClient();
 
     try
     {
