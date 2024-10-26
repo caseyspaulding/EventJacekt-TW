@@ -192,12 +192,7 @@ export async function createBlogPost ( formData: FormData )
     const title = formData.get( 'title' ) as string;
     const content = formData.get( 'content' ) as string;
     const excerpt = ( formData.get( 'excerpt' ) as string ) || '';
-    const authorIdStr = formData.get( 'authorId' ) as string;
-    const authorId = parseInt( authorIdStr, 10 );
-    if ( isNaN( authorId ) )
-    {
-        return { success: false, message: 'Invalid author ID.' };
-    }
+    const authorId = 1; // Assuming 1 is your hardcoded author ID
     const tags = ( formData.get( 'tags' ) as string )?.split( ',' ).map( tag => tag.trim() ).join( ',' ) || '';
     let slug = formData.get( 'slug' ) as string;
     const featuredImage = formData.get( 'featuredImage' ) as string;
@@ -219,19 +214,12 @@ export async function createBlogPost ( formData: FormData )
             return { success: false, message: 'A post with this slug already exists.' };
         }
 
-        // Fetch the author using the ID
-        const [ author ] = await db.select().from( authors ).where( eq( authors.id, authorId ) );
-        if ( !author )
-        {
-            return { success: false, message: 'Author not found.' };
-        }
-
         // Insert the new blog post into the database
         await db.insert( blogPosts ).values( {
             title,
             content,
             excerpt,
-            authorId: author.id, // You can also use authorId directly
+            authorId, // Use authorId directly without needing a lookup
             tags,
             slug,
             featuredImage,
@@ -252,7 +240,6 @@ export async function createBlogPost ( formData: FormData )
         return { success: false, message: 'Failed to create blog post. Please try again.' };
     }
 }
-
 
 export async function getAllBlogSlugs ()
 {

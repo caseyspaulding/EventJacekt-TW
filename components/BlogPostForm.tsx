@@ -156,12 +156,6 @@ const BlogPostForm: React.FC = () =>
       return;
     }
 
-    if ( !authorId )
-    {
-      toast.error( 'Please select an author.' );
-      return;
-    }
-
     const imageUrl = await handleImageUpload( featuredImage );
     if ( !imageUrl )
     {
@@ -169,13 +163,11 @@ const BlogPostForm: React.FC = () =>
       return;
     }
 
-
-
     const formData = new FormData();
     formData.append( 'title', title );
     formData.append( 'content', content );
     formData.append( 'excerpt', excerpt );
-    formData.append( 'authorId', authorId );
+    formData.append( 'authorId', '1' ); // Hardcode the author ID as 1
     formData.append( 'tags', tags );
     formData.append( 'slug', slug );
     formData.append( 'metaTitle', metaTitle );
@@ -192,7 +184,6 @@ const BlogPostForm: React.FC = () =>
       setTitle( '' );
       setContent( '' );
       setExcerpt( '' );
-      setAuthorId( '' );
       setTags( '' );
       setSlug( '' );
       setMetaTitle( '' );
