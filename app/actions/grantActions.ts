@@ -61,7 +61,7 @@ export const getGrantsByOrg = async ( orgId: string ) =>
 // Utility function to get user and organization ID (reuse your existing code)
 export const getUserAndOrgId = async () =>
 {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
     error: userError,
