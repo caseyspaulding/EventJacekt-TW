@@ -15,7 +15,7 @@ export async function POST ( request: Request )
   const email = formData.get( 'email' ) as string;
   const password = formData.get( 'password' ) as string;
   const googleToken = formData.get( 'googleToken' ) as string;
-  const supabase = createClient();
+  const supabase = await createClient();
   const redirectTo = `${ origin }/confirm`;
 
   if ( !email || !password )
