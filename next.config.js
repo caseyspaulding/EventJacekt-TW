@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  optimizeFonts: true,
+ 
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
-  swcMinify: true,
+ 
 
   images: {
     remotePatterns: [

@@ -1,5 +1,4 @@
 import { nextui } from '@nextui-org/react';
-import flowbite from 'flowbite-react/tailwind';
 import type { Config } from 'tailwindcss';
 
 export default {
@@ -9,7 +8,7 @@ export default {
 		'./pages/**/*.{ts,tsx,mdx}', // Include pages folder if exists
 		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
 		'./node_modules/flowbite-react/**/*.{js,ts,jsx,tsx}', // Include Flowbite
-		flowbite.content(), // Flowbite's content paths
+		
 	],
 	theme: {
     	extend: {
