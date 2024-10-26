@@ -6,6 +6,7 @@ import ClientProviders from './ClientProviders';
 import { ThemeProvider } from "@/providers/theme-provider";
 import Script from 'next/script';
 import { Toaster } from "@/components/ui/toaster"
+import { Analytics } from "@vercel/analytics/react"
 
 // Google Font Configuration
 const spaceGrotesk = Space_Grotesk( {
@@ -20,6 +21,7 @@ export default function RootLayout ( { children }: PropsWithChildren )
         <html lang="en" className={ spaceGrotesk.className }>
 
             <body>
+                <Analytics />
                 {/* Google Tag Manager Script */ }
                 <Script
                     strategy="afterInteractive"

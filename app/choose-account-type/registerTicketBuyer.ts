@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
 
 export const registerTicketBuyer = async () =>
 {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Get the authenticated user
   const {
