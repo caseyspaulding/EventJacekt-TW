@@ -14,7 +14,7 @@ export async function GET ( request: Request )
             return NextResponse.redirect( 'https://www.eventjacket.com/auth/sign-in?message=Missing%20authorization%20code' );
         }
 
-        const supabase = createClient();
+        const supabase = await createClient();
 
         // Attempt to exchange the authorization code for a session
         const { data: session, error: exchangeError } = await supabase.auth.exchangeCodeForSession( code );

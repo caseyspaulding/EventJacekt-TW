@@ -12,7 +12,7 @@ const navigation = {
   support: [
     { name: 'Blog', href: '/blog' },
 
-    { name: 'Site Map', href: '/sitemap' },
+    { name: 'Site Map', href: '/sitemap-eventjacket' },
     { name: 'Events', href: '/events' },
 
   ],
