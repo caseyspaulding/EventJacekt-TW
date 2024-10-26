@@ -139,7 +139,7 @@ export async function fetchTicketTypesForEvent ( eventId: string )
 // Utility function to get user and organization ID
 export async function getUserAndOrgId ()
 {
-    const supabase = createClient();
+    const supabase = await createClient();
     const {
         data: { user },
         error: userError

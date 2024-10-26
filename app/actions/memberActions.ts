@@ -61,7 +61,7 @@ export const updateMember = async ( memberId: string, data: FormData ) =>
 // Invite a member to an organization
 export const inviteMember = async ( email: string, orgId: string ) =>
 {
-  const supabase = createClient();
+  const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
   try

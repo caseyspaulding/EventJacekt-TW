@@ -29,7 +29,7 @@ export async function GET (): Promise<NextResponse<ErrorResponse | SuccessRespon
 {
   try
   {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Fetch the authenticated user from Supabase auth
     const {
