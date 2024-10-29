@@ -54,7 +54,15 @@ export default function FormsPage ()
       {
         setLoading( true );
         const formsData = await getForms( user.organizationId );
-        setForms( formsData );
+        setForms(
+          formsData.map((form) => ({
+            ...form,
+            isArchived: form.is_archived ?? false,
+            isDeleted: false,
+            isDraft: false,
+            status: form.status ?? 'active', // Ensure status is always a string
+          }))
+        );
       } catch ( error )
       {
         console.error( 'Failed to fetch forms:', error );

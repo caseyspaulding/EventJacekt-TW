@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { Button } from "flowbite-react";
 
 export default async function SignUpButton() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

@@ -8,10 +8,11 @@ import { useEffect, useState } from "react";
 import { Bars3CenterLeftIcon, BookmarkIcon, BookmarkSquareIcon, BuildingStorefrontIcon, ChartBarIcon, CurrencyDollarIcon, HeartIcon, MegaphoneIcon, PhoneArrowDownLeftIcon, TicketIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 import { createClient } from "@/utils/supabase/client";
 import React from "react";
-import type { Json } from "@/database.types";
+
 import { Button } from "@nextui-org/button";
 import { useUser } from "@/contexts/UserContext";
 import { BookDashedIcon, User } from "lucide-react";
+import { Json } from "@/database.types";
 
 
 // Define your UserType

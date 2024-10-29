@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm';
 
 export const googleSignUp = async ( idToken: string, orgName: string ) =>
 {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try
   {

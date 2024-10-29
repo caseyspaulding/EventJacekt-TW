@@ -1,12 +1,15 @@
 export type Post = {
     id: number;
-    slug: string;
     title: string;
+    slug: string;
     content: string;
-    excerpt?: string;
+    excerpt: string | null;
     author: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt?: string;
-    tags?: string[];
+    tags: string[] | null;
+    featuredImage: string | null;
+    metaTitle: string | null;
+    metaDescription: string | null;
+    isPublished: boolean | null;
+    createdAt: Date;
+    updatedAt: Date;
 };

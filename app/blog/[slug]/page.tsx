@@ -63,7 +63,15 @@ export default async function BlogPost ( { params }: { params: Promise<{ slug: s
     // Sanitize the HTML content
     const sanitizedContent = DOMPurify.sanitize( post.content );
     const readTime = calculateReadTime( post.content );
-
+    let tags;
+    try
+    {
+        tags = post.tags ? JSON.parse( post.tags ) : [];
+    } catch ( error )
+    {
+        // If JSON.parse fails, it’s likely just a plain string
+        tags = [ post.tags ];
+    }
 
 
     return (
@@ -74,11 +82,8 @@ export default async function BlogPost ( { params }: { params: Promise<{ slug: s
                     <div className="relative mb-8 flex flex-col md:flex-row items-center md:items-stretch">
                         <div className="md:w-2/3 flex flex-col justify-center p-4 bg-white rounded-tl-xl rounded-bl-xl">
                             <div className="flex flex-wrap gap-2 mb-4">
-                                { post.tags ? JSON.parse( post.tags ).map( ( tag: string, index: number ) => (
-                                    <span
-                                        key={ index }
-                                        className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
-                                    >
+                                { tags ? tags.map( ( tag: string, index: number ) => (
+                                    <span key={ index } className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
                                         { tag.trim() }
                                     </span>
                                 ) ) : null }

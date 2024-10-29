@@ -172,8 +172,8 @@ export function FormBuilderComponent ( { orgId, userId }: FormBuilderProps )
 
     setForm( {
       id: formData.id,
-      name: formData.name,
-      description: formData.description,
+      name: formData.form_name,
+      description: formData.description ?? '',
       fields: fieldsData.map( ( field: any ) => ( {
         id: field.id,
         type: field.type as FieldType,

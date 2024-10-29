@@ -9,7 +9,7 @@ import type React from 'react';
 export default async function DashboardLayout ( { children }: React.PropsWithChildren<unknown> )
 {
     const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-    const supabase = createClient();
+    const supabase = await createClient();
     const {
         data: { session }
     } = await supabase.auth.getSession();

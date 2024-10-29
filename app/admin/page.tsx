@@ -4,12 +4,22 @@ import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
-import type { Post } from '../../types/Post';
 import { Button } from '@nextui-org/button';
+
+
+type Posts = {
+    id: number;
+    title: string;
+    content: string;
+    created_at: string;
+};
+
+
+
 
 const AdminDashboard = () =>
 {
-    const [ posts, setPosts ] = useState<Post[]>( [] );
+    const [ posts, setPosts ] = useState<Posts[]>( [] );
     const [ user, setUser ] = useState<User | null>( null );
     const router = useRouter();
 
@@ -53,7 +63,7 @@ const AdminDashboard = () =>
                 <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">Blog Admin Dashboard</h1>
                 <Button
                     as='a'
-                href='/admin/dashboard'>Dashboard</Button>
+                    href='/admin/dashboard'>Dashboard</Button>
             </div>
         </div>
     );

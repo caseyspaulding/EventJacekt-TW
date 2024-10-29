@@ -1,6 +1,6 @@
+import { Database } from '@/database.types';
 import { createServerClient } from '@supabase/ssr'
 
-import type { Database } from './database.types'
 import { cookies } from 'next/headers'
 
 export default async function useSupabaseServer ()

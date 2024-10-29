@@ -16,7 +16,7 @@ export const registerOrganization = async ( formData: FormData ) =>
   const orgName = formData.get( 'orgName' ) as string;
   const website = formData.get( 'website' ) as string;
   const logoFile = formData.get( 'logo' ) as File;
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Get the authenticated user
   const {

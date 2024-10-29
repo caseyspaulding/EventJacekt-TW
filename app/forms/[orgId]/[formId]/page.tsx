@@ -63,22 +63,21 @@ async function getForm ( formId: string ): Promise<Form | null>
   }
 
   const parsedFieldsData = fieldsData?.map( ( field ) => ( {
-    id: field.id,
+    id: String(field.id),
     fieldType: field.field_type,
     fieldName: field.field_name,
-    placeholder: field.placeholder,
-    isRequired: field.is_required,
-    options: field.options ? JSON.parse( field.options ) : null,
+    placeholder: field.placeholder ?? undefined,
+    isRequired: field.is_required ?? false,
+    options: typeof field.options === 'string' ? JSON.parse(field.options) : null,
     order: field.order,
   } ) );
 
   return {
     id: formData.id,
     name: formData.form_name,
-    description: formData.description,
-    headerMediaUrl: formData.header_media_url,
-    backgroundType: formData.background_type,
-    backgroundValue: formData.background_value,
+    description: formData.description ?? '',
+    headerMediaUrl: formData.header_media_url ?? undefined,
+    backgroundType: (formData as any).background_type as string | undefined,
     fields: parsedFieldsData ?? [],
   };
 }

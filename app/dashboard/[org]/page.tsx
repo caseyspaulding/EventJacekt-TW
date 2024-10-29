@@ -20,7 +20,7 @@ interface DashboardPageProps
 
 async function getDashboardData ( orgName: string )
 {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Fetch the authenticated user from Supabase auth
     const {

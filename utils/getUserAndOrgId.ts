@@ -5,7 +5,7 @@ import { createClient } from "./supabase/server";
 // Utility function to get user and organization ID
 export const getUserAndOrgId = async () =>
 {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
     error: userError

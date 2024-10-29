@@ -40,7 +40,7 @@ interface Form
 {
   id: string
   name: string
-  description: string
+  description: string | null
   fields: FormField[]
 }
 
@@ -157,7 +157,7 @@ export function FormEditorComponent ( { orgId, formId, user }: FormEditorProps )
       orgId: orgId,
       formId: form.id,
       name: form.name,
-      description: form.description,
+      description: form.description || '',
       fields: form.fields,
       isDraft: isDraft,
       isArchived: isArchived,
@@ -556,7 +556,7 @@ export function FormEditorComponent ( { orgId, formId, user }: FormEditorProps )
                     className="text-2xl font-bold mb-2"
                   />
                   <Textarea
-                    value={ form.description }
+                    value={ form.description || '' }
                     onChange={ ( e ) => setForm( { ...form, description: e.target.value } ) }
                     placeholder="Form Description"
                   />

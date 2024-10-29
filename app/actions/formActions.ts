@@ -5,7 +5,7 @@ import { db } from "@/db";
 import { formFields, formResponses, forms } from "@/db/schemas/schema";
 import { createClient } from "@/utils/supabase/server";
 import { eq } from "drizzle-orm";
-import { Database } from '@/utils/database.types'
+
 const supabase = await createClient();
 
 interface FormFieldInput

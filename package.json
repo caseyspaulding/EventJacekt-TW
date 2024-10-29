@@ -84,6 +84,7 @@
     "critters": "^0.0.24",
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.33.0",
+    "eslint-config-next": "^15.0.2",
     "file-saver": "^2.0.5",
     "flowbite-react": "^0.10.2",
     "flowbite-typography": "^1.0.4",

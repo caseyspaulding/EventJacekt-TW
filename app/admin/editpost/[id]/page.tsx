@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { Button } from 'flowbite-react';
 import LogoSpinner from '@/components/Loaders/LogoSpinner';
 import dynamic from 'next/dynamic';
+
 // Dynamically import JoditEditor with SSR disabled
 const JoditEditor = dynamic( () => import( 'jodit-react' ), {
     ssr: false,
@@ -18,7 +19,6 @@ interface Author
 {
     id: number;
     name: string;
-
 }
 
 interface BlogPost
@@ -29,7 +29,7 @@ interface BlogPost
     content: string;
     excerpt?: string | null;
     authorId: number;
-    tags?: string | null;
+    tags?: string[] | null;
     featuredImage?: string | null;
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -37,7 +37,6 @@ interface BlogPost
     createdAt: Date;
     updatedAt: Date;
 }
-
 
 export default function EditPostPage ()
 {
@@ -48,10 +47,9 @@ export default function EditPostPage ()
     const [ authorsList, setAuthorsList ] = useState<Author[]>( [] );
     const [ title, setTitle ] = useState( '' );
     const [ content, setContent ] = useState( '' );
-    const [ excerpt, setExcerpt ] = useState( '' );
-    const [ authorId, setAuthorId ] = useState( '' );
-
-    const [ tags, setTags ] = useState( '' );
+    const [ excerpt, setExcerpt ] = useState<string>( '' );
+    const [ authorId, setAuthorId ] = useState<number | null>( null );
+    const [ tags, setTags ] = useState<string[]>( [] );
     const [ slug, setSlug ] = useState( '' );
     const [ metaTitle, setMetaTitle ] = useState( '' );
     const [ metaDescription, setMetaDescription ] = useState( '' );
@@ -65,7 +63,11 @@ export default function EditPostPage ()
         const fetchPost = async () =>
         {
             const supabase = createClient();
-            const { data: post, error } = await supabase.from( 'blog_posts' ).select( '*' ).eq( 'id', id ).single();
+            const { data: post, error } = await supabase
+                .from( 'blog_posts' )
+                .select( '*' )
+                .eq( 'id', idAsNumber )
+                .single();
 
             if ( error )
             {
@@ -78,35 +80,20 @@ export default function EditPostPage ()
             {
                 setTitle( post.title );
                 setContent( post.content );
-                setExcerpt( post.excerpt );
-                setAuthorId( post.author_id ); // Update here
-                setTags( post.tags ? JSON.parse( post.tags ).join( ', ' ) : '' );
+                setExcerpt( post.excerpt ?? '' );
+               
+             
 
                 setSlug( post.slug );
-                setMetaTitle( post.meta_title );
-                setMetaDescription( post.meta_description );
-                setIsPublished( post.is_published );
-                setFeaturedImageURL( post.featured_image );
+               
                 setLoading( false );
             }
         };
 
-        const fetchAuthors = async () =>
-        {
-            const supabase = createClient();
-            const { data: authors, error } = await supabase.from( 'authors' ).select( 'id, name' );
-
-            if ( error )
-            {
-                toast.error( 'Error fetching authors' );
-            } else
-            {
-                setAuthorsList( authors || [] );
-            }
-        };
+       
 
         fetchPost();
-        fetchAuthors();
+     
     }, [ id, router ] );
 
     const handleUpdate = async ( e: React.FormEvent ) =>
@@ -135,16 +122,15 @@ export default function EditPostPage ()
         const formData = new FormData();
         formData.append( 'title', title );
         formData.append( 'content', content );
-        formData.append( 'excerpt', excerpt );
-        formData.append( 'author', authorId ); // Update here
-        formData.append( 'tags', JSON.stringify( tags.split( ',' ).map( ( tag ) => tag.trim() ) ) );
+        formData.append( 'excerpt', excerpt || '' );
+        formData.append( 'authorId', authorId?.toString() || '' ); // Ensure authorId is a string
+        formData.append( 'tags', JSON.stringify( tags ) ); // No need to split and trim since tags are stored as an array
         formData.append( 'slug', slug );
         formData.append( 'metaTitle', metaTitle );
         formData.append( 'metaDescription', metaDescription );
         formData.append( 'isPublished', isPublished.toString() );
         formData.append( 'featuredImage', imageURL );
 
-        console.log( 'formData', formData, idAsNumber );  ////////// Debugging
         const response = await updateBlogPost( idAsNumber, formData );
 
         if ( response.success )
@@ -156,7 +142,6 @@ export default function EditPostPage ()
             toast.error( 'Error updating post' );
         }
     };
-
 
     // Configuration for the editor
     const config = useMemo(
@@ -271,22 +256,16 @@ export default function EditPostPage ()
                             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                         />
                     </div>
+
                     {/* Jodit Editor for Content */ }
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Content</label>
                         <JoditEditor
                             ref={ editor }
-                            value={ content } // The editor's current content
-                            config={ config } // Editor configuration
-                            onBlur={ ( newContent ) => setContent( newContent ) } // Use this to update the content
-                            onChange={ ( newContent ) => setContent( newContent ) } // Optional: Update the content as the user types
+                            value={ content }
+                            config={ config }
+                            onBlur={ ( newContent ) => setContent( newContent ) }
                         />
-                    </div>
-                    {/* Content */ }
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Content</label>
-
-                        <input type="hidden" name="content" value={ content } />
                     </div>
 
                     {/* Author Select Dropdown */ }
@@ -294,8 +273,8 @@ export default function EditPostPage ()
                         <label className="block text-sm font-medium text-gray-700">Author</label>
                         <select
                             name="authorId"
-                            value={ authorId }
-                            onChange={ ( e ) => setAuthorId( e.target.value ) }
+                            value={ authorId || '' }
+                            onChange={ ( e ) => setAuthorId( Number( e.target.value ) ) }
                             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 bg-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                             required
                         >
@@ -314,8 +293,8 @@ export default function EditPostPage ()
                         <input
                             name="tags"
                             type="text"
-                            value={ tags }
-                            onChange={ ( e ) => setTags( e.target.value ) }
+                            value={ tags.join( ', ' ) }
+                            onChange={ ( e ) => setTags( e.target.value.split( ',' ).map( ( tag ) => tag.trim() ) ) }
                             placeholder="Tags (comma-separated)"
                             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                         />

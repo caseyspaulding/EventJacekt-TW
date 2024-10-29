@@ -8,7 +8,7 @@ export const signIn = async ( formData: FormData ) =>
 {
     const email = formData.get( 'email' ) as string;
     const password = formData.get( 'password' ) as string;
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const { data: session, error } = await supabase.auth.signInWithPassword( {
         email,
@@ -55,7 +55,7 @@ export const signIn = async ( formData: FormData ) =>
 
 export const verifyAndRedirect = async ( tokenOrFormData: string | { formData: FormData } ) =>
 {
-    const supabase = createClient();
+    const supabase = await createClient();
     let user;
 
     if ( typeof tokenOrFormData === 'string' )

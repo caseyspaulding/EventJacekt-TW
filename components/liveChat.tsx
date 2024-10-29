@@ -72,7 +72,7 @@ async function sendMessage ( content: string, senderId: string )
   const supabase = createClient();
   const { data, error } = await supabase
     .from( 'messages' )
-    .insert( [ { content, sender_id: senderId } ] );
+    .insert( [ { content, sender_id: senderId, delivery_method: 'chat' } ] );
 
   if ( error ) console.error( error );
 }
