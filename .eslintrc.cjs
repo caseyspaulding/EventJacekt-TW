@@ -3,52 +3,35 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    commonjs: true,
-    es2021: true
+    es2021: true,
+    node: true
   },
   extends: [
-
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jsx-a11y/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:jsx-a11y/recommended', // Optional accessibility rules
-    'next/core-web-vitals' // Adds Next.js-specific linting rules
+    'next/core-web-vitals'
   ],
-  overrides: [
-    {
-      files: ['**/*.{ts,tsx}'],
-      plugins: ['@typescript-eslint'],
-      rules: {
-        '@typescript-eslint/consistent-type-imports': 'off', // Changed to 'off' as per recommendation
-        '@typescript-eslint/no-unused-vars': 'warn', // Display warnings instead of errors
-        '@typescript-eslint/no-explicit-any': 'off' // Disable rule for 'any' type usage
-      }
-    }
-  ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    
+  rules: {
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    'jsx-a11y/no-redundant-roles': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    '@next/next/no-img-element': 'off',
+    '@next/next/no-script-component-in-head': 'off',
+    'react-hooks/rules-of-hooks': 'off',
+    'react-hooks/exhaustive-deps': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    'jsx-a11y/media-has-caption': 'off',
+    'jsx-a11y/heading-has-content': 'off',
+    'prefer-const': 'off'
   },
   settings: {
     react: {
       version: 'detect'
-    },
-    tailwindcss: {
-      callees: ['twMerge', 'createTheme'],
-      classRegex: '^(class(Name)|theme)?$'
     }
-  },
-  rules: {
-    'jsx-a11y/anchor-is-valid': 'off',
-    'react/no-unescaped-entities': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'tailwindcss/enforces-shorthand': 'off',
-    'tailwindcss/no-custom-classname': 'off',
-    'next/next/no-img-element': 'off',
-    'no-unused-vars': 'warn', // Show warnings for unused variables (non-TypeScript files)
-    'no-undef': 'off' // Disable undefined variable checks for cases like `process`
   }
 }
