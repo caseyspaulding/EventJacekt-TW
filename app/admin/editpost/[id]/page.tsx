@@ -81,19 +81,19 @@ export default function EditPostPage ()
                 setTitle( post.title );
                 setContent( post.content );
                 setExcerpt( post.excerpt ?? '' );
-               
-             
+
+
 
                 setSlug( post.slug );
-               
+
                 setLoading( false );
             }
         };
 
-       
+
 
         fetchPost();
-     
+
     }, [ id, router ] );
 
     const handleUpdate = async ( e: React.FormEvent ) =>
@@ -123,7 +123,7 @@ export default function EditPostPage ()
         formData.append( 'title', title );
         formData.append( 'content', content );
         formData.append( 'excerpt', excerpt || '' );
-        formData.append( 'authorId', authorId?.toString() || '' ); // Ensure authorId is a string
+        formData.append( 'authorId', authorId?.toString() || '1' ); // Ensure authorId is a string
         formData.append( 'tags', JSON.stringify( tags ) ); // No need to split and trim since tags are stored as an array
         formData.append( 'slug', slug );
         formData.append( 'metaTitle', metaTitle );
@@ -270,10 +270,10 @@ export default function EditPostPage ()
 
                     {/* Author Select Dropdown */ }
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Author</label>
+                        {/*<label className="block text-sm font-medium text-gray-700">Author</label>
                         <select
                             name="authorId"
-                            value={ authorId || '' }
+                            value={ authorId || '1' }
                             onChange={ ( e ) => setAuthorId( Number( e.target.value ) ) }
                             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 bg-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                             required
@@ -284,7 +284,7 @@ export default function EditPostPage ()
                                     { author.name }
                                 </option>
                             ) ) }
-                        </select>
+                        </select>*/}
                     </div>
 
                     {/* Tags */ }
