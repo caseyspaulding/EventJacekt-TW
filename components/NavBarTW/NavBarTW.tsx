@@ -17,7 +17,7 @@ export default function NavBarTW ()
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
               <span className="block text-base font-semibold text-gray-500 sm:text-lg lg:text-base xl:text-lg">
-                Fundraising 
+                👋 &nbsp;Free Account
               </span>
               <h1>
                 <span className="mt-1 block text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
@@ -26,7 +26,7 @@ export default function NavBarTW ()
                 </span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                Transparent Pricing. No Hidden Fees. Simplify Your Nonprofit’s Events and Raise More Funds with EventJacket.
+                No Hidden Fees. Transparent Pricing. Easy.
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
                 <Link href="/signup" passHref>
