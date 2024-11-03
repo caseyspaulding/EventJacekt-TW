@@ -111,8 +111,8 @@ export const createEvent = async ( formData: FormData ) =>
     const tags = ( formData.get( 'tags' ) as string ).split( ',' ).map( ( tag ) => tag.trim() );
     const faqs = JSON.parse( formData.get( 'faqs' ) as string );
     const highlights = ( formData.get( 'highlights' ) as string ).split( ',' ).map( ( highlight ) => highlight.trim() );
-    const ageRestriction = formData.get( 'ageRestriction' ) as string;
-    const parkingOptions = formData.get( 'parkingOptions' ) as string;
+    const ageRestriction = ( formData.get( 'ageRestriction' ) as string ).split( ',' ).map( ( restriction ) => restriction.trim() );
+    const parkingOptions = ( formData.get( 'parkingOptions' ) as string ).split( ',' ).map( ( option ) => option.trim() );
     const agendaItemsRaw = formData.get( 'agendaItems' ) as string;
     const organizerContact = formData.get( 'organizerContact' ) as string;
     const venueDescription = formData.get( 'venueDescription' ) as string;
@@ -167,8 +167,8 @@ export const createEvent = async ( formData: FormData ) =>
         tags: tags || [],
         faqs: faqs || [],
         highlights: highlights || [],
-        ageRestriction: ageRestriction || null,
-        parkingOptions: parkingOptions || null,
+        ageRestriction: ageRestriction.join( ', ' ),  // Convert array to comma-separated string
+        parkingOptions: parkingOptions.join( ', ' ),    // If parkingOptions is also an array
         status: 'draft', // Default status
     };
 

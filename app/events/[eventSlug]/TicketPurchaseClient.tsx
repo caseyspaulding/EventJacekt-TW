@@ -4,7 +4,7 @@ import type { Ref } from 'react';
 import { useState, forwardRef } from 'react';
 import getStripe from '@/utils/stripeClient';
 import { Button } from '@nextui-org/react';
-import InputFieldEJ from '@/components/Input/InputEJ';
+import InputFieldEJ from '@/components/Input/TagInput';
 import QuantitySelector from '@/components/QuantitySelector';
 
 interface TicketPurchaseClientProps
@@ -22,8 +22,8 @@ const TicketPurchaseClient = ( { ticket, eventSlug, quantity, setQuantity }: Tic
     const [ firstName, setFirstName ] = useState( '' );
     const [ lastName, setLastName ] = useState( '' );
     const [ email, setEmail ] = useState( '' );
-   
-    
+
+
     const handleBuyTicket = async () =>
     {
         setLoading( true );
@@ -119,7 +119,7 @@ const TicketPurchaseClient = ( { ticket, eventSlug, quantity, setQuantity }: Tic
                 min={ 1 }  // Assuming minimum quantity is 1
                 max={ 10 }  // Set a maximum if needed, or remove this prop for no upper limit
             />
-           
+
             <Button
                 onClick={ handleBuyTicket }
                 disabled={ loading }

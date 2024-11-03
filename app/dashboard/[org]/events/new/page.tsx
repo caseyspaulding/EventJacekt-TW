@@ -14,10 +14,7 @@ import BreadcrumbsPageHeader from '../../components/BreadcrumbsPageHeading';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { ImageUploadVenue } from './ImageUploadVenue';
-
 import dynamic from 'next/dynamic';
-import InputFieldEJ from '@/components/Input/InputEJ';
-
 import Head from 'next/head';
 import Script from 'next/script';
 import React from 'react';
@@ -25,12 +22,15 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import TimePicker from '@/components/TimePicker';
 import DatePicker from '@/components/DatePicker';
+import EventTimezonePicker from '@/components/TimeZonePicker';
+import TagInput from '@/components/Input/TagInput';
 
 
 
 const VenueMap = dynamic( () => import( '@/components/VenueMap' ), {
     ssr: false, // This prevents server-side rendering of the component
 } );
+
 
 
 type FAQ = {
@@ -47,13 +47,9 @@ const CreateEventPage = () =>
     const [ description, setDescription ] = useState( '' );
     const [ startDate, setStartDate ] = useState( '' );
     const [ endDate, setEndDate ] = useState( '' );
-
-
     const [ eventStartTime, setEventStartTime ] = useState( '' );
-
     const [ eventEndTime, setEventEndTime ] = useState( '' );
     const [ organizerContact, setOrganizerContact ] = useState( '' );
-
     const [ venue, setVenue ] = useState( '' );
     const [ venueDescription, setVenueDescription ] = useState( '' );
     const [ address, setAddress ] = useState( '' );
@@ -71,13 +67,11 @@ const CreateEventPage = () =>
     const [ scheduleDetails, setScheduleDetails ] = useState( '' );
     const [ refundPolicy, setRefundPolicy ] = useState( '' );
     const [ timezone, setTimezone ] = useState( '' );
-    const [ tags, setTags ] = useState( '' );
+    const [ tags, setTags ] = useState<string[]>( [] );
     const [ faqs, setFaqs ] = useState<{ question: string; answer: string }[]>( [ { question: '', answer: '' } ] );
     const [ highlights, setHighlights ] = useState( '' );
-    const [ ageRestriction, setAgeRestriction ] = useState( '' );
-    const [ parkingOptions, setParkingOptions ] = useState( '' );
-
-
+    const [ ageRestriction, setAgeRestriction ] = useState<string[]>( [] );
+    const [ parkingOptions, setParkingOptions ] = useState<string[]>( [] );
     const [ previewImage, setPreviewImage ] = useState<string | null>( null ); // New state for image preview
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -98,6 +92,11 @@ const CreateEventPage = () =>
         setEndDate( date )
 
     }
+
+    const handleTagsChange = ( newTags: string[] ) =>
+    {
+        setTags( newTags );
+    };
 
     const handleEventEndTimeChange = ( time: string ) =>
     {
@@ -139,17 +138,27 @@ const CreateEventPage = () =>
 
     const handleAgeRestrictionChange = ( option: string ) =>
     {
-        setAgeRestriction( option );
+        setAgeRestriction( prev =>
+            prev.includes( option )
+                ? prev.filter( item => item !== option ) // Remove if already selected
+                : [ ...prev, option ]                    // Add if not selected
+        );
     };
+
     const handleFaqChange = ( e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number, field: keyof FAQ ) =>
     {
         const newFaqs = [ ...faqs ];
         newFaqs[ index ][ field ] = e.target.value; // TypeScript now understands field is a key of FAQ
         setFaqs( newFaqs );
     };
+
     const handleParkingOptionsChange = ( option: string ) =>
     {
-        setParkingOptions( option );
+        setParkingOptions( prev =>
+            prev.includes( option )
+                ? prev.filter( item => item !== option ) // Remove if already selected
+                : [ ...prev, option ]                    // Add if not selected
+        );
     };
 
     const addFaq = () =>
@@ -166,6 +175,7 @@ const CreateEventPage = () =>
     const handleSubmit = async ( e: { preventDefault: () => void } ) =>
     {
         e.preventDefault();
+        console.log( 'Form Submitted' );
         if ( !user ) return;
 
         const orgId = user.organizationId;
@@ -218,15 +228,16 @@ const CreateEventPage = () =>
         formData.append( 'scheduleDetails', scheduleDetails );
         formData.append( 'refundPolicy', refundPolicy );
         formData.append( 'timezone', timezone );
-        formData.append( 'tags', tags );
+        formData.append( 'tags', tags.join( ',' ) );
         formData.append( 'faqs', JSON.stringify( faqs ) );
         formData.append( 'highlights', highlights );
-        formData.append( 'ageRestriction', ageRestriction );
-        formData.append( 'parkingOptions', parkingOptions );
+        formData.append( 'ageRestriction', ageRestriction.join( ',' ) );
+        formData.append( 'parkingOptions', parkingOptions.join( ',' ) );
         formData.append( 'agendaItems', JSON.stringify( agendaItems ) );
 
         try
         {
+            console.log( 'Form Data:', formData );
             const response = await createEvent( formData );
 
             if ( response.success )
@@ -260,11 +271,11 @@ const CreateEventPage = () =>
                 setScheduleDetails( '' );
                 setRefundPolicy( '' );
                 setTimezone( '' );
-                setTags( '' );
+                setTags( [] );
                 setFaqs( [ { question: '', answer: '' } ] );
                 setHighlights( '' );
-                setAgeRestriction( '' );
-                setParkingOptions( '' );
+                setAgeRestriction( [] );
+                setParkingOptions( [] );
                 setAgendaItems( [ { title: '', startTime: '', endTime: '', description: '', hostOrArtist: '' } ] );
             } else
             {
@@ -452,7 +463,7 @@ const CreateEventPage = () =>
                             value={ address }
                             onChange={ ( e ) => setAddress( e.target.value ) }
                             className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Address"  />
+                            placeholder="Address" />
 
 
                     </div>
@@ -466,7 +477,7 @@ const CreateEventPage = () =>
                                 value={ city }
                                 onChange={ ( e ) => setCity( e.target.value ) }
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="City"  />
+                                placeholder="City" />
                         </div>
 
                         <div>
@@ -477,7 +488,7 @@ const CreateEventPage = () =>
                                 value={ state }
                                 onChange={ ( e ) => setState( e.target.value ) }
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="State"  />
+                                placeholder="State" />
                         </div>
                     </div>
 
@@ -492,7 +503,7 @@ const CreateEventPage = () =>
                                 value={ zipCode }
                                 onChange={ ( e ) => setZipCode( e.target.value ) }
                                 className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="Zip Code"  />
+                                placeholder="Zip Code" />
                         </div>
 
                     </div>
@@ -505,12 +516,12 @@ const CreateEventPage = () =>
                         <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
                             Notes
                         </label>
-                        <InputFieldEJ
+                        <Input
                             id="notes"
                             value={ notes }
                             onChange={ ( e ) => setNotes( e.target.value ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Notes" label={ 'Notes' } />
+                            placeholder="Notes" />
                     </div>
 
                     <div>
@@ -537,29 +548,14 @@ const CreateEventPage = () =>
                             placeholder="Refund Policy"
                         />
                     </div>
-
                     <div>
 
-                        <InputFieldEJ
-                            type="text"
-                            id="timezone"
-                            value={ timezone }
-                            onChange={ ( e ) => setTimezone( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Timezone"
-                            label={ ' Timezone' } />
+                        <EventTimezonePicker onTimezoneChange={ setTimezone } />
                     </div>
 
                     <div>
-
-                        <InputFieldEJ
-                            type="text"
-                            id="tags"
-                            value={ tags }
-                            onChange={ ( e ) => setTags( e.target.value ) }
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            placeholder="Tags (comma separated)"
-                            label={ 'Tags' } />
+                        <TagInput label="Tags" onTagsChange={ handleTagsChange } />
+                        <p>Current tags: { tags.join( ', ' ) }</p>
                     </div>
 
                     <div id="step5">
@@ -573,14 +569,14 @@ const CreateEventPage = () =>
                                     <label htmlFor={ `faq-question-${ index }` } className="block text-sm font-medium text-gray-700">
                                         Question
                                     </label>
-                                    <InputFieldEJ
+                                    <Input
                                         type="text"
                                         id={ `faq-question-${ index }` }
                                         value={ faq.question }
                                         onChange={ ( e ) => handleFaqChange( e, index, 'question' ) }
                                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                         placeholder="Enter your question"
-                                        label={ 'Question' } />
+                                    />
                                     { faq.question.trim() === '' && faq.answer.trim() !== '' && (
                                         <p className="text-red-500 text-sm mt-1">A question is required if you provide an answer.</p>
                                     ) }
@@ -589,13 +585,13 @@ const CreateEventPage = () =>
                                     <label htmlFor={ `faq-answer-${ index }` } className="block text-sm font-medium text-gray-700">
                                         Answer
                                     </label>
-                                    <InputFieldEJ
+                                    <Input
                                         id={ `faq-answer-${ index }` }
                                         value={ faq.answer }
                                         onChange={ ( e ) => handleFaqChange( e, index, 'answer' ) }
                                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                         placeholder="Enter your answer"
-                                        label={ 'Answer' } />
+                                    />
                                     { faq.answer.trim() === '' && faq.question.trim() !== '' && (
                                         <p className="text-red-500 text-sm mt-1">An answer is required if you provide a question.</p>
                                     ) }
@@ -625,12 +621,12 @@ const CreateEventPage = () =>
                         <div className="mb-6">
                             <p className="text-sm font-medium text-gray-700 mb-2">Is there an age restriction?</p>
                             <div className="flex gap-4">
-                                { [ 'All ages allowed', 'There’s an age restriction', 'Parent or guardian needed' ].map( ( option ) => (
+                                { [ 'All ages allowed', 'There’s an age restriction', 'Parent or guardian needed' ].map( option => (
                                     <button
                                         key={ option }
                                         type="button"
                                         onClick={ () => handleAgeRestrictionChange( option ) }
-                                        className={ `py-2 px-4 border rounded-md ${ ageRestriction === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                                        className={ `py-2 px-4 border rounded-md ${ ageRestriction.includes( option ) ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
                                             }` }
                                     >
                                         { option }
@@ -639,16 +635,17 @@ const CreateEventPage = () =>
                             </div>
                         </div>
 
+
                         {/* Parking Options */ }
                         <div className="mb-6">
                             <p className="text-sm font-medium text-gray-700 mb-2">Is there parking at your venue?</p>
                             <div className="flex gap-4">
-                                { [ 'Free parking', 'Paid parking', 'No parking options' ].map( ( option ) => (
+                                { [ 'Free parking', 'Paid parking', 'No parking options' ].map( option => (
                                     <button
                                         key={ option }
                                         type="button"
                                         onClick={ () => handleParkingOptionsChange( option ) }
-                                        className={ `py-2 px-4 border rounded-md ${ parkingOptions === option ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                                        className={ `py-2 px-4 border rounded-md ${ parkingOptions.includes( option ) ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
                                             }` }
                                     >
                                         { option }
@@ -662,16 +659,27 @@ const CreateEventPage = () =>
 
                     <div id="step7">
 
-                        <InputFieldEJ
+                        <label htmlFor="maxAttendees" className="block text-sm font-medium text-gray-700">
+                            Max Attendees
+                        </label>
+                        <Input
                             type="number"
                             id="maxAttendees"
                             value={ maxAttendees.toString() }
                             onChange={ ( e ) => setMaxAttendees( Number( e.target.value ) ) }
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             placeholder="Max Attendees"
-                            label={ ' Max Attendees' } />
+                        />
                     </div>
-
+                    <div className="mt-6">
+                        <Button
+                            type="submit"
+                            radius="sm"
+                            className="w-full py-2 bg-blue-700 text-white font-medium text-xl rounded-3xl"
+                        >
+                            Save Event
+                        </Button>
+                    </div>
                     {/* Sticky Footer for Small Screens */ }
                     <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md flex justify-center">
                         <Button
@@ -703,15 +711,7 @@ const CreateEventPage = () =>
                             {/* Add more steps as necessary */ }
                         </ul>
 
-                        <div className="mt-6">
-                            <Button
-                                type="submit"
-                                radius="sm"
-                                className="w-full py-2 bg-blue-700 text-white font-medium text-xl rounded-3xl"
-                            >
-                                Save Event
-                            </Button>
-                        </div>
+
                     </div>
                 </aside>
             </div>

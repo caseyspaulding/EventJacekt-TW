@@ -11,7 +11,7 @@ import { createClient } from '@utils/supabase/client'; // For Supabase bucket st
 import { FileUploadButton } from '../../new/FileUploadButton';
 import { ImageUploadVenue } from '../../new/ImageUploadVenue';
 import { useUser } from '@/contexts/UserContext';
-import InputFieldEJ from '@/components/Input/InputEJ';
+import InputFieldEJ from '@/components/Input/TagInput';
 import { useRouter } from 'next/navigation';
 
 type AgendaItem = {

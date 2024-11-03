@@ -26,7 +26,7 @@ export default function NavBarTW ()
                 </span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                No Hidden Fees. Transparent Pricing. Easy. One on One Support.
+                No Hidden Fees. Transparent Pricing. Easy. <br/>One on One Support.
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
                 <Link href="/signup" passHref>
