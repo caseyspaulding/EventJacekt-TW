@@ -6,6 +6,7 @@ import getStripe from '@/utils/stripeClient';
 import { Button } from '@nextui-org/react';
 import InputFieldEJ from '@/components/Input/TagInput';
 import QuantitySelector from '@/components/QuantitySelector';
+import { Input } from '@/components/ui/input';
 
 interface TicketPurchaseClientProps
 {
@@ -84,7 +85,7 @@ const TicketPurchaseClient = ( { ticket, eventSlug, quantity, setQuantity }: Tic
     return (
         <div className="space-y-4 w-full">
             { errorMessage && <div className="mb-4 text-red-600 font-bold">{ errorMessage }</div> }
-            <InputFieldEJ
+            <Input
                 type="text"
                 placeholder="First Name"
                 value={ firstName }
@@ -92,25 +93,25 @@ const TicketPurchaseClient = ( { ticket, eventSlug, quantity, setQuantity }: Tic
                 className="w-full"
                 ref={ ref }
                 required
-                label={ 'First Name' }
+
             />
-            <InputFieldEJ
+            <Input
                 type="text"
                 placeholder="Last Name"
                 value={ lastName }
                 onChange={ ( e ) => setLastName( e.target.value ) }
                 className="w-full"
                 required
-                label={ 'Last Name' }
+
             />
-            <InputFieldEJ
+            <Input
                 type="email"
                 placeholder="Email"
                 value={ email }
                 onChange={ ( e ) => setEmail( e.target.value ) }
                 className="w-full"
                 required
-                label={ 'Email' }
+
             />
 
             <QuantitySelector

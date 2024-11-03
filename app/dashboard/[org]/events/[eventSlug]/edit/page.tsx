@@ -13,6 +13,7 @@ import { ImageUploadVenue } from '../../new/ImageUploadVenue';
 import { useUser } from '@/contexts/UserContext';
 import InputFieldEJ from '@/components/Input/TagInput';
 import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
 
 type AgendaItem = {
   id: string;
@@ -267,8 +268,10 @@ const EditEventPage = () =>
 
         </div>
         <div>
-
-          <InputFieldEJ
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            Event Name
+          </label>
+          <Input
             type="text"
             id="name"
 
@@ -276,91 +279,111 @@ const EditEventPage = () =>
             onChange={ ( e ) => setName( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Event Name"
-            required label={ 'Event Title' } />
+          />
         </div>
 
         <div>
-
-          <InputFieldEJ
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <Input
             id="description"
             value={ description }
             onChange={ ( e ) => setDescription( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Description"
-            required label={ 'Description' } />
+          />
         </div>
 
         <div>
-          <InputFieldEJ
+          <label htmlFor="organizerContact" className="block text-sm font-medium text-gray-700">
+            Organizer Contact Information
+          </label>
+          <Input
             type="text"
             id="organizerContact"
             value={ organizerContact }
             onChange={ ( e ) => setOrganizerContact( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Organizer Contact Information"
-            label={ 'Organizer Contact' }
+
             required
           />
         </div>
 
 
         <div>
-          <InputFieldEJ
+          <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
+            Start Date
+          </label>
+          <Input
             type="date"
             id="startDate"
             value={ startDate }
             onChange={ ( e ) => setStartDate( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             required
-            label="Start Date"
+
           />
         </div>
         <div>
-          <InputFieldEJ
+          <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
+            End Date
+          </label>
+          <Input
             type="date"
             id="endDate"
             value={ endDate }
             onChange={ ( e ) => setEndDate( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             required
-            label="End Date"
+
           />
         </div>
 
 
         <div>
-          <InputFieldEJ
+          <label htmlFor="eventStartTime" className="block text-sm font-medium text-gray-700">
+            Event Start Time
+          </label>
+          <Input
             type="time"
             id="eventStartTime"
             value={ eventStartTime }
             onChange={ ( e ) => setEventStartTime( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             required
-            label="Event Start Time"
+
           />
         </div>
         <div>
-          <InputFieldEJ
+          <label htmlFor="eventEndTime" className="block text-sm font-medium text-gray-700">
+            Event End Time
+          </label>
+          <Input
             type="time"
             id="eventEndTime"
             value={ eventEndTime }
             onChange={ ( e ) => setEventEndTime( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             required
-            label="Event End Time"
+
           />
         </div>
 
         <div>
 
+          <label htmlFor="venue" className="block text-sm font-medium text-gray-700">
+            Venue
+          </label>
 
-          <InputFieldEJ
+          <Input
             type="text"
             id="venue"
             value={ venue }
             onChange={ ( e ) => setVenue( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-            placeholder="Venue" label={ ' Venue Name' }
+            placeholder="Venue"
           />
         </div>
         <ImageUploadVenue
@@ -385,13 +408,13 @@ const EditEventPage = () =>
         <div>
 
 
-          <InputFieldEJ
+          <Input
             type="text"
             id="address"
             value={ address }
             onChange={ ( e ) => setAddress( e.target.value ) }
             className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-            placeholder="Address" label={ '  Venue Street Address' } />
+            placeholder="Address" />
 
 
         </div>
@@ -399,24 +422,24 @@ const EditEventPage = () =>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
 
-            <InputFieldEJ
+            <Input
               type="text"
               id="city"
               value={ city }
               onChange={ ( e ) => setCity( e.target.value ) }
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              placeholder="City" label={ 'City' } />
+              placeholder="City" />
           </div>
 
           <div>
 
-            <InputFieldEJ
+            <Input
               type="text"
               id="state"
               value={ state }
               onChange={ ( e ) => setState( e.target.value ) }
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              placeholder="State" label={ 'State' } />
+              placeholder="State" />
           </div>
         </div>
 
@@ -425,13 +448,13 @@ const EditEventPage = () =>
 
           <div>
 
-            <InputFieldEJ
+            <Input
               type="text"
               id="zipCode"
               value={ zipCode }
               onChange={ ( e ) => setZipCode( e.target.value ) }
               className=" block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              placeholder="Zip Code" label={ 'Zip Code' } />
+              placeholder="Zip Code" />
           </div>
 
         </div>
@@ -441,12 +464,12 @@ const EditEventPage = () =>
           <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
             Notes
           </label>
-          <InputFieldEJ
+          <Input
             id="notes"
             value={ notes }
             onChange={ ( e ) => setNotes( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-            placeholder="Notes" label={ 'Notes' } />
+            placeholder="Notes" />
         </div>
 
         <div>
@@ -476,26 +499,26 @@ const EditEventPage = () =>
 
         <div>
 
-          <InputFieldEJ
+          <Input
             type="text"
             id="timezone"
             value={ timezone }
             onChange={ ( e ) => setTimezone( e.target.value ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Timezone"
-            label={ ' Timezone' } />
+          />
         </div>
 
         <div>
 
-          <InputFieldEJ
+          <Input
             type="text"
             id="tags"
             value={ tags.join( ', ' ) } // Convert array to comma-separated string for display
             onChange={ ( e ) => setTags( e.target.value.split( ',' ).map( tag => tag.trim() ) ) } // Split by commas and trim spaces
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Tags (comma separated)"
-            label="Tags"
+
           />
         </div>
 
@@ -510,14 +533,14 @@ const EditEventPage = () =>
                 <label htmlFor={ `faq-question-${ index }` } className="block text-sm font-medium text-gray-700">
                   Question
                 </label>
-                <InputFieldEJ
+                <Input
                   type="text"
                   id={ `faq-question-${ index }` }
                   value={ faq.question }
                   onChange={ ( e ) => handleFaqChange( e, index, 'question' ) }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   placeholder="Enter your question"
-                  label={ 'Question' } />
+                />
                 { faq.question.trim() === '' && faq.answer.trim() !== '' && (
                   <p className="text-red-500 text-sm mt-1">A question is required if you provide an answer.</p>
                 ) }
@@ -526,13 +549,13 @@ const EditEventPage = () =>
                 <label htmlFor={ `faq-answer-${ index }` } className="block text-sm font-medium text-gray-700">
                   Answer
                 </label>
-                <InputFieldEJ
+                <Input
                   id={ `faq-answer-${ index }` }
                   value={ faq.answer }
                   onChange={ ( e ) => handleFaqChange( e, index, 'answer' ) }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   placeholder="Enter your answer"
-                  label={ 'Answer' } />
+                />
                 { faq.answer.trim() === '' && faq.question.trim() !== '' && (
                   <p className="text-red-500 text-sm mt-1">An answer is required if you provide a question.</p>
                 ) }
@@ -598,15 +621,17 @@ const EditEventPage = () =>
 
 
         <div>
-
-          <InputFieldEJ
+          <label htmlFor="maxAttendees" className="block text-sm font-medium text-gray-700">
+            Max Attendees
+          </label>
+          <Input
             type="number"
             id="maxAttendees"
             value={ maxAttendees.toString() }
             onChange={ ( e ) => setMaxAttendees( Number( e.target.value ) ) }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="Max Attendees"
-            label={ ' Max Attendees' } />
+          />
         </div>
 
 

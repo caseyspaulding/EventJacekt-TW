@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
@@ -126,7 +126,7 @@ export const BuyTicketsComp: React.FC<MainBannerProps> = ( { eventName, tickets,
             src={ featuredImage || '/images/eventjacket-banner.png' }
             alt={ `${ eventName } featured image` }
             className="max-w-full h-auto object-cover rounded-md shadow-md"
-           
+
           />
         </div>
       </div>
