@@ -40,6 +40,7 @@ import { fetchClientSecret } from './fetchClientSecret';
 
 import { HiMailOpen, HiOutlineLibrary } from 'react-icons/hi';
 import { ClipboardCheck, } from 'lucide-react';
+import FeedbackFormDialog from '@/components/FeedbackFormDialog';
 
 
 
@@ -315,6 +316,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                         </Disclosure>
                       )
                     ) }
+                    <FeedbackFormDialog />
                   </nav>
                 </div>
               </Dialog.Panel>
@@ -399,6 +401,7 @@ export default function DashboardLayoutTW ( { children }: DashboardLayoutProps )
                 </Disclosure>
               )
             ) }
+            <FeedbackFormDialog />
           </nav>
         </div>
       </div>

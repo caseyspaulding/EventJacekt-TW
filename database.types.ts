@@ -3,12 +3,37 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json | undefined }
+  | { [ key: string ]: Json | undefined }
   | Json[]
 
 export type Database = {
   public: {
     Tables: {
+      feedback: {
+        Row: {
+          id: string;
+          subject: string;
+          category: string;
+          description: string;
+          attachment_url: string | null;
+          user_id: string;
+          created_at: string | null;
+        };
+        Insert: {
+          subject: string;
+          category: string;
+          description: string;
+          attachment_url?: string | null;
+          user_id: string;
+        };
+        Update: {
+          subject?: string;
+          category?: string;
+          description?: string;
+          attachment_url?: string | null;
+          user_id?: string;
+        };
+      };
       agenda: {
         Row: {
           created_at: string | null
@@ -46,10 +71,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "agenda_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -93,17 +118,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "attendees_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "attendees_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -135,10 +160,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "audience_segments_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -224,10 +249,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "blog_posts_author_id_fkey"
-            columns: ["author_id"]
+            columns: [ "author_id" ]
             isOneToOne: false
             referencedRelation: "authors"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -265,17 +290,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "cal_event_attendees_event_id_calendar_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "calendar_events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "cal_event_attendees_user_id_user_profiles_id_fk"
-            columns: ["user_id"]
+            columns: [ "user_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -310,10 +335,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "calendar_event_reminders_event_id_calendar_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "calendar_events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -375,17 +400,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "calendar_events_calendar_id_calendars_id_fk"
-            columns: ["calendar_id"]
+            columns: [ "calendar_id" ]
             isOneToOne: false
             referencedRelation: "calendars"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "calendar_events_organizer_id_user_profiles_id_fk"
-            columns: ["organizer_id"]
+            columns: [ "organizer_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -438,17 +463,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "calendar_tasks_assigned_to_user_profiles_id_fk"
-            columns: ["assigned_to"]
+            columns: [ "assigned_to" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "calendar_tasks_calendar_id_calendars_id_fk"
-            columns: ["calendar_id"]
+            columns: [ "calendar_id" ]
             isOneToOne: false
             referencedRelation: "calendars"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -486,17 +511,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "calendars_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "calendars_user_id_user_profiles_id_fk"
-            columns: ["user_id"]
+            columns: [ "user_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -549,17 +574,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "communication_logs_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "communication_logs_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -597,24 +622,24 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "customer_feedback_customer_id_org_customers_id_fk"
-            columns: ["customer_id"]
+            columns: [ "customer_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "customer_feedback_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "customer_feedback_session_id_event_sessions_id_fk"
-            columns: ["session_id"]
+            columns: [ "session_id" ]
             isOneToOne: false
             referencedRelation: "event_sessions"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -652,17 +677,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "customer_interactions_customer_id_org_customers_id_fk"
-            columns: ["customer_id"]
+            columns: [ "customer_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "customer_interactions_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -715,10 +740,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "donors_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -765,17 +790,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "email_campaigns_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "email_campaigns_segment_id_audience_segments_id_fk"
-            columns: ["segment_id"]
+            columns: [ "segment_id" ]
             isOneToOne: false
             referencedRelation: "audience_segments"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -813,17 +838,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "email_recipients_campaign_id_email_campaigns_id_fk"
-            columns: ["campaign_id"]
+            columns: [ "campaign_id" ]
             isOneToOne: false
             referencedRelation: "email_campaigns"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "email_recipients_customer_id_org_customers_id_fk"
-            columns: ["customer_id"]
+            columns: [ "customer_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -858,10 +883,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "email_templates_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -911,10 +936,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "event_locations_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -952,17 +977,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "event_media_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "event_media_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1018,31 +1043,31 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "event_schedules_customer_id_org_customers_id_fk"
-            columns: ["customer_id"]
+            columns: [ "customer_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "event_schedules_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "event_schedules_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "event_schedules_session_id_event_sessions_id_fk"
-            columns: ["session_id"]
+            columns: [ "session_id" ]
             isOneToOne: false
             referencedRelation: "event_sessions"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1077,17 +1102,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "event_sections_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "event_sections_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1167,24 +1192,24 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "event_sessions_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "event_sessions_performer_id_org_performers_id_fk"
-            columns: ["performer_id"]
+            columns: [ "performer_id" ]
             isOneToOne: false
             referencedRelation: "org_performers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "event_sessions_speaker_id_event_speakers_id_fk"
-            columns: ["speaker_id"]
+            columns: [ "speaker_id" ]
             isOneToOne: false
             referencedRelation: "event_speakers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1267,17 +1292,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "event_speakers_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "event_speakers_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1300,17 +1325,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "event_tags_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "event_tags_tag_id_tags_id_fk"
-            columns: ["tag_id"]
+            columns: [ "tag_id" ]
             isOneToOne: false
             referencedRelation: "tags"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1438,10 +1463,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "events_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1470,17 +1495,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "favorite_events_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "favorite_events_user_id_user_profiles_id_fk"
-            columns: ["user_id"]
+            columns: [ "user_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1512,24 +1537,24 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "favorite_performers_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "favorite_performers_performer_id_org_performers_id_fk"
-            columns: ["performer_id"]
+            columns: [ "performer_id" ]
             isOneToOne: false
             referencedRelation: "org_performers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "favorite_performers_visitor_id_org_customers_id_fk"
-            columns: ["visitor_id"]
+            columns: [ "visitor_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1561,24 +1586,24 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "favorite_sessions_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "favorite_sessions_session_id_event_sessions_id_fk"
-            columns: ["session_id"]
+            columns: [ "session_id" ]
             isOneToOne: false
             referencedRelation: "event_sessions"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "favorite_sessions_visitor_id_org_customers_id_fk"
-            columns: ["visitor_id"]
+            columns: [ "visitor_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1616,17 +1641,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "feedback_surveys_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "feedback_surveys_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1667,17 +1692,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "festival_map_locations_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "festival_map_locations_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1718,10 +1743,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "form_fields_form_id_forms_id_fk"
-            columns: ["form_id"]
+            columns: [ "form_id" ]
             isOneToOne: false
             referencedRelation: "forms"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1750,17 +1775,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "form_response_details_form_field_id_form_fields_id_fk"
-            columns: ["form_field_id"]
+            columns: [ "form_field_id" ]
             isOneToOne: false
             referencedRelation: "form_fields"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "form_response_details_form_response_id_form_responses_id_fk"
-            columns: ["form_response_id"]
+            columns: [ "form_response_id" ]
             isOneToOne: false
             referencedRelation: "form_responses"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1792,17 +1817,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "form_responses_form_id_forms_id_fk"
-            columns: ["form_id"]
+            columns: [ "form_id" ]
             isOneToOne: false
             referencedRelation: "forms"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "form_responses_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1855,17 +1880,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "forms_creator_id_user_profiles_user_id_fk"
-            columns: ["creator_id"]
+            columns: [ "creator_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["user_id"]
+            referencedColumns: [ "user_id" ]
           },
           {
             foreignKeyName: "forms_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1900,10 +1925,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "grant_reminders_grant_id_grants_id_fk"
-            columns: ["grant_id"]
+            columns: [ "grant_id" ]
             isOneToOne: false
             referencedRelation: "grants"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1938,10 +1963,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "grant_reports_grant_id_grants_id_fk"
-            columns: ["grant_id"]
+            columns: [ "grant_id" ]
             isOneToOne: false
             referencedRelation: "grants"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -1982,17 +2007,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "grant_reviews_grant_id_grants_id_fk"
-            columns: ["grant_id"]
+            columns: [ "grant_id" ]
             isOneToOne: false
             referencedRelation: "grants"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "grant_reviews_reviewer_id_user_profiles_id_fk"
-            columns: ["reviewer_id"]
+            columns: [ "reviewer_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2030,10 +2055,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "grant_touchpoints_grant_id_grants_id_fk"
-            columns: ["grant_id"]
+            columns: [ "grant_id" ]
             isOneToOne: false
             referencedRelation: "grants"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2086,10 +2111,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "grants_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2121,17 +2146,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "group_members_group_id_signup_sheet_groups_id_fk"
-            columns: ["group_id"]
+            columns: [ "group_id" ]
             isOneToOne: false
             referencedRelation: "signup_sheet_groups"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "group_members_participant_id_participants_id_fk"
-            columns: ["participant_id"]
+            columns: [ "participant_id" ]
             isOneToOne: false
             referencedRelation: "participants"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2208,17 +2233,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "guilds_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "guilds_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2253,17 +2278,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "kanban_boards_created_by_user_profiles_id_fk"
-            columns: ["created_by"]
+            columns: [ "created_by" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "kanban_boards_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2295,17 +2320,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "kanban_card_activities_card_id_kanban_cards_id_fk"
-            columns: ["card_id"]
+            columns: [ "card_id" ]
             isOneToOne: false
             referencedRelation: "kanban_cards"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "kanban_card_activities_performed_by_user_profiles_id_fk"
-            columns: ["performed_by"]
+            columns: [ "performed_by" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2337,17 +2362,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "kanban_card_comments_card_id_kanban_cards_id_fk"
-            columns: ["card_id"]
+            columns: [ "card_id" ]
             isOneToOne: false
             referencedRelation: "kanban_cards"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "kanban_card_comments_created_by_user_profiles_id_fk"
-            columns: ["created_by"]
+            columns: [ "created_by" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2400,24 +2425,24 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "kanban_cards_assigned_to_user_profiles_id_fk"
-            columns: ["assigned_to"]
+            columns: [ "assigned_to" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "kanban_cards_board_id_kanban_boards_id_fk"
-            columns: ["board_id"]
+            columns: [ "board_id" ]
             isOneToOne: false
             referencedRelation: "kanban_boards"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "kanban_cards_column_id_kanban_columns_id_fk"
-            columns: ["column_id"]
+            columns: [ "column_id" ]
             isOneToOne: false
             referencedRelation: "kanban_columns"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2449,10 +2474,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "kanban_columns_board_id_kanban_boards_id_fk"
-            columns: ["board_id"]
+            columns: [ "board_id" ]
             isOneToOne: false
             referencedRelation: "kanban_boards"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2496,17 +2521,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "leads_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "leads_stage_id_sales_stages_id_fk"
-            columns: ["stage_id"]
+            columns: [ "stage_id" ]
             isOneToOne: false
             referencedRelation: "sales_stages"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2577,24 +2602,24 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "messages_group_id_signup_sheet_groups_id_fk"
-            columns: ["group_id"]
+            columns: [ "group_id" ]
             isOneToOne: false
             referencedRelation: "signup_sheet_groups"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "messages_message_template_id_message_templates_id_fk"
-            columns: ["message_template_id"]
+            columns: [ "message_template_id" ]
             isOneToOne: false
             referencedRelation: "message_templates"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "messages_participant_id_participants_id_fk"
-            columns: ["participant_id"]
+            columns: [ "participant_id" ]
             isOneToOne: false
             referencedRelation: "participants"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2635,10 +2660,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "notifications_recipient_id_participants_id_fk"
-            columns: ["recipient_id"]
+            columns: [ "recipient_id" ]
             isOneToOne: false
             referencedRelation: "participants"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2709,24 +2734,24 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_customers_favorite_event_id_events_id_fk"
-            columns: ["favorite_event_id"]
+            columns: [ "favorite_event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_customers_favorite_performer_id_org_performers_id_fk"
-            columns: ["favorite_performer_id"]
+            columns: [ "favorite_performer_id" ]
             isOneToOne: false
             referencedRelation: "org_performers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_customers_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2782,38 +2807,38 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_event_attendance_checked_in_by_user_profiles_id_fk"
-            columns: ["checked_in_by"]
+            columns: [ "checked_in_by" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_event_attendance_customer_id_org_customers_id_fk"
-            columns: ["customer_id"]
+            columns: [ "customer_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_event_attendance_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_event_attendance_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_event_attendance_ticket_id_org_event_tickets_id_fk"
-            columns: ["ticket_id"]
+            columns: [ "ticket_id" ]
             isOneToOne: false
             referencedRelation: "org_event_tickets"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -2953,31 +2978,31 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_event_tickets_customer_id_org_customers_id_fk"
-            columns: ["customer_id"]
+            columns: [ "customer_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_event_tickets_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_event_tickets_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_event_tickets_ticket_type_id_org_ticket_types_id_fk"
-            columns: ["ticket_type_id"]
+            columns: [ "ticket_type_id" ]
             isOneToOne: false
             referencedRelation: "org_ticket_types"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3030,17 +3055,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_invites_inviter_id_user_profiles_id_fk"
-            columns: ["inviter_id"]
+            columns: [ "inviter_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_invites_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3114,17 +3139,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_members_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_members_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3183,10 +3208,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_payments_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3263,17 +3288,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_performers_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_performers_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3308,10 +3333,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_referral_programs_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3400,17 +3425,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_ticket_types_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_ticket_types_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3472,17 +3497,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_transaction_items_order_id_org_transactions_id_fk"
-            columns: ["order_id"]
+            columns: [ "order_id" ]
             isOneToOne: false
             referencedRelation: "org_transactions"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_transaction_items_ticket_id_org_event_tickets_id_fk"
-            columns: ["ticket_id"]
+            columns: [ "ticket_id" ]
             isOneToOne: false
             referencedRelation: "org_event_tickets"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3565,17 +3590,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_transactions_customer_id_org_customers_id_fk"
-            columns: ["customer_id"]
+            columns: [ "customer_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_transactions_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3664,17 +3689,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "org_vendors_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "org_vendors_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3796,17 +3821,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "participant_events_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "participant_events_participant_id_org_performers_id_fk"
-            columns: ["participant_id"]
+            columns: [ "participant_id" ]
             isOneToOne: false
             referencedRelation: "org_performers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3853,10 +3878,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "participants_signup_sheet_id_signup_sheets_id_fk"
-            columns: ["signup_sheet_id"]
+            columns: [ "signup_sheet_id" ]
             isOneToOne: false
             referencedRelation: "signup_sheets"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3912,17 +3937,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "payments_invoices_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "payments_invoices_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -3981,17 +4006,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "performers_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "performers_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4023,10 +4048,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "recurring_event_instances_event_id_calendar_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "calendar_events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4058,10 +4083,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "sales_pipelines_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4093,10 +4118,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "sales_stages_pipeline_id_sales_pipelines_id_fk"
-            columns: ["pipeline_id"]
+            columns: [ "pipeline_id" ]
             isOneToOne: false
             referencedRelation: "sales_pipelines"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4140,10 +4165,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "signup_sheet_custom_questions_signup_sheet_id_signup_sheets_id_"
-            columns: ["signup_sheet_id"]
+            columns: [ "signup_sheet_id" ]
             isOneToOne: false
             referencedRelation: "signup_sheets"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4178,10 +4203,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "signup_sheet_groups_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4231,31 +4256,31 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "signup_sheet_responses_last_updated_by_user_profiles_id_fk"
-            columns: ["last_updated_by"]
+            columns: [ "last_updated_by" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "signup_sheet_responses_participant_id_participants_id_fk"
-            columns: ["participant_id"]
+            columns: [ "participant_id" ]
             isOneToOne: false
             referencedRelation: "participants"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "signup_sheet_responses_signup_sheet_id_signup_sheets_id_fk"
-            columns: ["signup_sheet_id"]
+            columns: [ "signup_sheet_id" ]
             isOneToOne: false
             referencedRelation: "signup_sheets"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "signup_sheet_responses_slot_id_signup_sheet_slots_id_fk"
-            columns: ["slot_id"]
+            columns: [ "slot_id" ]
             isOneToOne: false
             referencedRelation: "signup_sheet_slots"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4317,17 +4342,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "signup_sheet_slots_group_id_signup_sheet_groups_id_fk"
-            columns: ["group_id"]
+            columns: [ "group_id" ]
             isOneToOne: false
             referencedRelation: "signup_sheet_groups"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "signup_sheet_slots_signup_sheet_id_signup_sheets_id_fk"
-            columns: ["signup_sheet_id"]
+            columns: [ "signup_sheet_id" ]
             isOneToOne: false
             referencedRelation: "signup_sheets"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4386,31 +4411,31 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "signup_sheets_creator_id_user_profiles_id_fk"
-            columns: ["creator_id"]
+            columns: [ "creator_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "signup_sheets_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "signup_sheets_group_id_signup_sheet_groups_id_fk"
-            columns: ["group_id"]
+            columns: [ "group_id" ]
             isOneToOne: false
             referencedRelation: "signup_sheet_groups"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "signup_sheets_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4469,17 +4494,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "sponsors_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "sponsors_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4520,10 +4545,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "stripe_connect_onboarding_user_profile_id_user_profiles_id_fk"
-            columns: ["user_profile_id"]
+            columns: [ "user_profile_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4567,10 +4592,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "stripe_connect_payouts_user_profile_id_user_profiles_id_fk"
-            columns: ["user_profile_id"]
+            columns: [ "user_profile_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4704,24 +4729,24 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "subscriptions_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "subscriptions_product_id_subscription_products_id_fk"
-            columns: ["product_id"]
+            columns: [ "product_id" ]
             isOneToOne: false
             referencedRelation: "subscription_products"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "subscriptions_user_profile_id_user_profiles_id_fk"
-            columns: ["user_profile_id"]
+            columns: [ "user_profile_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4789,17 +4814,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "tasks_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "tasks_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4834,10 +4859,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "ticket_analytics_ticket_page_id_ticket_pages_id_fk"
-            columns: ["ticket_page_id"]
+            columns: [ "ticket_page_id" ]
             isOneToOne: false
             referencedRelation: "ticket_pages"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4902,17 +4927,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "ticket_buyer_profiles_favorite_event_id_events_id_fk"
-            columns: ["favorite_event_id"]
+            columns: [ "favorite_event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "ticket_buyer_profiles_favorite_performer_id_org_performers_id_f"
-            columns: ["favorite_performer_id"]
+            columns: [ "favorite_performer_id" ]
             isOneToOne: false
             referencedRelation: "org_performers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -4971,17 +4996,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "ticket_pages_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "ticket_pages_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -5019,17 +5044,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "user_event_reminders_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "user_event_reminders_user_id_user_profiles_id_fk"
-            columns: ["user_id"]
+            columns: [ "user_id" ]
             isOneToOne: false
             referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -5091,10 +5116,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "user_profiles_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -5156,17 +5181,17 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "vendors_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "vendors_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -5201,31 +5226,31 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "visitor_schedules_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "visitor_schedules_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "visitor_schedules_session_id_event_sessions_id_fk"
-            columns: ["session_id"]
+            columns: [ "session_id" ]
             isOneToOne: false
             referencedRelation: "event_sessions"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "visitor_schedules_visitor_id_org_customers_id_fk"
-            columns: ["visitor_id"]
+            columns: [ "visitor_id" ]
             isOneToOne: false
             referencedRelation: "org_customers"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
@@ -5287,23 +5312,23 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "volunteers_event_id_events_id_fk"
-            columns: ["event_id"]
+            columns: [ "event_id" ]
             isOneToOne: false
             referencedRelation: "events"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
           {
             foreignKeyName: "volunteers_org_id_organizations_id_fk"
-            columns: ["org_id"]
+            columns: [ "org_id" ]
             isOneToOne: false
             referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            referencedColumns: [ "id" ]
           },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      [ _ in never ]: never
     }
     Functions: {
       custom_access_token_hook: {
@@ -5326,107 +5351,107 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      [ _ in never ]: never
     }
     CompositeTypes: {
-      [_ in never]: never
+      [ _ in never ]: never
     }
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type PublicSchema = Database[ Extract<keyof Database, "public"> ]
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
-    | { schema: keyof Database },
+  | keyof ( PublicSchema[ "Tables" ] & PublicSchema[ "Views" ] )
+  | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-        Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+  ? keyof ( Database[ PublicTableNameOrOptions[ "schema" ] ][ "Tables" ] &
+    Database[ PublicTableNameOrOptions[ "schema" ] ][ "Views" ] )
+  : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+  ? ( Database[ PublicTableNameOrOptions[ "schema" ] ][ "Tables" ] &
+    Database[ PublicTableNameOrOptions[ "schema" ] ][ "Views" ] )[ TableName ] extends {
       Row: infer R
     }
-    ? R
-    : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
-        PublicSchema["Views"])
-    ? (PublicSchema["Tables"] &
-        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R
-      }
-      ? R
-      : never
-    : never
+  ? R
+  : never
+  : PublicTableNameOrOptions extends keyof ( PublicSchema[ "Tables" ] &
+    PublicSchema[ "Views" ] )
+  ? ( PublicSchema[ "Tables" ] &
+    PublicSchema[ "Views" ] )[ PublicTableNameOrOptions ] extends {
+      Row: infer R
+    }
+  ? R
+  : never
+  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
-    | { schema: keyof Database },
+  | keyof PublicSchema[ "Tables" ]
+  | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+  ? keyof Database[ PublicTableNameOrOptions[ "schema" ] ][ "Tables" ]
+  : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
-    }
-    ? I
-    : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Insert: infer I
-      }
-      ? I
-      : never
-    : never
+  ? Database[ PublicTableNameOrOptions[ "schema" ] ][ "Tables" ][ TableName ] extends {
+    Insert: infer I
+  }
+  ? I
+  : never
+  : PublicTableNameOrOptions extends keyof PublicSchema[ "Tables" ]
+  ? PublicSchema[ "Tables" ][ PublicTableNameOrOptions ] extends {
+    Insert: infer I
+  }
+  ? I
+  : never
+  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
-    | { schema: keyof Database },
+  | keyof PublicSchema[ "Tables" ]
+  | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+  ? keyof Database[ PublicTableNameOrOptions[ "schema" ] ][ "Tables" ]
+  : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
-    }
-    ? U
-    : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Update: infer U
-      }
-      ? U
-      : never
-    : never
+  ? Database[ PublicTableNameOrOptions[ "schema" ] ][ "Tables" ][ TableName ] extends {
+    Update: infer U
+  }
+  ? U
+  : never
+  : PublicTableNameOrOptions extends keyof PublicSchema[ "Tables" ]
+  ? PublicSchema[ "Tables" ][ PublicTableNameOrOptions ] extends {
+    Update: infer U
+  }
+  ? U
+  : never
+  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof PublicSchema["Enums"]
-    | { schema: keyof Database },
+  | keyof PublicSchema[ "Enums" ]
+  | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+  ? keyof Database[ PublicEnumNameOrOptions[ "schema" ] ][ "Enums" ]
+  : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
-    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-    : never
+  ? Database[ PublicEnumNameOrOptions[ "schema" ] ][ "Enums" ][ EnumName ]
+  : PublicEnumNameOrOptions extends keyof PublicSchema[ "Enums" ]
+  ? PublicSchema[ "Enums" ][ PublicEnumNameOrOptions ]
+  : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof PublicSchema["CompositeTypes"]
-    | { schema: keyof Database },
+  | keyof PublicSchema[ "CompositeTypes" ]
+  | { schema: keyof Database },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof Database
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+  ? keyof Database[ PublicCompositeTypeNameOrOptions[ "schema" ] ][ "CompositeTypes" ]
+  : never = never,
 > = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
-    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
+  ? Database[ PublicCompositeTypeNameOrOptions[ "schema" ] ][ "CompositeTypes" ][ CompositeTypeName ]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema[ "CompositeTypes" ]
+  ? PublicSchema[ "CompositeTypes" ][ PublicCompositeTypeNameOrOptions ]
+  : never

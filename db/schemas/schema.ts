@@ -84,6 +84,17 @@ export const userProfiles = pgTable( 'user_profiles', {
     };
 } );
 
+// Feedback
+export const feedbackTable = pgTable( 'feedback', {
+    id: serial( 'id' ).primaryKey(),
+    subject: varchar( 'subject', { length: 255 } ).notNull(),
+    category: varchar( 'category', { length: 50 } ).notNull(),
+    description: text( 'description' ).notNull(),
+    attachment_url: varchar( 'attachment_url', { length: 255 } ),
+    user_id: varchar( 'user_id', { length: 255 } ).notNull(),
+    created_at: timestamp( 'created_at' ).defaultNow(),
+} );
+
 // Grants Table
 export const grants = pgTable( 'grants', {
     id: uuid( 'id' )
@@ -420,6 +431,8 @@ export const contacts = pgTable( 'contacts', {
         uniqueContact: uniqueIndex( 'contacts_unique_email_org' ).on( table.email, table.orgId ),
     };
 } );
+
+
 
 export const interactions = pgTable( 'interactions', {
     id: uuid( 'id' )
