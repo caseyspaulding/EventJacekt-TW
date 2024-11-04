@@ -68,7 +68,10 @@ export default function Example ()
 
                     </div>
                     <div>
-                        <EventJacketCalculator />
+                        {/* Fee Calculator */ }
+                        <div className='my-6 '>
+                            <FeeCalculator />
+                        </div>
                         <div className="mt-8 xl:mt-0 mb-8">
                             <div className="flex items-center justify-center">
                                 <div className="inline-flex rounded-3xl shadow-2xl">
@@ -146,6 +149,10 @@ export default function Example ()
 
             <div className=''>
                 <ComparisonTable />
+
+            </div>
+            <div className='my-8'>
+                <EventJacketCalculator />
             </div>
 
             {/* Branded FAQ */ }
@@ -171,10 +178,7 @@ export default function Example ()
                 </div>
             </div>
 
-            {/* Fee Calculator */ }
-            <div className='my-6 '>
-                <FeeCalculator />
-            </div>
+
 
 
             {/* CTA section */ }
