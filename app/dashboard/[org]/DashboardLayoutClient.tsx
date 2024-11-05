@@ -1,22 +1,83 @@
-'use client';
+"use client"
 
-import type React from 'react';
-import { useEffect, useState } from 'react';
-import { loadStripe, type Stripe } from '@stripe/stripe-js';
-import UserProvider from '@/contexts/UserContext';
-import DashboardLayoutTW from './components/DashboardLayoutTW/DashboardLayoutTW';
-import type { UserType } from '@/types/UserType';
+import * as React from "react"
+import { useEffect, useState } from "react"
+import { loadStripe, Stripe } from "@stripe/stripe-js"
+import Link from "next/link"
+import
+  {
+    ChevronRight,
+    ClipboardCheck,
+    ChevronsUpDown,
+  
+    FolderIcon,
+    HomeIcon,
+    MoreHorizontal,
+   
+  } from "lucide-react"
+import { HiOutlineLibrary } from "react-icons/hi"
+
+import UserProvider from "@/contexts/UserContext"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import
+  {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+  } from "@/components/ui/breadcrumb"
+import
+  {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+  } from "@/components/ui/collapsible"
+import
+  {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
+import { Separator } from "@/components/ui/separator"
+import
+  {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarHeader,
+    SidebarInset,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarProvider,
+    SidebarRail,
+    SidebarTrigger,
+  } from "@/components/ui/sidebar"
+import type { UserType } from "@/types/UserType"
+import { DocumentIcon, UserGroupIcon } from "@heroicons/react/24/outline"
 
 interface DashboardLayoutClientProps
 {
-  children: React.ReactNode;
-  user: UserType | null;
-  stripePublishableKey: string; // Accept Stripe publishable key as a prop
+  children: React.ReactNode
+  user: UserType | null
+  stripePublishableKey: string
 }
 
-export default function DashboardLayoutClient ( { children, user, stripePublishableKey }: DashboardLayoutClientProps )
+export default function DashboardLayoutClient ( {
+  children,
+  user,
+  stripePublishableKey,
+}: DashboardLayoutClientProps )
 {
-  const [ stripe, setStripe ] = useState<Stripe | null>( null );
+  const [ stripe, setStripe ] = useState<Stripe | null>( null )
 
   // Initialize Stripe
   useEffect( () =>
@@ -25,25 +86,250 @@ export default function DashboardLayoutClient ( { children, user, stripePublisha
     {
       if ( stripePublishableKey )
       {
-        const stripeInstance = await loadStripe( stripePublishableKey );
-        setStripe( stripeInstance );
+        const stripeInstance = await loadStripe( stripePublishableKey )
+        setStripe( stripeInstance )
       }
-    };
+    }
 
-    initializeStripe();
-  }, [ stripePublishableKey ] );
+    initializeStripe()
+  }, [ stripePublishableKey ] )
 
-  // Check if user is properly initialized
-  if ( user === undefined )
-  {
-    console.error( 'User is undefined, ensure UserProvider is initialized correctly' );
-    return <div>Error: User context is not properly initialized.</div>;
-  }
+  const orgName = user?.orgName
+
+  // Navigation structure with dynamic links based on orgName
+  const navigation = [
+    { name: "Dashboard", href: "/", icon: HomeIcon },
+    {
+      name: "Events",
+      icon: FolderIcon,
+      children: [
+        { name: "Manage Events", href: "/events" },
+        { name: "Create Event", href: "/events/new" },
+        { name: "Scan Tickets", href: "/events/scan-tickets" },
+      ],
+    },
+    {
+      name: "Team",
+      icon: UserGroupIcon,
+      children: [
+        { name: "Members", href: "/team/members" },
+        { name: "Committees", href: "/team/committees" },
+        { name: "Volunteers", href: "/team/volunteers" },
+      ],
+    },
+    {
+      name: "Forms",
+      icon: DocumentIcon,
+      children: [
+        { name: "All Forms", href: "/forms/all-forms" },
+        { name: "Create Form", href: "/forms/new" },
+      ],
+    },
+    {
+      name: "Sign Up Sheets",
+      icon: ClipboardCheck,
+      children: [
+        { name: "All", href: "/signup-sheets/all" },
+        { name: "Create Signup", href: "/signup-sheets/new" },
+        { name: "Groups", href: "/signup-sheets/groups" },
+      ],
+    },
+    {
+      name: "Banking",
+      icon: HiOutlineLibrary,
+      children: [
+        { name: "Connect Account", href: "/banking" },
+        { name: "Payments", href: "/banking/payments" },
+        { name: "Payouts", href: "/banking/payouts" },
+        { name: "Account Settings", href: "/banking/account-settings" },
+        { name: "Help", href: "/banking/help" },
+      ],
+    },
+  ]
+
+  // Function to generate the correct path for each link
+  const generateHref = ( href: string ) =>
+    orgName ? `/dashboard/${ orgName }${ href }` : href
 
   return (
     <UserProvider initialUser={ user }>
-      {/* Optionally, you can provide the stripe instance to child components via context */ }
-      <DashboardLayoutTW>{ children }</DashboardLayoutTW>
+      <SidebarProvider>
+        <Sidebar collapsible="icon">
+          <SidebarHeader>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <SidebarMenuButton
+                      size="lg"
+                      className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                    >
+                      <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                        <HomeIcon className="size-4" />
+                      </div>
+                      <div className="grid flex-1 text-left text-sm leading-tight">
+                        <span className="truncate font-semibold">
+                          { orgName || "Organization" }
+                        </span>
+                        <span className="truncate text-xs">Dashboard</span>
+                      </div>
+                      <ChevronsUpDown className="ml-auto" />
+                    </SidebarMenuButton>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                    align="start"
+                    side="bottom"
+                    sideOffset={ 4 }
+                  >
+                    <DropdownMenuLabel className="text-xs text-muted-foreground">
+                      Switch Organization
+                    </DropdownMenuLabel>
+                    {/* Add organization switching logic here if needed */ }
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  { navigation.map( ( item ) =>
+                    !item.children ? (
+                      <SidebarMenuItem key={ item.name }>
+                        <SidebarMenuButton asChild>
+                          <Link href={ generateHref( item.href ) }>
+                            <item.icon className="mr-2 h-4 w-4" />
+                            <span>{ item.name }</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ) : (
+                      <Collapsible
+                        key={ item.name }
+                        asChild
+                        className="group/collapsible"
+                      >
+                        <SidebarMenuItem>
+                          <CollapsibleTrigger asChild>
+                            <SidebarMenuButton>
+                              <item.icon className="mr-2 h-4 w-4" />
+                              <span>{ item.name }</span>
+                              <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                            </SidebarMenuButton>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <SidebarMenu>
+                              { item.children.map( ( subItem ) => (
+                                <SidebarMenuItem key={ subItem.name }>
+                                  <SidebarMenuButton asChild>
+                                    <Link href={ generateHref( subItem.href ) }>
+                                      <span>{ subItem.name }</span>
+                                    </Link>
+                                  </SidebarMenuButton>
+                                </SidebarMenuItem>
+                              ) ) }
+                            </SidebarMenu>
+                          </CollapsibleContent>
+                        </SidebarMenuItem>
+                      </Collapsible>
+                    )
+                  ) }
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+          <SidebarFooter>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <SidebarMenuButton
+                      size="lg"
+                      className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                    >
+                      <Avatar className="h-8 w-8 rounded-lg">
+                        <AvatarImage
+                          src={ user?.avatar || "/placeholder.svg" }
+                          alt={ user?.name || "User" }
+                        />
+                        <AvatarFallback className="rounded-lg">
+                          { user?.name?.[ 0 ] || "U" }
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="grid flex-1 text-left text-sm leading-tight">
+                        <span className="truncate font-semibold">
+                          { user?.name || "User" }
+                        </span>
+                        <span className="truncate text-xs">
+                          { user?.email || "user@example.com" }
+                        </span>
+                      </div>
+                      <ChevronsUpDown className="ml-auto size-4" />
+                    </SidebarMenuButton>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                    side="bottom"
+                    align="end"
+                    sideOffset={ 4 }
+                  >
+                    <DropdownMenuLabel className="p-0 font-normal">
+                      <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                        <Avatar className="h-8 w-8 rounded-lg">
+                          <AvatarImage
+                            src={ user?.avatar || "/placeholder.svg" }
+                            alt={ user?.name || "User" }
+                          />
+                          <AvatarFallback className="rounded-lg">
+                            { user?.name?.[ 0 ] || "U" }
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="grid flex-1 text-left text-sm leading-tight">
+                          <span className="truncate font-semibold">
+                            { user?.name || "User" }
+                          </span>
+                          <span className="truncate text-xs">
+                            { user?.email || "user@example.com" }
+                          </span>
+                        </div>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Log out</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarFooter>
+          <SidebarRail />
+        </Sidebar>
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+            <div className="flex items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator orientation="vertical" className="mr-2 h-4" />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="#">{ orgName }</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Dashboard</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+          </header>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{ children }</div>
+        </SidebarInset>
+      </SidebarProvider>
     </UserProvider>
-  );
+  )
 }
