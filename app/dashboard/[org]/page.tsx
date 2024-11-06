@@ -120,126 +120,104 @@ export default async function DashboardPage ( { params }: DashboardPageProps )
 
 
         return (
-
-            <div className=" ">
-
-                <div className='bg-white'>
-                    <div>
-                        {/* Back Navigation for Small Screens */ }
-                        <nav aria-label="Back" className="sm:hidden">
-
-                        </nav>
-
-                        {/* Breadcrumbs for Larger Screens */ }
-                        <nav aria-label="Breadcrumb" className="hidden sm:flex bg-white">
-                            <ol role="list" className="flex items-center space-x-4 bg-white">
-                                { breadcrumbs.map( ( breadcrumb, index ) => (
-                                    <li key={ breadcrumb.name }>
-                                        <div className="flex items-center bg-white">
-                                            { index > 0 && (
-                                                <ChevronRightIcon
-                                                    aria-hidden="true"
-                                                    className="h-5 w-5 mr-4 flex-shrink-0 text-gray-400"
-                                                />
-                                            ) }
-                                            <Link href='/' >
-                                                <div
-                                                    className={ ` text-sm bg-white font-medium text-gray-500 hover:text-gray-700 ${ breadcrumb ? 'text-gray-700' : ''
-                                                        }` }
-                                                    aria-current={ breadcrumb ? 'page' : undefined }
-                                                >
-                                                    { breadcrumb.name }
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    </li>
-                                ) ) }
-                            </ol>
-                        </nav>
-                    </div>
-
-
-
+            <div className="max-w-8xl  px-4 sm:px-6 lg:px-8">
+                <div className="bg-white">
+                    <nav aria-label="Breadcrumb" className="py-4">
+                        <ol role="list" className="flex items-center space-x-4">
+                            { breadcrumbs.map( ( breadcrumb, index ) => (
+                                <li key={ breadcrumb.name }>
+                                    <div className="flex items-center">
+                                        { index > 0 && (
+                                            <ChevronRightIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                        ) }
+                                        <Link href={ breadcrumb.href }>
+                                            <span className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">
+                                                { breadcrumb.name }
+                                            </span>
+                                        </Link>
+                                    </div>
+                                </li>
+                            ) ) }
+                        </ol>
+                    </nav>
                 </div>
-                <header>
-                    <Suspense fallback={ <div>Loading...</div> }>
-                        <UserProfileHeaderDashboard
-                            userName={ userName }
-                            organizationName={ dashboardData.organizationName }
-                            userImageUrl={ dashboardData.avatar }
-                            accountStatus="Verified Account"
 
-                        />
-                    </Suspense>
+                <header className="mb-8">
+                    <UserProfileHeaderDashboard
+                        userName={ dashboardData.userName }
+                        organizationName={ dashboardData.organizationName }
+                        userImageUrl={ dashboardData.avatar }
+                        accountStatus="Verified Account"
+                    />
                 </header>
-                <div className="my-8 bg-white">
+
+                <div className="mb-8">
                     <h1 className="text-2xl font-bold mb-4">Your Events</h1>
                     { events.length > 0 ? (
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Event Name
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Description
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Start Date
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            End Date
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Status
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    { events.map( ( event ) => (
-                                        <tr key={ event.id }>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <Link href={ `/events/${ event.slug }` }>
-                                                    <div className="text-gray-700 hover:underline">{ event.name }</div>
-                                                </Link>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                { event.description || 'No description available' }
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'N/A' }
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                { event.endDate ? new Date( event.endDate ).toLocaleDateString() : 'N/A' }
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">{ event.status }</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <Link href={ `/events/${ event.slug }` }>
-                                                    <div className="text-blue-600 hover:text-blue-900 cursor-pointer mt-2">
-                                                        View Public Page
-                                                        <span className="sr-only">, { event.name }</span>
-                                                    </div>
-                                                </Link>
-                                            </td>
+                        <div className="overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
+                            <div className="inline-block min-w-full py-2 align-middle">
+                                <table className="min-w-full divide-y divide-gray-200">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">
+                                                Event Name
+                                            </th>
+                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 hidden sm:table-cell">
+                                                Description
+                                            </th>
+                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 hidden md:table-cell">
+                                                Start Date
+                                            </th>
+                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 hidden lg:table-cell">
+                                                End Date
+                                            </th>
+                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                Status
+                                            </th>
+                                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
+                                                <span className="sr-only">Actions</span>
+                                            </th>
                                         </tr>
-                                    ) ) }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200 bg-white">
+                                        { events.map( ( event ) => (
+                                            <tr key={ event.id }>
+                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+                                                    <Link href={ `/events/${ event.slug }` }>
+                                                        <span className="hover:underline">{ event.name }</span>
+                                                    </Link>
+                                                </td>
+                                                <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                                                    { event.description || 'No description available' }
+                                                </td>
+                                                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 md:table-cell">
+                                                    { event.startDate ? new Date( event.startDate ).toLocaleDateString() : 'N/A' }
+                                                </td>
+                                                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">
+                                                    { event.endDate ? new Date( event.endDate ).toLocaleDateString() : 'N/A' }
+                                                </td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{ event.status }</td>
+                                                <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
+                                                    <Link href={ `/events/${ event.slug }` }>
+                                                        <span className="text-indigo-600 hover:text-indigo-900">
+                                                            View<span className="hidden sm:inline"> Public Page</span>
+                                                            <span className="sr-only">, { event.name }</span>
+                                                        </span>
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                        ) ) }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     ) : (
-                        <p>No events found for your organization.</p>
+                        <p className="text-gray-500">No events found for your organization.</p>
                     ) }
                 </div>
-                <div className="bg-white ">
+
+                <div className="bg-white">
                     <DashboardCardGrid cards={ cards } />
-                    <div>
-
-
-                    </div>
                 </div>
             </div>
 
