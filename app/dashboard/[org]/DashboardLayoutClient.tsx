@@ -5,62 +5,64 @@ import { useEffect, useState } from "react"
 import { loadStripe, Stripe } from "@stripe/stripe-js"
 import Link from "next/link"
 import
-  {
-    ChevronRight,
-    ClipboardCheck,
-    ChevronsUpDown,
-  
-    FolderIcon,
-    HomeIcon,
-    MoreHorizontal,
-   
-  } from "lucide-react"
+{
+  ChevronRight,
+  ClipboardCheck,
+  ChevronsUpDown,
+
+  FolderIcon,
+  HomeIcon,
+  MoreHorizontal,
+  ArrowBigDownIcon,
+  MoveRightIcon,
+
+} from "lucide-react"
 import { HiOutlineLibrary } from "react-icons/hi"
 
 import UserProvider from "@/contexts/UserContext"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import
-  {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-  } from "@/components/ui/breadcrumb"
+{
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import
-  {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-  } from "@/components/ui/collapsible"
+{
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import
-  {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
+{
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
 import
-  {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarGroupLabel,
-    SidebarHeader,
-    SidebarInset,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarProvider,
-    SidebarRail,
-    SidebarTrigger,
-  } from "@/components/ui/sidebar"
+{
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 import type { UserType } from "@/types/UserType"
 import { DocumentIcon, UserGroupIcon } from "@heroicons/react/24/outline"
 
@@ -173,20 +175,13 @@ export default function DashboardLayoutClient ( {
                         </span>
                         <span className="truncate text-xs">Dashboard</span>
                       </div>
-                      <ChevronsUpDown className="ml-auto" />
+
                     </SidebarMenuButton>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                    align="start"
-                    side="bottom"
-                    sideOffset={ 4 }
-                  >
-                    <DropdownMenuLabel className="text-xs text-muted-foreground">
-                      Switch Organization
-                    </DropdownMenuLabel>
-                    {/* Add organization switching logic here if needed */ }
-                  </DropdownMenuContent>
+
+
+                  {/* Add organization switching logic here if needed */ }
+
                 </DropdownMenu>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -201,7 +196,7 @@ export default function DashboardLayoutClient ( {
                       <SidebarMenuItem key={ item.name }>
                         <SidebarMenuButton asChild>
                           <Link href={ generateHref( item.href ) }>
-                            <item.icon className="mr-2 h-4 w-4" />
+                            <item.icon className="mr-2 h-5 w-5" />
                             <span>{ item.name }</span>
                           </Link>
                         </SidebarMenuButton>
@@ -215,7 +210,7 @@ export default function DashboardLayoutClient ( {
                         <SidebarMenuItem>
                           <CollapsibleTrigger asChild>
                             <SidebarMenuButton>
-                              <item.icon className="mr-2 h-4 w-4" />
+                              <item.icon className="mr-2 h-5 w-5" />
                               <span>{ item.name }</span>
                               <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                             </SidebarMenuButton>
@@ -312,19 +307,12 @@ export default function DashboardLayoutClient ( {
         <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2 px-4">
-              <SidebarTrigger className="-ml-1" />
-              <Separator orientation="vertical" className="mr-2 h-4" />
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">{ orgName }</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Dashboard</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
+              <SidebarTrigger className="-ml-1"  >
+
+              </SidebarTrigger >
+
+
+
             </div>
           </header>
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{ children }</div>
