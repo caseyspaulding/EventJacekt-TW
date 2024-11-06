@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { ConnectAccountManagement, ConnectComponentsProvider } from '@stripe/react-connect-js';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { createAccountSession } from '@/app/actions/createAccountSession';
@@ -9,8 +9,8 @@ type AccountManagementPageProps = {
   params: Promise<{ org: string }>; // Adjust to meet the constraint of PageProps
 };
 
-export default function AccountManagementPage ( { params }: AccountManagementPageProps )
-{
+export default function AccountManagementPage(props: AccountManagementPageProps) {
+  const params = use(props.params);
   const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
   const [ loading, setLoading ] = useState( true );
   const [ clientSecret, setClientSecret ] = useState<string | null>( null );

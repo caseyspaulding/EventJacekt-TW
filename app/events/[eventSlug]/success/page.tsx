@@ -5,25 +5,24 @@ import { eq } from 'drizzle-orm';
 import { db } from '@/db';
 import { notFound } from 'next/navigation';
 import ConfettiComponent from '@/components/Confetti/Confetti';
-import TicketDisplay from '@/components/TicketViewer';
+
 
 interface SuccessPageProps
 {
     params: Promise<{ eventSlug: string }>;
-    searchParams: Promise<{ firstName?: string; lastName?: string }>;
+
 }
 
 export default async function SuccessPage ( {
     params,
-    searchParams,
+
 }: SuccessPageProps )
 {
     const { eventSlug } = await params; // Await params here
-    const { firstName, lastName } = await searchParams; // Await searchParams here
-    const customerName = `${ firstName ?? '' } ${ lastName ?? '' }`.trim() || '';
+
 
     console.log( 'Received eventSlug:', eventSlug );
-    console.log( 'Received customerName:', customerName );
+
 
 
     // Fetch the event ID by slug
@@ -109,15 +108,7 @@ export default async function SuccessPage ( {
                         You got ticket(s) to <br /> <span className="font-extrabold">{ eventData.eventName }</span>.
                     </h1>
                     {/* Display ticket information */ }
-                    <TicketDisplay
-                        eventName={ eventData.eventName }
-                        eventDate={ eventDate }
-                        eventTime={ ticket.doorOpenTime || '' }
-                        price={ ticket.price.toString() }
-                        address={ eventLocation }
-                        ticketNumber={ '' }
-                        customerName={ customerName }
-                    />
+
                     <p className="mb-2 mt-2 text-lg">Your ticket(s) have been sent to the email address you provided during checkout.</p>
                     <div className="mb-4 text-left">
                         <h2 className="text-xl font-semibold mb-2">Event Details</h2>

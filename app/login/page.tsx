@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
@@ -25,8 +25,8 @@ declare global
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function LoginComponent ( { searchParams }: { searchParams: any } )
-{
+export default function LoginComponent(props: { searchParams: Promise<any> }) {
+    const searchParams = use(props.searchParams);
 
     const [ email, setEmail ] = useState( "" );
     const [ password, setPassword ] = useState( "" );

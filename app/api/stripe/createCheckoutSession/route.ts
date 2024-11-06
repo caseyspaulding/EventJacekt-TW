@@ -167,9 +167,7 @@ export async function POST ( req: NextRequest )
             customer_email: buyer.email, // Automatically send receipt to buyer's email
             mode: 'payment',
             // Pass firstName and lastName directly from buyer object
-            success_url: `https://eventjacket.com/events/${ eventSlug }/success?session_id={CHECKOUT_SESSION_ID}&firstName=${ encodeURIComponent(
-                buyer.firstName
-            ) }&lastName=${ encodeURIComponent( buyer.lastName ) }&customer_id=${ customerId }`,
+            success_url: `https://eventjacket.com/events/${ eventSlug }/success`,
             cancel_url: `https://eventjacket.com/events/${ eventSlug }/cancel`,
         } );
 

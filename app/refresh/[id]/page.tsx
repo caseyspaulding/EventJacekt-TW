@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, use } from 'react';
 
-export default function RefreshStripe ( { params }: { params: Promise<{ id: string }> } )
-{
+export default function RefreshStripe(props: { params: Promise<{ id: string }> }) {
+    const params = use(props.params);
     const [ accountLinkCreatePending, setAccountLinkCreatePending ] = useState( false );
     const [ error, setError ] = useState( false );
     const [ accountId, setAccountId ] = useState<string | null>( null );

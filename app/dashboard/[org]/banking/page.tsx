@@ -8,8 +8,8 @@ type BankingPageWrapperProps = {
     params: Promise<{ org: string }>; // Define `params` as a Promise to meet the new type constraints
 };
 
-export default async function BankingPageWrapper ( { params }: BankingPageWrapperProps )
-{
+export default async function BankingPageWrapper(props: BankingPageWrapperProps) {
+    const params = await props.params;
     const { org } = await params;
     const decodedOrgName = decodeURIComponent( org );
 

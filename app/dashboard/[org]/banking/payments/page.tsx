@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, use } from 'react';
 import { loadConnectAndInitialize } from '@stripe/connect-js';
 import { createPaymentSession } from '@/app/actions/createPaymentSession'; // Server action
 import { ConnectPaymentDetails, ConnectComponentsProvider } from '@stripe/react-connect-js';
@@ -18,8 +18,8 @@ type PaymentsPageProps = {
   params: Promise<{ org: string }>;
 };
 
-export default function PaymentsPage ( { params }: PaymentsPageProps )
-{
+export default function PaymentsPage(props: PaymentsPageProps) {
+  const params = use(props.params);
   const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
   const [ loading, setLoading ] = useState( true );
   const [ clientSecret, setClientSecret ] = useState<string | null>( null );

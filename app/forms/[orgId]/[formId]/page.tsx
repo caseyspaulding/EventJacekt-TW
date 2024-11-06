@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useTransition } from 'react';
+import React, { useEffect, useState, useTransition, use } from 'react';
 import { createClient } from '@utils/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -82,8 +82,8 @@ async function getForm ( formId: string ): Promise<Form | null>
   };
 }
 
-export default function SharedForm ( { params }: { params: Promise<{ orgId: string; formId: string }> } )
-{
+export default function SharedForm(props: { params: Promise<{ orgId: string; formId: string }> }) {
+  const params = use(props.params);
   const { toast } = useToast();
   const [ form, setForm ] = useState<Form | null>( null );
   const [ isPending, startTransition ] = useTransition();

@@ -6,8 +6,8 @@ type RefreshStripeProps = {
     params: Promise<{ id: string }>;
 };
 
-export default async function RefreshStripe ( { params }: RefreshStripeProps )
-{
+export default async function RefreshStripe(props: RefreshStripeProps) {
+    const params = await props.params;
     const [ accountLinkCreatePending, setAccountLinkCreatePending ] = useState( false );
     const [ error, setError ] = useState( false );
 
