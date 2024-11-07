@@ -6,16 +6,15 @@ import { useUser } from '@/contexts/UserContext';
 import LogoSpinner from '@/components/Loaders/LogoSpinner';
 import { Button } from '@nextui-org/button';
 import
-  {
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    useDisclosure,
-  } from '@nextui-org/modal';
+{
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from '@nextui-org/modal';
 import React from 'react';
-import { archiveForm, getForms } from '@/app/actions/formActions';
 import { Badge } from '@/components/ui/badge';
 
 interface Form
@@ -28,7 +27,6 @@ interface Form
   isDeleted: boolean;
   isDraft: boolean;
 }
-
 export default function FormsPage ()
 {
   const { user } = useUser();
@@ -53,16 +51,31 @@ export default function FormsPage ()
       try
       {
         setLoading( true );
-        const formsData = await getForms( user.organizationId );
-        setForms(
-          formsData.map((form) => ({
-            ...form,
-            isArchived: form.is_archived ?? false,
-            isDeleted: false,
-            isDraft: false,
-            status: form.status ?? 'active', // Ensure status is always a string
-          }))
-        );
+        const response = await fetch( '/api/forms/getForms', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify( { organizationId: user.organizationId } ),
+        } );
+
+        const result = await response.json();
+
+        if ( response.ok && result.success )
+        {
+          setForms(
+            result.forms.map( ( form: any ) => ( {
+              ...form,
+              isArchived: form.is_archived ?? false,
+              isDeleted: false,
+              isDraft: false,
+              status: form.status ?? 'active',
+            } ) )
+          );
+        } else
+        {
+          setError( result.message || 'Failed to fetch forms' );
+        }
       } catch ( error )
       {
         console.error( 'Failed to fetch forms:', error );
@@ -95,15 +108,29 @@ export default function FormsPage ()
   {
     try
     {
-      await archiveForm( formId, user?.organizationId || '' );
-      // Update the specific form's status to "archived" in the local state
-      setForms(
-        forms.map( ( form ) =>
-          form.id === formId
-            ? { ...form, isArchived: true, status: 'archived' }
-            : form
-        )
-      );
+      const response = await fetch( '/api/forms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify( { action: 'archiveForm', formId, orgId: user?.organizationId || '' } ),
+      } );
+
+      const result = await response.json();
+
+      if ( response.ok )
+      {
+        setForms(
+          forms.map( ( form ) =>
+            form.id === formId
+              ? { ...form, isArchived: true, status: 'archived' }
+              : form
+          )
+        );
+      } else
+      {
+        setError( result.message || 'Failed to archive form' );
+      }
     } catch ( error )
     {
       console.error( 'Failed to archive form:', error );
@@ -139,6 +166,7 @@ export default function FormsPage ()
   {
     return <p className="text-red-600 text-center">{ error }</p>;
   }
+
 
   return (
     <>
@@ -186,54 +214,35 @@ export default function FormsPage ()
                     forms.map( ( form ) => (
                       <tr key={ form.id }>
                         <td className="px-3 py-2">{ form.form_name }</td>
-                        <td className="px-3 py-2">
-                          { form.description || 'No description' }
-                        </td>
-                        <td className="px-3 py-2">
-                          { renderStatusLabel( form ) }
-                        </td>
+                        <td className="px-3 py-2">{ form.description || 'No description' }</td>
+                        <td className="px-3 py-2">{ renderStatusLabel( form ) }</td>
                         <td className="">
                           <div className="flex ">
-                            <Link
-                              href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }` }
-                            >
+                            <Link href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }` }>
                               <Button size="sm" color="primary" variant="light">
                                 Edit
                               </Button>
                             </Link>
-                            <Link
-                              href={ `/forms/${ user?.organizationId }/${ form.id }` }
-                            >
+                            <Link href={ `/forms/${ user?.organizationId }/${ form.id }` }>
                               <Button size="sm" color="primary" variant="light">
-                                View 
+                                View
                               </Button>
                             </Link>
-                            <Link
-                              href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }/responses` }
-                            >
+                            <Link href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }/responses` }>
                               <Button size="sm" color="primary" variant="light">
-                               Responses
+                                Responses
                               </Button>
                             </Link>
-                            <Button
-                              size="sm"
-                              color="danger"
-                              variant="light"
-                              onPress={ () => openModal( form.id ) }
-                            >
+                            <Button size="sm" color="danger" variant="light" onPress={ () => openModal( form.id ) }>
                               Archive
                             </Button>
                           </div>
-
                         </td>
                       </tr>
                     ) )
                   ) : (
                     <tr>
-                      <td
-                        colSpan={ 4 }
-                        className="px-3 py-2 text-center text-sm text-gray-500"
-                      >
+                      <td colSpan={ 4 } className="px-3 py-2 text-center text-sm text-gray-500">
                         No forms found.
                       </td>
                     </tr>
@@ -247,54 +256,36 @@ export default function FormsPage ()
           <div className="md:hidden">
             { forms.length > 0 ? (
               forms.map( ( form ) => (
-                <div
-                  key={ form.id }
-                  className="bg-white shadow rounded-lg mb-4 p-4"
-                >
+                <div key={ form.id } className="bg-white shadow rounded-lg mb-4 p-4">
                   <div className="flex justify-between items-center">
                     <h2 className="text-lg font-medium">{ form.form_name }</h2>
                     { renderStatusLabel( form ) }
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">
-                    { form.description || 'No description' }
-                  </p>
+                  <p className="text-sm text-gray-600 mt-2">{ form.description || 'No description' }</p>
                   <div className="mt-4 flex ">
-                    <Link
-                      href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }` }
-                    >
+                    <Link href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }` }>
                       <Button size="sm" color="primary" variant="light">
                         Edit
                       </Button>
                     </Link>
-                    <Link
-                      href={ `/forms/${ user?.organizationId }/${ form.id }` }
-                    >
+                    <Link href={ `/forms/${ user?.organizationId }/${ form.id }` }>
                       <Button size="sm" color="primary" variant="light">
                         View Form
                       </Button>
                     </Link>
-                    <Link
-                      href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }/responses` }
-                    >
+                    <Link href={ `/dashboard/${ user?.organizationId }/forms/${ form.id }/responses` }>
                       <Button size="sm" color="primary" variant="light">
                         View Responses
                       </Button>
                     </Link>
-                    <Button
-                      size="sm"
-                      color="danger"
-                      variant="light"
-                      onPress={ () => openModal( form.id ) }
-                    >
+                    <Button size="sm" color="danger" variant="light" onPress={ () => openModal( form.id ) }>
                       Archive
                     </Button>
                   </div>
                 </div>
               ) )
             ) : (
-              <p className="text-center text-sm text-gray-500">
-                No forms found.
-              </p>
+              <p className="text-center text-sm text-gray-500">No forms found.</p>
             ) }
           </div>
         </div>
@@ -303,18 +294,14 @@ export default function FormsPage ()
       {/* Modal for archive confirmation */ }
       <Modal isOpen={ isOpen } onOpenChange={ onOpenChange }>
         <ModalContent>
-          { onClose => (
+          { ( onClose ) => (
             <>
               <ModalHeader>Confirm Archive</ModalHeader>
               <ModalBody>
                 <p>Are you sure you want to archive this form?</p>
               </ModalBody>
               <ModalFooter>
-                <Button
-                  color="danger"
-                  variant="light"
-                  onPress={ confirmArchive }
-                >
+                <Button color="danger" variant="light" onPress={ confirmArchive }>
                   Yes, Archive
                 </Button>
                 <Button color="primary" onPress={ onClose }>

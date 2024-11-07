@@ -1,40 +1,34 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Database } from '@/database.types';
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
 export async function createClient ()
 {
-    const cookieStore = await cookies();
+    const cookieStore = await cookies()
 
-    return createServerClient<Database>(
+    return createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
         {
             cookies: {
                 getAll ()
                 {
-
-                    // Iterate manually since getAll does not exist
-                    const allCookies = cookieStore.getAll().map( ( { name, value } ) => ( { name, value } ) );
-                    return allCookies;
+                    return cookieStore.getAll()
                 },
                 setAll ( cookiesToSet )
                 {
-                    cookiesToSet.forEach( ( { name, value, options } ) =>
+                    try
                     {
-                        // To persist cookie, you would need to set them manually here,
-                        // This example assumes `set` is available in some environments:
-                        try
-                        {
-                            ( cookieStore ).set( name, value, options );
-                        } catch
-                        {
-                            // Ignore if `setAll` was called in a server environment without access
-                        }
-                    } );
+                        cookiesToSet.forEach( ( { name, value, options } ) =>
+                            cookieStore.set( name, value, options )
+                        )
+                    } catch
+                    {
+                        // The `setAll` method was called from a Server Component.
+                        // This can be ignored if you have middleware refreshing
+                        // user sessions.
+                    }
                 },
             },
         }
-    );
+    )
 }
