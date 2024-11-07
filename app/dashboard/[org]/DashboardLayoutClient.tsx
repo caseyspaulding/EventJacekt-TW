@@ -65,6 +65,7 @@ import
 } from "@/components/ui/sidebar"
 import type { UserType } from "@/types/UserType"
 import { DocumentIcon, UserGroupIcon } from "@heroicons/react/24/outline"
+import { signOut } from "@/app/actions/SignOut"
 
 interface DashboardLayoutClientProps
 {
@@ -73,6 +74,7 @@ interface DashboardLayoutClientProps
   stripePublishableKey: string
 }
 
+
 export default function DashboardLayoutClient ( {
   children,
   user,
@@ -80,7 +82,8 @@ export default function DashboardLayoutClient ( {
 }: DashboardLayoutClientProps )
 {
   const [ stripe, setStripe ] = useState<Stripe | null>( null )
-
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const [ stripeConnectInstance, setStripeConnectInstance ] = useState<any>( null );
   // Initialize Stripe
   useEffect( () =>
   {
@@ -95,6 +98,27 @@ export default function DashboardLayoutClient ( {
 
     initializeStripe()
   }, [ stripePublishableKey ] )
+
+  const handleLogout = async () =>
+  {
+    try
+    {
+      // Logout from Stripe Connect session, if instance is initialized
+      if ( stripeConnectInstance )
+      {
+        await stripeConnectInstance.logout(); // Ensure this is awaited
+        console.log( "Stripe Connect session destroyed." );
+      }
+
+      // Proceed with server-side sign out (Supabase logout)
+      await signOut();
+      console.log( "Signed out successfully from Supabase." );
+
+    } catch ( error )
+    {
+      console.error( "Error during logout:", error );
+    }
+  };
 
   const orgName = user?.orgName
 
@@ -296,7 +320,7 @@ export default function DashboardLayoutClient ( {
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                     <DropdownMenuItem>Settings</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Log out</DropdownMenuItem>
+                    <DropdownMenuItem onClick={ handleLogout }>Log out</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </SidebarMenuItem>
@@ -321,3 +345,4 @@ export default function DashboardLayoutClient ( {
     </UserProvider>
   )
 }
+
