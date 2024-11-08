@@ -40,7 +40,7 @@ export async function POST ( request: Request )
       if ( userError ) throw userError;
       return NextResponse.json( {
         success: true,
-        redirectTo: '/choose-account-type',
+        redirectTo: '/signup-success',
         user: userResponse.user,
       } );
     }
