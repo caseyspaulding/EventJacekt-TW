@@ -213,7 +213,7 @@ export async function sendTicketEmail (
     <div class="container">
       <!-- Header Section -->
       <div class="header">
-        <img src="https://www.eventjacket.com/images/logo-icon-white.png" class='logo' alt="EventJacket Logo">
+        <img src="https://www.eventjacket.com/images/logo-full.webp" class='logo' alt="EventJacket Logo">
 
 
       </div>
@@ -274,7 +274,7 @@ export async function sendTicketEmail (
       <div class="footer">
 
         <img src="https://www.eventjacket.com/images/logo-full.png" class='logo-footer' alt="EventJacket Logo">
-        <p>EventJacket, 1893 Chuctaw Trl, Kissimme, FL. 34747</p>
+        <p>EventJacket, Kissimmee, FL. 34747</p>
       </div>
     </div>
   </body>

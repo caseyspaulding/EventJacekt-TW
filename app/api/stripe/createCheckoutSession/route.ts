@@ -185,8 +185,8 @@ export async function POST ( req: NextRequest )
                 price: ticket.price,                    // Matches schema
                 currency: 'USD',                        // Matches schema
                 status: 'checkout-started',                         // Matches schema (default 'available', but here 'sold')
-                validFrom: ticket.validFrom,            // Matches schema (assuming it's available in your ticket data)
-                validUntil: ticket.validUntil,          // Matches schema (assuming it's available in your ticket data)
+                validFrom: ticket.validFrom,            // Matches schema 
+                validUntil: ticket.validUntil,          // Matches schema 
                 purchaseDate: new Date(),               // Matches schema
                 stripeSessionId: session.id,            // Matches schema
                 createdAt: new Date(),                  // Matches schema
