@@ -94,7 +94,7 @@ export default function BankingPageClient ( {
             <BreadcrumbsPageHeader title="Connect Bank Account" breadcrumbs={ breadcrumbs } />
 
             { ( connectedAccountId || accountCreatePending || onboardingExited ) && (
-                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <div className="mt-6 p-4 bg-gray-50 rounded-lg flex flex-col justify-center items-center text-center">
                     { connectedAccountId && (
                         <p className="text-gray-700">
                             Your connected account ID is: <code className="font-bold">{ connectedAccountId }</code>
