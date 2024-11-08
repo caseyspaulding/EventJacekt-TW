@@ -33,7 +33,7 @@ export default function FeedbackForm ( { closeDialog }: FeedbackFormProps )
     <div className="w-full max-w-lg p-6">
       <div className="mb-6">
         <h2 className="text-2xl font-semibold leading-none tracking-tight">Submit Feedback</h2>
-        <p className="text-sm text-muted-foreground">We value your input to improve our service.</p>
+        <p className="text-sm text-muted-foreground">I value your input. - Casey</p>
       </div>
       <form onSubmit={ handleSubmit } className="space-y-4">
         <div className="space-y-2">
