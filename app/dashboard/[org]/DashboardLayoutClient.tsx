@@ -66,6 +66,7 @@ import
 import type { UserType } from "@/types/UserType"
 import { DocumentIcon, UserGroupIcon } from "@heroicons/react/24/outline"
 import { signOut } from "@/app/actions/SignOut"
+import FeedbackFormDialog from "@/components/FeedbackFormDialog"
 
 interface DashboardLayoutClientProps
 {
@@ -260,6 +261,16 @@ export default function DashboardLayoutClient ( {
                       </Collapsible>
                     )
                   ) }
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+            <SidebarGroup>
+              <SidebarGroupLabel>Support</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <FeedbackFormDialog />
+                  </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
