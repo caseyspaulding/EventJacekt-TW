@@ -190,8 +190,12 @@ export default function DashboardLayoutClient ( {
                       size="lg"
                       className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                     >
-                      <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                        <HomeIcon className="size-4" />
+                      <div className="flex aspect-square size-8 items-center justify-center rounded-lg ">
+                        <img
+                          src="/images/Logo_Icon.webp"
+                          width={ 32 }
+                          height={ 32 }
+                        />
                       </div>
                       <div className="grid flex-1 text-left text-sm leading-tight">
                         <span className="truncate font-semibold">

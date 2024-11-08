@@ -1,6 +1,6 @@
 // app/layout.tsx
 import type { PropsWithChildren } from 'react';
-import { Space_Grotesk } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 import ClientProviders from './ClientProviders';
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react"
 
 // Google Font Configuration
-const spaceGrotesk = Space_Grotesk( {
+const spaceGrotesk = Poppins( {
     weight: [ '400' ],
     subsets: [ 'latin' ],
     display: 'swap',
