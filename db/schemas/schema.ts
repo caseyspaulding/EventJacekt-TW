@@ -64,6 +64,8 @@ export const userProfiles = pgTable( 'user_profiles', {
     orgId: uuid( 'org_id' )
         .notNull()
         .references( () => organizations.id ),
+    firstName: text( 'first_name' ), // New field for first name
+    lastName: text( 'last_name' ), // New field for last name
     profileImageUrl: text( 'profile_image_url' ),
     organizationName: text( 'organization_name' ).notNull(),
     role: text( 'role' ).notNull().default( 'user' ), // User's role within the organization
