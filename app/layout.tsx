@@ -35,11 +35,11 @@ export default function RootLayout ( { children }: PropsWithChildren )
             gtag('config', 'G-M6F4XVZM25');
           `}
                 </Script>
-                <ThemeProvider attribute="class" defaultTheme="light">
+               
                     <ClientProviders>
                         { children }
                     </ClientProviders>
-                </ThemeProvider>
+             
                 <Toaster />
             </body>
         </html>
