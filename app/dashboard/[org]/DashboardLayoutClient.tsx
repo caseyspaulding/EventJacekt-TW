@@ -332,7 +332,11 @@ export default function DashboardLayoutClient ( {
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href={ generateHref( '/profile' ) } className="w-full text-left">
+                        Profile
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>Settings</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={ handleLogout }>Log out</DropdownMenuItem>
