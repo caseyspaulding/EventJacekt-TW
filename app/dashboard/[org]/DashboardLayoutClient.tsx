@@ -152,15 +152,15 @@ export default function DashboardLayoutClient ( {
         { name: "Create Form", href: "/forms/new" },
       ],
     },
-    {
-      name: "Sign Up Sheets",
-      icon: ClipboardCheck,
-      children: [
-        { name: "All", href: "/signup-sheets/all" },
-        { name: "Create Signup", href: "/signup-sheets/new" },
-        { name: "Groups", href: "/signup-sheets/groups" },
-      ],
-    },
+    //{
+    //  name: "Sign Up Sheets",
+    //  icon: ClipboardCheck,
+    //  children: [
+    //    { name: "All", href: "/signup-sheets/all" },
+    //    { name: "Create Signup", href: "/signup-sheets/new" },
+    //    { name: "Groups", href: "/signup-sheets/groups" },
+    //  ],
+    //},
     {
       name: "Banking",
       icon: HiOutlineLibrary,
