@@ -15,6 +15,7 @@ import
   MoreHorizontal,
   ArrowBigDownIcon,
   MoveRightIcon,
+  TicketCheck,
 
 } from "lucide-react"
 import { HiOutlineLibrary } from "react-icons/hi"
@@ -135,12 +136,12 @@ export default function DashboardLayoutClient ( {
         { name: "Scan Tickets", href: "/events/scan-tickets" },
       ],
     },
+    { name: "Scan Tickets", href: "/events/scan-tickets", icon: TicketCheck },
     {
       name: "Team",
       icon: UserGroupIcon,
       children: [
         { name: "Members", href: "/team/members" },
-        { name: "Committees", href: "/team/committees" },
         { name: "Volunteers", href: "/team/volunteers" },
       ],
     },
