@@ -55,12 +55,11 @@ export default function Example ()
                     <div className="pb-16 xl:flex xl:items-center xl:justify-between">
                         <div>
                             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-                                <span className="text-gray-900">Nonprofit Event Planners Save Thousands! </span>
-                                <p className=" text-blue-600">No Monthly Fee</p>
+                                <span className="text-gray-900">Best way to sell tickets online! </span>
+                                <p className=" text-blue-600">No Monthly Fees</p>
                             </h1>
                             <p className="mt-5 text-xl text-gray-500">
-                                As someone who’s seen firsthand the challenges nonprofits face, I’ve made it my mission to offer affordable tools that make a real difference—without breaking the bank.
-                            </p>
+                                I’ve made it my mission to offer an affordable tool to sell tickets online. 25 cents a ticket sold, that can be added to the price of your ticket so that it makes it free for you.  Tickets are emailed and scanner is included to scanned emailed tickets at your event.                            </p>
                             <p className="mt-5 text-xl text-gray-500">
 
                             </p>
@@ -95,7 +94,7 @@ export default function Example ()
                                 Everything you need
                             </h2>
                             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
-                               
+
                             </p>
                             <p className="mt-4 text-lg text-gray-500"></p>
                         </div>
