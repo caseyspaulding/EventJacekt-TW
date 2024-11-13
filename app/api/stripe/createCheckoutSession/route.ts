@@ -159,7 +159,7 @@ export async function POST ( req: NextRequest )
                 },
             ],
             payment_intent_data: {
-                application_fee_amount: 50,
+                application_fee_amount: 25,
                 transfer_data: {
                     destination: orgStripeAccountId,
                 },

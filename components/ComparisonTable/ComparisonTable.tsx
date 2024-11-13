@@ -38,7 +38,7 @@ const ComparisonTable = () =>
         },
         {
           label: 'App Fee',
-          values: [ '.50 cents per ticket', '3.7% + $1.79 service fee per ticket', '$1 + 2% of the ticket price' ],
+          values: [ '25 cents per ticket', '3.7% + $1.79 service fee per ticket', '$1 + 2% of the ticket price' ],
         },
         {
           label: 'Payment Processing Fee',
@@ -51,7 +51,7 @@ const ComparisonTable = () =>
       rows: [
         {
           label: 'CRM Included',
-          values: [ 'Yes, with CRM for vendors and performers', 'Basic attendee management', 'No' ],
+          values: [ 'No', 'No', 'No' ],
         },
         {
           label: 'Ticket Scanner',

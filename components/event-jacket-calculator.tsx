@@ -24,8 +24,8 @@ export function EventJacketCalculator ()
   {
     const totalRevenue = ticketPrice * attendeesPerEvent * eventsPerYear
 
-    // EventJacket fees (50¢ per ticket + 2.9% + 30¢ for payment processing)
-    const eventJacket = ( 0.50 * attendeesPerEvent * eventsPerYear ) + ( 0.029 * totalRevenue ) + ( 0.30 * attendeesPerEvent * eventsPerYear )
+    // EventJacket fees (25¢ per ticket + 2.9% + 30¢ for payment processing)
+    const eventJacket = ( 0.25 * attendeesPerEvent * eventsPerYear ) + ( 0.029 * totalRevenue ) + ( 0.30 * attendeesPerEvent * eventsPerYear )
     setEventJacketFees( eventJacket )
 
     // Eventbrite fees (3.7% + $1.79 per ticket + 2.9% payment processing)
@@ -60,7 +60,7 @@ export function EventJacketCalculator ()
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-center text-lg">
-          At just 50¢ per ticket + 2.9% + 30¢ payment processing, calculate how much you'll save.
+          At just 25¢ per ticket + 2.9% + 30¢ payment processing (Stripe), calculate how much you'll save.
         </p>
         <p className="text-center text-lg font-semibold">
           See how EventJacket compares to other popular ticketing platforms.
@@ -130,7 +130,7 @@ export function EventJacketCalculator ()
             </div>
           </div>
 
-          
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">

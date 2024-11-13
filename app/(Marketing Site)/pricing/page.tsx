@@ -95,7 +95,7 @@ export default function Example ()
                                 Everything you need
                             </h2>
                             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
-                                All-in-one platform
+                               
                             </p>
                             <p className="mt-4 text-lg text-gray-500"></p>
                         </div>
