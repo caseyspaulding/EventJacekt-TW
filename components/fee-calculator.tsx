@@ -6,33 +6,37 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-export function FeeCalculator() {
-  const [ticketPrice, setTicketPrice] = useState(30)
-  const [feePayer, setFeePayer] = useState('buyer')
-  const [eventJacketFee, setEventJacketFee] = useState(0)
-  const [processingFee, setProcessingFee] = useState(0)
-  const [buyerPays, setBuyerPays] = useState(0)
-  const [youReceive, setYouReceive] = useState(0)
+export function FeeCalculator ()
+{
+  const [ ticketPrice, setTicketPrice ] = useState( 30 )
+  const [ feePayer, setFeePayer ] = useState( 'buyer' )
+  const [ eventJacketFee, setEventJacketFee ] = useState( 0 )
+  const [ processingFee, setProcessingFee ] = useState( 0 )
+  const [ buyerPays, setBuyerPays ] = useState( 0 )
+  const [ youReceive, setYouReceive ] = useState( 0 )
 
-  useEffect(() => {
-    const baseEventJacketFee = 0.50
+  useEffect( () =>
+  {
+    const baseEventJacketFee = 0.25
     const processingPercentage = 0.029
     const processingFixed = 0.30
 
     let calculatedEventJacketFee = baseEventJacketFee
-    let calculatedProcessingFee = (ticketPrice * processingPercentage) + processingFixed
+    let calculatedProcessingFee = ( ticketPrice * processingPercentage ) + processingFixed
 
-    if (feePayer === 'buyer') {
-      setBuyerPays(ticketPrice + calculatedEventJacketFee + calculatedProcessingFee)
-      setYouReceive(ticketPrice)
-    } else {
-      setBuyerPays(ticketPrice)
-      setYouReceive(ticketPrice - calculatedEventJacketFee - calculatedProcessingFee)
+    if ( feePayer === 'buyer' )
+    {
+      setBuyerPays( ticketPrice + calculatedEventJacketFee + calculatedProcessingFee )
+      setYouReceive( ticketPrice )
+    } else
+    {
+      setBuyerPays( ticketPrice )
+      setYouReceive( ticketPrice - calculatedEventJacketFee - calculatedProcessingFee )
     }
 
-    setEventJacketFee(calculatedEventJacketFee)
-    setProcessingFee(calculatedProcessingFee)
-  }, [ticketPrice, feePayer])
+    setEventJacketFee( calculatedEventJacketFee )
+    setProcessingFee( calculatedProcessingFee )
+  }, [ ticketPrice, feePayer ] )
 
   return (
     <Card className="w-full max-w-md mx-auto shadow-md sm:p-3 lg:p-1 shadow-yellow-300" >
@@ -47,7 +51,7 @@ export function FeeCalculator() {
             Understand your ticket fees. Easy.
           </p>
           <p className="text-sm text-gray-600">
-            We charge 50¢ per ticket, plus 2.9% + 30¢ for credit card processing. 
+            We charge 50¢ per ticket, plus 2.9% + 30¢ for credit card processing.
             See how that works out with your ticket prices:
           </p>
         </div>
@@ -60,14 +64,14 @@ export function FeeCalculator() {
               type="number"
               min="0"
               step="0.01"
-              value={ticketPrice}
-              onChange={(e) => setTicketPrice(Number(e.target.value))}
+              value={ ticketPrice }
+              onChange={ ( e ) => setTicketPrice( Number( e.target.value ) ) }
             />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="fee-payer">Who pays the fees?</Label>
-            <Select value={feePayer} onValueChange={setFeePayer}>
+            <Select value={ feePayer } onValueChange={ setFeePayer }>
               <SelectTrigger id="fee-payer">
                 <SelectValue placeholder="Select who pays the fees" />
               </SelectTrigger>
@@ -83,27 +87,27 @@ export function FeeCalculator() {
           <CardContent className="p-4 space-y-2">
             <div className="flex justify-between">
               <span>EventJacket Fee:</span>
-              <span className="font-semibold text-blue-600">${eventJacketFee.toFixed(2)}</span>
+              <span className="font-semibold text-blue-600">${ eventJacketFee.toFixed( 2 ) }</span>
             </div>
             <div className="flex justify-between">
               <span>Credit Card Processing:</span>
-              <span className="font-semibold text-blue-600">${processingFee.toFixed(2)}</span>
+              <span className="font-semibold text-blue-600">${ processingFee.toFixed( 2 ) }</span>
             </div>
             <div className="flex justify-between text-lg font-bold">
               <span>Your Buyers Pay:</span>
-              <span className="text-blue-600">${buyerPays.toFixed(2)}</span>
+              <span className="text-blue-600">${ buyerPays.toFixed( 2 ) }</span>
             </div>
             <div className="flex justify-between text-lg font-bold">
               <span>You Receive:</span>
-              <span className="text-blue-600">${youReceive.toFixed(2)}</span>
+              <span className="text-blue-600">${ youReceive.toFixed( 2 ) }</span>
             </div>
           </CardContent>
         </Card>
 
         <p className="text-xs text-center text-gray-500">
-         
+
           <br />
-        
+
         </p>
       </CardContent>
     </Card>
