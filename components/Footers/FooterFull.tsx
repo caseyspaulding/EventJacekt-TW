@@ -105,7 +105,7 @@ export default function FooterFull ()
             />
 
             <p className=" pl-1 text-sm leading-6 text-blue-700">
-              Fundraising event management software for nonprofits.
+              Affordable Event Managment Software
             </p>
             <div className="flex space-x-6">
               { navigation.social.map( ( item ) => (
