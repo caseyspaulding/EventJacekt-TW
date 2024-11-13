@@ -142,7 +142,7 @@ export default function DashboardLayoutClient ( {
       icon: UserGroupIcon,
       children: [
         { name: "Members", href: "/team/members" },
-       
+
       ],
     },
     {
@@ -338,7 +338,7 @@ export default function DashboardLayoutClient ( {
                         Profile
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    {/*<DropdownMenuItem>Settings</DropdownMenuItem>*/ }
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={ handleLogout }>Log out</DropdownMenuItem>
                   </DropdownMenuContent>
