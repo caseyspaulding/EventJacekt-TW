@@ -127,11 +127,9 @@ export default function AboutHeroBig ()
                 Who We Are
               </h1>
               <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
-                <p className="text-lg leading-8 text-gray-600">
-                  After dedicating twenty years to the Navy, I learned the true meaning of serving a mission greater than myself. That same sense of purpose and discipline has guided me throughout my life—first as a teacher, and now as a software engineer and the founder of EventJacket. Through my own time volunteering with nonprofits, I saw firsthand the hurdles small organizations face in trying to make a difference with limited resources.
-                </p>
+
                 <p className="text-lg leading-8 mt-3 text-gray-600">
-                  EventJacket was born from that realization. As I watched organizations struggle with a patchwork of disconnected tools to manage events, I knew there had to be a better solution. Nonprofits needed an affordable, all-in-one platform to handle everything from ticket sales and vendor coordination to volunteer management—without the complexity of using multiple systems.
+                  EventJacket was born from the realization that I could build a simple, effective, event mananagement platform to handle everything from ticket sales, event pages, and marketing without the complexity of using multiple systems.
                 </p>
               </div>
               <img
