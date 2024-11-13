@@ -5,7 +5,7 @@ const faqs = [
   {
     id: 1,
     question: 'What is EventJacket?',
-    answer: 'EventJacket is a platform that allows event organizers to easily input event details and automatically generate a professional web page. This page enables seamless online ticket sales and promotes the event—all in one place.'
+    answer: 'EventJacket is a platform that allows event organizers to easily input event details and automatically generate a professional web page. This page enables seamless Online Ticket Sales and promotes the event—all in one place.'
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ const faqs = [
   {
     id: 3,
     question: 'Why choose EventJacket?',
-    answer: 'EventJacket offers an all-in-one solution for nonprofits, making it easy to manage ticket sales, volunteers, vendors, and more. With our user-friendly platform, you can create professional event pages, handle payments, and promote your event seamlessly—without needing multiple tools. Plus, we offer one-on-one support and assistance with setting up your event pages, ensuring you have everything you need to succeed. It’s designed to save you time, reduce hassle, and help your events thrive.'
+    answer: 'EventJacket offers a simple, cost effective solution for organizations or individuals, making it easy to manage ticket sales and more. With our user-friendly platform, you can create professional event pages, handle payments, and promote your event seamlessly—without needing multiple tools. Plus, we offer one-on-one support and assistance with setting up your event pages, ensuring you have everything you need to succeed. It’s designed to save you time, reduce hassle, and help your events thrive.'
   },
   {
     id: 4,
@@ -50,7 +50,7 @@ const faqs = [
   {
     id: 10,
     question: 'What\'s the maximum fee my ticket buyers will incur?',
-    answer: 'At EventJacket, our standard ticketing fee is 50 cents per ticket. Ensuring that even your higher-priced tickets remain affordable for your attendees. Please note, the 3% credit card processing fee that all ticket buyers incur is separate from the ticketing fee.'
+    answer: 'At EventJacket, our standard ticketing fee is 25 cents per ticket. Ensuring that even your higher-priced tickets remain affordable for your attendees. Please note, the 3% credit card processing fee that all ticket buyers incur is separate from the ticketing fee.'
   },
   {
     id: 11,
