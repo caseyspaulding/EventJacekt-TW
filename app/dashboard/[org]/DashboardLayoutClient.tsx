@@ -142,7 +142,7 @@ export default function DashboardLayoutClient ( {
       icon: UserGroupIcon,
       children: [
         { name: "Members", href: "/team/members" },
-        { name: "Volunteers", href: "/team/volunteers" },
+       
       ],
     },
     {
