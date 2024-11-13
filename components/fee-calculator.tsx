@@ -51,7 +51,7 @@ export function FeeCalculator ()
             Understand your ticket fees. Easy.
           </p>
           <p className="text-sm text-gray-600">
-            We charge 50¢ per ticket, plus 2.9% + 30¢ for credit card processing (Stripe).
+            We charge 25¢ per ticket, plus 2.9% + 30¢ for credit card processing (Stripe).
             See how that works out with your ticket prices:
           </p>
         </div>
