@@ -15,6 +15,13 @@
       "when": 1731074052642,
       "tag": "0001_mysterious_jubilee",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1733342254923,
+      "tag": "0002_fair_captain_midlands",
+      "breakpoints": true
     }
   ]
 }

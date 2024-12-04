@@ -47,8 +47,8 @@ const CreateEventPage = () =>
     const [ description, setDescription ] = useState( '' );
     const [ startDate, setStartDate ] = useState( '' );
     const [ endDate, setEndDate ] = useState( '' );
-    const [ eventStartTime, setEventStartTime ] = useState( '' );
-    const [ eventEndTime, setEventEndTime ] = useState( '' );
+    const [ eventStartTime, setEventStartTime ] = useState( null );
+    const [ eventEndTime, setEventEndTime ] = useState( null );
     const [ organizerContact, setOrganizerContact ] = useState( '' );
     const [ venue, setVenue ] = useState( '' );
     const [ venueDescription, setVenueDescription ] = useState( '' );
@@ -202,8 +202,14 @@ const CreateEventPage = () =>
         formData.append( 'description', description );
         formData.append( 'startDate', startDateISO || '' ); // Ensure it's in ISO format
         formData.append( 'endDate', endDateISO || '' );     // Ensure it's in ISO format
-        formData.append( 'eventStartTime', eventStartTime );
-        formData.append( 'eventEndTime', eventEndTime );
+        if ( eventStartTime )
+        {
+            formData.append( 'eventStartTime', eventStartTime );
+             }
+        if ( eventEndTime )
+        {
+            formData.append( 'eventEndTime', eventEndTime );
+             }
         formData.append( 'venue', venue );
         formData.append( 'venueDescription', venueDescription );
         formData.append( 'address', address );
@@ -256,8 +262,8 @@ const CreateEventPage = () =>
                 setDescription( '' );
                 setStartDate( '' );
                 setEndDate( '' );
-                setEventStartTime( '' );
-                setEventEndTime( '' );
+                setEventStartTime( null);
+                setEventEndTime( null);
                 setVenue( '' );
                 setVenueDescription( '' );
                 setAddress( '' );
@@ -402,7 +408,7 @@ const CreateEventPage = () =>
                             </label>
                             <TimePicker
                                 id="eventStartTime"
-                                value={ eventStartTime }
+                                value={ eventStartTime || undefined }
                                 onChange={ handleEventStartTimeChange }
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 required
@@ -415,7 +421,7 @@ const CreateEventPage = () =>
                             </label>
                             <TimePicker
                                 id="eventEndTime"
-                                value={ eventEndTime }
+                                value={ eventEndTime || undefined }
                                 onChange={ handleEventEndTimeChange }
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 required

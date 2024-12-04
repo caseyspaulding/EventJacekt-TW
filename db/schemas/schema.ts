@@ -370,8 +370,8 @@ export const events = pgTable( 'events', {
     slug: text( 'slug' ).notNull().unique(), // Add a slug column for SEO-friendly URLs
     description: text( 'description' ),
     notes: text( 'notes' ),
-    startDate: date( 'start_date' ).notNull(),
-    endDate: date( 'end_date' ).notNull(),
+    startDate: date( 'start_date' ),
+    endDate: date( 'end_date' ),
     eventStartTime: time( 'event_start_time' ), // New field for event start time
     eventEndTime: time( 'event_end_time' ), // New field for event end time
     venue: text( 'venue' ),

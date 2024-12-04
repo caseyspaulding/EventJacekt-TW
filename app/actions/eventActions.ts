@@ -83,6 +83,7 @@ export async function getEventBySlug ( eventSlug: string )
     };
 }
 
+
 // Create a new event
 export const createEvent = async ( formData: FormData ) =>
 {
@@ -94,8 +95,8 @@ export const createEvent = async ( formData: FormData ) =>
     const description = formData.get( 'description' ) as string;
     const startDateString = formData.get( 'startDate' ) as string;
     const endDateString = formData.get( 'endDate' ) as string;
-    const eventStartTime = formData.get( 'eventStartTime' ) as string;
-    const eventEndTime = formData.get( 'eventEndTime' ) as string;
+    const eventStartTimeRaw = formData.get( 'eventStartTime' ) as string;
+    const eventEndTimeRaw = formData.get( 'eventEndTime' ) as string;
     const venue = formData.get( 'venue' ) as string;
     const address = formData.get( 'address' ) as string;
     const city = formData.get( 'city' ) as string;
@@ -108,25 +109,42 @@ export const createEvent = async ( formData: FormData ) =>
     const scheduleDetails = formData.get( 'scheduleDetails' ) as string;
     const refundPolicy = formData.get( 'refundPolicy' ) as string;
     const timezone = formData.get( 'timezone' ) as string;
-    const tags = ( formData.get( 'tags' ) as string ).split( ',' ).map( ( tag ) => tag.trim() );
-    const faqs = JSON.parse( formData.get( 'faqs' ) as string );
-    const highlights = ( formData.get( 'highlights' ) as string ).split( ',' ).map( ( highlight ) => highlight.trim() );
-    const ageRestriction = ( formData.get( 'ageRestriction' ) as string ).split( ',' ).map( ( restriction ) => restriction.trim() );
-    const parkingOptions = ( formData.get( 'parkingOptions' ) as string ).split( ',' ).map( ( option ) => option.trim() );
+    const tagsRaw = formData.get( 'tags' ) as string;
+    const faqsRaw = formData.get( 'faqs' ) as string;
+    const highlightsRaw = formData.get( 'highlights' ) as string;
+    const ageRestrictionRaw = formData.get( 'ageRestriction' ) as string;
+    const parkingOptionsRaw = formData.get( 'parkingOptions' ) as string;
     const agendaItemsRaw = formData.get( 'agendaItems' ) as string;
     const organizerContact = formData.get( 'organizerContact' ) as string;
     const venueDescription = formData.get( 'venueDescription' ) as string;
 
-    // Parse JSON string for agenda items
-    let agendaItems;
-    try
-    {
-        agendaItems = JSON.parse( agendaItemsRaw );
-    } catch ( error )
-    {
-        console.error( 'Error parsing agenda items:', error );
-        return { success: false, message: 'Invalid agenda items format' };
-    }
+    // Handle empty strings for time fields
+    const eventStartTime =
+        eventStartTimeRaw && eventStartTimeRaw.trim() !== ''
+            ? eventStartTimeRaw
+            : null;
+    const eventEndTime =
+        eventEndTimeRaw && eventEndTimeRaw.trim() !== ''
+            ? eventEndTimeRaw
+            : null;
+
+    // Parse JSON strings
+    const faqs = faqsRaw ? JSON.parse( faqsRaw ) : [];
+    const agendaItems = agendaItemsRaw ? JSON.parse( agendaItemsRaw ) : [];
+
+    // Parse arrays
+    const tags = tagsRaw
+        ? tagsRaw.split( ',' ).map( ( tag ) => tag.trim() )
+        : [];
+    const highlights = highlightsRaw
+        ? highlightsRaw.split( ',' ).map( ( highlight ) => highlight.trim() )
+        : [];
+    const ageRestriction = ageRestrictionRaw
+        ? ageRestrictionRaw.split( ',' ).map( ( restriction ) => restriction.trim() )
+        : [];
+    const parkingOptions = parkingOptionsRaw
+        ? parkingOptionsRaw.split( ',' ).map( ( option ) => option.trim() )
+        : [];
 
     // Validation
     if ( !name || !slug || !startDateString || !endDateString )
@@ -145,12 +163,11 @@ export const createEvent = async ( formData: FormData ) =>
         name,
         slug,
         description,
-
         organizerContact,
-        startDate: startDateString,  // Use plain date string
-        endDate: endDateString,      // Use plain date string
-        eventStartTime, // Use plain time string
-        eventEndTime,   // Use plain time string
+        startDate: startDateString,
+        endDate: endDateString,
+        eventStartTime,
+        eventEndTime,
         venue: venue || null,
         venueDescription: venueDescription || null,
         address: address || null,
@@ -164,37 +181,54 @@ export const createEvent = async ( formData: FormData ) =>
         scheduleDetails: scheduleDetails || null,
         refundPolicy: refundPolicy || null,
         timezone: timezone || null,
-        tags: tags || [],
-        faqs: faqs || [],
-        highlights: highlights || [],
-        ageRestriction: ageRestriction.join( ', ' ),  // Convert array to comma-separated string
-        parkingOptions: parkingOptions.join( ', ' ),    // If parkingOptions is also an array
-        status: 'draft', // Default status
+        tags,
+        faqs,
+        highlights,
+        ageRestriction: ageRestriction.join( ', ' ),
+        parkingOptions: parkingOptions.join( ', ' ),
+        status: 'draft',
     };
 
     try
     {
         // Insert new event into events table and get the ID
-        const [ insertedEvent ] = await db.insert( events ).values( newEvent ).returning( { id: events.id } );
+        const [ insertedEvent ] = await db
+            .insert( events )
+            .values( newEvent )
+            .returning( { id: events.id } );
 
         // Handle agenda items
         if ( agendaItems.length > 0 )
         {
-            const agendaData = agendaItems.map( ( item: { title: string; startTime: string; endTime: string; description: string; hostOrArtist: string; } ) =>
-            {
-                // Validate and format start and end times
-                const formattedStartTime = item.startTime ? item.startTime : null;
-                const formattedEndTime = item.endTime ? item.endTime : null;
+            const agendaData = agendaItems.map(
+                ( item: {
+                    title: string;
+                    startTime: string;
+                    endTime: string;
+                    description: string;
+                    hostOrArtist: string;
+                } ) =>
+                {
+                    // Validate and format start and end times
+                    const formattedStartTime =
+                        item.startTime && item.startTime.trim() !== ''
+                            ? item.startTime
+                            : null;
+                    const formattedEndTime =
+                        item.endTime && item.endTime.trim() !== ''
+                            ? item.endTime
+                            : null;
 
-                return {
-                    eventId: insertedEvent.id,
-                    title: item.title,
-                    startTime: formattedStartTime,  // Ensure this is a valid time format 'HH:mm'
-                    endTime: formattedEndTime,      // Ensure this is a valid time format 'HH:mm'
-                    description: item.description,
-                    hostOrArtist: item.hostOrArtist,
-                };
-            } );
+                    return {
+                        eventId: insertedEvent.id,
+                        title: item.title,
+                        startTime: formattedStartTime,
+                        endTime: formattedEndTime,
+                        description: item.description,
+                        hostOrArtist: item.hostOrArtist,
+                    };
+                }
+            );
 
             await db.insert( agenda ).values( agendaData );
         }
