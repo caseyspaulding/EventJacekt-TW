@@ -278,7 +278,7 @@ export default async function EventPage ( { params }: { params: Promise<Params> 
                                 name={ eventData.eventName }
                                 description={ eventData.description }
                                 notes={ eventData.notes }
-                                startDate={ eventData.startDate }
+                                startDate={ eventData.startDate  }
                                 endDate={ eventData.endDate }
                                 eventStartTime={ eventData.eventStartTime }
                                 eventEndTime={ eventData.eventEndTime }

@@ -18,19 +18,18 @@ interface FAQ
   question: string;
   answer: string;
 }
-
 interface EventDetailsProps
 {
   eventId: string;
   name: string;
   description?: string | null;
   notes?: string | null;
-  startDate: string;
-  endDate: string;
+  startDate?: string | null;
+  endDate?: string | null;
   eventStartTime?: string | null;
   eventEndTime?: string | null;
   venue?: string | null;
-  venueImage?: string | null;  // Add venueImage prop
+  venueImage?: string | null;
   address?: string | null;
   city?: string | null;
   state?: string | null;
@@ -42,17 +41,18 @@ interface EventDetailsProps
   videoLinks?: string[] | null;
   organizerContact?: string | null;
   maxAttendees?: number | null;
-  status: string;
+  status?: string | null;
   refundPolicy?: string | null;
-  timezone: string | null;
+  timezone?: string | null;
   tags?: string[] | null;
   highlights?: string[] | null;
-  faqs?: string | FAQ[] | null | undefined;
+  faqs?: FAQ[] | null;
   ageRestriction?: string | null;
   parkingOptions?: string | null;
-  createdAt: string | null;
-  updatedAt: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 }
+
 
 const EventDetails: React.FC<EventDetailsProps> = ( {
   notes,
@@ -88,7 +88,7 @@ const EventDetails: React.FC<EventDetailsProps> = ( {
       <section className="mb-4">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Date & Time</h2>
         <div className="flex items-center text-gray-700">
-          <p>{ formatDate( startDate ) } to { formatDate( endDate ) }</p>
+          <p>{ formatDate( startDate || 'TBD' ) } to { formatDate( endDate || "TBD") }</p>
         </div>
         <div className='mt-2'>
           { eventStartTime && eventEndTime && (

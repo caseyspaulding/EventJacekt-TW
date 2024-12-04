@@ -47,8 +47,8 @@ const CreateEventPage = () =>
     const [ description, setDescription ] = useState( '' );
     const [ startDate, setStartDate ] = useState( '' );
     const [ endDate, setEndDate ] = useState( '' );
-    const [ eventStartTime, setEventStartTime ] = useState( null );
-    const [ eventEndTime, setEventEndTime ] = useState( null );
+    const [ eventStartTime, setEventStartTime ] = useState<string | null>( null );
+    const [ eventEndTime, setEventEndTime ] = useState<string | null>( null );
     const [ organizerContact, setOrganizerContact ] = useState( '' );
     const [ venue, setVenue ] = useState( '' );
     const [ venueDescription, setVenueDescription ] = useState( '' );
@@ -205,11 +205,11 @@ const CreateEventPage = () =>
         if ( eventStartTime )
         {
             formData.append( 'eventStartTime', eventStartTime );
-             }
+        }
         if ( eventEndTime )
         {
             formData.append( 'eventEndTime', eventEndTime );
-             }
+        }
         formData.append( 'venue', venue );
         formData.append( 'venueDescription', venueDescription );
         formData.append( 'address', address );
@@ -262,8 +262,8 @@ const CreateEventPage = () =>
                 setDescription( '' );
                 setStartDate( '' );
                 setEndDate( '' );
-                setEventStartTime( null);
-                setEventEndTime( null);
+                setEventStartTime( null );
+                setEventEndTime( null );
                 setVenue( '' );
                 setVenueDescription( '' );
                 setAddress( '' );
