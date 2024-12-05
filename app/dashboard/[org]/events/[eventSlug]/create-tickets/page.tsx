@@ -14,7 +14,15 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@nextui-org/button';
 
-
+// Define the interface for a question
+interface TicketTypeQuestion
+{
+    id: string;
+    questionText: string;
+    isRequired: boolean;
+    questionType: string; // 'text', 'multiple_choice', etc.
+    options?: string[]; // For multiple-choice questions
+}
 
 const CreateTicketsPage = () =>
 {
@@ -34,7 +42,7 @@ const CreateTicketsPage = () =>
     const [ isModalOpen, setIsModalOpen ] = useState( false );
     const { user } = useUser();
     const { eventSlug } = useParams();
-
+    const [ questions, setQuestions ] = useState<TicketTypeQuestion[]>( [] );
     useEffect( () =>
     {
         async function fetchEventId ()
@@ -48,6 +56,32 @@ const CreateTicketsPage = () =>
 
         fetchEventId();
     }, [ eventSlug ] );
+    // Function to add a new question
+    const handleAddQuestion = () =>
+    {
+        const newQuestion: TicketTypeQuestion = {
+            id: Date.now().toString(),
+            questionText: '',
+            isRequired: true,
+            questionType: 'text',
+            options: [],
+        };
+        setQuestions( [ ...questions, newQuestion ] );
+    };
+
+    // Function to update a question
+    const handleQuestionChange = ( id: string, field: string, value: any ) =>
+    {
+        setQuestions( ( prevQuestions ) =>
+            prevQuestions.map( ( q ) => ( q.id === id ? { ...q, [ field ]: value } : q ) )
+        );
+    };
+
+    // Function to remove a question
+    const handleRemoveQuestion = ( id: string ) =>
+    {
+        setQuestions( ( prevQuestions ) => prevQuestions.filter( ( q ) => q.id !== id ) );
+    };
 
     if ( !eventId )
     {
@@ -75,6 +109,7 @@ const CreateTicketsPage = () =>
         formData.append( 'eventStartTime', eventStartTime ); // Append event start time
         formData.append( 'eventEndTime', eventEndTime ); // Append event end time
         formData.append( 'isEarlyBird', isEarlyBird.toString() );
+        formData.append( 'questions', JSON.stringify( questions ) );
         formData.append( 'maxPerCustomer', maxPerCustomer?.toString() ?? '' );
 
         try
@@ -97,6 +132,7 @@ const CreateTicketsPage = () =>
                 setEventEndTime( '' ); // Clear event end time
                 setIsEarlyBird( false );
                 setMaxPerCustomer( 1 );
+                setQuestions( [] );
                 setIsModalOpen( true );
             } else
             {
@@ -138,6 +174,82 @@ const CreateTicketsPage = () =>
                         required
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                     />
+                </div>
+                {/* Questions Section */ }
+                <div>
+                    <h2 className="text-xl font-bold mb-4">Questions for Ticket Buyers</h2>
+                    { questions.map( ( question ) => (
+                        <div key={ question.id } className="mb-4 p-4 border rounded">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Question Text</label>
+                                <Input
+                                    type="text"
+                                    value={ question.questionText }
+                                    onChange={ ( e ) =>
+                                        handleQuestionChange( question.id, 'questionText', e.target.value )
+                                    }
+                                    placeholder="Enter your question"
+                                    required
+                                    className="mt-1 block w-full"
+                                />
+                            </div>
+
+                            <div className="mt-2">
+                                <label className="block text-sm font-medium text-gray-700">Question Type</label>
+                                <select
+                                    value={ question.questionType }
+                                    onChange={ ( e ) =>
+                                        handleQuestionChange( question.id, 'questionType', e.target.value )
+                                    }
+                                    className="mt-1 block w-full"
+                                >
+                                    <option value="text">Text</option>
+                                    <option value="multiple_choice">Multiple Choice</option>
+                                </select>
+                            </div>
+
+                            { question.questionType === 'multiple_choice' && (
+                                <div className="mt-2">
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        Options (comma-separated)
+                                    </label>
+                                    <Input
+                                        type="text"
+                                        value={ question.options?.join( ', ' ) || '' }
+                                        onChange={ ( e ) =>
+                                            handleQuestionChange( question.id, 'options', e.target.value.split( ',' ) )
+                                        }
+                                        placeholder="Option1, Option2, Option3"
+                                        className="mt-1 block w-full"
+                                    />
+                                </div>
+                            ) }
+
+                            <div className="mt-2 flex items-center">
+                                <input
+                                    type="checkbox"
+                                    checked={ question.isRequired }
+                                    onChange={ ( e ) =>
+                                        handleQuestionChange( question.id, 'isRequired', e.target.checked )
+                                    }
+                                    className="h-4 w-4 text-blue-600"
+                                />
+                                <label className="ml-2 block text-sm text-gray-700">Required</label>
+                            </div>
+
+                            <Button
+                                color="danger"
+                                onClick={ () => handleRemoveQuestion( question.id ) }
+                                className="mt-2"
+                            >
+                                Remove Question
+                            </Button>
+                        </div>
+                    ) ) }
+
+                    <Button onClick={ handleAddQuestion } color="primary">
+                        Add Question
+                    </Button>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

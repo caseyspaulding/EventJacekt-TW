@@ -697,6 +697,39 @@ export const orgTicketTypes = pgTable( 'org_ticket_types', {
     updatedAt: timestamp( 'updated_at' ).default( sql`now()` )
 } );
 
+// Ticket Type Questions Table
+export const ticketTypeQuestions = pgTable( 'ticket_type_questions', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    ticketTypeId: uuid( 'ticket_type_id' )
+        .notNull()
+        .references( () => orgTicketTypes.id ),
+    questionText: text( 'question_text' ).notNull(),
+    questionType: text( 'question_type' ).notNull(), // e.g., 'text', 'select', 'checkbox', etc.
+    options: text( 'options' ).array(), // For questions with options
+    isRequired: boolean( 'is_required' ).default( true ),
+    order: integer( 'order' ), // To maintain question order
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
+} );
+
+// Ticket Question Answers Table
+export const ticketQuestionAnswers = pgTable( 'ticket_question_answers', {
+    id: uuid( 'id' )
+        .primaryKey()
+        .default( sql`uuid_generate_v4()` ),
+    ticketId: uuid( 'ticket_id' )
+        .notNull()
+        .references( () => orgEventTickets.id ),
+    questionId: uuid( 'question_id' )
+        .notNull()
+        .references( () => ticketTypeQuestions.id ),
+    answerText: text( 'answer_text' ).notNull(),
+    createdAt: timestamp( 'created_at' ).default( sql`now()` ),
+    updatedAt: timestamp( 'updated_at' ).default( sql`now()` ),
+} );
+
 // Enhanced Tickets Table
 export const orgEventTickets = pgTable( 'org_event_tickets', {
     id: uuid( 'id' )

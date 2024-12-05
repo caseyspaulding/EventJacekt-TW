@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { orgTicketTypes, organizations } from '@/db/schemas/schema';
+import { orgTicketTypes, organizations, ticketTypeQuestions } from '@/db/schemas/schema';
 
 import { createClient } from '@/utils/supabase/server';
 
@@ -9,15 +9,23 @@ import { and, eq } from 'drizzle-orm/expressions';
 import { revalidatePath } from 'next/cache';
 
 
-// Create a new ticket type
+// Define the interface for a question
+interface TicketTypeQuestion
+{
+    id: string;
+    questionText: string;
+    isRequired: boolean;
+    questionType: string; // 'text', 'select', 'checkbox', etc.
+    options: string[]; // For questions with options
+}
 export async function createTicketType ( formData: FormData )
 {
     const { orgId } = await getUserAndOrgId();
 
     const eventId = formData.get( 'eventId' ) as string;
     const name = formData.get( 'name' ) as string;
-    const description = ( formData.get( 'description' ) as string ) || null; // Handle optional field
-    const price = formData.get( 'price' ) as string; // Keep it as a string
+    const description = ( formData.get( 'description' ) as string ) || null;
+    const price = formData.get( 'price' ) as string;
     const quantity = parseInt( formData.get( 'quantity' ) as string, 10 );
     const saleStartDate = new Date( formData.get( 'saleStartDate' ) as string );
     const saleEndDate = new Date( formData.get( 'saleEndDate' ) as string );
@@ -25,7 +33,8 @@ export async function createTicketType ( formData: FormData )
     const isEarlyBird = formData.get( 'isEarlyBird' ) === 'true';
     const maxPerCustomer = formData.get( 'maxPerCustomer' )
         ? parseInt( formData.get( 'maxPerCustomer' ) as string, 10 )
-        : null; // Handle optional field
+        : null;
+    const questions = JSON.parse( formData.get( 'questions' ) as string ) as TicketTypeQuestion[];
 
     const newTicketType = {
         eventId: eventId,
@@ -34,18 +43,43 @@ export async function createTicketType ( formData: FormData )
         description: description,
         price: price,
         quantity: quantity,
-        saleStartDate: saleStartDate.toISOString().split( 'T' )[ 0 ], // Convert to 'YYYY-MM-DD'
-        saleEndDate: saleEndDate.toISOString().split( 'T' )[ 0 ], // Convert to 'YYYY-MM-DD'
-        eventDate: eventDate.toISOString().split( 'T' )[ 0 ], // Convert to 'YYYY-MM-DD'
+        saleStartDate: saleStartDate.toISOString().split( 'T' )[ 0 ],
+        saleEndDate: saleEndDate.toISOString().split( 'T' )[ 0 ],
+        eventDate: eventDate.toISOString().split( 'T' )[ 0 ],
         isEarlyBird: isEarlyBird,
         maxPerCustomer: maxPerCustomer,
-        createdAt: new Date(), // You can keep this as a Date object if it will be converted later
-        updatedAt: new Date() // You can keep this as a Date object if it will be converted later
+        createdAt: new Date(),
+        updatedAt: new Date(),
     };
 
     try
     {
-        await db.insert( orgTicketTypes ).values( newTicketType );
+        // Insert the ticket type and get the inserted ID
+        const [ insertedTicketType ] = await db
+            .insert( orgTicketTypes )
+            .values( newTicketType )
+            .returning( { id: orgTicketTypes.id } );
+
+        const ticketTypeId = insertedTicketType.id;
+
+        // Prepare the questions data
+        const questionInsertData = questions.map( ( q, index ) => ( {
+            ticketTypeId: ticketTypeId,
+            questionText: q.questionText,
+            questionType: q.questionType,
+            options: q.options || [],
+            isRequired: q.isRequired,
+            order: index + 1,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        } ) );
+
+        // Insert questions into the database
+        if ( questionInsertData.length > 0 )
+        {
+            await db.insert( ticketTypeQuestions ).values( questionInsertData );
+        }
+
         revalidatePath( `/dashboard/${ orgId }/events/${ eventId }/create-tickets` );
         return { success: true, message: 'Ticket type created successfully' };
     } catch ( error )
@@ -54,7 +88,6 @@ export async function createTicketType ( formData: FormData )
         return { success: false, message: 'Error inserting ticket type into database' };
     }
 }
-
 // Update an existing ticket type
 export async function updateTicketType ( ticketTypeId: string, formData: FormData )
 {
